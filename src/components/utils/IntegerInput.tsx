@@ -6,6 +6,7 @@ type IntegerInputProps = {
   setValue: (value: number) => void;
   min?: number;
   max?: number;
+  animateShow?: boolean;
   onDelete?: () => void;
 };
 
@@ -14,6 +15,7 @@ export function IntegerInput({
   setValue,
   min = 0,
   max,
+  animateShow = true,
   onDelete,
 }: IntegerInputProps) {
   function onValueChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -33,10 +35,12 @@ export function IntegerInput({
   }
 
   return (
-    <div className="h-8 flex rounded-lg overflow-hidden w-24">
+    <div className={`h-8 flex rounded-lg justify-center overflow-hidden w-24`}>
       {!onDelete && (
         <Button
-          className={"text-lg min-w-7"}
+          className={`text-lg ${
+            animateShow ? "min-w-7 w-7" : "w-0 min-w-0"
+          } transition-all ease-out duration-200`}
           color={"red"}
           onClick={() => value != min && setValue(value - 1)}
         >
@@ -45,7 +49,9 @@ export function IntegerInput({
       )}
       {onDelete && (
         <Button
-          className={"text-lg min-w-7"}
+          className={`text-lg ${
+            animateShow ? "min-w-7 w-7" : "w-0 min-w-0"
+          } transition-all ease-out duration-200`}
           color={"red"}
           onClick={() => (value !== 0 ? setValue(value - 1) : onDelete())}
         >
@@ -60,10 +66,12 @@ export function IntegerInput({
         type="text"
         value={String(value)}
         onChange={onValueChange}
-        className={`h-8 px-2 w-full text-xl text-center font-bold outline-none`}
+        className={`h-8 px-2 w-[40px] text-xl text-center font-bold outline-none`}
       />
       <Button
-        className={"text-lg min-w-7"}
+        className={`text-lg ${
+          animateShow ? "min-w-7 w-7" : "w-0 min-w-0"
+        } transition-all ease-out duration-200`}
         color={"green"}
         onClick={() => {
           if (max !== undefined && value >= max) return;
