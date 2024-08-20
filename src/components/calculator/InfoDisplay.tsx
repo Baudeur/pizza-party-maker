@@ -5,12 +5,13 @@ import {
   pizzaPricePerPerson,
   pizzaSlicesPerPerson,
 } from "../../services/calculatorService";
-import { Diet } from "../../types";
+import { Diet, diets } from "../../types";
 import { FlagState, PizzaFlag } from "../utils/PizzaFlag";
 import { peopleSelector } from "../../modules/people/selector";
 import { pizzasSelector } from "../../modules/pizzas/selector";
 import { paramsSelector } from "../../modules/params/selector";
 import { toUnderstandableRational } from "../../services/utils";
+import { DietIcon } from "../icons/DietIcon";
 
 type InfoDisplayProps = {
   peopleAteAvg: PeopleAte;
@@ -26,27 +27,28 @@ export function InfoDisplay({ peopleAteAvg }: InfoDisplayProps) {
 
   return (
     <div className="flex w-full">
-      {[
-        { label: "🍗", diet: "normal" },
-        { label: "🐟", diet: "pescoVegetarian" },
-        { label: "🧀", diet: "vegetarian" },
-        { label: "🥕", diet: "vegan" },
-      ].map((obj) => (
-        <div className="h-full mr-2 w-full" key={obj.diet}>
-          <span className="text-3xl font-bold">{obj.label}</span>
+      {diets.map((diet) => (
+        <div className="h-full mr-2 w-full" key={diet}>
+          <div className="text-3xl font-bold mb-2 flex justify-center">
+            <DietIcon type={diet as Diet} color="Color" className="h-8 w-8" />
+          </div>
           <PizzaFlag
-            flagState={stateOfDiet(obj.diet as Diet, peopleAteAvg, people)}
+            flagState={stateOfDiet(diet as Diet, peopleAteAvg, people)}
           />
         </div>
       ))}
       <div className="text-3xl font-bold mr-2 w-full">
-        <span>💵</span>
+        <div className="mb-2 flex justify-center">
+          <img src="/src/assets/Cash.png" className="w-8 h-8" />
+        </div>
         <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex items-center justify-center">
           <span className="text-2xl">{pricePerPerson}€</span>
         </div>
       </div>
       <div className="text-3xl font-bold w-full">
-        <span>🍕</span>
+        <div className="mb-2 flex justify-center">
+          <img src="/src/assets/Pizza.png" className="w-8 h-8" />
+        </div>
         <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
           <span className="text-lg">{slicesPerPerson} slices</span>
           <span className="text-lg">
