@@ -35,6 +35,7 @@ export function PizzaForm() {
         }
       }}
     >
+      <td></td>
       <td className="align-top pt-2">
         <div className="flex flex-col items-start">
           <TextInput
@@ -55,7 +56,7 @@ export function PizzaForm() {
       <td className="text-lg align-top pt-2 pl-2">
         <Button
           tabIndex={14}
-          className={"rounded-lg w-16"}
+          className={"rounded-lg w-[68px]"}
           color={"green"}
           onClick={handleSubmit}
         >

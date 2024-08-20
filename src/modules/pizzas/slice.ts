@@ -12,6 +12,7 @@ export type Pizza = {
   name: string;
   price: number;
   eatenBy: Diet;
+  quantity: number;
 };
 
 type PizzaState = {
@@ -34,6 +35,7 @@ const pizzas = createSlice({
         name: action.payload.name,
         price: action.payload.price,
         eatenBy: action.payload.eatenBy,
+        quantity: 1,
       };
       return { id: state.id + 1, pizzas: [...state.pizzas, newPizza] };
     },
