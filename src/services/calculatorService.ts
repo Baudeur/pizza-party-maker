@@ -42,7 +42,7 @@ function createSimulation(
     people,
     pizzas.map((p) => ({
       pizza: p,
-      slicesLeft: slices,
+      slicesLeft: slices * p.quantity,
     }))
   );
 
@@ -217,9 +217,9 @@ export function averageCaseScenario(
 export function pizzaPricePerPerson(people: People, pizzas: Pizza[]) {
   const totalPeople = getTotalPeople(people);
   if (totalPeople == 0) return 0;
-  return +(pizzas.reduce((acc, pi) => acc + pi.price, 0) / totalPeople).toFixed(
-    2
-  );
+  return +(
+    pizzas.reduce((acc, pi) => acc + pi.price * pi.quantity, 0) / totalPeople
+  ).toFixed(2);
 }
 
 export function pizzaSlicesPerPerson(
@@ -229,6 +229,8 @@ export function pizzaSlicesPerPerson(
 ) {
   const totalPeople = getTotalPeople(people);
   if (totalPeople == 0) return 0;
-  // return +(pizzas.reduce((acc, pz) => acc + pz.quantity, 0) * slices / totalPeople).toFixed(2)
-  return +((pizzas.length * slices) / totalPeople).toFixed(1);
+  return +(
+    (pizzas.reduce((acc, p) => acc + p.quantity, 0) * slices) /
+    totalPeople
+  ).toFixed(1);
 }
