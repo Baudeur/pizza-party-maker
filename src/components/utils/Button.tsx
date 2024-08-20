@@ -17,7 +17,7 @@ export function Button({
   return (
     <button
       tabIndex={tabIndex}
-      className={`h-8 flex justify-center items-center ${className} ${
+      className={`hover:brightness-90 active:brightness-[80%] h-8 flex justify-center items-center ${className} ${
         color === "red" ? "bg-red-500" : "bg-green-500"
       }`}
       onClick={onClick}

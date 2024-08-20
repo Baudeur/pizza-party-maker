@@ -18,7 +18,7 @@ export function Expand({
       className={`h-fit flex flex-col items-start w-full bg-amber-300 rounded-lg ${className}`}
     >
       <div
-        className="h-7 w-full text-lg font-bold cursor-pointer text-left ml-2 mr-2"
+        className="h-7 w-full text-lg font-bold cursor-pointer text-left mx-2"
         onClick={() => setExpanded(!expanded)}
       >
         {label}
@@ -26,7 +26,7 @@ export function Expand({
       <div
         className={`${
           expanded ? heigth : "h-0"
-        } transition-all ease-in-out duration-300 overflow-hidden pr-2 pl-2 w-full`}
+        } transition-all ease-in-out duration-300 overflow-hidden px-2 w-full`}
       >
         {children}
       </div>

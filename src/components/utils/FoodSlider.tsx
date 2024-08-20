@@ -34,7 +34,7 @@ export function FoodSlider({ value, onChange }: FoodSliderProps) {
   }
 
   return (
-    <div className="flex flex-col pl-2 pr-2">
+    <div className="flex flex-col px-2">
       <input
         className="accent-green-500 w-full h-8"
         type="range"

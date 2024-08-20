@@ -30,7 +30,7 @@ export function InfoDisplay({ peopleAteAvg }: InfoDisplayProps) {
       {diets.map((diet) => (
         <div className="h-full mr-2 w-full" key={diet}>
           <div className="text-3xl font-bold mb-2 flex justify-center">
-            <DietIcon type={diet as Diet} color="Color" className="h-8 w-8" />
+            <DietIcon type={diet as Diet} color="Color" className="size-8" />
           </div>
           <PizzaFlag
             flagState={stateOfDiet(diet as Diet, peopleAteAvg, people)}
@@ -39,7 +39,7 @@ export function InfoDisplay({ peopleAteAvg }: InfoDisplayProps) {
       ))}
       <div className="text-3xl font-bold mr-2 w-full">
         <div className="mb-2 flex justify-center">
-          <img src="/src/assets/Cash.png" className="w-8 h-8" />
+          <img src="/src/assets/Cash.png" className="size-8" />
         </div>
         <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex items-center justify-center">
           <span className="text-2xl">{pricePerPerson}€</span>
@@ -47,7 +47,7 @@ export function InfoDisplay({ peopleAteAvg }: InfoDisplayProps) {
       </div>
       <div className="text-3xl font-bold w-full">
         <div className="mb-2 flex justify-center">
-          <img src="/src/assets/Pizza.png" className="w-8 h-8" />
+          <img src="/src/assets/Pizza.png" className="size-8" />
         </div>
         <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
           <span className="text-lg">{slicesPerPerson} slices</span>

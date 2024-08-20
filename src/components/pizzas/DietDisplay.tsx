@@ -7,22 +7,22 @@ type DietDisplayProps = {
 
 export function DietDisplay({ diet }: DietDisplayProps) {
   return (
-    <div className="flex justify-between pl-2 pr-2">
-      <DietIcon type="normal" color="Color" className="h-7 w-7" />
+    <div className="flex justify-between px-2">
+      <DietIcon type="normal" color="Color" className="size-7" />
       {["pescoVegetarian", "vegetarian", "vegan"].includes(diet) ? (
-        <DietIcon type="pescoVegetarian" color="Color" className="h-7 w-7" />
+        <DietIcon type="pescoVegetarian" color="Color" className="size-7" />
       ) : (
-        <div className="h-7 w-7" />
+        <div className="size-7" />
       )}
       {["vegetarian", "vegan"].includes(diet) ? (
-        <DietIcon type="vegetarian" color="Color" className="h-7 w-7" />
+        <DietIcon type="vegetarian" color="Color" className="size-7" />
       ) : (
-        <div className="h-7 w-7" />
+        <div className="size-7" />
       )}
       {"vegan" == diet ? (
-        <DietIcon type="vegan" color="Color" className="h-7 w-7" />
+        <DietIcon type="vegan" color="Color" className="size-7" />
       ) : (
-        <div className="h-7 w-7" />
+        <div className="size-7" />
       )}
     </div>
   );

@@ -13,7 +13,7 @@ export function CaseScenario({ label, peopleAte }: CaseScenarioProps) {
       <span className="w-48 text-right">{label}</span>
       {diets.map((diet) => (
         <div
-          className="bg-amber-200 rounded-lg pr-2 pl-2 w-20 flex items-center ml-2"
+          className="bg-amber-200 rounded-lg px-2 w-20 flex items-center ml-2"
           key={diet}
         >
           <DietIcon type={diet} color="Color" className="h-4 w-4 min-w-4" />

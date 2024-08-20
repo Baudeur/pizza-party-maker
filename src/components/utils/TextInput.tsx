@@ -33,7 +33,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         defaultValue={defaultValue}
         value={value}
         onChange={onChange}
-        className={`outline-none focus:border-neutral-500 focus:border-2 border-[1px] border-neutral-300 rounded-lg h-8 pl-2 pr-2 w-full text-xl ${className} ${
+        className={`outline-none focus:border-neutral-500 focus:border-2 border-[1px] border-neutral-300 rounded-lg h-8 px-2 w-full text-xl ${className} ${
           error ? "bg-red-200 border-red-500" : ""
         }`}
       />

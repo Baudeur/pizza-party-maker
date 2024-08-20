@@ -1,13 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { pizzasSelector } from "../../modules/pizzas/selector";
 import { PizzaDisplay } from "./PizzaDisplay";
 import { PizzaForm } from "./PizzaForm";
-import { addPizza } from "../../modules/pizzas/slice";
 import { Container } from "../utils/Container";
 
 export function Pizzas() {
   const pizzas = useSelector(pizzasSelector);
-  const dispatch = useDispatch();
   return (
     <Container className="text-xl flex ml-4 mb-4 h-96">
       <table className="block overflow-y-auto w-[640px]">
@@ -25,7 +23,7 @@ export function Pizzas() {
           })}
         </tbody>
         <tfoot className="sticky bottom-0 bg-gradient-to-t from-amber-100 from-85% to-transparent">
-          <PizzaForm onPizzaCreate={(pizza) => dispatch(addPizza(pizza))} />
+          <PizzaForm />
         </tfoot>
       </table>
     </Container>

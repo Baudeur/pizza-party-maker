@@ -28,7 +28,7 @@ export function IntegerInput({ value, setValue }: IntegerInputProps) {
         type="text"
         value={String(value)}
         onChange={onValueChange}
-        className={`h-8 pl-2 pr-2 w-[40px] text-xl text-center font-bold outline-none`}
+        className={`h-8 px-2 w-[40px] text-xl text-center font-bold outline-none`}
       />
       <Button
         className={"text-lg w-7"}

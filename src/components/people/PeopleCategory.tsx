@@ -20,7 +20,7 @@ export function PeopleCategory({ diet }: PeopleCategoryProps) {
   return (
     <div className="text-2xl flex mb-3 last:mb-0">
       <div className="mr-3 ">
-        <DietIcon type={diet} color="Color" className="h-7 w-7" />
+        <DietIcon type={diet} color="Color" className="size-7" />
       </div>
       <IntegerInput value={quantity} setValue={setQuantity(diet)} />
     </div>
