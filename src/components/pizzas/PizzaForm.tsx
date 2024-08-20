@@ -6,6 +6,7 @@ import { Diet } from "../../types";
 import { TextInput } from "../utils/TextInput";
 import { DietSelector } from "../utils/DietSelector";
 import { useDispatch } from "react-redux";
+import { Plus } from "lucide-react";
 
 export function PizzaForm() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export function PizzaForm() {
   return (
     <tr
       onKeyDown={(e) => {
-        if (e.key == "Enter") {
+        if (e.key === "Enter") {
           handleSubmit();
           nameInputRef.current?.focus();
         }
@@ -60,7 +61,7 @@ export function PizzaForm() {
           color={"green"}
           onClick={handleSubmit}
         >
-          Add
+          <Plus size={20} strokeWidth={2} />
         </Button>
       </td>
     </tr>

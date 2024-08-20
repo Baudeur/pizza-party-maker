@@ -55,9 +55,9 @@ export function PizzaEdit({ pizza }: PizzaEditProps) {
   }
 
   useEffect(() => {
-    focus == "name" && nameInputRef.current?.focus();
-    focus == "diet" && dietInputRef.current?.focus();
-    focus == "price" && priceInputRef.current?.focus();
+    focus === "name" && nameInputRef.current?.focus();
+    focus === "diet" && dietInputRef.current?.focus();
+    focus === "price" && priceInputRef.current?.focus();
   }, [focus, editable]);
 
   return (

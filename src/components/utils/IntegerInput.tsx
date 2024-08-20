@@ -65,7 +65,10 @@ export function IntegerInput({
       <Button
         className={"text-lg min-w-7"}
         color={"green"}
-        onClick={() => max !== undefined && value < max && setValue(value + 1)}
+        onClick={() => {
+          if (max !== undefined && value >= max) return;
+          setValue(value + 1);
+        }}
       >
         <Plus size={20} strokeWidth={2} />
       </Button>

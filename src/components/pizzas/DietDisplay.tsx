@@ -19,7 +19,7 @@ export function DietDisplay({ diet }: DietDisplayProps) {
       ) : (
         <div className="size-7" />
       )}
-      {"vegan" == diet ? (
+      {"vegan" === diet ? (
         <DietIcon type="vegan" color="Color" className="size-7" />
       ) : (
         <div className="size-7" />

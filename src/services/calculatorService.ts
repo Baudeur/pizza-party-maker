@@ -47,7 +47,7 @@ function createSimulation(
   );
 
   function createSimuPart(diet: Diet) {
-    return people[diet] == 0
+    return people[diet] === 0
       ? null
       : {
           number: people[diet],
@@ -90,7 +90,7 @@ function getTotalPeople(people: People) {
 
 function averagePeopleAte(people: People, peopleAte: PeopleAte) {
   for (const diet of dietOrder) {
-    if (people[diet] == 0) continue;
+    if (people[diet] === 0) continue;
     peopleAte[diet] = +(peopleAte[diet] / people[diet]).toFixed(1);
   }
   return peopleAte;
@@ -100,8 +100,8 @@ function averagePeopleAte(people: People, peopleAte: PeopleAte) {
 
 function pickRandomSlice(pizzas: PizzaState[]): boolean {
   if (
-    pizzas.length == 0 ||
-    pizzas.reduce((acc, cur) => acc + cur.slicesLeft, 0) == 0
+    pizzas.length === 0 ||
+    pizzas.reduce((acc, cur) => acc + cur.slicesLeft, 0) === 0
   ) {
     return false;
   }
@@ -137,7 +137,7 @@ function removeUneatablePizza(
 const pickPizzasInOrder = (order: Diet[]) => (pizzas: PizzaState[]) => {
   //A list of pizza list grouped by diet.
   const pizzaDiets = order.map((diet) =>
-    pizzas.filter((ps) => ps.pizza.eatenBy == diet)
+    pizzas.filter((ps) => ps.pizza.eatenBy === diet)
   );
   for (const pizzaDiet of pizzaDiets) {
     if (pickRandomSlice(pizzaDiet)) return true;
@@ -151,7 +151,7 @@ const pickPizzaRandom = () => (pizzas: PizzaState[]) => {
 
 const letDietEat =
   (eat: (pizzas: PizzaState[]) => boolean) => (simu: SimulationDiet) => {
-    if (simu.pizzas.reduce((acc, cur) => acc + cur.slicesLeft, 0) == 0) return;
+    if (simu.pizzas.reduce((acc, cur) => acc + cur.slicesLeft, 0) === 0) return;
     for (let i = 0; i < (simu.number ?? 0); i++) {
       if (eat(simu.pizzas)) {
         simu.ate++;
@@ -216,7 +216,7 @@ export function averageCaseScenario(
 
 export function pizzaPricePerPerson(people: People, pizzas: Pizza[]) {
   const totalPeople = getTotalPeople(people);
-  if (totalPeople == 0) return 0;
+  if (totalPeople === 0) return 0;
   return +(
     pizzas.reduce((acc, pi) => acc + pi.price * pi.quantity, 0) / totalPeople
   ).toFixed(2);
@@ -228,7 +228,7 @@ export function pizzaSlicesPerPerson(
   slices: number
 ) {
   const totalPeople = getTotalPeople(people);
-  if (totalPeople == 0) return 0;
+  if (totalPeople === 0) return 0;
   return +(
     (pizzas.reduce((acc, p) => acc + p.quantity, 0) * slices) /
     totalPeople

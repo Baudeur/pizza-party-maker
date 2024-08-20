@@ -29,7 +29,7 @@ const acceptableValues = [
 
 export function toUnderstandableRational(slicesAte: number, slices: number) {
   function parseRational(str: string): number {
-    if (str == "0" || str == "1") return Number(str);
+    if (str === "0" || str === "1") return Number(str);
     const splitted = str.split("/");
     return Number(splitted[0]) / Number(splitted[1]);
   }
@@ -45,20 +45,20 @@ export function toUnderstandableRational(slicesAte: number, slices: number) {
       best = ecart;
     }
   }
-  if (res == "0") return entier.toString();
-  if (res == "1") return (entier + 1).toString();
-  if (entier == 0) return "~" + res;
+  if (res === "0") return entier.toString();
+  if (res === "1") return (entier + 1).toString();
+  if (entier === 0) return "~" + res;
   return "~" + entier.toString() + "+" + res;
 }
 
 export function calcDiet(diet: Diet, type: "prev" | "next"): Diet {
-  if (type == "prev") {
-    if (diet == "vegan") return "vegetarian";
-    if (diet == "vegetarian") return "pescoVegetarian";
+  if (type === "prev") {
+    if (diet === "vegan") return "vegetarian";
+    if (diet === "vegetarian") return "pescoVegetarian";
     return "normal";
   } else {
-    if (diet == "normal") return "pescoVegetarian";
-    if (diet == "pescoVegetarian") return "vegetarian";
+    if (diet === "normal") return "pescoVegetarian";
+    if (diet === "pescoVegetarian") return "vegetarian";
     return "vegan";
   }
 }

@@ -15,11 +15,11 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
       if (Number.isNaN(inputPrice)) {
         return;
       }
-      if (event.target.value.slice(-1) == ".") {
+      if (event.target.value.slice(-1) === ".") {
         setPrice(event.target.value);
         return;
       }
-      if (event.target.value == "") {
+      if (event.target.value === "") {
         setPrice("");
         return;
       }

@@ -20,7 +20,7 @@ export function DietIcon({ type, color, className }: DietIconProps) {
     <div className={`${className}`}>
       <img
         src={iconName}
-        className={`size-full ${color == "BW" && "filter grayscale"}`}
+        className={`size-full ${color === "BW" && "filter grayscale"}`}
       />
     </div>
   );

@@ -65,13 +65,13 @@ function stateOfDiet(
   peopleAte: PeopleAte,
   people: People
 ): FlagState {
-  if (people[diet] == 0) return "N/A";
+  if (people[diet] === 0) return "N/A";
   const maxAte = Math.max(
     Math.max(peopleAte.normal, peopleAte.pescoVegetarian),
     Math.max(peopleAte.vegan, peopleAte.vegetarian)
   );
-  if (peopleAte[diet] == 0) return "cantEat";
-  if (peopleAte[diet] == maxAte) return "perfect";
+  if (peopleAte[diet] === 0) return "cantEat";
+  if (peopleAte[diet] === maxAte) return "perfect";
   if (peopleAte[diet] * 1.5 < maxAte) return "bad";
   if (peopleAte[diet] * 1.25 < maxAte) return "okay";
   if (peopleAte[diet] < maxAte) return "good";

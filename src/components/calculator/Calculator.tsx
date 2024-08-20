@@ -38,7 +38,7 @@ export function Calculator() {
         />
         <CaseScenario label="Best case scenario" peopleAte={peopleAteBest} />
       </Expand>
-      <Expand label="Parameters" heigth="h-16" className="mt-2">
+      <Expand label="Parameters" heigth="h-10" className="mt-2">
         <Params />
       </Expand>
     </Container>

@@ -54,7 +54,7 @@ export const DietSelector = forwardRef<HTMLDivElement, DietSelectorProps>(
         <div className="cursor-pointer" onClick={() => onChange("vegan")}>
           <DietIcon
             type="vegan"
-            color={value == "vegan" ? "Color" : "BW"}
+            color={value === "vegan" ? "Color" : "BW"}
             className="size-7"
           />
         </div>
