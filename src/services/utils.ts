@@ -1,3 +1,4 @@
+import { PizzaQuantity } from "../modules/pizzas/selector";
 import { Diet } from "../types";
 
 export function shuffleArray<T>(array: Array<T>) {
@@ -61,4 +62,19 @@ export function calcDiet(diet: Diet, type: "prev" | "next"): Diet {
     if (diet === "pescoVegetarian") return "vegetarian";
     return "vegan";
   }
+}
+
+export function pizzaQuantityEquality(
+  pizzaQuantity1: PizzaQuantity[],
+  pizzaQuantity2: PizzaQuantity[]
+) {
+  if (pizzaQuantity1.length !== pizzaQuantity2.length) return false;
+  return pizzaQuantity1
+    .map((pq) => {
+      const pq2 = pizzaQuantity2.find((elem) => elem.eatenBy === pq.eatenBy);
+      if (pq2 === null) return false;
+      if (pq2?.quantity !== pq.quantity) return false;
+      return true;
+    })
+    .every((bool) => bool);
 }

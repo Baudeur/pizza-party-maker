@@ -1,4 +1,5 @@
 import { People } from "../modules/people/slice";
+import { PizzaQuantity } from "../modules/pizzas/selector";
 import { Pizza } from "../modules/pizzas/slice";
 import { Diet } from "../types";
 import { shuffleArray } from "./utils";
@@ -6,7 +7,7 @@ import { shuffleArray } from "./utils";
 // ####################### TYPES #######################
 
 type PizzaState = {
-  pizza: Pizza;
+  diet: Diet;
   slicesLeft: number;
 };
 
@@ -35,16 +36,15 @@ function createPeopleAte(): PeopleAte {
 
 function createSimulation(
   people: People,
-  pizzas: Pizza[],
+  pizzas: PizzaQuantity[],
   slices: number
 ): Simulation {
-  const pizzaStates: PizzaState[] = removeUneatablePizza(
-    people,
-    pizzas.map((p) => ({
-      pizza: p,
-      slicesLeft: slices * p.quantity,
-    }))
-  );
+  const pizzaStatesStacked: PizzaState[] = pizzas.map((p) => ({
+    diet: p.eatenBy,
+    slicesLeft: slices * p.quantity,
+  }));
+
+  const pizzaStates = removeUneatablePizza(people, pizzaStatesStacked);
 
   function createSimuPart(diet: Diet) {
     return people[diet] === 0
@@ -52,7 +52,7 @@ function createSimulation(
       : {
           number: people[diet],
           ate: 0,
-          pizzas: pizzaStates.filter((ps) => canEat(diet, ps.pizza.eatenBy)),
+          pizzas: pizzaStates.filter((ps) => canEat(diet, ps.diet)),
         };
   }
 
@@ -105,6 +105,10 @@ function pickRandomSlice(pizzas: PizzaState[]): boolean {
   ) {
     return false;
   }
+  if (pizzas.length === 1) {
+    pizzas[0].slicesLeft--;
+    return true;
+  }
   let rand =
     1 +
     Math.floor(
@@ -126,18 +130,17 @@ function removeUneatablePizza(
 ): PizzaState[] {
   if (people.normal > 0) return pizzas;
   if (people.pescoVegetarian > 0)
-    return pizzas.filter((ps) => canEat("pescoVegetarian", ps.pizza.eatenBy));
+    return pizzas.filter((ps) => canEat("pescoVegetarian", ps.diet));
   if (people.vegetarian > 0)
-    return pizzas.filter((ps) => canEat("vegetarian", ps.pizza.eatenBy));
-  if (people.vegan > 0)
-    return pizzas.filter((ps) => canEat("vegan", ps.pizza.eatenBy));
+    return pizzas.filter((ps) => canEat("vegetarian", ps.diet));
+  if (people.vegan > 0) return pizzas.filter((ps) => canEat("vegan", ps.diet));
   return [];
 }
 
 const pickPizzasInOrder = (order: Diet[]) => (pizzas: PizzaState[]) => {
   //A list of pizza list grouped by diet.
   const pizzaDiets = order.map((diet) =>
-    pizzas.filter((ps) => ps.pizza.eatenBy === diet)
+    pizzas.filter((ps) => ps.diet === diet)
   );
   for (const pizzaDiet of pizzaDiets) {
     if (pickRandomSlice(pizzaDiet)) return true;
@@ -164,7 +167,7 @@ const caseScenario =
     behavior: (pizzas: PizzaState[]) => boolean,
     shuffle?: <T>(array: Array<T>) => void
   ) =>
-  (slices: number, pizzas: Pizza[], people: People): PeopleAte => {
+  (slices: number, pizzas: PizzaQuantity[], people: People): PeopleAte => {
     const simu = createSimulation(people, pizzas, slices);
 
     const letDietEatWorst = letDietEat(behavior);
@@ -198,7 +201,7 @@ export const randomCaseScenario = caseScenario(pickPizzaRandom(), shuffleArray);
 
 export function averageCaseScenario(
   slices: number,
-  pizzas: Pizza[],
+  pizzas: PizzaQuantity[],
   people: People
 ): PeopleAte {
   const scenari = [];

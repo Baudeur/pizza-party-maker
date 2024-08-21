@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Container } from "../utils/Container";
-import { pizzasSelector } from "../../modules/pizzas/selector";
+import { pizzaQuantitySelector } from "../../modules/pizzas/selector";
 import { peopleSelector } from "../../modules/people/selector";
 import {
   averageCaseScenario,
@@ -13,9 +13,10 @@ import { paramsSelector } from "../../modules/params/selector";
 import { Params } from "./Params";
 import { Expand } from "../utils/Expand";
 import { CaseScenario } from "./CaseScenario";
+import { pizzaQuantityEquality } from "../../services/utils";
 
 export function Calculator() {
-  const pizza = useSelector(pizzasSelector);
+  const pizza = useSelector(pizzaQuantitySelector, pizzaQuantityEquality);
   const people = useSelector(peopleSelector);
   const { slices } = useSelector(paramsSelector);
 
