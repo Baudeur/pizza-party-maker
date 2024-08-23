@@ -1,7 +1,7 @@
 import { People } from "../modules/people/slice";
 import { PizzaQuantity } from "../modules/pizzas/selector";
 import { Pizza } from "../modules/pizzas/slice";
-import { Diet } from "../types";
+import { Diet, diets } from "../types";
 import { shuffleArray } from "./utils";
 
 // ####################### TYPES #######################
@@ -39,11 +39,13 @@ function createSimulation(
   pizzas: PizzaQuantity[],
   slices: number
 ): Simulation {
+  //Group the pizza per diet adding the quantity.
   const pizzaStatesStacked: PizzaState[] = pizzas.map((p) => ({
     diet: p.eatenBy,
     slicesLeft: slices * p.quantity,
   }));
 
+  //Remove the pizza that can't be eaten.
   const pizzaStates = removeUneatablePizza(people, pizzaStatesStacked);
 
   function createSimuPart(diet: Diet) {
@@ -152,12 +154,16 @@ const pickPizzaRandom = () => (pizzas: PizzaState[]) => {
   return pickRandomSlice(pizzas);
 };
 
-const letDietEat =
-  (eat: (pizzas: PizzaState[]) => boolean) => (simu: SimulationDiet) => {
-    if (simu.pizzas.reduce((acc, cur) => acc + cur.slicesLeft, 0) === 0) return;
-    for (let i = 0; i < (simu.number ?? 0); i++) {
-      if (eat(simu.pizzas)) {
-        simu.ate++;
+const eatOneRound =
+  (eat: (pizzas: PizzaState[]) => boolean) =>
+  (simulation: Simulation, peopleList: Diet[]) => {
+    for (const diet of peopleList) {
+      const simuDiet = simulation[diet] as SimulationDiet;
+      if (simuDiet.pizzas.reduce((acc, cur) => acc + cur.slicesLeft, 0) === 0)
+        continue;
+
+      if (eat(simuDiet.pizzas)) {
+        simuDiet.ate++;
       }
     }
   };
@@ -168,23 +174,26 @@ const caseScenario =
     shuffle?: <T>(array: Array<T>) => void
   ) =>
   (slices: number, pizzas: PizzaQuantity[], people: People): PeopleAte => {
-    const simu = createSimulation(people, pizzas, slices);
+    const simulation = createSimulation(people, pizzas, slices);
 
-    const letDietEatWorst = letDietEat(behavior);
+    const eatOneRoundBehavior = eatOneRound(behavior);
 
-    const presentDiet = dietOrder.filter(
-      (diet) => simu[diet] != null && simu[diet].pizzas.length > 0
-    );
+    const peopleList: Diet[] = diets
+      .map((diet) => {
+        const simuDiet = simulation[diet];
+        if (simuDiet === null) return [];
+        if (simuDiet.pizzas.length === 0) return [];
+        return Array(simuDiet.number).fill(diet);
+      })
+      .flat();
 
-    while (simu.pizzas.some((ps) => ps.slicesLeft > 0)) {
-      if (shuffle) shuffle(presentDiet);
-      for (const diet of presentDiet) {
-        letDietEatWorst(simu[diet] as SimulationDiet); //Null case deleted when presentDiet defined
-      }
+    while (simulation.pizzas.some((ps) => ps.slicesLeft > 0)) {
+      if (shuffle) shuffle(peopleList);
+      eatOneRoundBehavior(simulation, peopleList);
     }
     const peopleAte = createPeopleAte();
-    for (const diet of presentDiet) {
-      peopleAte[diet] = simu[diet]?.ate ?? 0;
+    for (const diet of diets) {
+      peopleAte[diet] = simulation[diet]?.ate ?? 0;
     }
     return averagePeopleAte(people, peopleAte);
   };
@@ -205,13 +214,14 @@ export function averageCaseScenario(
   people: People
 ): PeopleAte {
   const scenari = [];
-  for (let i = 0; i < 20; i++) {
+  const simulationNumber = 100;
+  for (let i = 0; i < simulationNumber; i++) {
     scenari.push(randomCaseScenario(slices, pizzas, people));
   }
   const peopleAte = createPeopleAte();
   for (const diet of dietOrder) {
     peopleAte[diet] = +(
-      scenari.reduce((acc, curr) => acc + curr[diet], 0) / 20
+      scenari.reduce((acc, curr) => acc + curr[diet], 0) / simulationNumber
     ).toFixed(1);
   }
   return peopleAte;

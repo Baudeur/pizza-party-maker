@@ -86,7 +86,7 @@ export function CaseScenarioOverlayContent() {
           </li>
           <li>
             The average case scenario: This one is just a random case scenario
-            repeated 20 times and we take the average of each result.
+            repeated 100 times and we take the average of each result.
           </li>
         </ul>
         <p>
