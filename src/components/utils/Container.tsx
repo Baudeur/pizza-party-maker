@@ -6,7 +6,7 @@ export function Container({
 }: PropsWithChildren<{ className?: string }>) {
   return (
     <div
-      className={`bg-amber-100 border-amber-400 border-4 rounded-2xl w-fit p-4 overflow-hidden ${className}`}
+      className={`bg-amber-100 border-amber-400 border-4 rounded-2xl w-fit p-4 ${className}`}
     >
       {children}
     </div>

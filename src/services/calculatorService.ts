@@ -225,6 +225,12 @@ export function pizzaPricePerPerson(people: People, pizzas: Pizza[]) {
   ).toFixed(2);
 }
 
+export function pizzaPriceTotal(pizzas: Pizza[]) {
+  return +pizzas
+    .reduce((acc, pi) => acc + pi.price * pi.quantity, 0)
+    .toFixed(2);
+}
+
 export function pizzaSlicesPerPerson(
   people: People,
   pizzas: Pizza[],

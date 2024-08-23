@@ -3,6 +3,7 @@ import { People } from "../../modules/people/slice";
 import {
   PeopleAte,
   pizzaPricePerPerson,
+  pizzaPriceTotal,
   pizzaSlicesPerPerson,
 } from "../../services/calculatorService";
 import { Diet, diets } from "../../types";
@@ -24,6 +25,7 @@ export function InfoDisplay({ peopleAteAvg }: InfoDisplayProps) {
 
   const slicesPerPerson = pizzaSlicesPerPerson(people, pizzas, slices);
   const pricePerPerson = pizzaPricePerPerson(people, pizzas);
+  const priceTotal = pizzaPriceTotal(pizzas);
 
   return (
     <div className="flex w-full">
@@ -41,8 +43,9 @@ export function InfoDisplay({ peopleAteAvg }: InfoDisplayProps) {
         <div className="mb-2 flex justify-center">
           <img src="/src/assets/Cash.png" className="size-8" />
         </div>
-        <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex items-center justify-center">
-          <span className="text-2xl">{pricePerPerson}€</span>
+        <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
+          <span className="text-lg">{pricePerPerson}€ / pers</span>
+          <span className="text-lg">{priceTotal}€ total</span>
         </div>
       </div>
       <div className="text-3xl font-bold w-full">

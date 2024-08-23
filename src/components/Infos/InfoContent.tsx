@@ -13,7 +13,7 @@ import {
   Pencil,
   Plus,
   Trash2,
-  X,
+  Undo2,
 } from "lucide-react";
 
 const flagStates: FlagState[] = [
@@ -180,7 +180,7 @@ export function InfoContent() {
               people
             </p>
           </div>
-          <p>
+          <p className="mb-2">
             You can both use the{" "}
             <Button
               className="inline-flex w-7 rounded-s-lg"
@@ -199,6 +199,10 @@ export function InfoContent() {
             </Button>{" "}
             button to change the value or you can directly edit the number with
             the keyboard.
+          </p>
+
+          <p>
+            At the bottom of the list you can see the total number of people.
           </p>
         </div>
 
@@ -335,8 +339,12 @@ export function InfoContent() {
             </div>
             , or you can cancel by clicking the{" "}
             <div className="inline-block translate-y-1">
-              <Button color="red" onClick={() => {}} className="w-8 rounded-lg">
-                <X size={20} strokeWidth={2} />
+              <Button
+                color="yellow"
+                onClick={() => {}}
+                className="w-8 rounded-lg"
+              >
+                <Undo2 size={20} strokeWidth={2} />
               </Button>
             </div>{" "}
             button or pressing{" "}
@@ -383,8 +391,9 @@ export function InfoContent() {
               <div className="mb-2 flex justify-center">
                 <img src="/src/assets/Cash.png" className="size-8" />
               </div>
-              <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex items-center justify-center">
-                <span className="text-2xl">12€</span>
+              <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
+                <span className="text-lg">4€ / pers</span>
+                <span className="text-lg">12€ total</span>
               </div>
             </div>
             <div className="text-3xl font-bold w-full">

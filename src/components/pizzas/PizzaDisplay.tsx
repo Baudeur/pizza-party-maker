@@ -22,6 +22,7 @@ export function PizzaDisplay({ pizza }: PizzaDisplayProps) {
     setEditable(true);
     setFocus(focus);
   }
+
   function handleQuantityChange(quantity: number) {
     const newPizza: Pizza = {
       id: pizza.id,
@@ -44,12 +45,11 @@ export function PizzaDisplay({ pizza }: PizzaDisplayProps) {
           setValue={handleQuantityChange}
           animateShow={hovered}
           onDelete={() => dispatch(removePizza(pizza.id))}
+          className="absolute z-[5] top-0"
         />
-        {!hovered && (
-          <div className="absolute top-0 h-9 w-full bg-amber-100">
-            <div className="pt-[3px] font-bold w-24">{pizza.quantity}</div>
-          </div>
-        )}
+        <div className="absolute top-0 h-8 w-full bg-amber-100">
+          <div className="pt-[2px] font-bold w-24">{pizza.quantity}</div>
+        </div>
       </td>
       <td
         className="flex relative h-8"

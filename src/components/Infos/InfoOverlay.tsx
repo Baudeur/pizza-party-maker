@@ -9,7 +9,7 @@ type InfoOverlayProps = {
 export function InfoOverlay({ show, close }: InfoOverlayProps) {
   return (
     <div
-      className={`z-20 fixed size-full bg-black top-0 left-0 ${
+      className={`z-30 fixed size-full bg-black top-0 left-0 ${
         show ? "bg-opacity-70" : "bg-opacity-0 pointer-events-none"
       } transition-all duration-150`}
     >

@@ -5,6 +5,7 @@ export type PizzaWithoutID = {
   name: string;
   price: number;
   eatenBy: Diet;
+  quantity: number;
 };
 
 export type Pizza = {

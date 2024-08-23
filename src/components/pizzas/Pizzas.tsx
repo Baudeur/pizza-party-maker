@@ -23,7 +23,7 @@ export function Pizzas() {
             return <PizzaLineWrapper key={pizzaElem.id} pizza={pizzaElem} />;
           })}
         </tbody>
-        <tfoot className="sticky bottom-0 bg-gradient-to-t from-amber-100 from-85% to-transparent">
+        <tfoot className="sticky bottom-0 bg-gradient-to-t from-amber-100 from-85% to-transparent z-10">
           <PizzaForm />
         </tfoot>
       </table>

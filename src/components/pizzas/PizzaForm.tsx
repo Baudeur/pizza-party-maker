@@ -7,12 +7,14 @@ import { TextInput } from "../utils/TextInput";
 import { DietSelector } from "../utils/DietSelector";
 import { useDispatch } from "react-redux";
 import { Plus } from "lucide-react";
+import { IntegerInput } from "../utils/IntegerInput";
 
 export function PizzaForm() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [eatenBy, setEatenBy] = useState<Diet>("normal");
+  const [quantity, setQuantity] = useState<number>(1);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = () => {
@@ -20,11 +22,13 @@ export function PizzaForm() {
       name,
       eatenBy,
       price: Number(price),
+      quantity,
     };
     dispatch(addPizza(pizza));
     setEatenBy("normal");
     setName("");
     setPrice("");
+    setQuantity(1);
   };
 
   return (
@@ -36,7 +40,9 @@ export function PizzaForm() {
         }
       }}
     >
-      <td></td>
+      <td className="align-top pt-2">
+        <IntegerInput value={quantity} setValue={setQuantity} />
+      </td>
       <td className="align-top pt-2">
         <div className="flex flex-col items-start">
           <TextInput

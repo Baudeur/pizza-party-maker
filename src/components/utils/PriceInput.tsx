@@ -15,12 +15,17 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
       if (Number.isNaN(inputPrice)) {
         return;
       }
-      if (event.target.value.slice(-1) === ".") {
+      if (
+        event.target.value === "" ||
+        event.target.value.slice(-1) === "." ||
+        event.target.value.slice(-2) === ".0" ||
+        event.target.value.slice(-3) === ".00"
+      ) {
         setPrice(event.target.value);
         return;
       }
-      if (event.target.value === "") {
-        setPrice("");
+      if (inputPrice > 999) {
+        setPrice("999");
         return;
       }
       setPrice(Math.round(inputPrice * 100) / 100 + "");

@@ -1,4 +1,4 @@
-import { Check, X } from "lucide-react";
+import { Check, Undo2 } from "lucide-react";
 import { Button } from "../utils/Button";
 import { DietSelector } from "../utils/DietSelector";
 import { IntegerInput } from "../utils/IntegerInput";
@@ -24,7 +24,7 @@ export function PizzaEdit({ pizza }: PizzaEditProps) {
   const [diet, setDiet] = useState<Diet>(pizza.eatenBy);
   const [price, setPrice] = useState(pizza.price);
 
-  const handleSubmit = () => {
+  function handleSubmit() {
     const newPizza: Pizza = {
       id: pizza.id,
       name,
@@ -34,7 +34,7 @@ export function PizzaEdit({ pizza }: PizzaEditProps) {
     };
     dispatch(modifyPizza(newPizza));
     setEditable(false);
-  };
+  }
 
   function handleCancel() {
     setName(pizza.name);
@@ -111,10 +111,10 @@ export function PizzaEdit({ pizza }: PizzaEditProps) {
         <Button
           tabIndex={4}
           className="rounded-lg w-8"
-          color="red"
+          color="yellow"
           onClick={() => handleCancel()}
         >
-          <X size={20} strokeWidth={2} />
+          <Undo2 size={20} strokeWidth={2} />
         </Button>
       </td>
     </tr>

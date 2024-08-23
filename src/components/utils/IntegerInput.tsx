@@ -1,5 +1,6 @@
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "./Button";
+import { useState } from "react";
 
 type IntegerInputProps = {
   value: number;
@@ -8,16 +9,19 @@ type IntegerInputProps = {
   max?: number;
   animateShow?: boolean;
   onDelete?: () => void;
+  className?: string;
 };
 
 export function IntegerInput({
   value,
   setValue,
   min = 0,
-  max,
+  max = 99,
   animateShow = true,
   onDelete,
+  className,
 }: IntegerInputProps) {
+  const [focus, setFocus] = useState(false);
   function onValueChange(event: React.ChangeEvent<HTMLInputElement>) {
     const inputValue = Number(event.target.value);
     if (Number.isNaN(inputValue)) {
@@ -35,11 +39,15 @@ export function IntegerInput({
   }
 
   return (
-    <div className={`h-8 flex rounded-lg justify-center overflow-hidden w-24`}>
+    <div
+      className={`h-8 flex rounded-lg justify-center overflow-hidden w-24 ${
+        animateShow || focus ? "opacity-100" : "opacity-0"
+      } transition-all duration-0 ${className}`}
+    >
       {!onDelete && (
         <Button
           className={`text-lg ${
-            animateShow ? "min-w-7 w-7" : "w-0 min-w-0"
+            animateShow || focus ? "min-w-7 w-7" : "w-0 min-w-0"
           } transition-all ease-out duration-200`}
           color={"red"}
           onClick={() => value != min && setValue(value - 1)}
@@ -50,7 +58,7 @@ export function IntegerInput({
       {onDelete && (
         <Button
           className={`text-lg ${
-            animateShow ? "min-w-7 w-7" : "w-0 min-w-0"
+            animateShow || focus ? "min-w-7 w-7" : "w-0 min-w-0"
           } transition-all ease-out duration-200`}
           color={"red"}
           onClick={() => (value !== 0 ? setValue(value - 1) : onDelete())}
@@ -63,6 +71,8 @@ export function IntegerInput({
         </Button>
       )}
       <input
+        onFocus={() => setFocus(true)}
+        onBlur={() => setFocus(false)}
         type="text"
         value={String(value)}
         onChange={onValueChange}
@@ -70,7 +80,7 @@ export function IntegerInput({
       />
       <Button
         className={`text-lg ${
-          animateShow ? "min-w-7 w-7" : "w-0 min-w-0"
+          animateShow || focus ? "min-w-7 w-7" : "w-0 min-w-0"
         } transition-all ease-out duration-200`}
         color={"green"}
         onClick={() => {

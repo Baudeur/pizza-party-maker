@@ -1,3 +1,4 @@
+import { ChevronDown } from "lucide-react";
 import { PropsWithChildren, useState } from "react";
 
 type ExpandProps = {
@@ -18,9 +19,16 @@ export function Expand({
       className={`h-fit flex flex-col items-start w-full bg-amber-300 rounded-lg ${className}`}
     >
       <div
-        className="h-7 w-full text-lg font-bold cursor-pointer text-left mx-2"
+        className="h-7 flex items-center w-full text-lg font-bold cursor-pointer text-left mx-2"
         onClick={() => setExpanded(!expanded)}
       >
+        <ChevronDown
+          size={15}
+          strokeWidth={4}
+          className={`mr-2 ${
+            expanded ? "-rotate-180" : "rotate-0"
+          } transition-all`}
+        />
         {label}
       </div>
       <div
