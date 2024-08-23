@@ -1,12 +1,12 @@
+import { PropsWithChildren } from "react";
 import { Container } from "../utils/Container";
-import { InfoContent } from "./InfoContent";
 
-type InfoOverlayProps = {
+type Overlay = {
   show: boolean;
   close: () => void;
 };
 
-export function InfoOverlay({ show, close }: InfoOverlayProps) {
+export function Overlay({ show, close, children }: PropsWithChildren<Overlay>) {
   return (
     <div
       className={`z-30 fixed size-full bg-black top-0 left-0 ${
@@ -22,9 +22,7 @@ export function InfoOverlay({ show, close }: InfoOverlayProps) {
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <Container className="h-fit">
-            <InfoContent />
-          </Container>
+          <Container className="h-fit">{children}</Container>
         </div>
       </div>
     </div>

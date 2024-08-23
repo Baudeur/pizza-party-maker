@@ -14,8 +14,13 @@ import { Params } from "./Params";
 import { Expand } from "../utils/Expand";
 import { CaseScenario } from "./CaseScenario";
 import { pizzaQuantityEquality } from "../../services/utils";
+import { Info } from "lucide-react";
+import { Overlay } from "../utils/Overlay";
+import { useState } from "react";
+import { CaseScenarioOverlayContent } from "./CaseScenarioOverlayContent";
 
 export function Calculator() {
+  const [showOverlay, setShowOverlay] = useState(false);
   const pizza = useSelector(pizzaQuantitySelector, pizzaQuantityEquality);
   const people = useSelector(peopleSelector);
   const { slices } = useSelector(paramsSelector);
@@ -28,6 +33,20 @@ export function Calculator() {
     <Container className="w-full h-fit mt-4">
       <InfoDisplay peopleAteAvg={peopleAteRandomAvg} />
       <Expand label="Details" heigth="h-36" className="mt-4 cursor-default">
+        <div className="relative flex justify-end pr-2">
+          <Info
+            className="cursor-pointer absolute"
+            size={25}
+            color="black"
+            strokeWidth={2}
+            onClick={() => {
+              setShowOverlay(true);
+            }}
+          />
+          <Overlay show={showOverlay} close={() => setShowOverlay(false)}>
+            <CaseScenarioOverlayContent />
+          </Overlay>
+        </div>
         <CaseScenario label="Worst case scenario" peopleAte={peopleAteWorst} />
         <CaseScenario
           label="Random case scenario"

@@ -1,6 +1,7 @@
 import { Info } from "lucide-react";
-import { InfoOverlay } from "./InfoOverlay";
 import { useState } from "react";
+import { Overlay } from "../utils/Overlay";
+import { InfoContent } from "./InfoContent";
 
 export function Infos() {
   const [displayOverlay, setDisplayOverlay] = useState(false);
@@ -13,10 +14,9 @@ export function Infos() {
         strokeWidth={2}
         onClick={() => setDisplayOverlay(true)}
       />
-      <InfoOverlay
-        show={displayOverlay}
-        close={() => setDisplayOverlay(false)}
-      />
+      <Overlay show={displayOverlay} close={() => setDisplayOverlay(false)}>
+        <InfoContent />
+      </Overlay>
     </div>
   );
 }
