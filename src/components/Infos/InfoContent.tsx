@@ -46,7 +46,6 @@ export function InfoContent() {
       clearInterval(intervalId);
     };
   }, [flagStateIndex]);
-
   return (
     <div className="h-[80vh] overflow-y-scroll">
       {/* ########## Introduction ########## */}
@@ -231,17 +230,17 @@ export function InfoContent() {
           <p className="mb-2">
             You can click the symbols to tell how permissive the pizza is. Or
             click once to focus it and press{" "}
-            <div className="inline-block size-7 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)] translate-y-1">
-              <div className="flex items-center justify-center size-full">
+            <span className="inline-block size-7 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)] translate-y-1">
+              <span className="flex items-center justify-center size-full">
                 <ArrowBigLeft size={18} />
-              </div>
-            </div>{" "}
+              </span>
+            </span>{" "}
             or{" "}
-            <div className="inline-block size-7 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)] translate-y-1">
-              <div className="flex items-center justify-center size-full">
+            <span className="inline-block size-7 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)] translate-y-1">
+              <span className="flex items-center justify-center size-full">
                 <ArrowBigRight size={18} />
-              </div>
-            </div>{" "}
+              </span>
+            </span>{" "}
             to control it.
           </p>
           <div className="flex mb-2">
@@ -279,22 +278,22 @@ export function InfoContent() {
           </div>
           <p>
             In the form you can press{" "}
-            <div className="inline-block h-7 w-10 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-              <div className="flex items-center justify-center size-full">
+            <span className="inline-block h-7 w-10 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
+              <span className="flex items-center justify-center size-full">
                 Tab
-              </div>
-            </div>{" "}
+              </span>
+            </span>{" "}
             to go to the next field.
           </p>
           <p className="mb-4">
             When done filling the fields, you can press{" "}
-            <div className="inline-block h-7 w-14 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-              <div className="flex items-center justify-center size-full">
+            <span className="inline-block h-7 w-14 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
+              <span className="flex items-center justify-center size-full">
                 Enter
-              </div>
-            </div>{" "}
+              </span>
+            </span>{" "}
             or click{" "}
-            <div className="inline-block translate-y-1">
+            <span className="inline-block translate-y-1">
               <Button
                 color="green"
                 onClick={() => {}}
@@ -302,13 +301,13 @@ export function InfoContent() {
               >
                 <Plus size={20} strokeWidth={2} />
               </Button>
-            </div>{" "}
+            </span>{" "}
             to add the pizza.
           </p>
           <p>
             If you make a mistake, you can edit it pizzas. To do that there is
             either a button{" "}
-            <div className="inline-block translate-y-1">
+            <span className="inline-block translate-y-1">
               <Button
                 color="green"
                 onClick={() => {}}
@@ -316,13 +315,13 @@ export function InfoContent() {
               >
                 <Pencil size={20} strokeWidth={2} />
               </Button>
-            </div>{" "}
+            </span>{" "}
             on the right or you can double click any field.
           </p>
           <p className="mb-4">
             Once in edit mode you can edit all fields, you can validate by
             clicking the{" "}
-            <div className="inline-block translate-y-1">
+            <span className="inline-block translate-y-1">
               <Button
                 color="green"
                 onClick={() => {}}
@@ -330,15 +329,15 @@ export function InfoContent() {
               >
                 <Check size={20} strokeWidth={2} />
               </Button>
-            </div>{" "}
+            </span>{" "}
             button or pressing{" "}
-            <div className="inline-block h-7 w-14 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-              <div className="flex items-center justify-center size-full">
+            <span className="inline-block h-7 w-14 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
+              <span className="flex items-center justify-center size-full">
                 Enter
-              </div>
-            </div>
+              </span>
+            </span>
             , or you can cancel by clicking the{" "}
-            <div className="inline-block translate-y-1">
+            <span className="inline-block translate-y-1">
               <Button
                 color="yellow"
                 onClick={() => {}}
@@ -346,22 +345,22 @@ export function InfoContent() {
               >
                 <Undo2 size={20} strokeWidth={2} />
               </Button>
-            </div>{" "}
+            </span>{" "}
             button or pressing{" "}
-            <div className="inline-block h-7 w-20 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-              <div className="flex items-center justify-center size-full">
+            <span className="inline-block h-7 w-20 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
+              <span className="flex items-center justify-center size-full">
                 Escape
-              </div>
-            </div>
+              </span>
+            </span>
             .
           </p>
           <p className="mb-4">
             You can also delete pizzas by clicking on the{" "}
-            <div className="inline-block translate-y-1">
+            <span className="inline-block translate-y-1">
               <Button color="red" onClick={() => {}} className="w-8 rounded-lg">
                 <Trash2 size={20} strokeWidth={2} />
               </Button>
-            </div>{" "}
+            </span>{" "}
             button on the right.
           </p>
           <p>

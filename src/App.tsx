@@ -1,6 +1,6 @@
 import "./App.css";
 import { Calculator } from "./components/calculator/Calculator";
-import { Infos } from "./components/Infos/Infos";
+import { Infos } from "./components/infos/Infos";
 import { People } from "./components/people/People";
 import { Pizzas } from "./components/pizzas/Pizzas";
 

@@ -18,6 +18,7 @@ import { Info } from "lucide-react";
 import { Overlay } from "../utils/Overlay";
 import { useState } from "react";
 import { CaseScenarioOverlayContent } from "./CaseScenarioOverlayContent";
+import { GraphComparison } from "../graph/GraphComparison";
 
 export function Calculator() {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -32,7 +33,10 @@ export function Calculator() {
   return (
     <Container className="w-full h-fit mt-4">
       <InfoDisplay peopleAteAvg={peopleAteRandomAvg} />
-      <Expand label="Details" heigth="h-36" className="mt-4 cursor-default">
+      <Expand label="Graphs" heigth="h-[110px]" className="mt-4">
+        <GraphComparison />
+      </Expand>
+      <Expand label="Details" heigth="h-36" className="mt-2 cursor-default">
         <div className="relative flex justify-end pr-2">
           <Info
             className="cursor-pointer absolute"
