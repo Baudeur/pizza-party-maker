@@ -17,7 +17,7 @@ export function GraphComparison() {
   return (
     <div className="flex flex-col justify-start gap-2 my-2">
       <div className="flex items-center">
-        <div className="font-bold w-20">People</div>
+        <div className="font-bold w-20 text-right pr-2">People</div>
 
         <Squares
           proportions={people}
@@ -27,7 +27,7 @@ export function GraphComparison() {
         />
       </div>
       <div className="flex items-center">
-        <div className="font-bold w-20">Pizza</div>
+        <div className="font-bold w-20 text-right pr-2">Pizza</div>
 
         <Squares
           proportions={pizzasCounts}

@@ -28,7 +28,7 @@ export function Calculator() {
 
   const peopleAteWorst = worstCaseScenario(slices, pizza, people);
   const peopleAteRandom = randomCaseScenario(slices, pizza, people);
-  const peopleAteRandomAvg = averageCaseScenario(slices, pizza, people);
+  const peopleAteRandomAvg = averageCaseScenario(100, slices, pizza, people);
   const peopleAteBest = bestCaseScenario(slices, pizza, people);
   return (
     <Container className="w-full h-fit mt-4">

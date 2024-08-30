@@ -25,7 +25,6 @@ export function Squares({
     vegetarian: Math.round((vegetarian / total) * 100),
     vegan: Math.round((vegan / total) * 100) + 1,
   };
-  console.log(percentages);
   //Takes an eight of the greatest length but do not go over the lowest one.
   const iconSize =
     Math.min(Math.max(width / 10, height / 10), Math.min(width, height)) - 4;
@@ -79,6 +78,7 @@ export function Squares({
               if (percentages[diet] === 0) return null;
               return (
                 <div
+                  key={diet}
                   className={`flex items-center justify-center ${color} ${
                     diet === "vegan" ? "grow-1" : "grow-0"
                   } h-full`}

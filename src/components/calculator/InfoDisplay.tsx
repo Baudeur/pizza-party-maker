@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
-import { People } from "../../modules/people/slice";
 import {
   PeopleAte,
   pizzaPricePerPerson,
   pizzaPriceTotal,
   pizzaSlicesPerPerson,
+  stateOfDiet,
 } from "../../services/calculatorService";
 import { Diet, diets } from "../../types";
-import { FlagState, PizzaFlag } from "../utils/PizzaFlag";
+import { PizzaFlag } from "../utils/PizzaFlag";
 import { peopleSelector } from "../../modules/people/selector";
 import { pizzasSelector } from "../../modules/pizzas/selector";
 import { paramsSelector } from "../../modules/params/selector";
@@ -61,22 +61,4 @@ export function InfoDisplay({ peopleAteAvg }: InfoDisplayProps) {
       </div>
     </div>
   );
-}
-
-function stateOfDiet(
-  diet: Diet,
-  peopleAte: PeopleAte,
-  people: People
-): FlagState {
-  if (people[diet] === 0) return "N/A";
-  const maxAte = Math.max(
-    Math.max(peopleAte.normal, peopleAte.pescoVegetarian),
-    Math.max(peopleAte.vegan, peopleAte.vegetarian)
-  );
-  if (peopleAte[diet] === 0) return "cantEat";
-  if (peopleAte[diet] === maxAte) return "perfect";
-  if (peopleAte[diet] * 1.5 < maxAte) return "bad";
-  if (peopleAte[diet] * 1.25 < maxAte) return "okay";
-  if (peopleAte[diet] < maxAte) return "good";
-  return "N/A";
 }
