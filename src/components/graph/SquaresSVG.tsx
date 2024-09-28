@@ -1,5 +1,5 @@
 import { People } from "../../modules/people/slice";
-import { Diet, diets } from "../../types";
+import { Diet } from "../../types";
 
 type SquaresProps = {
   proportions: People;

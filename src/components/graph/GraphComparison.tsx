@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { pizzaQuantitySelector } from "../../modules/pizzas/selector";
 import { peopleSelector } from "../../modules/people/selector";
 import { pizzaQuantityEquality } from "../../services/utils";
-import { Squares } from "./Squares";
 import { SquaresSVG } from "./SquaresSVG";
 
 export function GraphComparison() {
