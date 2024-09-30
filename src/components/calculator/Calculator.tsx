@@ -15,10 +15,10 @@ import { Expand } from "../utils/Expand";
 import { CaseScenario } from "./CaseScenario";
 import { pizzaQuantityEquality } from "../../services/utils";
 import { Info } from "lucide-react";
-import { Overlay } from "../utils/Overlay";
 import { useState } from "react";
 import { CaseScenarioOverlayContent } from "./CaseScenarioOverlayContent";
 import { GraphComparison } from "../graph/GraphComparison";
+import { OverlayWrapper } from "../utils/OverlayWrapper";
 
 export function Calculator() {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -47,9 +47,12 @@ export function Calculator() {
               setShowOverlay(true);
             }}
           />
-          <Overlay show={showOverlay} close={() => setShowOverlay(false)}>
+          <OverlayWrapper
+            show={showOverlay}
+            close={() => setShowOverlay(false)}
+          >
             <CaseScenarioOverlayContent />
-          </Overlay>
+          </OverlayWrapper>
         </div>
         <CaseScenario label="Worst case scenario" peopleAte={peopleAteWorst} />
         <CaseScenario

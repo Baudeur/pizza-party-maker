@@ -1,22 +1,35 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { Container } from "../utils/Container";
 
 type Overlay = {
-  show: boolean;
   close: () => void;
 };
 
-export function Overlay({ show, close, children }: PropsWithChildren<Overlay>) {
+export function Overlay({ close, children }: PropsWithChildren<Overlay>) {
+  const [showDelayed, setShowDelayed] = useState(false);
+  useEffect(() => {
+    setShowDelayed(true);
+  }, []);
+
+  const animateAndClose = () => {
+    setShowDelayed(false);
+    setTimeout(() => {
+      close();
+    }, 300);
+  };
   return (
     <div
       className={`z-30 fixed size-full bg-black top-0 left-0 ${
-        show ? "bg-opacity-70" : "bg-opacity-0 pointer-events-none"
+        showDelayed ? "bg-opacity-70" : "bg-opacity-0 pointer-events-none"
       } transition-all duration-150`}
     >
-      <div className="flex items-center justify-center h-full" onClick={close}>
+      <div
+        className="flex items-center justify-center h-full"
+        onClick={animateAndClose}
+      >
         <div
           className={`size-fit transition-all ease-out duration-300 ${
-            show
+            showDelayed
               ? "transform-none opacity-100"
               : " opacity-0 translate-y-[-100px]"
           }`}

@@ -75,7 +75,7 @@ export function SuggestOverlayContent() {
         <div className="flex w-full gap-2 items-center">
           <div className="pl-2">Strategy:</div>
           <DropDown<string>
-            className="w-[150px]"
+            className="w-[175px]"
             options={[
               { value: "lowerCost", label: "Minimal cost" },
               { value: "maxDiversity", label: "Maximal diversity" },
@@ -85,7 +85,7 @@ export function SuggestOverlayContent() {
           />
         </div>
         <div className="flex w-full gap-2 items-center">
-          <div className="pl-2">Strategy:</div>
+          <div className="pl-2">Quantity per persons:</div>
           <DropDown<number>
             className="w-[100px]"
             options={options}
