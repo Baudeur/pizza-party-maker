@@ -78,3 +78,11 @@ export function pizzaQuantityEquality(
     })
     .every((bool) => bool);
 }
+
+export function priceToString(number: number) {
+  if (Number.isInteger(number)) {
+    return number.toFixed(0);
+  } else {
+    return number.toFixed(2);
+  }
+}

@@ -1,7 +1,17 @@
 import { useEffect, useState } from "react";
-import { SuggestMode } from "../../services/suggestionService";
+import {
+  SuggestedQuantityPerPizza,
+  SuggestMode,
+  suggestPizzas,
+} from "../../services/suggestionService";
 import { DropDown } from "../utils/DropDown";
 import { Button } from "../utils/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { pizzasSelector } from "../../modules/pizzas/selector";
+import { peopleSelector } from "../../modules/people/selector";
+import { Spinner } from "../utils/Spinner";
+import { SuggestionDisplay } from "./SuggestionDisplay";
+import { modifyPizza } from "../../modules/pizzas/slice";
 
 const optionsInit = [
   { value: 1 / 8, label: "1/8" },
@@ -22,12 +32,31 @@ const optionsInit = [
   { value: 1, label: "1" },
 ];
 
-export function SuggestOverlayContent() {
+type SuggestOverlayContentProps = {
+  close: () => void;
+};
+
+export function SuggestOverlayContent({
+  close,
+}: Readonly<SuggestOverlayContentProps>) {
   const [fairness, setFairness] = useState(1.25);
   const [suggestMode, setSuggestMode] = useState<SuggestMode>("lowerCost");
   const [quantity, setQuantity] = useState(1);
   const [options, setOptions] =
     useState<{ value: number; label: string }[]>(optionsInit);
+
+  const pizzas = useSelector(pizzasSelector);
+  const people = useSelector(peopleSelector);
+  const [isLoading, setIsLoading] = useState(false);
+  const [suggestions, setSuggestions] = useState<
+    SuggestedQuantityPerPizza | undefined
+  >();
+  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+
+  const image = new Image(1, 1);
+  image.src = "/src/assets/LoadingOmni.png";
+
   function addChoices() {
     const addValue = options[options.length - 1].value;
     if (addValue === 100) return;
@@ -50,12 +79,44 @@ export function SuggestOverlayContent() {
     };
   }, []);
 
+  const handleCompute = () => {
+    setIsLoading(true);
+    setError(false);
+    setTimeout(() => {
+      let suggest = undefined;
+      try {
+        suggest = suggestPizzas(
+          pizzas,
+          people,
+          quantity,
+          suggestMode,
+          fairness
+        );
+      } catch {
+        setError(true);
+      }
+      setSuggestions(suggest);
+      setIsLoading(false);
+    }, 20);
+  };
+
+  const handleApply = () => {
+    pizzas.forEach((pizza) => {
+      const suggestedQuantity = suggestions?.get(pizza) ?? 0;
+      const suggestedPizza = { ...pizza, quantity: suggestedQuantity };
+      dispatch(modifyPizza(suggestedPizza));
+    });
+    close();
+  };
+
   return (
     <div className="w-[500px]">
       <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-2 text-center w-full">
         Select you suggestion parameters
       </p>
-      <p>This form will suggest you an order based on certain parameters</p>
+      <p className="mb-2">
+        This form will suggest you an order based on certain parameters
+      </p>
       <div className="flex flex-col gap-2">
         <div className="px-2 flex gap-2 w-full">
           <div>Unfairness:</div>
@@ -96,11 +157,31 @@ export function SuggestOverlayContent() {
         </div>
         <Button
           color="green"
-          onClick={() => {}}
-          className="rounded-lg font-bold"
+          onClick={handleCompute}
+          className="rounded-lg font-bold disabled:bg-gray-200 disabled:text-gray-400"
+          disabled={isLoading}
         >
           Compute suggestion
         </Button>
+        {error && (
+          <span className="text-red-500 font-bold text-sm">
+            Error: the pizza list is missing diets that people in your group
+            have.
+          </span>
+        )}
+        {isLoading && <Spinner />}
+        {suggestions !== undefined && !isLoading && (
+          <div>
+            <SuggestionDisplay pizzas={suggestions} />
+            <Button
+              color="green"
+              onClick={handleApply}
+              className="w-full font-bold rounded-lg mt-2"
+            >
+              Apply suggestion
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

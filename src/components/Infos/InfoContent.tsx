@@ -56,6 +56,7 @@ export function InfoContent() {
         <img
           src="/src/assets/Title.png"
           className="h-6 mx-2 translate-y-[5px]"
+          alt="Pizza Party Maker"
         />
         <div>
           <b>!</b>
@@ -225,7 +226,7 @@ export function InfoContent() {
             Let's take a quick look at the diet selector of the form.
           </p>
           <div className="w-40 mb-2">
-            <DietSelector tabIndex={1} value={diet} onChange={setDiet} />
+            <DietSelector tabIndex={0} value={diet} onChange={setDiet} />
           </div>
           <p className="mb-2">
             You can click the symbols to tell how permissive the pizza is. Or
@@ -352,7 +353,7 @@ export function InfoContent() {
                 Escape
               </span>
             </span>
-            .
+            {""}.
           </p>
           <p className="mb-4">
             You can also delete pizzas by clicking on the{" "}
@@ -388,7 +389,11 @@ export function InfoContent() {
           <div className="w-64 flex mb-2">
             <div className="text-3xl font-bold mr-2 w-full">
               <div className="mb-2 flex justify-center">
-                <img src="/src/assets/Cash.png" className="size-8" />
+                <img
+                  src="/src/assets/Cash.png"
+                  className="size-8"
+                  alt="Price"
+                />
               </div>
               <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
                 <span className="text-lg">4€ / pers</span>
@@ -397,7 +402,11 @@ export function InfoContent() {
             </div>
             <div className="text-3xl font-bold w-full">
               <div className="mb-2 flex justify-center">
-                <img src="/src/assets/Pizza.png" className="size-8" />
+                <img
+                  src="/src/assets/Pizza.png"
+                  className="size-8"
+                  alt="Quantity"
+                />
               </div>
               <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
                 <span className="text-lg">4 slices</span>
