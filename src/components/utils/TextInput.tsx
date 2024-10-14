@@ -1,7 +1,6 @@
-import { forwardRef, Ref } from "react";
+import { forwardRef } from "react";
 
 type TextInputProps = {
-  ref?: Ref<HTMLInputElement>;
   className?: string;
   placeholder?: string;
   value?: string;

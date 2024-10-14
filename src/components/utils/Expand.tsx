@@ -18,7 +18,7 @@ export function Expand({
     <div
       className={`h-fit flex flex-col items-start w-full bg-amber-300 rounded-lg ${className}`}
     >
-      <div
+      <button
         className="h-7 flex items-center w-full text-lg font-bold cursor-pointer text-left mx-2"
         onClick={() => setExpanded(!expanded)}
       >
@@ -30,7 +30,7 @@ export function Expand({
           } transition-all`}
         />
         {label}
-      </div>
+      </button>
       <div
         className={`${
           expanded ? heigth : "h-0"

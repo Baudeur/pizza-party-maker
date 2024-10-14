@@ -1,5 +1,5 @@
 import { Pizza } from "../../modules/pizzas/slice";
-import { createContext, useState } from "react";
+import { createContext, useMemo, useState } from "react";
 import { PizzaDisplay } from "./PizzaDisplay";
 import { PizzaEdit } from "./PizzaEdit";
 
@@ -22,12 +22,17 @@ export const EditContext = createContext<EditContext>({
   setFocus: () => {},
 });
 
-export function PizzaLineWrapper({ pizza }: PizzaLineWrapperProps) {
+export function PizzaLineWrapper({ pizza }: Readonly<PizzaLineWrapperProps>) {
   const [editable, setEditable] = useState(false);
   const [focus, setFocus] = useState<Focusable>("name");
 
+  const val = useMemo(
+    () => ({ editable, setEditable, focus, setFocus }),
+    [editable, focus]
+  );
+
   return (
-    <EditContext.Provider value={{ editable, setEditable, focus, setFocus }}>
+    <EditContext.Provider value={val}>
       <>
         {!editable && <PizzaDisplay pizza={pizza} />}
         {editable && <PizzaEdit pizza={pizza} />}

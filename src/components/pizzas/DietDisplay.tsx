@@ -5,7 +5,7 @@ type DietDisplayProps = {
   diet: Diet;
 };
 
-export function DietDisplay({ diet }: DietDisplayProps) {
+export function DietDisplay({ diet }: Readonly<DietDisplayProps>) {
   return (
     <div className="flex justify-between px-2">
       <DietIcon type="normal" color="Color" className="size-7" />

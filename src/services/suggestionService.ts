@@ -13,7 +13,7 @@ import {
 export type SuggestMode = "lowerCost" | "maxDiversity";
 
 type SuggestedQuantityPerDiet = Record<Diet, number>;
-type SuggestedQuantityPerPizza = Map<Pizza, number>;
+export type SuggestedQuantityPerPizza = Map<Pizza, number>;
 
 // #################### UTILS ####################
 
@@ -217,7 +217,7 @@ export function suggestPizzas(
   minQuantity: number,
   suggestMode: SuggestMode,
   fairness: number = 1.25
-) {
+): SuggestedQuantityPerPizza {
   const totalPeople = getTotalPeople(people);
   if (totalPeople === 0 || minQuantity === 0) return new Map();
 

@@ -7,7 +7,10 @@ type CaseScenarioProps = {
   peopleAte: PeopleAte;
 };
 
-export function CaseScenario({ label, peopleAte }: CaseScenarioProps) {
+export function CaseScenario({
+  label,
+  peopleAte,
+}: Readonly<CaseScenarioProps>) {
   return (
     <div className="flex justify-start w-full mt-1 mb-1">
       <span className="w-48 text-right">{label}</span>

@@ -20,7 +20,7 @@ export function IntegerInput({
   animateShow = true,
   onDelete,
   className,
-}: IntegerInputProps) {
+}: Readonly<IntegerInputProps>) {
   const [focus, setFocus] = useState(false);
   function onValueChange(event: React.ChangeEvent<HTMLInputElement>) {
     const inputValue = Number(event.target.value);

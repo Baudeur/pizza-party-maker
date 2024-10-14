@@ -15,7 +15,7 @@ export function DropDown<T extends number | string>({
   onChange,
   onScrollBottom = () => {},
   className,
-}: DropDownProps<T>) {
+}: Readonly<DropDownProps<T>>) {
   const [dropDownShown, setDropDownShown] = useState(false);
 
   function handleScroll(event: React.UIEvent<HTMLDivElement, UIEvent>) {
@@ -48,12 +48,13 @@ export function DropDown<T extends number | string>({
         >
           {options.map(({ value: val, label }) => (
             <div
-              className="hover:bg-gray-200 text-left pl-3"
+              className="hover:bg-gray-200 text-left pl-3 w-full"
               key={label}
               onClick={() => {
-                setDropDownShown(false);
                 onChange(val);
+                setDropDownShown(false);
               }}
+              onKeyDown={() => {}}
             >
               {label}
             </div>

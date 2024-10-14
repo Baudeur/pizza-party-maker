@@ -17,9 +17,9 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
       }
       if (
         event.target.value === "" ||
-        event.target.value.slice(-1) === "." ||
-        event.target.value.slice(-2) === ".0" ||
-        event.target.value.slice(-3) === ".00"
+        event.target.value.endsWith(".") ||
+        event.target.value.endsWith(".0") ||
+        event.target.value.endsWith(".00")
       ) {
         setPrice(event.target.value);
         return;
@@ -33,7 +33,7 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
 
     return (
       <div className={`flex items-center relative ${className}`}>
-        <label className="absolute text-xl right-2 z-10">€</label>
+        <div className="absolute text-xl right-2 z-10">€</div>
         <TextInput
           tabIndex={tabIndex}
           ref={ref}
