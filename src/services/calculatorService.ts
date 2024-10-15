@@ -1,3 +1,4 @@
+import { FlagState } from "../components/utils/PizzaFlag";
 import { People } from "../modules/people/slice";
 import { PizzaQuantity } from "../modules/pizzas/selector";
 import { Pizza } from "../modules/pizzas/slice";
@@ -82,7 +83,7 @@ function canEat(personDiet: Diet, dishDiet: Diet) {
   }
 }
 
-function getTotalPeople(people: People) {
+export function getTotalPeople(people: People) {
   let totalPeople = 0;
   for (const diet of dietOrder) {
     totalPeople += people[diet];
@@ -209,12 +210,13 @@ export const bestCaseScenario = caseScenario(
 export const randomCaseScenario = caseScenario(pickPizzaRandom(), shuffleArray);
 
 export function averageCaseScenario(
+  iterations: number,
   slices: number,
   pizzas: PizzaQuantity[],
   people: People
 ): PeopleAte {
   const scenari = [];
-  const simulationNumber = 100;
+  const simulationNumber = iterations;
   for (let i = 0; i < simulationNumber; i++) {
     scenari.push(randomCaseScenario(slices, pizzas, people));
   }
@@ -252,4 +254,22 @@ export function pizzaSlicesPerPerson(
     (pizzas.reduce((acc, p) => acc + p.quantity, 0) * slices) /
     totalPeople
   ).toFixed(1);
+}
+
+export function stateOfDiet(
+  diet: Diet,
+  peopleAte: PeopleAte,
+  people: People
+): FlagState {
+  if (people[diet] === 0) return "N/A";
+  const maxAte = Math.max(
+    Math.max(peopleAte.normal, peopleAte.pescoVegetarian),
+    Math.max(peopleAte.vegan, peopleAte.vegetarian)
+  );
+  if (peopleAte[diet] === 0) return "cantEat";
+  if (peopleAte[diet] === maxAte) return "perfect";
+  if (peopleAte[diet] * 1.5 < maxAte) return "bad";
+  if (peopleAte[diet] * 1.25 < maxAte) return "okay";
+  if (peopleAte[diet] < maxAte) return "good";
+  return "N/A";
 }

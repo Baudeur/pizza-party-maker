@@ -14,7 +14,7 @@ type PizzaEditProps = {
   pizza: Pizza;
 };
 
-export function PizzaEdit({ pizza }: PizzaEditProps) {
+export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
   const dispatch = useDispatch();
   const nameInputRef = useRef<HTMLInputElement>(null);
   const priceInputRef = useRef<HTMLInputElement>(null);
@@ -22,14 +22,14 @@ export function PizzaEdit({ pizza }: PizzaEditProps) {
   const { editable, setEditable, focus } = useContext(EditContext);
   const [name, setName] = useState(pizza.name);
   const [diet, setDiet] = useState<Diet>(pizza.eatenBy);
-  const [price, setPrice] = useState(pizza.price);
+  const [price, setPrice] = useState(pizza.price.toString());
 
   function handleSubmit() {
     const newPizza: Pizza = {
       id: pizza.id,
       name,
       eatenBy: diet,
-      price,
+      price: Number(price),
       quantity: pizza.quantity,
     };
     dispatch(modifyPizza(newPizza));
@@ -39,7 +39,7 @@ export function PizzaEdit({ pizza }: PizzaEditProps) {
   function handleCancel() {
     setName(pizza.name);
     setDiet(pizza.eatenBy);
-    setPrice(pizza.price);
+    setPrice(pizza.price.toString());
     setEditable(false);
   }
 
@@ -76,7 +76,7 @@ export function PizzaEdit({ pizza }: PizzaEditProps) {
       </td>
       <td>
         <TextInput
-          tabIndex={1}
+          tabIndex={0}
           ref={nameInputRef}
           placeholder="4 Cheese"
           value={name}
@@ -88,20 +88,20 @@ export function PizzaEdit({ pizza }: PizzaEditProps) {
           ref={dietInputRef}
           value={diet}
           onChange={(diet) => setDiet(diet)}
-          tabIndex={2}
+          tabIndex={0}
         />
       </td>
       <td>
         <PriceInput
           ref={priceInputRef}
           price={price.toString()}
-          setPrice={(price) => setPrice(Number(price))}
-          tabIndex={3}
+          setPrice={(price) => setPrice(price)}
+          tabIndex={0}
         />
       </td>
       <td className="pl-2 flex">
         <Button
-          tabIndex={4}
+          tabIndex={0}
           className="rounded-lg w-8 mr-1"
           color="green"
           onClick={() => handleSubmit()}
@@ -109,7 +109,7 @@ export function PizzaEdit({ pizza }: PizzaEditProps) {
           <Check size={20} strokeWidth={2} />
         </Button>
         <Button
-          tabIndex={4}
+          tabIndex={0}
           className="rounded-lg w-8"
           color="yellow"
           onClick={() => handleCancel()}

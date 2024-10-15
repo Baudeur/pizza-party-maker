@@ -7,7 +7,7 @@ type GraphProps = {
   size: number;
 };
 
-export function Graph({ proportions, className, size }: GraphProps) {
+export function Graph({ proportions, className, size }: Readonly<GraphProps>) {
   const { normal, pescoVegetarian, vegetarian, vegan } = proportions;
   const total = normal + pescoVegetarian + vegetarian + vegan;
   const degs = {

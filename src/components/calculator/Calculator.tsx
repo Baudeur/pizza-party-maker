@@ -15,24 +15,37 @@ import { Expand } from "../utils/Expand";
 import { CaseScenario } from "./CaseScenario";
 import { pizzaQuantityEquality } from "../../services/utils";
 import { Info } from "lucide-react";
-import { Overlay } from "../utils/Overlay";
 import { useState } from "react";
 import { CaseScenarioOverlayContent } from "./CaseScenarioOverlayContent";
 import { GraphComparison } from "../graph/GraphComparison";
+import { OverlayWrapper } from "../utils/OverlayWrapper";
+import { Button } from "../utils/Button";
+import { SuggestOverlayContent } from "../suggester/SuggestOverlayContent";
 
 export function Calculator() {
   const [showOverlay, setShowOverlay] = useState(false);
+  const [displayOverlay, setDisplayOverlay] = useState(false);
+
   const pizza = useSelector(pizzaQuantitySelector, pizzaQuantityEquality);
   const people = useSelector(peopleSelector);
   const { slices } = useSelector(paramsSelector);
 
   const peopleAteWorst = worstCaseScenario(slices, pizza, people);
   const peopleAteRandom = randomCaseScenario(slices, pizza, people);
-  const peopleAteRandomAvg = averageCaseScenario(slices, pizza, people);
+  const peopleAteRandomAvg = averageCaseScenario(100, slices, pizza, people);
   const peopleAteBest = bestCaseScenario(slices, pizza, people);
   return (
     <Container className="w-full h-fit mt-4">
       <InfoDisplay peopleAteAvg={peopleAteRandomAvg} />
+      <Button
+        color="green"
+        onClick={() => {
+          setDisplayOverlay(true);
+        }}
+        className="mt-2 font-bold w-full rounded-lg"
+      >
+        Struggling to find the right order ? Click here
+      </Button>
       <Expand label="Graphs" heigth="h-[110px]" className="mt-4">
         <GraphComparison />
       </Expand>
@@ -47,9 +60,12 @@ export function Calculator() {
               setShowOverlay(true);
             }}
           />
-          <Overlay show={showOverlay} close={() => setShowOverlay(false)}>
+          <OverlayWrapper
+            show={showOverlay}
+            close={() => setShowOverlay(false)}
+          >
             <CaseScenarioOverlayContent />
-          </Overlay>
+          </OverlayWrapper>
         </div>
         <CaseScenario label="Worst case scenario" peopleAte={peopleAteWorst} />
         <CaseScenario
@@ -65,6 +81,12 @@ export function Calculator() {
       <Expand label="Parameters" heigth="h-10" className="mt-2">
         <Params />
       </Expand>
+      <OverlayWrapper
+        show={displayOverlay}
+        close={() => setDisplayOverlay(false)}
+      >
+        <SuggestOverlayContent close={() => setDisplayOverlay(false)} />
+      </OverlayWrapper>
     </Container>
   );
 }

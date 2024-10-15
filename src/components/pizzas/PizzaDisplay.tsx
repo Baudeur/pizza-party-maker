@@ -6,6 +6,7 @@ import { DietDisplay } from "./DietDisplay";
 import { useContext, useState } from "react";
 import { IntegerInput } from "../utils/IntegerInput";
 import { EditContext } from "./PizzaLineWrapper";
+import { priceToString } from "../../services/utils";
 
 type PizzaDisplayProps = {
   pizza: Pizza;
@@ -13,7 +14,7 @@ type PizzaDisplayProps = {
 
 type Focusable = "name" | "diet" | "price";
 
-export function PizzaDisplay({ pizza }: PizzaDisplayProps) {
+export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
   const dispatch = useDispatch();
   const { setEditable, setFocus } = useContext(EditContext);
   const [hovered, setHovered] = useState(false);
@@ -64,7 +65,9 @@ export function PizzaDisplay({ pizza }: PizzaDisplayProps) {
       </td>
       <td onDoubleClick={() => handleDoubleClick("price")}>
         <div className="flex items-center h-8 justify-end">
-          <div className="text-right pr-2 h-8 py-[2px]">{pizza.price} €</div>
+          <div className="text-right pr-2 h-8 py-[2px]">
+            {priceToString(pizza.price)} €
+          </div>
         </div>
       </td>
       <td className="relative overflow-hidden">

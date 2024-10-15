@@ -27,12 +27,17 @@ export const DietSelector = forwardRef<HTMLDivElement, DietSelectorProps>(
           }
         }}
       >
-        <div className="cursor-pointer" onClick={() => onChange("normal")}>
+        <button
+          className="cursor-pointer"
+          onClick={() => onChange("normal")}
+          tabIndex={-1}
+        >
           <DietIcon type="normal" color="Color" className="size-7" />
-        </div>
-        <div
+        </button>
+        <button
           className="cursor-pointer"
           onClick={() => onChange("pescoVegetarian")}
+          tabIndex={-1}
         >
           <DietIcon
             type="pescoVegetarian"
@@ -43,21 +48,29 @@ export const DietSelector = forwardRef<HTMLDivElement, DietSelectorProps>(
             }
             className="size-7"
           />
-        </div>
-        <div className="cursor-pointer" onClick={() => onChange("vegetarian")}>
+        </button>
+        <button
+          className="cursor-pointer"
+          onClick={() => onChange("vegetarian")}
+          tabIndex={-1}
+        >
           <DietIcon
             type="vegetarian"
             color={["vegetarian", "vegan"].includes(value) ? "Color" : "BW"}
             className="size-7"
           />
-        </div>
-        <div className="cursor-pointer" onClick={() => onChange("vegan")}>
+        </button>
+        <button
+          className="cursor-pointer"
+          onClick={() => onChange("vegan")}
+          tabIndex={-1}
+        >
           <DietIcon
             type="vegan"
             color={value === "vegan" ? "Color" : "BW"}
             className="size-7"
           />
-        </div>
+        </button>
       </div>
     );
   }

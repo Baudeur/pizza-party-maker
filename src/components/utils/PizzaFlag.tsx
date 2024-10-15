@@ -1,6 +1,6 @@
 export type FlagState = "perfect" | "good" | "okay" | "bad" | "cantEat" | "N/A";
 
-export function PizzaFlag({ flagState }: { flagState: FlagState }) {
+export function PizzaFlag({ flagState }: { readonly flagState: FlagState }) {
   let color = "bg-gray-300";
   let label = "N/A";
   let emoji = "❌";

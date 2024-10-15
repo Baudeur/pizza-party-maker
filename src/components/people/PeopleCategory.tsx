@@ -9,7 +9,7 @@ type PeopleCategoryProps = {
   diet: Diet;
 };
 
-export function PeopleCategory({ diet }: PeopleCategoryProps) {
+export function PeopleCategory({ diet }: Readonly<PeopleCategoryProps>) {
   const dispatch = useDispatch();
   const quantity = useSelector(peopleDietSelector(diet));
 

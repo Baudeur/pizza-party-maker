@@ -78,6 +78,7 @@ export function Squares({
               if (percentages[diet] === 0) return null;
               return (
                 <div
+                  key={diet}
                   className={`flex items-center justify-center ${color} ${
                     diet === "vegan" ? "grow-1" : "grow-0"
                   } h-full`}

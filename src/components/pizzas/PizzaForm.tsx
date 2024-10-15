@@ -46,7 +46,7 @@ export function PizzaForm() {
       <td className="align-top pt-2">
         <div className="flex flex-col items-start">
           <TextInput
-            tabIndex={11}
+            tabIndex={0}
             ref={nameInputRef}
             placeholder="4 Cheese"
             value={name}
@@ -55,14 +55,14 @@ export function PizzaForm() {
         </div>
       </td>
       <td className="align-top pt-2 h-[70px]">
-        <DietSelector tabIndex={12} value={eatenBy} onChange={setEatenBy} />
+        <DietSelector tabIndex={0} value={eatenBy} onChange={setEatenBy} />
       </td>
       <td className="align-top pt-2">
-        <PriceInput tabIndex={13} price={price} setPrice={setPrice} />
+        <PriceInput tabIndex={0} price={price} setPrice={setPrice} />
       </td>
       <td className="text-lg align-top pt-2 pl-2">
         <Button
-          tabIndex={14}
+          tabIndex={0}
           className={"rounded-lg w-[68px]"}
           color={"green"}
           onClick={handleSubmit}

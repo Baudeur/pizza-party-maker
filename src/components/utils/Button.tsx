@@ -5,6 +5,7 @@ type ButtonProps = {
   color: "green" | "red" | "yellow";
   onClick: () => void;
   tabIndex?: number;
+  disabled?: boolean;
 };
 
 export function Button({
@@ -13,6 +14,7 @@ export function Button({
   onClick,
   children,
   tabIndex,
+  disabled,
 }: PropsWithChildren<ButtonProps>) {
   return (
     <button
@@ -23,6 +25,7 @@ export function Button({
         color === "yellow" && "bg-yellow-500"
       }`}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

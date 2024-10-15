@@ -23,8 +23,8 @@ map.set("pescoVegetarian", "pesco‑vegetarian");
 map.set("vegetarian", "vegetarian");
 map.set("vegan", "vegan");
 
-export function DietIcon({ type, color, className }: DietIconProps) {
-  const [tooltipState, setToolTipState] = useState<TooltipState>("out");
+export function DietIcon({ type, color, className }: Readonly<DietIconProps>) {
+  const [tooltipState, setTooltipState] = useState<TooltipState>("out");
   const [timerId, setTimerId] = useState(0);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export function DietIcon({ type, color, className }: DietIconProps) {
     if (tooltipState === "in" && timerId == 0) {
       setTimerId(
         setTimeout(() => {
-          setToolTipState("display");
+          setTooltipState("display");
         }, 1000)
       );
     }
@@ -48,12 +48,13 @@ export function DietIcon({ type, color, className }: DietIconProps) {
   return (
     <div
       className={`relative ${className}`}
-      onMouseEnter={() => setToolTipState("in")}
-      onMouseLeave={() => setToolTipState("out")}
+      onMouseEnter={() => setTooltipState("in")}
+      onMouseLeave={() => setTooltipState("out")}
     >
       <img
         src={iconName}
         className={`size-full ${color === "BW" && "filter grayscale"}`}
+        alt={map.get(type)}
       />
       {tooltipState === "display" && (
         <div className="top-[-100%] translate-x-[-50%] left-1/2 text-base absolute z-20 bg-white border-[1px] border-gray-600 px-2 rounded-md">
