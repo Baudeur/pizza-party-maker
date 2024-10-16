@@ -18,7 +18,7 @@ export function CaseScenarioOverlayContent() {
         </p>
         <p>
           Each simulation result is presented in form of a line that show how
-          much slices in average each person of each diet get like so:
+          much slices in average each person of each diet get, like so:
         </p>
         <div className="text-center">
           <CaseScenario
@@ -86,7 +86,7 @@ export function CaseScenarioOverlayContent() {
           </li>
           <li>
             The average case scenario: This one is just a random case scenario
-            repeated 100 times and we take the average of each result.
+            repeated 100 times and we take the average of the results.
           </li>
         </ul>
         <p>
@@ -98,7 +98,7 @@ export function CaseScenarioOverlayContent() {
         </p>
         <p className="mb-2">
           This choice is deliberate, it is there to take into account the fact
-          in reality, everybody goes at the same time roughly and if there are
+          in reality, everybody goes roughly at the same time and if there are
           fights over a unique slice, the most restricitve diet will probably
           have it.
         </p>

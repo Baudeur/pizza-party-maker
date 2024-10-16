@@ -23,21 +23,23 @@ export function Overlay({ close, children }: PropsWithChildren<Overlay>) {
         showDelayed ? "bg-opacity-70" : "bg-opacity-0 pointer-events-none"
       } transition-all duration-150`}
     >
-      <button
-        className="flex items-center justify-center h-full w-full cursor-default"
+      <div
+        className="flex items-center justify-center h-full w-full"
         onClick={animateAndClose}
+        onKeyDown={animateAndClose}
       >
-        <button
-          className={`size-fit transition-all ease-out duration-300 cursor-default ${
+        <div
+          className={`size-fit transition-all ease-out duration-300 ${
             showDelayed
               ? "transform-none opacity-100"
               : " opacity-0 translate-y-[-100px]"
           }`}
           onClick={(e) => e.stopPropagation()}
+          onKeyDown={animateAndClose}
         >
           <Container className="h-fit">{children}</Container>
-        </button>
-      </button>
+        </div>
+      </div>
     </div>
   );
 }

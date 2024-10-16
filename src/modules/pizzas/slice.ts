@@ -36,7 +36,7 @@ const pizzas = createSlice({
         name: action.payload.name,
         price: action.payload.price,
         eatenBy: action.payload.eatenBy,
-        quantity: 1,
+        quantity: action.payload.quantity,
       };
       return { id: state.id + 1, pizzas: [...state.pizzas, newPizza] };
     },

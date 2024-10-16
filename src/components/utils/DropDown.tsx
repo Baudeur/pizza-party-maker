@@ -54,7 +54,10 @@ export function DropDown<T extends number | string>({
                 onChange(val);
                 setDropDownShown(false);
               }}
-              onKeyDown={() => {}}
+              onKeyDown={() => {
+                onChange(val);
+                setDropDownShown(false);
+              }}
             >
               {label}
             </div>

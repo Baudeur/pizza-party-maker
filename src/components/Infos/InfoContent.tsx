@@ -306,7 +306,7 @@ export function InfoContent() {
             to add the pizza.
           </p>
           <p>
-            If you make a mistake, you can edit it pizzas. To do that there is
+            If you make a mistake, you can edit the pizzas. To do that there is
             either a button{" "}
             <span className="inline-block translate-y-1">
               <Button
