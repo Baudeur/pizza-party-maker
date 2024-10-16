@@ -16,6 +16,3 @@ export const pizzaQuantitySelector = (state: RootState): PizzaQuantity[] =>
       0
     ),
   }));
-
-export const pizzaByNameSelector = (state: RootState, name: string) =>
-  state.pizzaList.pizzas.find((pz) => pz.name === name);

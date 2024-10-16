@@ -52,7 +52,6 @@ function findXPercentWorst(
   let continueLoop = true;
   while (continueLoop) {
     let fails = 0;
-    let best = 0;
     continueLoop = false;
     for (let i = 0; i < 100; i++) {
       const gap = evaluatePeopleAte(
@@ -61,11 +60,9 @@ function findXPercentWorst(
       );
       if (gap > worst) {
         fails += 1;
-        if (gap > best) best = gap;
-
         //Have we exceeded the max percentage ?
         if (fails > 100 - percent) {
-          worst = best;
+          worst = gap;
           continueLoop = true;
           break;
         }
@@ -109,14 +106,14 @@ function makeInitialSuggestion(
   howManyPizza: number,
   startingDiet: Diet
 ): SuggestedQuantityPerDiet {
-  const startingOr0 = (diet: Diet) =>
-    startingDiet === diet ? howManyPizza : 0;
-  return {
-    normal: startingOr0("normal"),
-    pescoVegetarian: startingOr0("pescoVegetarian"),
-    vegetarian: startingOr0("vegetarian"),
-    vegan: startingOr0("vegan"),
+  const initialSuggestion = {
+    normal: 0,
+    pescoVegetarian: 0,
+    vegetarian: 0,
+    vegan: 0,
   };
+  initialSuggestion[startingDiet] = howManyPizza;
+  return initialSuggestion;
 }
 
 /* Tries to upgrade pizza from starting diet to target diet until it breaks fairness
@@ -147,34 +144,23 @@ function createNewSuggestedQuantity(
   startingDiet: Diet,
   targetDiet: Diet
 ): SuggestedQuantityPerDiet {
-  const plusOrMinus = (diet: Diet) => {
-    if (startingDiet === diet) {
-      return suggestedQuantity[diet] - 1;
-    }
-    if (targetDiet === diet) {
-      return suggestedQuantity[diet] + 1;
-    }
-    return suggestedQuantity[diet];
-  };
-  return {
-    normal: plusOrMinus("normal"),
-    pescoVegetarian: plusOrMinus("pescoVegetarian"),
-    vegetarian: plusOrMinus("vegetarian"),
-    vegan: plusOrMinus("vegan"),
-  };
+  const newSuggestedQuantity = { ...suggestedQuantity };
+  newSuggestedQuantity[targetDiet] += 1;
+  newSuggestedQuantity[startingDiet] -= 1;
+  return newSuggestedQuantity;
 }
 
 //Select number pizza among pizzas, takes the same number of each pizza and select randomly the rest.
 function selectPizzasMostDiversity(
-  number: number,
+  quantity: number,
   pizzas: Pizza[]
 ): SuggestedQuantityPerPizza {
   const selectedPizzas: SuggestedQuantityPerPizza = new Map();
-  if (number === 0) return selectedPizzas; //No pizza to select
+  if (quantity === 0) return selectedPizzas; //No pizza to select
 
   const len = pizzas.length;
-  const baseQuantity = Math.floor(number / len); //How many pizza of each we can have.
-  let remainingQuantity = number % len; //The rest is decided randomly
+  const baseQuantity = Math.floor(quantity / len); //How many pizza of each we can have.
+  let remainingQuantity = quantity % len; //The rest is decided randomly
 
   //Necessary so all remaining don't go to the same pizza.
   let indexes = Array.from(Array(len).keys()); // [1,2,3,... len-1]
@@ -196,16 +182,16 @@ function selectPizzasMostDiversity(
 }
 
 function selectPizzasCheapest(
-  number: number,
+  quantity: number,
   pizzas: Pizza[]
 ): SuggestedQuantityPerPizza {
   const selectedPizzas: SuggestedQuantityPerPizza = new Map();
-  if (number === 0) return selectedPizzas;
+  if (quantity === 0) return selectedPizzas;
   let minPizza = pizzas[0];
   pizzas.forEach((pz) => {
     if (pz.price < minPizza.price) minPizza = pz;
   });
-  selectedPizzas.set(minPizza, number);
+  selectedPizzas.set(minPizza, quantity);
   return selectedPizzas;
 }
 

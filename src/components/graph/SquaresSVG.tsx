@@ -72,7 +72,7 @@ export function SquaresSVG({
             })}
             {presentDiets.map((diet, index) => {
               if (coords[index + 1] - coords[index] - borderWidth < iconSize)
-                return <></>;
+                return null;
               return (
                 <image
                   key={diet}

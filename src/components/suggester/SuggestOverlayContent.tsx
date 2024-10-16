@@ -12,6 +12,7 @@ import { peopleSelector } from "../../modules/people/selector";
 import { Spinner } from "../utils/Spinner";
 import { SuggestionDisplay } from "./SuggestionDisplay";
 import { modifyPizza } from "../../modules/pizzas/slice";
+import workerUrl from "/src/services/workerService?worker&url";
 
 const optionsInit = [
   { value: 1 / 8, label: "1/8" },
@@ -82,29 +83,51 @@ export function SuggestOverlayContent({
   const handleCompute = () => {
     setIsLoading(true);
     setError(false);
-    setTimeout(() => {
-      let suggest = undefined;
+
+    if (window.Worker) {
+      const suggestWorker = new Worker(workerUrl, { type: "module" });
+      suggestWorker.onmessage = (ev) => {
+        setSuggestions(ev.data);
+        setIsLoading(false);
+      };
+      suggestWorker.onerror = (event) => {
+        event.preventDefault();
+        setError(true);
+        setIsLoading(false);
+      };
+      suggestWorker.postMessage({
+        pizzas,
+        people,
+        minQuantity: quantity,
+        suggestMode,
+        fairness,
+      });
+    } else {
       try {
-        suggest = suggestPizzas(
-          pizzas,
-          people,
-          quantity,
-          suggestMode,
-          fairness
+        setSuggestions(
+          suggestPizzas(pizzas, people, quantity, suggestMode, fairness)
         );
       } catch {
         setError(true);
       }
-      setSuggestions(suggest);
       setIsLoading(false);
-    }, 20);
+    }
   };
 
   const handleApply = () => {
-    pizzas.forEach((pizza) => {
-      const suggestedQuantity = suggestions?.get(pizza) ?? 0;
-      const suggestedPizza = { ...pizza, quantity: suggestedQuantity };
+    const ids: number[] = [];
+    suggestions?.forEach((value, key) => {
+      const pizza = pizzas.find((pz) => pz.id === key.id);
+      if (pizza === undefined) throw Error("Suggested pizza does not exist");
+      const suggestedPizza = { ...pizza, quantity: value };
+      ids.push(key.id);
       dispatch(modifyPizza(suggestedPizza));
+    });
+    pizzas.forEach((pizza) => {
+      if (!ids.includes(pizza.id)) {
+        const suggestedPizza = { ...pizza, quantity: 0 };
+        dispatch(modifyPizza(suggestedPizza));
+      }
     });
     close();
   };
@@ -112,7 +135,7 @@ export function SuggestOverlayContent({
   return (
     <div className="w-[500px]">
       <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-2 text-center w-full">
-        Select you suggestion parameters
+        Select your suggestion parameters
       </p>
       <p className="mb-2">
         This form will suggest you an order based on certain parameters
@@ -158,7 +181,7 @@ export function SuggestOverlayContent({
         <Button
           color="green"
           onClick={handleCompute}
-          className="rounded-lg font-bold disabled:bg-gray-200 disabled:text-gray-400"
+          className="rounded-lg font-bold disabled:bg-gray-200 disabled:text-gray-400 disabled:hover:brightness-100"
           disabled={isLoading}
         >
           Compute suggestion
