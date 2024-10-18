@@ -7,10 +7,11 @@ type DietSelectorProps = {
   value: Diet;
   onChange: (value: Diet) => void;
   tabIndex?: number;
+  testId?: string;
 };
 
 export const DietSelector = forwardRef<HTMLDivElement, DietSelectorProps>(
-  function DietSelector({ value, onChange, tabIndex }, ref) {
+  function DietSelector({ value, onChange, tabIndex, testId }, ref) {
     return (
       <div
         ref={ref}
@@ -26,11 +27,13 @@ export const DietSelector = forwardRef<HTMLDivElement, DietSelectorProps>(
               break;
           }
         }}
+        data-testid={testId}
       >
         <button
           className="cursor-pointer"
           onClick={() => onChange("normal")}
           tabIndex={-1}
+          data-testid={`${testId}-normal-button`}
         >
           <DietIcon type="normal" color="Color" className="size-7" />
         </button>
@@ -38,6 +41,7 @@ export const DietSelector = forwardRef<HTMLDivElement, DietSelectorProps>(
           className="cursor-pointer"
           onClick={() => onChange("pescoVegetarian")}
           tabIndex={-1}
+          data-testid={`${testId}-pescoVegetarian-button`}
         >
           <DietIcon
             type="pescoVegetarian"
@@ -53,6 +57,7 @@ export const DietSelector = forwardRef<HTMLDivElement, DietSelectorProps>(
           className="cursor-pointer"
           onClick={() => onChange("vegetarian")}
           tabIndex={-1}
+          data-testid={`${testId}-vegetarian-button`}
         >
           <DietIcon
             type="vegetarian"
@@ -64,6 +69,7 @@ export const DietSelector = forwardRef<HTMLDivElement, DietSelectorProps>(
           className="cursor-pointer"
           onClick={() => onChange("vegan")}
           tabIndex={-1}
+          data-testid={`${testId}-vegan-button`}
         >
           <DietIcon
             type="vegan"

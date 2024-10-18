@@ -19,7 +19,7 @@ export function Expand({
       className={`h-fit flex flex-col items-start w-full bg-amber-300 rounded-lg ${className}`}
     >
       <button
-        className="h-7 flex items-center w-full text-lg font-bold cursor-pointer text-left mx-2"
+        className="h-7 flex items-center text-lg font-bold cursor-pointer text-left w-full px-2"
         onClick={() => setExpanded(!expanded)}
       >
         <ChevronDown

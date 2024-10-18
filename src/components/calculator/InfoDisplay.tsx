@@ -34,10 +34,13 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
           <div className="text-3xl font-bold mb-2 flex justify-center">
             <DietIcon type={diet} color="Color" className="size-8" />
           </div>
-          <PizzaFlag flagState={stateOfDiet(diet, peopleAteAvg, people)} />
+          <PizzaFlag
+            flagState={stateOfDiet(diet, peopleAteAvg, people)}
+            testId={`${diet}-flag`}
+          />
         </div>
       ))}
-      <div className="text-3xl font-bold mr-2 w-full">
+      <div className="text-3xl font-bold mr-2 w-full" data-testid="price-flag">
         <div className="mb-2 flex justify-center">
           <img src="/src/assets/Cash.png" className="size-8" alt="Price" />
         </div>
@@ -48,7 +51,7 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
           <span className="text-lg">{priceToString(priceTotal)}€ total</span>
         </div>
       </div>
-      <div className="text-3xl font-bold w-full">
+      <div className="text-3xl font-bold w-full" data-testid="quantity-flag">
         <div className="mb-2 flex justify-center">
           <img src="/src/assets/Pizza.png" className="size-8" alt="Quantity" />
         </div>

@@ -6,6 +6,7 @@ type ButtonProps = {
   onClick: () => void;
   tabIndex?: number;
   disabled?: boolean;
+  testId?: string;
 };
 
 export function Button({
@@ -15,6 +16,7 @@ export function Button({
   children,
   tabIndex,
   disabled,
+  testId,
 }: PropsWithChildren<ButtonProps>) {
   return (
     <button
@@ -26,6 +28,7 @@ export function Button({
       }`}
       onClick={onClick}
       disabled={disabled}
+      data-testid={testId}
     >
       {children}
     </button>

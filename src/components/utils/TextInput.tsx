@@ -8,6 +8,7 @@ type TextInputProps = {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: boolean;
   tabIndex?: number;
+  testId?: string;
 };
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -20,6 +21,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       onChange,
       error = false,
       tabIndex,
+      testId,
     },
     ref
   ) {
@@ -35,6 +37,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         className={`outline-none focus:border-neutral-500 focus:border-2 border-[1px] border-neutral-300 rounded-lg h-8 px-2 w-full text-xl ${className} ${
           error ? "bg-red-200 border-red-500" : ""
         }`}
+        data-testid={testId}
       />
     );
   }

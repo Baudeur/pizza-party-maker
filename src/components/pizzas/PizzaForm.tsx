@@ -39,9 +39,14 @@ export function PizzaForm() {
           nameInputRef.current?.focus();
         }
       }}
+      data-testid="pizza-form"
     >
       <td className="align-top pt-2">
-        <IntegerInput value={quantity} setValue={setQuantity} />
+        <IntegerInput
+          value={quantity}
+          setValue={setQuantity}
+          testId="pizza-form-quantity"
+        />
       </td>
       <td className="align-top pt-2">
         <div className="flex flex-col items-start">
@@ -51,14 +56,25 @@ export function PizzaForm() {
             placeholder="4 Cheese"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            testId="pizza-form-name"
           />
         </div>
       </td>
-      <td className="align-top pt-2 h-[70px]">
-        <DietSelector tabIndex={0} value={eatenBy} onChange={setEatenBy} />
+      <td className="align-top pt-2">
+        <DietSelector
+          tabIndex={0}
+          value={eatenBy}
+          onChange={setEatenBy}
+          testId="pizza-form-diet"
+        />
       </td>
       <td className="align-top pt-2">
-        <PriceInput tabIndex={0} price={price} setPrice={setPrice} />
+        <PriceInput
+          tabIndex={0}
+          price={price}
+          setPrice={setPrice}
+          testId="pizza-form-price"
+        />
       </td>
       <td className="text-lg align-top pt-2 pl-2">
         <Button
@@ -66,6 +82,7 @@ export function PizzaForm() {
           className={"rounded-lg w-[68px]"}
           color={"green"}
           onClick={handleSubmit}
+          testId="pizza-form-submit"
         >
           <Plus size={20} strokeWidth={2} />
         </Button>

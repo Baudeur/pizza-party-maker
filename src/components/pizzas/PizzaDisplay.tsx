@@ -39,6 +39,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
     <tr
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      data-testid={`${pizza.id}-pizza-display`}
     >
       <td className="relative">
         <IntegerInput
@@ -47,8 +48,12 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
           animateShow={hovered}
           onDelete={() => dispatch(removePizza(pizza.id))}
           className="absolute z-[5] top-0"
+          testId={`${pizza.id}-pizza-display-quantity-editable`}
         />
-        <div className="absolute top-0 h-8 w-full bg-amber-100">
+        <div
+          className="absolute top-0 h-8 w-full bg-amber-100"
+          data-testid={`${pizza.id}-pizza-display-quantity`}
+        >
           <div className="pt-[2px] font-bold w-24">{pizza.quantity}</div>
         </div>
       </td>
@@ -56,16 +61,25 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
         className="flex relative h-8"
         onDoubleClick={() => handleDoubleClick("name")}
       >
-        <div className="truncate absolute right-0 left-0 text-left pl-2 h-8 py-[2px]">
+        <div
+          className="truncate absolute right-0 left-0 text-left pl-2 h-8 py-[2px]"
+          data-testid={`${pizza.id}-pizza-display-name`}
+        >
           {pizza.name}
         </div>
       </td>
       <td onDoubleClick={() => handleDoubleClick("diet")}>
-        <DietDisplay diet={pizza.eatenBy} />
+        <DietDisplay
+          diet={pizza.eatenBy}
+          testId={`${pizza.id}-pizza-display-diet`}
+        />
       </td>
       <td onDoubleClick={() => handleDoubleClick("price")}>
         <div className="flex items-center h-8 justify-end">
-          <div className="text-right pr-2 h-8 py-[2px]">
+          <div
+            className="text-right pr-2 h-8 py-[2px]"
+            data-testid={`${pizza.id}-pizza-display-price`}
+          >
             {priceToString(pizza.price)} €
           </div>
         </div>
@@ -80,6 +94,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             className="rounded-lg w-8 mr-1"
             color="green"
             onClick={() => handleDoubleClick("name")}
+            testId={`${pizza.id}-pizza-display-edit-button`}
           >
             <Pencil size={20} strokeWidth={2} />
           </Button>
@@ -87,6 +102,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             className="rounded-lg w-8"
             color="red"
             onClick={() => dispatch(removePizza(pizza.id))}
+            testId={`${pizza.id}-pizza-display-delete-button`}
           >
             <Trash2 size={20} strokeWidth={2} />
           </Button>
