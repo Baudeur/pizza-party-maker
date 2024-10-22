@@ -40,6 +40,15 @@ function getMostRestrictiveDiet(people: People): Diet {
 // #################### SIMULATION ####################
 
 // Find the fairness such that percent% of tries will be below.
+/* This works this way.
+  -It takes a first evaluation as a reference. Called worst.
+  -It tries to run a 100 other evaluation.
+  -If we find a worst value than worst 100-percent time.
+    -worst take the value of the worst value of the 100 check loop. Called greatest.
+    -It starts the 100 evaluation over again.
+  -Else it stops and returns worst.
+
+*/
 function findXPercentWorst(
   percent: number,
   suggestedQuantity: SuggestedQuantityPerDiet,
@@ -52,6 +61,7 @@ function findXPercentWorst(
   let continueLoop = true;
   while (continueLoop) {
     let fails = 0;
+    let greatest = 0;
     continueLoop = false;
     for (let i = 0; i < 100; i++) {
       const gap = evaluatePeopleAte(
@@ -59,10 +69,11 @@ function findXPercentWorst(
         people
       );
       if (gap > worst) {
+        if (gap > greatest) greatest = gap;
         fails += 1;
         //Have we exceeded the max percentage ?
         if (fails > 100 - percent) {
-          worst = gap;
+          worst = greatest;
           continueLoop = true;
           break;
         }

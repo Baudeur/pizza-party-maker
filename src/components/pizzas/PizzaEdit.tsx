@@ -66,12 +66,14 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
         event.key === "Enter" && handleSubmit();
         event.key === "Escape" && handleCancel();
       }}
+      data-testid={`${pizza.id}-pizza-edit`}
     >
       <td>
         <IntegerInput
           value={pizza.quantity}
           setValue={handleQuantityChange}
           onDelete={() => dispatch(removePizza(pizza.id))}
+          testId={`${pizza.id}-pizza-edit-quantity`}
         />
       </td>
       <td>
@@ -81,6 +83,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
           placeholder="4 Cheese"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          testId={`${pizza.id}-pizza-edit-name`}
         />
       </td>
       <td>
@@ -89,6 +92,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
           value={diet}
           onChange={(diet) => setDiet(diet)}
           tabIndex={0}
+          testId={`${pizza.id}-pizza-edit-diet`}
         />
       </td>
       <td>
@@ -97,6 +101,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
           price={price.toString()}
           setPrice={(price) => setPrice(price)}
           tabIndex={0}
+          testId={`${pizza.id}-pizza-edit-price`}
         />
       </td>
       <td className="pl-2 flex">
@@ -105,6 +110,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
           className="rounded-lg w-8 mr-1"
           color="green"
           onClick={() => handleSubmit()}
+          testId={`${pizza.id}-pizza-edit-validate-button`}
         >
           <Check size={20} strokeWidth={2} />
         </Button>
@@ -113,6 +119,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
           className="rounded-lg w-8"
           color="yellow"
           onClick={() => handleCancel()}
+          testId={`${pizza.id}-pizza-edit-cancel-button`}
         >
           <Undo2 size={20} strokeWidth={2} />
         </Button>

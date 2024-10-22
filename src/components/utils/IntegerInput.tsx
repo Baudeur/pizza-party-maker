@@ -10,6 +10,7 @@ type IntegerInputProps = {
   animateShow?: boolean;
   onDelete?: () => void;
   className?: string;
+  testId?: string;
 };
 
 export function IntegerInput({
@@ -20,13 +21,15 @@ export function IntegerInput({
   animateShow = true,
   onDelete,
   className,
+  testId,
 }: Readonly<IntegerInputProps>) {
   const [focus, setFocus] = useState(false);
   function onValueChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const inputValue = Number(event.target.value);
+    let inputValue = Number(event.target.value);
     if (Number.isNaN(inputValue)) {
       return;
     }
+    inputValue = Math.floor(inputValue);
     if (inputValue < min) {
       setValue(min);
       return;
@@ -51,6 +54,8 @@ export function IntegerInput({
           } transition-all ease-out duration-200`}
           color={"red"}
           onClick={() => value != min && setValue(value - 1)}
+          tabIndex={-1}
+          testId={`${testId}-minus`}
         >
           <Minus size={20} strokeWidth={2} />
         </Button>
@@ -62,6 +67,8 @@ export function IntegerInput({
           } transition-all ease-out duration-200`}
           color={"red"}
           onClick={() => (value !== 0 ? setValue(value - 1) : onDelete())}
+          tabIndex={-1}
+          testId={`${testId}-minus`}
         >
           {value !== 0 ? (
             <Minus size={20} strokeWidth={2} />
@@ -77,6 +84,7 @@ export function IntegerInput({
         value={String(value)}
         onChange={onValueChange}
         className={`h-8 px-2 w-[40px] text-xl text-center font-bold outline-none`}
+        data-testid={`${testId}-input`}
       />
       <Button
         className={`text-lg ${
@@ -87,6 +95,8 @@ export function IntegerInput({
           if (max !== undefined && value >= max) return;
           setValue(value + 1);
         }}
+        tabIndex={-1}
+        testId={`${testId}-plus`}
       >
         <Plus size={20} strokeWidth={2} />
       </Button>

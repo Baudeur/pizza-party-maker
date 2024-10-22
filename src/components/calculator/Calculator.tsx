@@ -44,7 +44,7 @@ export function Calculator() {
         }}
         className="mt-2 font-bold w-full rounded-lg"
       >
-        Struggling to find the right order ? Click here
+        Struggling to find the right proportions ? Click here
       </Button>
       <Expand label="Graphs" heigth="h-[110px]" className="mt-4">
         <GraphComparison />

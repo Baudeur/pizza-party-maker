@@ -6,13 +6,14 @@ type PriceInputProps = {
   price: string;
   setPrice: (value: React.SetStateAction<string>) => void;
   tabIndex?: number;
+  testId?: string;
 };
 
 export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
-  function PriceInput({ className, price, setPrice, tabIndex }, ref) {
+  function PriceInput({ className, price, setPrice, tabIndex, testId }, ref) {
     function onPriceChange(event: React.ChangeEvent<HTMLInputElement>) {
       const inputPrice = Number(event.target.value);
-      if (Number.isNaN(inputPrice)) {
+      if (Number.isNaN(inputPrice) || inputPrice < 0) {
         return;
       }
       if (
@@ -33,7 +34,9 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
 
     return (
       <div className={`flex items-center relative ${className}`}>
-        <div className="absolute text-xl right-2 z-10">€</div>
+        <div className="absolute text-xl right-2 z-10 pointer-events-none">
+          €
+        </div>
         <TextInput
           tabIndex={tabIndex}
           ref={ref}
@@ -41,6 +44,7 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
           value={price}
           onChange={onPriceChange}
           error={false}
+          testId={testId}
         />
       </div>
     );

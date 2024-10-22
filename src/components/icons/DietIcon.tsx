@@ -7,6 +7,7 @@ type DietIconProps = {
   type: Diet;
   color: IconColor;
   className?: string;
+  testId?: string;
 };
 
 const dietToIconMap = new Map<Diet, string>();
@@ -23,16 +24,21 @@ map.set("pescoVegetarian", "pesco‑vegetarian");
 map.set("vegetarian", "vegetarian");
 map.set("vegan", "vegan");
 
-export function DietIcon({ type, color, className }: Readonly<DietIconProps>) {
+export function DietIcon({
+  type,
+  color,
+  className,
+  testId,
+}: Readonly<DietIconProps>) {
   const [tooltipState, setTooltipState] = useState<TooltipState>("out");
-  const [timerId, setTimerId] = useState(0);
+  const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>();
 
   useEffect(() => {
     if (tooltipState === "out") {
       clearTimeout(timerId);
-      setTimerId(0);
+      setTimerId(undefined);
     }
-    if (tooltipState === "in" && timerId == 0) {
+    if (tooltipState === "in" && timerId === undefined) {
       setTimerId(
         setTimeout(() => {
           setTooltipState("display");
@@ -54,7 +60,10 @@ export function DietIcon({ type, color, className }: Readonly<DietIconProps>) {
       <img
         src={iconName}
         className={`size-full ${color === "BW" && "filter grayscale"}`}
-        alt={map.get(type)}
+        alt={`${color === "BW" ? "grayed out" : "coloured"} ${map.get(
+          type
+        )} icon`}
+        data-testid={`${testId}-${type}-diet-icon`}
       />
       {tooltipState === "display" && (
         <div className="top-[-100%] translate-x-[-50%] left-1/2 text-base absolute z-20 bg-white border-[1px] border-gray-600 px-2 rounded-md">

@@ -1,6 +1,11 @@
 export type FlagState = "perfect" | "good" | "okay" | "bad" | "cantEat" | "N/A";
 
-export function PizzaFlag({ flagState }: { readonly flagState: FlagState }) {
+type FlagStateProps = {
+  flagState: FlagState;
+  testId?: string;
+};
+
+export function PizzaFlag({ flagState, testId }: Readonly<FlagStateProps>) {
   let color = "bg-gray-300";
   let label = "N/A";
   let emoji = "❌";
@@ -34,6 +39,7 @@ export function PizzaFlag({ flagState }: { readonly flagState: FlagState }) {
   return (
     <div
       className={`${color} h-full w-full rounded-lg flex justify-center flex-col min-w-24 min-h-14 cursor-default`}
+      data-testid={testId}
     >
       <span className="font-bold text-lg">{label}</span>
       <span className="font-bold text-lg">{emoji}</span>
