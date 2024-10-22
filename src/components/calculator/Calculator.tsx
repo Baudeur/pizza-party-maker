@@ -43,47 +43,82 @@ export function Calculator() {
           setDisplayOverlay(true);
         }}
         className="mt-2 font-bold w-full rounded-lg"
+        testId="suggester-button"
       >
         Struggling to find the right proportions ? Click here
       </Button>
-      <Expand label="Graphs" heigth="h-[110px]" className="mt-4">
+      <Expand
+        label="Graphs"
+        heigth="h-[110px]"
+        className="mt-4"
+        testId="graph-expand"
+      >
         <GraphComparison />
       </Expand>
-      <Expand label="Details" heigth="h-36" className="mt-2 cursor-default">
+      <Expand
+        label="Details"
+        heigth="h-36"
+        className="mt-2 cursor-default"
+        testId="details-expand"
+      >
         <div className="relative flex justify-end pr-2">
-          <Info
-            className="cursor-pointer absolute"
-            size={25}
-            color="black"
-            strokeWidth={2}
+          <button
+            className="absolute"
             onClick={() => {
               setShowOverlay(true);
             }}
-          />
+            data-testid="details-overlay-button"
+          >
+            <Info
+              size={25}
+              color="black"
+              strokeWidth={2}
+              onClick={() => {
+                setShowOverlay(true);
+              }}
+            />
+          </button>
           <OverlayWrapper
             show={showOverlay}
             close={() => setShowOverlay(false)}
+            testId="details-overlay"
           >
             <CaseScenarioOverlayContent />
           </OverlayWrapper>
         </div>
-        <CaseScenario label="Worst case scenario" peopleAte={peopleAteWorst} />
+        <CaseScenario
+          label="Worst case scenario"
+          peopleAte={peopleAteWorst}
+          testId="worst-case"
+        />
         <CaseScenario
           label="Random case scenario"
           peopleAte={peopleAteRandom}
+          testId="random-case"
         />
         <CaseScenario
           label="Average case scenario"
           peopleAte={peopleAteRandomAvg}
+          testId="average-case"
         />
-        <CaseScenario label="Best case scenario" peopleAte={peopleAteBest} />
+        <CaseScenario
+          label="Best case scenario"
+          peopleAte={peopleAteBest}
+          testId="best-case"
+        />
       </Expand>
-      <Expand label="Parameters" heigth="h-10" className="mt-2">
+      <Expand
+        label="Parameters"
+        heigth="h-10"
+        className="mt-2"
+        testId="parameters-expand"
+      >
         <Params />
       </Expand>
       <OverlayWrapper
         show={displayOverlay}
         close={() => setDisplayOverlay(false)}
+        testId="suggester-overlay"
       >
         <SuggestOverlayContent close={() => setDisplayOverlay(false)} />
       </OverlayWrapper>

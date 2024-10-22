@@ -18,7 +18,7 @@ export function SuggestionDisplay({
   );
 
   return (
-    <div className="bg-white rounded-lg px-2">
+    <div className="bg-white rounded-lg px-2" data-testid="suggestion">
       <table className="w-full">
         <thead>
           <tr className="border-b-2">
@@ -30,7 +30,11 @@ export function SuggestionDisplay({
         <tbody>
           {Array.from(pizzas).map(([pizza, quantity]) => {
             return (
-              <tr key={pizza.id} className="w-full">
+              <tr
+                key={pizza.id}
+                className="w-full"
+                data-testid={`suggestion-line-${pizza.id}`}
+              >
                 <td className="text-left">{pizza.name}</td>
                 <td className="text-center">{quantity}</td>
                 <td className="text-right">
@@ -39,10 +43,14 @@ export function SuggestionDisplay({
               </tr>
             );
           })}
-          <tr className="font-bold border-t-2">
+          <tr className="font-bold border-t-2" data-testid="suggestion-total">
             <td className="text-left">Total</td>
-            <td className="text-center">{total[1]}</td>
-            <td className="text-right">{priceToString(total[0])} €</td>
+            <td className="text-center" data-testid="suggestion-total-quantity">
+              {total[1]}
+            </td>
+            <td className="text-right" data-testid="suggestion-total-price">
+              {priceToString(total[0])} €
+            </td>
           </tr>
         </tbody>
       </table>

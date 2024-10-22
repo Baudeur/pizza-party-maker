@@ -6,6 +6,7 @@ type SquaresProps = {
   width: number;
   height: number;
   className?: string;
+  testId?: string;
 };
 
 const borderWidth = 2;
@@ -15,6 +16,7 @@ export function SquaresSVG({
   width,
   height,
   className,
+  testId,
 }: Readonly<SquaresProps>) {
   const total =
     proportions.normal +
@@ -35,12 +37,10 @@ export function SquaresSVG({
   const coords = limits.map((elem) =>
     Math.round(elem * (width - borderWidth) + borderWidth / 2)
   );
-  //Takes a tenth of the greatest length but do not go over the lowest one.
-  const iconSize =
-    Math.min(Math.max(width / 10, height / 10), Math.min(width, height)) -
-    borderWidth * 2;
+  //Takes 3/4 of the smallest dimension.
+  const iconSize = (Math.min(height, width) * 3) / 4 - borderWidth * 2;
   return (
-    <div className={`${className}`}>
+    <div className={`${className}`} data-testid={testId}>
       <svg width={width} height={height}>
         <rect height={height} width={width} />
         {total !== 0 && (

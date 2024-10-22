@@ -16,13 +16,23 @@ export function GraphComparison() {
   };
   return (
     <div className="flex flex-col justify-start gap-2 my-2">
-      <div className="flex items-center">
+      <div className="flex items-center" data-testid="people-graph-container">
         <div className="font-bold w-20">People</div>
-        <SquaresSVG proportions={people} width={300} height={40} />
+        <SquaresSVG
+          proportions={people}
+          width={300}
+          height={40}
+          testId="people-graph"
+        />
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center" data-testid="pizza-graph-container">
         <div className="font-bold w-20">Pizza</div>
-        <SquaresSVG proportions={pizzasCounts} width={300} height={40} />
+        <SquaresSVG
+          proportions={pizzasCounts}
+          width={300}
+          height={40}
+          testId="pizza-graph"
+        />
       </div>
     </div>
   );

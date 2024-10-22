@@ -154,10 +154,13 @@ export function SuggestOverlayContent({
             min={1.05}
             max={2}
             step={0.05}
+            data-testid="suggester-fairness-slider"
           />
         </div>
         <div className="flex w-full gap-2 items-center">
-          <div className="pl-2">Strategy:</div>
+          <div className="pl-2" data-testid="suggester-strategy-label">
+            Strategy:
+          </div>
           <DropDown<string>
             className="w-[175px]"
             options={[
@@ -166,16 +169,20 @@ export function SuggestOverlayContent({
             ]}
             value={suggestMode}
             onChange={(value) => setSuggestMode(value as SuggestMode)}
+            testId="suggester-strategy-dropdown"
           />
         </div>
         <div className="flex w-full gap-2 items-center">
-          <div className="pl-2">Quantity per persons:</div>
+          <div className="pl-2" data-testid="suggester-quantity-label">
+            Quantity per persons:
+          </div>
           <DropDown<number>
             className="w-[100px]"
             options={options}
             value={quantity}
             onChange={(value) => setQuantity(value)}
             onScrollBottom={addChoices}
+            testId="suggester-quantity-dropdown"
           />
         </div>
         <Button
@@ -183,11 +190,15 @@ export function SuggestOverlayContent({
           onClick={handleCompute}
           className="rounded-lg font-bold disabled:bg-gray-200 disabled:text-gray-400 disabled:hover:brightness-100"
           disabled={isLoading}
+          testId="suggester-compute-button"
         >
           Compute suggestion
         </Button>
         {error && (
-          <span className="text-red-500 font-bold text-sm">
+          <span
+            className="text-red-500 font-bold text-sm"
+            data-testid="suggester-error-message"
+          >
             Error: the pizza list is missing diets that people in your group
             have.
           </span>
@@ -200,6 +211,7 @@ export function SuggestOverlayContent({
               color="green"
               onClick={handleApply}
               className="w-full font-bold rounded-lg mt-2"
+              testId="suggester-apply-button"
             >
               Apply suggestion
             </Button>

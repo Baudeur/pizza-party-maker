@@ -15,6 +15,7 @@ export function Params() {
         setValue={(value) => dispatch(setSlices(value))}
         max={16}
         min={1}
+        testId="parameters"
       />
     </div>
   );

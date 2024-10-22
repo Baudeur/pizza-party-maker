@@ -5,6 +5,7 @@ type ExpandProps = {
   label: string;
   heigth: string;
   className?: string;
+  testId?: string;
 };
 
 export function Expand({
@@ -12,11 +13,13 @@ export function Expand({
   children,
   heigth,
   className,
+  testId,
 }: PropsWithChildren<ExpandProps>) {
   const [expanded, setExpanded] = useState(false);
   return (
     <div
       className={`h-fit flex flex-col items-start w-full bg-amber-300 rounded-lg ${className}`}
+      data-testid={testId}
     >
       <button
         className="h-7 flex items-center text-lg font-bold cursor-pointer text-left w-full px-2"

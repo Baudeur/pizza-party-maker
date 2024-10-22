@@ -55,7 +55,7 @@ export function IntegerInput({
           color={"red"}
           onClick={() => value != min && setValue(value - 1)}
           tabIndex={-1}
-          testId={`${testId}-minus`}
+          testId={testId && `${testId}-minus`}
         >
           <Minus size={20} strokeWidth={2} />
         </Button>
@@ -68,7 +68,7 @@ export function IntegerInput({
           color={"red"}
           onClick={() => (value !== 0 ? setValue(value - 1) : onDelete())}
           tabIndex={-1}
-          testId={`${testId}-minus`}
+          testId={testId && `${testId}-minus`}
         >
           {value !== 0 ? (
             <Minus size={20} strokeWidth={2} />
@@ -84,7 +84,7 @@ export function IntegerInput({
         value={String(value)}
         onChange={onValueChange}
         className={`h-8 px-2 w-[40px] text-xl text-center font-bold outline-none`}
-        data-testid={`${testId}-input`}
+        data-testid={testId && `${testId}-input`}
       />
       <Button
         className={`text-lg ${
@@ -96,7 +96,7 @@ export function IntegerInput({
           setValue(value + 1);
         }}
         tabIndex={-1}
-        testId={`${testId}-plus`}
+        testId={testId && `${testId}-plus`}
       >
         <Plus size={20} strokeWidth={2} />
       </Button>

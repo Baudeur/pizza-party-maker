@@ -63,7 +63,7 @@ export function DietIcon({
         alt={`${color === "BW" ? "grayed out" : "coloured"} ${map.get(
           type
         )} icon`}
-        data-testid={`${testId}-${type}-diet-icon`}
+        data-testid={testId && `${testId}-${type}-diet-icon`}
       />
       {tooltipState === "display" && (
         <div className="top-[-100%] translate-x-[-50%] left-1/2 text-base absolute z-20 bg-white border-[1px] border-gray-600 px-2 rounded-md">
