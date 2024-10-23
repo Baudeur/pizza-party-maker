@@ -7,16 +7,16 @@ export function Infos() {
   const [displayOverlay, setDisplayOverlay] = useState(false);
   return (
     <div>
-      <Info
-        className="cursor-pointer"
-        size={30}
-        color="gray"
-        strokeWidth={2}
+      <button
         onClick={() => setDisplayOverlay(true)}
-      />
+        data-testid="info-overlay-button"
+      >
+        <Info size={30} color="gray" strokeWidth={2} />
+      </button>
       <OverlayWrapper
         show={displayOverlay}
         close={() => setDisplayOverlay(false)}
+        testId="info-overlay"
       >
         <InfoContent />
       </OverlayWrapper>

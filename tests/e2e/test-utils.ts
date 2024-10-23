@@ -68,3 +68,5 @@ export async function setPeople(
   await inputVegetarian.fill(vegetarian.toString());
   await inputVegan.fill(vegan.toString());
 }
+
+export const diets = ["normal", "pescoVegetarian", "vegetarian", "vegan"];

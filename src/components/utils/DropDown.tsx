@@ -7,6 +7,7 @@ type DropDownProps<T extends number | string> = {
   onChange: (value: T) => void;
   onScrollBottom?: () => void;
   className?: string;
+  testId?: string;
 };
 
 export function DropDown<T extends number | string>({
@@ -15,6 +16,7 @@ export function DropDown<T extends number | string>({
   onChange,
   onScrollBottom = () => {},
   className,
+  testId,
 }: Readonly<DropDownProps<T>>) {
   const [dropDownShown, setDropDownShown] = useState(false);
 
@@ -32,6 +34,7 @@ export function DropDown<T extends number | string>({
       className={`relative ${className}`}
       onClick={() => setDropDownShown(!dropDownShown)}
       onBlur={() => setDropDownShown(false)}
+      data-testid={testId && `${testId}-button`}
     >
       <div
         className={`h-[30px] bg-white rounded-lg flex items-center justify-between pr-2 pl-3 cursor-pointer`}
@@ -58,6 +61,7 @@ export function DropDown<T extends number | string>({
                 onChange(val);
                 setDropDownShown(false);
               }}
+              data-testid={testId && `${testId}-${val}-option`}
             >
               {label}
             </div>

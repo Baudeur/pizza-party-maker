@@ -1,11 +1,22 @@
 import { People } from "../../modules/people/slice";
 import { Diet, diets } from "../../types";
+import veganIconUrl from "../../assets/Carrot.png";
+import vegetarianIconUrl from "../../assets/Cheese.png";
+import pescoVegetarianIconUrl from "../../assets/Fish.png";
+import normalIconUrl from "../../assets/Meat.png";
+
+const iconUrlMap = new Map<Diet, string>();
+iconUrlMap.set("normal", normalIconUrl);
+iconUrlMap.set("pescoVegetarian", pescoVegetarianIconUrl);
+iconUrlMap.set("vegetarian", vegetarianIconUrl);
+iconUrlMap.set("vegan", veganIconUrl);
 
 type SquaresProps = {
   proportions: People;
   width: number;
   height: number;
   className?: string;
+  testId?: string;
 };
 
 const borderWidth = 2;
@@ -15,6 +26,7 @@ export function SquaresSVG({
   width,
   height,
   className,
+  testId,
 }: Readonly<SquaresProps>) {
   const total =
     proportions.normal +
@@ -35,12 +47,10 @@ export function SquaresSVG({
   const coords = limits.map((elem) =>
     Math.round(elem * (width - borderWidth) + borderWidth / 2)
   );
-  //Takes a tenth of the greatest length but do not go over the lowest one.
-  const iconSize =
-    Math.min(Math.max(width / 10, height / 10), Math.min(width, height)) -
-    borderWidth * 2;
+  //Takes 3/4 of the smallest dimension.
+  const iconSize = (Math.min(height, width) * 3) / 4 - borderWidth * 2;
   return (
-    <div className={`${className}`}>
+    <div className={`${className}`} data-testid={testId}>
       <svg width={width} height={height}>
         <rect height={height} width={width} />
         {total !== 0 && (
@@ -76,7 +86,7 @@ export function SquaresSVG({
               return (
                 <image
                   key={diet}
-                  href={imageOfDiet(diet)}
+                  href={iconUrlMap.get(diet)}
                   width={iconSize}
                   x={(coords[index + 1] + coords[index] - iconSize) / 2}
                   y={(height - iconSize) / 2}
@@ -121,18 +131,5 @@ function colorOfDiet(diet: Diet) {
       return "#22C55E";
     case "vegan":
       return "#F97316";
-  }
-}
-
-function imageOfDiet(diet: Diet) {
-  switch (diet) {
-    case "normal":
-      return "src/assets/Meat.png";
-    case "pescoVegetarian":
-      return "src/assets/Fish.png";
-    case "vegetarian":
-      return "src/assets/Cheese.png";
-    case "vegan":
-      return "src/assets/Carrot.png";
   }
 }
