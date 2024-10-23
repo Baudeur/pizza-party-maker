@@ -16,6 +16,10 @@ import {
   Undo2,
 } from "lucide-react";
 
+import priceIcon from "../../assets/Cash.png";
+import sliceIcon from "../../assets/Pizza.png";
+import title from "../../assets/Title.png";
+
 const flagStates: FlagState[] = [
   "perfect",
   "good",
@@ -54,7 +58,7 @@ export function InfoContent() {
           <b>Welcome to</b>
         </div>
         <img
-          src="/src/assets/Title.png"
+          src={title}
           className="h-6 mx-2 translate-y-[5px]"
           alt="Pizza Party Maker"
         />
@@ -389,11 +393,7 @@ export function InfoContent() {
           <div className="w-64 flex mb-2">
             <div className="text-3xl font-bold mr-2 w-full">
               <div className="mb-2 flex justify-center">
-                <img
-                  src="/src/assets/Cash.png"
-                  className="size-8"
-                  alt="Price"
-                />
+                <img src={priceIcon} className="size-8" alt="Price" />
               </div>
               <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
                 <span className="text-lg">4€ / pers</span>
@@ -402,11 +402,7 @@ export function InfoContent() {
             </div>
             <div className="text-3xl font-bold w-full">
               <div className="mb-2 flex justify-center">
-                <img
-                  src="/src/assets/Pizza.png"
-                  className="size-8"
-                  alt="Quantity"
-                />
+                <img src={sliceIcon} className="size-8" alt="Quantity" />
               </div>
               <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
                 <span className="text-lg">4 slices</span>
