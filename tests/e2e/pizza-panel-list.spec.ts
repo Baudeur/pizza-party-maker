@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { checkPizza, createPizza } from "./test-utils";
 
 test("User can hover pizza to see interactions", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto("localhost:5173");
   await createPizza(page, 1, "4 Cheese", "vegetarian", "12.50");
   const pizzaLine = page.getByTestId("0-pizza-display");
   await pizzaLine.hover();
@@ -17,7 +17,7 @@ test("User can hover pizza to see interactions", async ({ page }) => {
 });
 
 test("User can delete pizza in two ways", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto("localhost:5173");
   await createPizza(page, 0);
   await createPizza(page, 0);
   const quantityMinusButton = page.getByTestId(
@@ -35,7 +35,7 @@ test("User can delete pizza in two ways", async ({ page }) => {
 });
 
 test("User edit quantity without editing the pizza", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto("localhost:5173");
   await createPizza(page, 0);
   const pizzaForm = page.getByTestId("pizza-form");
   const quantityMinusButton = page.getByTestId(
@@ -60,7 +60,7 @@ test("User edit quantity without editing the pizza", async ({ page }) => {
 });
 
 test("User can start editing pizza in two ways", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto("localhost:5173");
   await createPizza(page, 1, "4 Cheese", "vegetarian", "10");
   await createPizza(page, 1, "Burrata", "vegan", "15");
   const pizza0 = page.getByTestId("0-pizza-display");
@@ -76,7 +76,7 @@ test("User can start editing pizza in two ways", async ({ page }) => {
 });
 
 test("User can edit fields and cancel", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto("localhost:5173");
   await createPizza(page, 1, "4 Chrrse", "normal", "100");
   const pizza0 = page.getByTestId("0-pizza-display");
   const editButton = page.getByTestId("0-pizza-display-edit-button");
@@ -107,7 +107,7 @@ test("User can edit fields and cancel", async ({ page }) => {
 });
 
 test("User can edit fields and validate", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto("localhost:5173");
   await createPizza(page, 1, "4 Chrrse", "normal", "100");
   const pizza0 = page.getByTestId("0-pizza-display");
   const editButton = page.getByTestId("0-pizza-display-edit-button");
@@ -144,7 +144,7 @@ test("User can edit fields and validate", async ({ page }) => {
 test("Initial edit focus depend on where user double click", async ({
   page,
 }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto("localhost:5173");
   await createPizza(page, 1, "4 Chrrse", "normal", "100");
   const pizza0Edit = page.getByTestId("0-pizza-edit");
   const nameDisplay = page.getByTestId("0-pizza-display-name");
@@ -165,7 +165,7 @@ test("Initial edit focus depend on where user double click", async ({
 });
 
 test("Header and footer should always be visible", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto("localhost:5173");
   const pizzaHeader = page.getByTestId("pizza-header");
   const pizzaFooter = page.getByTestId("pizza-footer");
   const pizza0 = page.getByTestId("0-pizza-display");

@@ -55,6 +55,9 @@ export function SuggestOverlayContent({
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
 
+  const image = new Image(1, 1);
+  image.src = "/src/assets/LoadingOmni.png";
+
   function addChoices() {
     const addValue = options[options.length - 1].value;
     if (addValue === 100) return;
