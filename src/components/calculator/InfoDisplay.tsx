@@ -13,6 +13,8 @@ import { pizzasSelector } from "../../modules/pizzas/selector";
 import { paramsSelector } from "../../modules/params/selector";
 import { priceToString, toUnderstandableRational } from "../../services/utils";
 import { DietIcon } from "../icons/DietIcon";
+import priceIcon from "../../assets/Cash.png";
+import sliceIcon from "../../assets/Pizza.png";
 
 type InfoDisplayProps = {
   peopleAteAvg: PeopleAte;
@@ -55,7 +57,7 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
       >
         <div className="mb-2 flex justify-center">
           <img
-            src="/src/assets/Cash.png"
+            src={priceIcon}
             className="size-8"
             alt="Price"
             data-testid="price-flag-icon"
@@ -76,7 +78,7 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
       >
         <div className="mb-2 flex justify-center">
           <img
-            src="/src/assets/Pizza.png"
+            src={sliceIcon}
             className="size-8"
             alt="Quantity"
             data-testid="quantity-flag-icon"

@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { Diet } from "../../types";
+import veganIconUrl from "../../assets/Carrot.png";
+import vegetarianIconUrl from "../../assets/Cheese.png";
+import pescoVegetarianIconUrl from "../../assets/Fish.png";
+import normalIconUrl from "../../assets/Meat.png";
 
 type IconColor = "Color" | "BW";
 
@@ -10,11 +14,11 @@ type DietIconProps = {
   testId?: string;
 };
 
-const dietToIconMap = new Map<Diet, string>();
-dietToIconMap.set("normal", "Meat");
-dietToIconMap.set("pescoVegetarian", "Fish");
-dietToIconMap.set("vegetarian", "Cheese");
-dietToIconMap.set("vegan", "Carrot");
+const iconUrlMap = new Map<Diet, string>();
+iconUrlMap.set("normal", normalIconUrl);
+iconUrlMap.set("pescoVegetarian", pescoVegetarianIconUrl);
+iconUrlMap.set("vegetarian", vegetarianIconUrl);
+iconUrlMap.set("vegan", veganIconUrl);
 
 type TooltipState = "out" | "in" | "display";
 
@@ -50,7 +54,7 @@ export function DietIcon({
     };
   }, [tooltipState, timerId]);
 
-  const iconName = "src/assets/" + dietToIconMap.get(type) + ".png";
+  const iconName = iconUrlMap.get(type);
   return (
     <div
       className={`relative ${className}`}

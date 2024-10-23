@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { createPizza, setPeople } from "./test-utils";
 
 test("Parameters are visible", async ({ page }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const parametersExpand = page.getByTestId("parameters-expand");
   await parametersExpand.click();
   const parametersInput = page.getByTestId("parameters-input");
@@ -10,7 +10,7 @@ test("Parameters are visible", async ({ page }) => {
 });
 
 test("Parameters can't go lower than 1 or higher than 16", async ({ page }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const parametersExpand = page.getByTestId("parameters-expand");
   await parametersExpand.click();
   const parametersInput = page.getByTestId("parameters-input");
@@ -27,7 +27,7 @@ test("Parameters can't go lower than 1 or higher than 16", async ({ page }) => {
 });
 
 test("Parameters influences fields", async ({ page }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 0, 0, 0);
   await createPizza(page, 1);
   const parametersExpand = page.getByTestId("parameters-expand");

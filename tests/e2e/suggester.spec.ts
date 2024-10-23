@@ -2,7 +2,7 @@ import { test, expect, Locator, Page } from "@playwright/test";
 import { createPizza, diets, setPeople } from "./test-utils";
 
 test("Suggester overlay can be opened an closed", async ({ page }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const overlayButton = page.getByTestId("suggester-button");
   const overlayContainer = page.getByTestId("suggester-overlay-container");
   const overlayBackground = page.getByTestId("suggester-overlay-background");
@@ -15,7 +15,7 @@ test("Suggester overlay can be opened an closed", async ({ page }) => {
 test("User can change fairness from 105 to 200 with steps of 5", async ({
   page,
 }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const overlayButton = page.getByTestId("suggester-button");
   await overlayButton.click();
   const fairnessSlider = page.getByTestId("suggester-fairness-slider");
@@ -32,7 +32,7 @@ test("User can change fairness from 105 to 200 with steps of 5", async ({
 });
 
 test("User can select the strategy", async ({ page }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const overlayButton = page.getByTestId("suggester-button");
   await overlayButton.click();
   const strategyDropdown = page.getByTestId(
@@ -59,7 +59,7 @@ test("User can select the strategy", async ({ page }) => {
 });
 
 test("User can select the quantity", async ({ page }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const overlayButton = page.getByTestId("suggester-button");
   await overlayButton.click();
   const quantityDropdown = page.getByTestId(
@@ -100,7 +100,7 @@ test("User can select the quantity", async ({ page }) => {
 test("Computing with people that can't eat displays error message", async ({
   page,
 }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 0, 0, 0);
   const overlayButton = page.getByTestId("suggester-button");
   await overlayButton.click();
@@ -113,7 +113,7 @@ test("Computing with people that can't eat displays error message", async ({
 test("Computing with minimal price selects only the lowest price pizzas", async ({
   page,
 }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 2, 2, 2, 2);
   let i = 0;
   for (const diet of diets) {
@@ -132,7 +132,7 @@ test("Computing with minimal price selects only the lowest price pizzas", async 
 test("Computing with maximal diversity selects as much pizzas as possible", async ({
   page,
 }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 2, 2, 2, 2);
   let i = 0;
   for (const diet of diets) {
@@ -158,7 +158,7 @@ test("Computing with maximal diversity selects as much pizzas as possible", asyn
 });
 
 test("Computing respects quantity", async ({ page }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 2, 2, 2, 2);
   let i = 0;
   for (const diet of diets) {
@@ -195,7 +195,7 @@ test("Computing respects quantity", async ({ page }) => {
 });
 
 test("The solution is satisfying", async ({ page }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 2, 2, 2, 2);
   let i = 0;
   for (const diet of diets) {
@@ -227,7 +227,7 @@ test("The solution is satisfying", async ({ page }) => {
 test("The price in the suggestion is the same after applying", async ({
   page,
 }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 2, 2, 2, 2);
   let i = 0;
   for (const diet of diets) {
