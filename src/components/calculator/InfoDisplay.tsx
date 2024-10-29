@@ -10,7 +10,7 @@ import { diets } from "../../types";
 import { PizzaFlag } from "../utils/PizzaFlag";
 import { peopleSelector } from "../../modules/people/selector";
 import { pizzasSelector } from "../../modules/pizzas/selector";
-import { paramsSelector } from "../../modules/params/selector";
+import { sliceSelector } from "../../modules/params/selector";
 import { priceToString, toUnderstandableRational } from "../../services/utils";
 import { DietIcon } from "../icons/DietIcon";
 import priceIcon from "../../assets/Cash.png";
@@ -23,7 +23,7 @@ type InfoDisplayProps = {
 export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
   const people = useSelector(peopleSelector);
   const pizzas = useSelector(pizzasSelector);
-  const { slices } = useSelector(paramsSelector);
+  const slices = useSelector(sliceSelector);
 
   const slicesPerPerson = pizzaSlicesPerPerson(people, pizzas, slices);
   const pricePerPerson = pizzaPricePerPerson(people, pizzas);

@@ -9,7 +9,7 @@ import {
   worstCaseScenario,
 } from "../../services/calculatorService";
 import { InfoDisplay } from "./InfoDisplay";
-import { paramsSelector } from "../../modules/params/selector";
+import { sliceSelector } from "../../modules/params/selector";
 import { Params } from "./Params";
 import { Expand } from "../utils/Expand";
 import { CaseScenario } from "./CaseScenario";
@@ -28,7 +28,7 @@ export function Calculator() {
 
   const pizza = useSelector(pizzaQuantitySelector, pizzaQuantityEquality);
   const people = useSelector(peopleSelector);
-  const { slices } = useSelector(paramsSelector);
+  const slices = useSelector(sliceSelector);
 
   const peopleAteWorst = worstCaseScenario(slices, pizza, people);
   const peopleAteRandom = randomCaseScenario(slices, pizza, people);
@@ -109,7 +109,7 @@ export function Calculator() {
       </Expand>
       <Expand
         label="Parameters"
-        heigth="h-10"
+        heigth="h-28"
         className="mt-2"
         testId="parameters-expand"
       >
