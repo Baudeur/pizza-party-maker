@@ -2,14 +2,18 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type Params = {
   slices: number;
-  okayThreshold: number;
-  badThreshold: number;
+  thresholds: {
+    okay: number;
+    bad: number;
+  };
 };
 
-const initialState = {
+const initialState: Params = {
   slices: 8,
-  okayThreshold: 1.25,
-  badThreshold: 1.5,
+  thresholds: {
+    okay: 1.25,
+    bad: 1.5,
+  },
 };
 
 const params = createSlice({
@@ -22,13 +26,13 @@ const params = createSlice({
     setOkayThresholds(state, action: PayloadAction<number>) {
       return {
         ...state,
-        okayThreshold: action.payload,
+        thresholds: { ...state.thresholds, okay: action.payload },
       };
     },
     setBadThresholds(state, action: PayloadAction<number>) {
       return {
         ...state,
-        badThreshold: action.payload,
+        thresholds: { ...state.thresholds, bad: action.payload },
       };
     },
   },

@@ -106,8 +106,25 @@ export function FairnessSelector({
     removeEventListener("mousemove", listener2);
   };
   addEventListener("mouseup", handleStopDrag);
+
+  const handleClick = (area: string, x: number) => {
+    if (area === "good") {
+      handleMove(1)(x);
+    }
+    if (area === "bad") {
+      handleMove(2)(x);
+    }
+    const rect = ref.current?.getBoundingClientRect();
+    const percentage =
+      Math.min(Math.max(0, x - (rect?.x ?? 0)), workingWidth) / workingWidth;
+    if (percentage - percentage1 < percentage2 - percentage) {
+      handleMove(1)(x);
+    } else {
+      handleMove(2)(x);
+    }
+  };
   return (
-    <div className={className}>
+    <div className={className} data-testid="fairness-parameter">
       <svg width={width} height={height}>
         {/*Mask for fadout of bad*/}
         <defs>
@@ -133,6 +150,7 @@ export function FairnessSelector({
           </mask>
         </defs>
         <rect
+          data-testid="fairness-parameter-move-area"
           ref={ref}
           x={startX}
           width={workingWidth}
@@ -148,14 +166,15 @@ export function FairnessSelector({
           className="fill-green-400"
           strokeWidth={borderWidth}
           stroke="black"
-        />{" "}
+          onClick={(ev) => {
+            handleClick("good", ev.pageX);
+          }}
+        />
         <text
-          x={startX + graphHeight * 0.1}
+          x={startX}
           y={graphHeight / 2}
-          transform={`rotate(-90, ${startX + graphHeight * 0.1},${
-            graphHeight / 2
-          })`}
-          className="font-bold"
+          transform={`rotate(-90, ${startX},${graphHeight / 2})`}
+          className="font-bold pointer-events-none"
           textAnchor="middle"
           dominantBaseline="central"
           fontSize={graphHeight * 0.3}
@@ -171,6 +190,9 @@ export function FairnessSelector({
           className="fill-yellow-400"
           strokeWidth={borderWidth}
           stroke="black"
+          onClick={(ev) => {
+            handleClick("okay", ev.pageX);
+          }}
         />
         <text
           x={
@@ -186,7 +208,7 @@ export function FairnessSelector({
             handeWidth / 2 +
             graphHeight * 0.2
           },${graphHeight / 2})`}
-          className="font-bold"
+          className="font-bold pointer-events-none"
           textAnchor="middle"
           dominantBaseline="central"
           fontSize={graphHeight * 0.3}
@@ -205,6 +227,9 @@ export function FairnessSelector({
           strokeWidth={borderWidth}
           stroke="black"
           mask="url(#fade)"
+          onClick={(ev) => {
+            handleClick("bad", ev.pageX);
+          }}
         />
         <text
           x={Math.min(
@@ -222,7 +247,7 @@ export function FairnessSelector({
               handeWidth / 2,
             width - startX / 2
           )},${graphHeight / 2})`}
-          className="font-bold cursor-vertical-text"
+          className="font-bold pointer-events-none"
           textAnchor="middle"
           dominantBaseline="central"
           fontSize={graphHeight * 0.3}
@@ -231,6 +256,7 @@ export function FairnessSelector({
         </text>
         {/*Cursors*/}
         <rect
+          data-testid="fairness-parameter-cursor1"
           className="cursor-ew-resize focus:fill-green-500 fill-gray-400 hover:fill-gray-500"
           x={startX + workingWidth * percentage1 - handeWidth / 2}
           width={handeWidth}
@@ -251,6 +277,7 @@ export function FairnessSelector({
           tabIndex={-1}
         />
         <rect
+          data-testid="fairness-parameter-cursor2"
           className="cursor-ew-resize focus:fill-green-500 fill-gray-400 hover:fill-gray-500"
           x={startX + workingWidth * percentage2 - handeWidth / 2}
           width={handeWidth}

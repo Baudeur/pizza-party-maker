@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  badThresoldsSelector,
-  okayThresoldsSelector,
   sliceSelector,
+  thresholdsSelector,
 } from "../../modules/params/selector";
 import {
   setBadThresholds,
@@ -14,8 +13,7 @@ import { FairnessSelector } from "../utils/FairnessSelector";
 
 export function Params() {
   const slices = useSelector(sliceSelector);
-  const okayThreshold = useSelector(okayThresoldsSelector);
-  const badThreshold = useSelector(badThresoldsSelector);
+  const { okay, bad } = useSelector(thresholdsSelector);
   const dispatch = useDispatch();
 
   const setThresholds = (value1: number, value2: number) => {
@@ -32,14 +30,14 @@ export function Params() {
           setValue={(value) => dispatch(setSlices(value))}
           max={16}
           min={1}
-          testId="parameters"
+          testId="slice-parameter"
         />
       </div>
-      <div className="flex text-lg items-center mb-2">
-        <span className="mr-2 w-20 text-start">Fairness</span>
+      <div className="flex text-lg mb-2">
+        <span className="mr-2 w-16 text-start">Fairness</span>
         <FairnessSelector
-          value1={okayThreshold}
-          value2={badThreshold}
+          value1={okay}
+          value2={bad}
           onChange={(value1, value2) => setThresholds(value1, value2)}
           min={1.05}
           max={2}

@@ -10,7 +10,10 @@ import { diets } from "../../types";
 import { PizzaFlag } from "../utils/PizzaFlag";
 import { peopleSelector } from "../../modules/people/selector";
 import { pizzasSelector } from "../../modules/pizzas/selector";
-import { sliceSelector } from "../../modules/params/selector";
+import {
+  sliceSelector,
+  thresholdsSelector,
+} from "../../modules/params/selector";
 import { priceToString, toUnderstandableRational } from "../../services/utils";
 import { DietIcon } from "../icons/DietIcon";
 import priceIcon from "../../assets/Cash.png";
@@ -24,6 +27,7 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
   const people = useSelector(peopleSelector);
   const pizzas = useSelector(pizzasSelector);
   const slices = useSelector(sliceSelector);
+  const { okay, bad } = useSelector(thresholdsSelector);
 
   const slicesPerPerson = pizzaSlicesPerPerson(people, pizzas, slices);
   const pricePerPerson = pizzaPricePerPerson(people, pizzas);
@@ -46,7 +50,7 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
             />
           </div>
           <PizzaFlag
-            flagState={stateOfDiet(diet, peopleAteAvg, people)}
+            flagState={stateOfDiet(diet, peopleAteAvg, people, okay, bad)}
             testId={`${diet}-flag`}
           />
         </div>

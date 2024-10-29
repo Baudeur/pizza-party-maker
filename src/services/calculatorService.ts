@@ -259,7 +259,9 @@ export function pizzaSlicesPerPerson(
 export function stateOfDiet(
   diet: Diet,
   peopleAte: PeopleAte,
-  people: People
+  people: People,
+  okayThreshold: number,
+  badThreshold: number
 ): FlagState {
   if (people[diet] === 0) return "N/A";
   const maxAte = Math.max(
@@ -268,8 +270,8 @@ export function stateOfDiet(
   );
   if (peopleAte[diet] === 0) return "cantEat";
   if (peopleAte[diet] === maxAte) return "perfect";
-  if (peopleAte[diet] * 1.5 < maxAte) return "bad";
-  if (peopleAte[diet] * 1.25 < maxAte) return "okay";
+  if (peopleAte[diet] * badThreshold < maxAte) return "bad";
+  if (peopleAte[diet] * okayThreshold < maxAte) return "okay";
   if (peopleAte[diet] < maxAte) return "good";
   return "N/A";
 }

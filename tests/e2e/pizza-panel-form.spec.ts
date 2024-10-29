@@ -110,6 +110,7 @@ test("User can add a pizza using only the keyboard", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const quantityInput = page.getByTestId("pizza-form-quantity-input");
   await quantityInput.click();
+  await page.keyboard.press("ArrowRight");
   await page.keyboard.press("2");
   await page.keyboard.press("Tab");
   await page.keyboard.type("4 Cheese");
@@ -126,6 +127,7 @@ test("Pizza can have empty name and price", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const submit = page.getByTestId("pizza-form-submit");
   await submit.click();
+  await page.mouse.move(0, 0);
   await checkPizza(page, 0, 1, "", "normal", "0");
 });
 
@@ -133,12 +135,13 @@ test("Pizza can have duplicate names", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const submit = page.getByTestId("pizza-form-submit");
   const nameInput = page.getByTestId("pizza-form-name");
-  nameInput.fill("4 Cheese");
+  await nameInput.fill("4 Cheese");
   await submit.click();
-  nameInput.fill("4 Cheese");
+  await nameInput.fill("4 Cheese");
   await submit.click();
-  checkPizza(page, 0, 1, "4 Cheese", "normal", "0");
-  checkPizza(page, 1, 1, "4 Cheese", "normal", "0");
+  await page.mouse.move(0, 0);
+  await checkPizza(page, 0, 1, "4 Cheese", "normal", "0");
+  await checkPizza(page, 1, 1, "4 Cheese", "normal", "0");
 });
 
 test("If pizza price has decimals show two decimals otherwise 0", async ({
@@ -147,19 +150,20 @@ test("If pizza price has decimals show two decimals otherwise 0", async ({
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const submit = page.getByTestId("pizza-form-submit");
   const priceInput = page.getByTestId("pizza-form-price");
-  priceInput.fill("15");
+  await priceInput.fill("15");
   await submit.click();
-  priceInput.fill("13.");
+  await priceInput.fill("13.");
   await submit.click();
-  priceInput.fill("13.1");
+  await priceInput.fill("13.1");
   await submit.click();
-  priceInput.fill("13.20");
+  await priceInput.fill("13.20");
   await submit.click();
-  priceInput.fill("13.15");
+  await priceInput.fill("13.15");
   await submit.click();
-  checkPizza(page, 0, 1, "", "normal", "15");
-  checkPizza(page, 1, 1, "", "normal", "13");
-  checkPizza(page, 2, 1, "", "normal", "13.10");
-  checkPizza(page, 3, 1, "", "normal", "13.20");
-  checkPizza(page, 4, 1, "", "normal", "13.15");
+  await page.mouse.move(0, 0);
+  await checkPizza(page, 0, 1, "", "normal", "15");
+  await checkPizza(page, 1, 1, "", "normal", "13");
+  await checkPizza(page, 2, 1, "", "normal", "13.10");
+  await checkPizza(page, 3, 1, "", "normal", "13.20");
+  await checkPizza(page, 4, 1, "", "normal", "13.15");
 });
