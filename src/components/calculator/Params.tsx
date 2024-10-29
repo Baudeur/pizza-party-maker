@@ -10,7 +10,7 @@ import {
   setSlices,
 } from "../../modules/params/slice";
 import { IntegerInput } from "../utils/IntegerInput";
-import { DoubleSlider } from "../utils/DoubleSlider";
+import { FairnessSelector } from "../utils/FairnessSelector";
 
 export function Params() {
   const slices = useSelector(sliceSelector);
@@ -36,28 +36,8 @@ export function Params() {
         />
       </div>
       <div className="flex text-lg items-center mb-2">
-        <span className="mr-2 w-40 text-start">Okay fairness limit</span>
-        <div className="bg-white font-bold w-16 text-center h-full rounded-lg mr-2">
-          {(okayThreshold * 100).toFixed(0)}%
-        </div>
-        <input
-          className="accent-green-500 w-48"
-          type="range"
-          value={okayThreshold}
-          onChange={(e) => dispatch(setOkayThresholds(Number(e.target.value)))}
-          min={1.05}
-          max={badThreshold}
-          step={0.05}
-          data-testid="params-fairness-okay-slider"
-        />
-      </div>
-      <div className="flex text-lg items-center">
-        <span className="mr-2 w-40 text-start">Bad fairness limit</span>
-        <div className="bg-white font-bold w-16 text-center h-full rounded-lg mr-2">
-          {(badThreshold * 100).toFixed(0)}%
-        </div>
-        <DoubleSlider
-          className="accent-green-500 w-48"
+        <span className="mr-2 w-20 text-start">Fairness</span>
+        <FairnessSelector
           value1={okayThreshold}
           value2={badThreshold}
           onChange={(value1, value2) => setThresholds(value1, value2)}
@@ -67,22 +47,6 @@ export function Params() {
           data-testid="params-fairness-okay-slider"
         />
       </div>
-      {/* <div className="flex text-lg items-center">
-        <span className="mr-2 w-40 text-start">Bad fairness limit</span>
-        <div className="bg-white font-bold w-16 text-center h-full rounded-lg mr-2">
-          {(badThreshold * 100).toFixed(0)}%
-        </div>
-        <input
-          className="accent-green-500 w-48"
-          type="range"
-          value={badThreshold}
-          onChange={(e) => dispatch(setBadThresholds(Number(e.target.value)))}
-          min={okayThreshold}
-          max={2}
-          step={0.05}
-          data-testid="params-fairness-bad-slider"
-        />
-      </div> */}
     </div>
   );
 }

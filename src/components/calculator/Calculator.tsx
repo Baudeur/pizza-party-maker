@@ -109,7 +109,7 @@ export function Calculator() {
       </Expand>
       <Expand
         label="Parameters"
-        heigth="h-28"
+        heigth="h-96"
         className="mt-2"
         testId="parameters-expand"
       >

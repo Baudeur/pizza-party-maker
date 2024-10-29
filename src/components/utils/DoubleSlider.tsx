@@ -64,11 +64,11 @@ export function DoubleSlider({
   );
 
   const listener1 = (ev: MouseEvent) => {
-    handleMove(1)(ev.screenX);
+    handleMove(1)(ev.pageX);
   };
 
   const listener2 = (ev: MouseEvent) => {
-    handleMove(2)(ev.screenX);
+    handleMove(2)(ev.pageX);
   };
 
   const handleStartDrag1 = () => {
