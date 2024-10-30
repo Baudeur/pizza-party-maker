@@ -1,0 +1,28 @@
+name: Update version
+on:
+  push:
+    branches:
+      - main
+jobs:
+  bump-version:
+    name: "Bump version on main"
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: "Use checkout v2"
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: "Automated Version Bump"
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          minor-wording: "MINOR"
+          major-wording: "MAJOR"
+          tag-prefix: "v"
+          target-branch: "main"
+          commit-message: "Bumps version to {{version}}"
