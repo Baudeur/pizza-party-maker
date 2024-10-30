@@ -2,16 +2,20 @@ name: Update version
 on:
   push:
     branches:
-    - main
+      - main
 jobs:
   bump-version:
     name: "Bump Version On Main"
     runs-on: ubuntu-latest
 
     steps:
-      - name: Update version in package.json
-        uses: maks-stupak/gh-action-bump-version@v7.1.5
+      - name: "Automated Version Bump"
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # Prefix that is used for the git tag
-          tag-prefix: 'v'
-          PACKAGEJSON_DIR: '/'
+          minor-wording: "MINOR"
+          major-wording: "MAJOR"
+          tag-prefix: "v"
+          target-branch: "main"
+          commit-message: "Update version"
