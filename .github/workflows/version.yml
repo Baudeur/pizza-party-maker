@@ -14,4 +14,4 @@ jobs:
         with:
           # Prefix that is used for the git tag
           tag-prefix: 'v'
-          PACKAGEJSON_DIR: ''
+          PACKAGEJSON_DIR: '/'
