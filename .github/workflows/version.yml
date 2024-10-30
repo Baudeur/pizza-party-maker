@@ -8,6 +8,9 @@ jobs:
     name: "Bump version on main"
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - name: "Use checkout v2"
         uses: actions/checkout@v2
