@@ -1,0 +1,16 @@
+name: Update version
+on:
+  push:
+    branches:
+    - main
+jobs:
+  bump-version:
+    name: "Bump Version On Main"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update version in package.json
+        uses: maks-stupak/gh-action-bump-version@v7.1.5
+        with:
+          # Prefix that is used for the git tag
+          tag-prefix: 'v'
