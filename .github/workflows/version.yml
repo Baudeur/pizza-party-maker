@@ -5,12 +5,14 @@ on:
       - main
 jobs:
   bump-version:
-    name: "Bump Version On Main"
+    name: "Bump version on main"
     runs-on: ubuntu-latest
 
     steps:
       - name: "Use checkout v2"
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
       - name: "Automated Version Bump"
         uses: "phips28/gh-action-bump-version@master"
         env:
@@ -20,4 +22,4 @@ jobs:
           major-wording: "MAJOR"
           tag-prefix: "v"
           target-branch: "main"
-          commit-message: "Update version"
+          commit-message: "Bumps version to {{version}}"
