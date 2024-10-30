@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: "Use checkout v2"
+        uses: actions/checkout@v2
       - name: "Automated Version Bump"
         uses: "phips28/gh-action-bump-version@master"
         env:
