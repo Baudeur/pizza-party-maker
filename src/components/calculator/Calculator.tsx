@@ -10,11 +10,10 @@ import {
 } from "../../services/calculatorService";
 import { InfoDisplay } from "./InfoDisplay";
 import { sliceSelector } from "../../modules/params/selector";
-import { Params } from "./Params";
 import { Expand } from "../utils/Expand";
 import { CaseScenario } from "./CaseScenario";
 import { pizzaQuantityEquality } from "../../services/utils";
-import { Info } from "lucide-react";
+import { CircleHelp } from "lucide-react";
 import { useState } from "react";
 import { CaseScenarioOverlayContent } from "./CaseScenarioOverlayContent";
 import { GraphComparison } from "../graph/GraphComparison";
@@ -69,7 +68,7 @@ export function Calculator() {
             }}
             data-testid="details-overlay-button"
           >
-            <Info
+            <CircleHelp
               size={25}
               color="black"
               strokeWidth={2}
@@ -107,14 +106,14 @@ export function Calculator() {
           testId="best-case"
         />
       </Expand>
-      <Expand
+      {/* <Expand
         label="Parameters"
         heigth="h-32"
         className="mt-2"
         testId="parameters-expand"
       >
         <Params />
-      </Expand>
+      </Expand> */}
       <OverlayWrapper
         show={displayOverlay}
         close={() => setDisplayOverlay(false)}
