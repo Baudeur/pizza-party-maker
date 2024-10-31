@@ -78,6 +78,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
       </td>
       <td>
         <TextInput
+          className="w-full"
           tabIndex={0}
           ref={nameInputRef}
           placeholder="4 Cheese"
@@ -97,6 +98,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
       </td>
       <td>
         <PriceInput
+          className="w-full"
           ref={priceInputRef}
           price={price.toString()}
           setPrice={(price) => setPrice(price)}

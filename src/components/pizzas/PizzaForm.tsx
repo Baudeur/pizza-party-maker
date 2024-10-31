@@ -51,6 +51,7 @@ export function PizzaForm() {
       <td className="align-top pt-2">
         <div className="flex flex-col items-start">
           <TextInput
+            className="w-full"
             tabIndex={0}
             ref={nameInputRef}
             placeholder="4 Cheese"
@@ -70,6 +71,7 @@ export function PizzaForm() {
       </td>
       <td className="align-top pt-2">
         <PriceInput
+          className="w-full"
           tabIndex={0}
           price={price}
           setPrice={setPrice}

@@ -59,8 +59,14 @@ const pizzas = createSlice({
         ],
       };
     },
+    setPizzas: (state, action: PayloadAction<Pizza[]>) => {
+      return {
+        ...state,
+        pizzas: action.payload,
+      };
+    },
   },
 });
 
 export const pizzasReducer = pizzas.reducer;
-export const { addPizza, removePizza, modifyPizza } = pizzas.actions;
+export const { addPizza, removePizza, modifyPizza, setPizzas } = pizzas.actions;
