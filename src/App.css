@@ -3,3 +3,52 @@
   margin: 0 auto;
   text-align: center;
 }
+
+@keyframes goingDownTwoStepsFirstElement {
+  0% {
+    --tw-translate-y: -1.75rem;
+    transform: translateY(-1.75rem);
+  }
+  50% {
+    --tw-translate-y: 0rem;
+    transform: translateY(0rem);
+  }
+  100% {
+    --tw-translate-y: 1.75rem;
+    transform: translateY(1.75rem);
+  }
+}
+
+@keyframes goingDownTwoStepsSecondElement {
+  0% {
+    --tw-translate-y: 0rem;
+    transform: translateY(var(--tw-translate-y));
+  }
+  50% {
+    --tw-translate-y: 1.75rem;
+    transform: translateY(var(--tw-translate-y));
+    animation-timing-function: step-end;
+  }
+  51% {
+    --tw-translate-y: -1.75rem;
+    transform: translateY(var(--tw-translate-y));
+  }
+  100% {
+    --tw-translate-y: 0rem;
+    transform: translateY(var(--tw-translate-y));
+  }
+}
+
+.goingDownTwoStepsFirstElement {
+  transition: transform --tw-translate-y;
+  animation-name: goingDownTwoStepsFirstElement;
+  animation-iteration-count: 1;
+  animation-duration: 750ms;
+}
+
+.goingDownTwoStepsSecondElement {
+  transition: transform --tw-translate-y;
+  animation-name: goingDownTwoStepsSecondElement;
+  animation-iteration-count: 1;
+  animation-duration: 750ms;
+}

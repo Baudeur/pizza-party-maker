@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 
 type TextInputProps = {
   className?: string;
+
   placeholder?: string;
   value?: string;
   defaultValue?: string;

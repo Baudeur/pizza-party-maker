@@ -1,10 +1,18 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Container } from "../utils/Container";
 
 type Overlay = {
   close: () => void;
   testId?: string;
 };
+
+export const CloseContext = createContext(() => {});
 
 export function Overlay({
   close,
@@ -16,12 +24,12 @@ export function Overlay({
     setShowDelayed(true);
   }, []);
 
-  const animateAndClose = () => {
+  const animateAndClose = useCallback(() => {
     setShowDelayed(false);
     setTimeout(() => {
       close();
     }, 300);
-  };
+  }, [close]);
   return (
     <div
       className={`z-30 fixed size-full bg-black top-0 left-0 ${
@@ -48,7 +56,9 @@ export function Overlay({
           }}
         >
           <Container className="h-fit" testId={`${testId}-container`}>
-            {children}
+            <CloseContext.Provider value={animateAndClose}>
+              {children}
+            </CloseContext.Provider>
           </Container>
         </div>
       </div>

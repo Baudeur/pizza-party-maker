@@ -14,12 +14,12 @@ export type Pizzeria = {
 };
 
 type PizzeriasState = {
-  loaded: string | null;
+  loaded: string | undefined;
   pizzerias: Pizzeria[];
 };
 
 const initialState: PizzeriasState = {
-  loaded: null,
+  loaded: undefined,
   pizzerias: [],
 };
 
@@ -36,7 +36,11 @@ const pizzerias = createSlice({
           quantity: 0,
         })),
       };
-      return { ...state, pizzerias: [...state.pizzerias, newPizzeria] };
+      return {
+        ...state,
+        pizzerias: [...state.pizzerias, newPizzeria],
+        loaded: newPizzeria.id,
+      };
     },
     removePizzeria: (state, action: PayloadAction<string>) => {
       return {
@@ -64,6 +68,7 @@ const pizzerias = createSlice({
           modifiedPizzeria,
           ...state.pizzerias.slice(pizzeriaIndex + 1),
         ],
+        loaded: action.payload.id,
       };
     },
     loadPizzeria: (state, action: PayloadAction<string>) => {
