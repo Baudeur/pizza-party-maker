@@ -95,6 +95,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             color="green"
             onClick={() => handleDoubleClick("name")}
             testId={`${pizza.id}-pizza-display-edit-button`}
+            title="Edit pizza"
           >
             <Pencil size={20} strokeWidth={2} />
           </Button>
@@ -103,6 +104,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             color="red"
             onClick={() => dispatch(removePizza(pizza.id))}
             testId={`${pizza.id}-pizza-display-delete-button`}
+            title="Delete pizza"
           >
             <Trash2 size={20} strokeWidth={2} />
           </Button>

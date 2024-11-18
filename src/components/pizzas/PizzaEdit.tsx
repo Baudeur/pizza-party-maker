@@ -113,6 +113,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
           color="green"
           onClick={() => handleSubmit()}
           testId={`${pizza.id}-pizza-edit-validate-button`}
+          title="Apply changes"
         >
           <Check size={20} strokeWidth={2} />
         </Button>
@@ -122,6 +123,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
           color="yellow"
           onClick={() => handleCancel()}
           testId={`${pizza.id}-pizza-edit-cancel-button`}
+          title="Cancel changes"
         >
           <Undo2 size={20} strokeWidth={2} />
         </Button>

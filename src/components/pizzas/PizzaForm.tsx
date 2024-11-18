@@ -85,6 +85,7 @@ export function PizzaForm() {
           color={"green"}
           onClick={handleSubmit}
           testId="pizza-form-submit"
+          title="Add pizza"
         >
           <Plus size={20} strokeWidth={2} />
         </Button>

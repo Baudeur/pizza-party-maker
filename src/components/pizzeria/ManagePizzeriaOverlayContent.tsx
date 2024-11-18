@@ -53,6 +53,7 @@ export function ManagePizzeriaOverlayContent() {
                 color="red"
                 onClick={() => dispatch(removePizzeria(pizzeria.id))}
                 className="rounded-lg px-2"
+                testId={`manage-${pizzeria.name}-delete-button`}
               >
                 <Trash2 size={20} strokeWidth={2} />
               </Button>
@@ -60,7 +61,8 @@ export function ManagePizzeriaOverlayContent() {
                 color="green"
                 onClick={() => handleLoad(pizzeria)}
                 disabled={pizzeria.id === loadedPizzeriaId}
-                className="rounded-lg px-2 w-32"
+                className="rounded-lg px-2 w-26"
+                testId={`manage-${pizzeria.name}-load-button`}
               >
                 {pizzeria.id === loadedPizzeriaId ? "Loaded" : "Load"}
               </Button>
@@ -69,6 +71,7 @@ export function ManagePizzeriaOverlayContent() {
                   pizzeria.id === selected?.id ? "bg-amber-300" : "bg-amber-200"
                 } px-2 items-center hover:brightness-90 active:brightness-[80%] truncate w-full`}
                 onClick={() => handleClick(pizzeria)}
+                data-testid={`manage-${pizzeria.name}-select-button`}
               >
                 <div className="truncate text-left" title={pizzeria.name}>
                   {pizzeria.name}
@@ -86,6 +89,7 @@ export function ManagePizzeriaOverlayContent() {
             <PizzeriaDisplayer
               pizzeria={selected}
               className="border-none max-h-96"
+              testId={`manage-${selected.name}-displayer`}
             />
           </div>
         )}

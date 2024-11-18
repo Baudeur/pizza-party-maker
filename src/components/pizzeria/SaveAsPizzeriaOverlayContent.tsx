@@ -80,11 +80,13 @@ export function SaveAsPizzeriaOverlayContent() {
               onChange={(ev) => setName(ev.target.value)}
               className="w-full"
               ref={inputRef}
+              testId="save-as-pizzeria-text-input"
             />
             <Button
               color="green"
               onClick={handleCreatePizzeria}
               className="min-w-[68px] rounded-lg"
+              testId="save-as-pizzeria-save-button"
             >
               <Save size={20} strokeWidth={2} />
             </Button>
@@ -96,12 +98,17 @@ export function SaveAsPizzeriaOverlayContent() {
           <span className="text-red-500 mb-2">
             A pizzeria with this name already exists, override ?
           </span>
-          <PizzeriaDisplayer pizzeria={nameConflict} className="max-h-48" />
+          <PizzeriaDisplayer
+            pizzeria={nameConflict}
+            className="max-h-48"
+            testId="save-as-conflict-pizzeria-displayer"
+          />
           <div className="flex w-full gap-2 mt-2">
             <Button
               onClick={handleCancel}
               color="yellow"
               className="rounded-lg w-full"
+              testId="save-as-conflict-cancel"
             >
               Cancel
             </Button>
@@ -109,6 +116,7 @@ export function SaveAsPizzeriaOverlayContent() {
               onClick={handleOverride}
               color="green"
               className="rounded-lg w-full"
+              testId="save-as-conflict-override"
             >
               Override
             </Button>

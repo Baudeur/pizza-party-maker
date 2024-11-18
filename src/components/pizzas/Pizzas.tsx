@@ -4,7 +4,7 @@ import { PizzaForm } from "./PizzaForm";
 import { Container } from "../utils/Container";
 import { PizzaLineWrapper } from "./PizzaLineWrapper";
 import { Button } from "../utils/Button";
-import { Save, Store } from "lucide-react";
+import { FilePlus, Save, Store } from "lucide-react";
 import { OverlayWrapper } from "../utils/OverlayWrapper";
 import { useCallback, useState } from "react";
 import { ManagePizzeriaOverlayContent } from "../pizzeria/ManagePizzeriaOverlayContent";
@@ -14,8 +14,13 @@ import {
   loadedPizzeriaSelector,
   pizzeriasSelector,
 } from "../../modules/pizzerias/selector";
-import { modifyPizzeria, Pizzeria } from "../../modules/pizzerias/slice";
+import {
+  modifyPizzeria,
+  Pizzeria,
+  unloadPizzeria,
+} from "../../modules/pizzerias/slice";
 import { NoVisibleEffectButton } from "../utils/NoVisibleEffectButton";
+import { setPizzas } from "../../modules/pizzas/slice";
 
 export function Pizzas() {
   const pizzas = useSelector(pizzasSelector);
@@ -38,19 +43,34 @@ export function Pizzas() {
     dispatch(modifyPizzeria(modifiedPizzeria));
   }, [dispatch, loadedPizzeriaId, pizzas, pizzerias]);
 
+  const handleNew = useCallback(() => {
+    dispatch(setPizzas([]));
+    dispatch(unloadPizzeria());
+  }, [dispatch]);
+
   return (
     <Container
-      className="text-xl flex flex-col ml-4 mb-4 h-96"
+      className="text-xl flex flex-col ml-4 mb-4 h-[27rem]"
       testId="pizza-panel"
     >
-      <div className="">
-        <div className="flex w-full gap-2 mb-2">
+      <div className="mb-2">
+        <div className="flex w-full">
+          <Button
+            color="green"
+            onClick={handleNew}
+            className="w-full rounded-s-lg border-2 border-e-0 border-green-600"
+            title="New pizzeria"
+            testId="pizza-panel-new-pizzeria-button"
+          >
+            <FilePlus size={20} strokeWidth={2} />
+          </Button>
           {loadedPizzeriaId && (
             <NoVisibleEffectButton
               color="green"
               onClick={handleSave}
-              className="w-16 rounded-lg"
+              className="w-full border-2 border-e-0 border-green-600"
               title="Save pizzeria"
+              testId="pizza-panel-save-button"
             >
               <Save size={20} strokeWidth={2} />
             </NoVisibleEffectButton>
@@ -59,8 +79,9 @@ export function Pizzas() {
             <Button
               color="green"
               onClick={() => setShowSaveAsOverlay(true)}
-              className="w-16 rounded-lg"
+              className="w-full border-2 border-e-0 border-green-600"
               title="Save pizzeria"
+              testId="pizza-panel-save-button"
             >
               <Save size={20} strokeWidth={2} />
             </Button>
@@ -70,18 +91,24 @@ export function Pizzas() {
             onClick={() => {
               setShowSaveAsOverlay(true);
             }}
-            className="w-16 rounded-lg"
-            title="Save pizzeria"
+            className="w-full border-2 border-e-0 border-green-600"
+            title="Save pizzeria as"
+            testId="pizza-panel-save-as-button"
           >
-            <SaveAsIcon size={20} strokeWidth={2} />
+            <SaveAsIcon
+              size={20}
+              strokeWidth={2}
+              backgroundColor="bg-green-500"
+            />
           </Button>
           <Button
             color="green"
             onClick={() => {
               setShowLoadOverlay(true);
             }}
-            className="w-16 rounded-lg"
-            title="Save pizzeria"
+            className="w-full rounded-e-lg border-2 border-green-600"
+            title="Load and manage pizzeria"
+            testId="pizza-panel-manage-button"
           >
             <Store size={20} strokeWidth={2} />
           </Button>

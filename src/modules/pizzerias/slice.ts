@@ -13,6 +13,11 @@ export type Pizzeria = {
   pizzas: Pizza[];
 };
 
+export type StoredPizzerias = {
+  version: number;
+  pizzerias: Pizzeria[];
+};
+
 type PizzeriasState = {
   loaded: string | undefined;
   pizzerias: Pizzeria[];
@@ -38,15 +43,15 @@ const pizzerias = createSlice({
       };
       return {
         ...state,
-        pizzerias: [...state.pizzerias, newPizzeria],
+        pizzerias: storeState([...state.pizzerias, newPizzeria]),
         loaded: newPizzeria.id,
       };
     },
     removePizzeria: (state, action: PayloadAction<string>) => {
       return {
         ...state,
-        pizzerias: state.pizzerias.filter(
-          (pizzerias) => pizzerias.id !== action.payload
+        pizzerias: storeState(
+          state.pizzerias.filter((pizzerias) => pizzerias.id !== action.payload)
         ),
       };
     },
@@ -63,12 +68,19 @@ const pizzerias = createSlice({
       };
       return {
         ...state,
-        pizzerias: [
+        pizzerias: storeState([
           ...state.pizzerias.slice(0, pizzeriaIndex),
           modifiedPizzeria,
           ...state.pizzerias.slice(pizzeriaIndex + 1),
-        ],
+        ]),
         loaded: action.payload.id,
+      };
+    },
+    setPizzerias: (state, action: PayloadAction<Pizzeria[]>) => {
+      return {
+        ...state,
+        loaded: undefined,
+        pizzerias: action.payload,
       };
     },
     loadPizzeria: (state, action: PayloadAction<string>) => {
@@ -77,9 +89,30 @@ const pizzerias = createSlice({
         loaded: action.payload,
       };
     },
+    unloadPizzeria: (state) => {
+      return {
+        ...state,
+        loaded: undefined,
+      };
+    },
   },
 });
 
+function storeState(state: Pizzeria[]) {
+  const toStore: StoredPizzerias = {
+    version: 1,
+    pizzerias: state,
+  };
+  localStorage.setItem("pizzerias", JSON.stringify(toStore));
+  return state;
+}
+
 export const pizzeriasReducer = pizzerias.reducer;
-export const { addPizzeria, removePizzeria, modifyPizzeria, loadPizzeria } =
-  pizzerias.actions;
+export const {
+  addPizzeria,
+  removePizzeria,
+  modifyPizzeria,
+  setPizzerias,
+  loadPizzeria,
+  unloadPizzeria,
+} = pizzerias.actions;
