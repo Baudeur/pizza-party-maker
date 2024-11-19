@@ -21,8 +21,10 @@ import { GraphComparison } from "../graph/GraphComparison";
 import { OverlayWrapper } from "../utils/OverlayWrapper";
 import { Button } from "../utils/Button";
 import { SuggestOverlayContent } from "../suggester/SuggestOverlayContent";
+import { useTranslation } from "react-i18next";
 
 export function Calculator() {
+  const { t } = useTranslation();
   const [showOverlay, setShowOverlay] = useState(false);
   const [displayOverlay, setDisplayOverlay] = useState(false);
 
@@ -45,10 +47,10 @@ export function Calculator() {
         className="mt-2 font-bold w-full rounded-lg"
         testId="suggester-button"
       >
-        Struggling to find the right proportions ? Click here
+        {t("suggester-open-button")}
       </Button>
       <Expand
-        label="Graphs"
+        label={t("graphs-expand-title")}
         heigth="h-[110px]"
         className="mt-4"
         testId="graph-expand"
@@ -56,7 +58,7 @@ export function Calculator() {
         <GraphComparison />
       </Expand>
       <Expand
-        label="Details"
+        label={t("details-expand-title")}
         heigth="h-36"
         className="mt-2 cursor-default"
         testId="details-expand"
@@ -87,28 +89,28 @@ export function Calculator() {
           </OverlayWrapper>
         </div>
         <CaseScenario
-          label="Worst case scenario"
+          label={t("details-worst-case-scenario")}
           peopleAte={peopleAteWorst}
           testId="worst-case"
         />
         <CaseScenario
-          label="Random case scenario"
+          label={t("details-random-case-scenario")}
           peopleAte={peopleAteRandom}
           testId="random-case"
         />
         <CaseScenario
-          label="Average case scenario"
+          label={t("details-average-case-scenario")}
           peopleAte={peopleAteRandomAvg}
           testId="average-case"
         />
         <CaseScenario
-          label="Best case scenario"
+          label={t("details-best-case-scenario")}
           peopleAte={peopleAteBest}
           testId="best-case"
         />
       </Expand>
       <Expand
-        label="Parameters"
+        label={t("parameters-expand-title")}
         heigth="h-32"
         className="mt-2"
         testId="parameters-expand"

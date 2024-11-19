@@ -1,0 +1,56 @@
+{
+  "translation": {
+    "people-panel-title": "Invités",
+    "people-panel-total": "Total : {{total}}",
+    "diet-icon-omnivorous": "ominvore",
+    "diet-icon-pesco-vegetarian": "pesco‑vegetarien",
+    "diet-icon-vegetarian": "vegetarien",
+    "diet-icon-vegan": "vegan",
+
+    "pizza-table-quantity": "Quantité",
+    "pizza-table-name": "Nom",
+    "pizza-table-eaten-by": "Mangé par",
+    "pizza-table-price": "Prix",
+
+    "pizza-form-placeholder": "4 Fromages",
+
+    "suggester-open-button": "Difficile de trouver les bonne proportions ? Cliquez ici",
+
+    "pizza-flag-perfect": "Parfait",
+    "pizza-flag-good": "Bien",
+    "pizza-flag-okay": "Moyen",
+    "pizza-flag-bad": "Mauvais",
+    "pizza-flag-cant-eat": "Ne mange pas",
+
+    "info-display-person": "pers",
+    "info-display-total": "total",
+    "info-display-slices": "parts",
+    "info-display-pizzas": "pizzas",
+
+    "graphs-expand-title": "Graphiques",
+    "graphs-people": "Invités",
+    "graphs-pizza": "Pizzas",
+
+    "details-expand-title": "Détails",
+    "details-worst-case-scenario": "Pire cas possible",
+    "details-random-case-scenario": "Cas aléatoire",
+    "details-average-case-scenario": "Cas moyen",
+    "details-best-case-scenario": "Meilleur cas possible",
+
+    "parameters-expand-title": "Paramètres",
+    "parameters-slices": "Parts par pizzas",
+    "parameters-fairness": "Équité",
+
+    "suggester-popup-title": "Calculateur de suggestion",
+    "suggester-description": "Choisissez les paramètres de la suggestion",
+    "suggester-unfairness": "Inéquité :",
+    "suggester-strategy": "Strategie :",
+    "suggester-quantity": "Quantité par personnes :",
+    "suggester-compute": "Calculer la suggestion",
+    "suggester-strategy-minimal": "Prix minimal",
+    "suggester-strategy-maximal": "Diversité maximale",
+    "suggester-error": "Erreur: votre liste de pizza ne permet pas à tous les invités de manger.",
+    "suggester-suggestion-total": "Total",
+    "suggester-apply": "Appliquer la suggestion"
+  }
+}

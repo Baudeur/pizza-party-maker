@@ -18,12 +18,14 @@ import { priceToString, toUnderstandableRational } from "../../services/utils";
 import { DietIcon } from "../icons/DietIcon";
 import priceIcon from "../../assets/Cash.png";
 import sliceIcon from "../../assets/Pizza.png";
+import { useTranslation } from "react-i18next";
 
 type InfoDisplayProps = {
   peopleAteAvg: PeopleAte;
 };
 
 export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
+  const { t } = useTranslation();
   const people = useSelector(peopleSelector);
   const pizzas = useSelector(pizzasSelector);
   const slices = useSelector(sliceSelector);
@@ -69,10 +71,10 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
         </div>
         <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
           <span className="text-lg" data-testid="price-flag-per-person">
-            {priceToString(pricePerPerson)}€ / pers
+            {priceToString(pricePerPerson)}€ / {t("info-display-person")}
           </span>
           <span className="text-lg" data-testid="price-flag-total">
-            {priceToString(priceTotal)}€ total
+            {priceToString(priceTotal)}€ {t("info-display-total")}
           </span>
         </div>
       </div>
@@ -90,10 +92,11 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
         </div>
         <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
           <span className="text-lg" data-testid="quantity-flag-slices">
-            {slicesPerPerson} slices
+            {slicesPerPerson} {t("info-display-slices")}
           </span>
           <span className="text-lg" data-testid="quantity-flag-pizzas">
-            {toUnderstandableRational(slicesPerPerson, slices)} pizzas
+            {toUnderstandableRational(slicesPerPerson, slices)}{" "}
+            {t("info-display-pizzas")}
           </span>
         </div>
       </div>

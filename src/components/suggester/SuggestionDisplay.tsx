@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { SuggestedQuantityPerPizza } from "../../services/suggestionService";
 import { priceToString } from "../../services/utils";
 
@@ -8,6 +9,7 @@ type SuggestionDisplayProps = {
 export function SuggestionDisplay({
   pizzas,
 }: Readonly<SuggestionDisplayProps>) {
+  const { t } = useTranslation();
   if (pizzas === undefined) return <></>;
   const total = Array.from(pizzas).reduce(
     (prev, [pizza, quantity]) => [
@@ -22,9 +24,9 @@ export function SuggestionDisplay({
       <table className="w-full">
         <thead>
           <tr className="border-b-2">
-            <th className="text-left w-1/2">Name</th>
-            <th className="text-center w-1/6">Quantity</th>
-            <th className="text-right w-2/6">Price</th>
+            <th className="text-left w-1/2">{t("pizza-table-name")}</th>
+            <th className="text-center w-1/6">{t("pizza-table-quantity")}</th>
+            <th className="text-right w-2/6">{t("pizza-table-price")}</th>
           </tr>
         </thead>
         <tbody>
@@ -44,7 +46,7 @@ export function SuggestionDisplay({
             );
           })}
           <tr className="font-bold border-t-2" data-testid="suggestion-total">
-            <td className="text-left">Total</td>
+            <td className="text-left">{t("suggester-suggestion-total")}</td>
             <td className="text-center" data-testid="suggestion-total-quantity">
               {total[1]}
             </td>

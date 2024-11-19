@@ -1,0 +1,57 @@
+{
+  "translation": {
+    "people-panel-title": "People",
+    "people-panel-total": "Total: {{total}}",
+
+    "diet-icon-omnivorous": "omnivorous",
+    "diet-icon-pesco-vegetarian": "pesco‑vegetarian",
+    "diet-icon-vegetarian": "vegetarian",
+    "diet-icon-vegan": "vegan",
+
+    "pizza-table-quantity": "Quantity",
+    "pizza-table-name": "Name",
+    "pizza-table-eaten-by": "Eaten by",
+    "pizza-table-price": "Price",
+
+    "pizza-form-placeholder": "4 Cheese",
+
+    "suggester-open-button": "Struggling to find the right proportions ? Click here",
+
+    "pizza-flag-perfect": "Perfect",
+    "pizza-flag-good": "Good",
+    "pizza-flag-okay": "Okay",
+    "pizza-flag-bad": "Bad",
+    "pizza-flag-cant-eat": "Can't eat",
+
+    "info-display-person": "pers",
+    "info-display-total": "total",
+    "info-display-slices": "slices",
+    "info-display-pizzas": "pizzas",
+
+    "graphs-expand-title": "Graphs",
+    "graphs-people": "People",
+    "graphs-pizza": "Pizzas",
+
+    "details-expand-title": "Details",
+    "details-worst-case-scenario": "Worst case scenario",
+    "details-random-case-scenario": "Random case scenario",
+    "details-average-case-scenario": "Averange case scenario",
+    "details-best-case-scenario": "Best case scenario",
+
+    "parameters-expand-title": "Parameters",
+    "parameters-slices": "Slices per pizzas",
+    "parameters-fairness": "Fairness",
+
+    "suggester-popup-title": "Suggestion computer",
+    "suggester-description": "Select your suggestion parameters below",
+    "suggester-unfairness": "Unfairness:",
+    "suggester-strategy": "Strategy:",
+    "suggester-quantity": "Quantity per persons:",
+    "suggester-compute": "Compute suggestion",
+    "suggester-strategy-minimal": "Minimal cost",
+    "suggester-strategy-maximal": "Maximal diversity",
+    "suggester-error": "Error: the pizza list is missing diets that people in your group have.",
+    "suggester-suggestion-total": "Total",
+    "suggester-apply": "Apply suggestion"
+  }
+}

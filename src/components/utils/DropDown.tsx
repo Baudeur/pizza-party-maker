@@ -1,13 +1,14 @@
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 type DropDownProps<T extends number | string> = {
-  options: { value: T; label: string }[];
+  options: { value: T; label: string; disabled?: boolean; icon?: ReactNode }[];
   value: T;
   onChange: (value: T) => void;
   onScrollBottom?: () => void;
   className?: string;
   testId?: string;
+  minimal?: boolean;
 };
 
 export function DropDown<T extends number | string>({
@@ -17,6 +18,7 @@ export function DropDown<T extends number | string>({
   onScrollBottom = () => {},
   className,
   testId,
+  minimal = false,
 }: Readonly<DropDownProps<T>>) {
   const [dropDownShown, setDropDownShown] = useState(false);
 
@@ -29,6 +31,9 @@ export function DropDown<T extends number | string>({
     if (bottom) onScrollBottom();
   }
 
+  const selectedOption =
+    options[options.findIndex((opt) => opt.value === value)];
+
   return (
     <button
       className={`relative ${className}`}
@@ -37,23 +42,35 @@ export function DropDown<T extends number | string>({
       data-testid={testId && `${testId}-button`}
     >
       <div
-        className={`h-[30px] bg-white rounded-lg flex items-center justify-between pr-2 pl-3 cursor-pointer`}
+        className={`h-[30px] ${
+          selectedOption.icon ? "hover:brightness-[80%]" : "hover:brightness-95"
+        } ${
+          !minimal && "bg-white"
+        } rounded-lg flex items-center justify-between pr-2 pl-3 cursor-pointer`}
       >
         <div className="text-left">
-          {options[options.findIndex((opt) => opt.value === value)].label}
+          {selectedOption.icon ? selectedOption.icon : selectedOption.label}
         </div>
-        <ChevronDown size={15} className={`${dropDownShown && "rotate-180"}`} />
+        {!minimal && (
+          <ChevronDown
+            size={15}
+            className={`transition-all ${dropDownShown && "-rotate-180"}`}
+          />
+        )}
       </div>
       {dropDownShown && (
         <div
-          className="z-10 absolute bg-white w-full rounded-lg overflow-hidden border-gray-200 border-2 shadow-md overflow-y-auto max-h-[150px]"
+          className="z-20 absolute bg-white min-w-full rounded-lg overflow-hidden border-gray-200 border-2 shadow-md overflow-y-auto max-h-[150px]"
           onScroll={handleScroll}
         >
-          {options.map(({ value: val, label }) => (
+          {options.map(({ value: val, label, disabled = false, icon }) => (
             <div
-              className="hover:bg-gray-200 text-left pl-3 w-full"
+              className={`flex items-center gap-1 ${
+                disabled ? "text-gray-400 grayscale" : "hover:bg-gray-200"
+              } text-left px-3 min-w-full`}
               key={label}
               onClick={() => {
+                if (disabled) return;
                 onChange(val);
                 setDropDownShown(false);
               }}
@@ -63,6 +80,7 @@ export function DropDown<T extends number | string>({
               }}
               data-testid={testId && `${testId}-${val}-option`}
             >
+              {icon}
               {label}
             </div>
           ))}

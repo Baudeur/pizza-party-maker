@@ -13,6 +13,7 @@ import { Spinner } from "../utils/Spinner";
 import { SuggestionDisplay } from "./SuggestionDisplay";
 import { modifyPizza } from "../../modules/pizzas/slice";
 import workerUrl from "/src/services/workerService?worker&url";
+import { useTranslation } from "react-i18next";
 
 const optionsInit = [
   { value: 1 / 8, label: "1/8" },
@@ -40,6 +41,7 @@ type SuggestOverlayContentProps = {
 export function SuggestOverlayContent({
   close,
 }: Readonly<SuggestOverlayContentProps>) {
+  const { t } = useTranslation();
   const [fairness, setFairness] = useState(1.25);
   const [suggestMode, setSuggestMode] = useState<SuggestMode>("lowerCost");
   const [quantity, setQuantity] = useState(1);
@@ -132,14 +134,46 @@ export function SuggestOverlayContent({
   return (
     <div className="w-[500px]">
       <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-2 text-center w-full">
-        Select your suggestion parameters
+        {t("suggester-popup-title")}
       </p>
-      <p className="mb-2">
-        This form will suggest you an order based on certain parameters
-      </p>
+      <p className="mb-2">{t("suggester-description")}</p>
       <div className="flex flex-col gap-2">
+        <div className="flex w-full gap-2 items-center">
+          <div
+            className="w-2/5 text-right"
+            data-testid="suggester-quantity-label"
+          >
+            {t("suggester-quantity")}
+          </div>
+          <DropDown<number>
+            className="w-[100px]"
+            options={options}
+            value={quantity}
+            onChange={(value) => setQuantity(value)}
+            onScrollBottom={addChoices}
+            testId="suggester-quantity-dropdown"
+          />
+        </div>
+        <div className="flex w-full gap-2 items-center">
+          <div
+            className="w-2/5 text-right"
+            data-testid="suggester-strategy-label"
+          >
+            {t("suggester-strategy")}
+          </div>
+          <DropDown<string>
+            className="w-[175px]"
+            options={[
+              { value: "lowerCost", label: t("suggester-strategy-minimal") },
+              { value: "maxDiversity", label: t("suggester-strategy-maximal") },
+            ]}
+            value={suggestMode}
+            onChange={(value) => setSuggestMode(value as SuggestMode)}
+            testId="suggester-strategy-dropdown"
+          />
+        </div>
         <div className="px-2 flex gap-2 w-full">
-          <div>Unfairness:</div>
+          <div className="w-2/5 text-right">{t("suggester-unfairness")}</div>
           <div className="bg-white font-bold w-16 text-center h-full rounded-lg">
             {(fairness * 100).toFixed(0)}%
           </div>
@@ -154,34 +188,6 @@ export function SuggestOverlayContent({
             data-testid="suggester-fairness-slider"
           />
         </div>
-        <div className="flex w-full gap-2 items-center">
-          <div className="pl-2" data-testid="suggester-strategy-label">
-            Strategy:
-          </div>
-          <DropDown<string>
-            className="w-[175px]"
-            options={[
-              { value: "lowerCost", label: "Minimal cost" },
-              { value: "maxDiversity", label: "Maximal diversity" },
-            ]}
-            value={suggestMode}
-            onChange={(value) => setSuggestMode(value as SuggestMode)}
-            testId="suggester-strategy-dropdown"
-          />
-        </div>
-        <div className="flex w-full gap-2 items-center">
-          <div className="pl-2" data-testid="suggester-quantity-label">
-            Quantity per persons:
-          </div>
-          <DropDown<number>
-            className="w-[100px]"
-            options={options}
-            value={quantity}
-            onChange={(value) => setQuantity(value)}
-            onScrollBottom={addChoices}
-            testId="suggester-quantity-dropdown"
-          />
-        </div>
         <Button
           color="green"
           onClick={handleCompute}
@@ -189,15 +195,14 @@ export function SuggestOverlayContent({
           disabled={isLoading}
           testId="suggester-compute-button"
         >
-          Compute suggestion
+          {t("suggester-compute")}
         </Button>
         {error && (
           <span
             className="text-red-500 font-bold text-sm"
             data-testid="suggester-error-message"
           >
-            Error: the pizza list is missing diets that people in your group
-            have.
+            {t("suggester-error")}
           </span>
         )}
         {isLoading && <Spinner />}
@@ -210,7 +215,7 @@ export function SuggestOverlayContent({
               className="w-full font-bold rounded-lg mt-2"
               testId="suggester-apply-button"
             >
-              Apply suggestion
+              {t("suggester-apply")}
             </Button>
           </div>
         )}

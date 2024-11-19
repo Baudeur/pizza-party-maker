@@ -10,8 +10,10 @@ import {
 } from "../../modules/params/slice";
 import { IntegerInput } from "../utils/IntegerInput";
 import { FairnessSelector } from "../utils/FairnessSelector";
+import { useTranslation } from "react-i18next";
 
 export function Params() {
+  const { t } = useTranslation();
   const slices = useSelector(sliceSelector);
   const { okay, bad } = useSelector(thresholdsSelector);
   const dispatch = useDispatch();
@@ -24,7 +26,7 @@ export function Params() {
   return (
     <div>
       <div className="flex text-lg w-64 items-center mb-2">
-        <span className="mr-2">Slices per pizzas</span>
+        <span className="mr-2">{t("parameters-slices")}</span>
         <IntegerInput
           value={slices}
           setValue={(value) => dispatch(setSlices(value))}
@@ -34,7 +36,7 @@ export function Params() {
         />
       </div>
       <div className="flex text-lg mb-2">
-        <span className="mr-2 w-16 text-start">Fairness</span>
+        <span className="mr-2 w-16 text-start">{t("parameters-fairness")}</span>
         <FairnessSelector
           value1={okay}
           value2={bad}
