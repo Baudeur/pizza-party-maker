@@ -106,14 +106,6 @@ export function Calculator() {
           testId="best-case"
         />
       </Expand>
-      {/* <Expand
-        label="Parameters"
-        heigth="h-32"
-        className="mt-2"
-        testId="parameters-expand"
-      >
-        <Params />
-      </Expand> */}
       <OverlayWrapper
         show={displayOverlay}
         close={() => setDisplayOverlay(false)}

@@ -1,10 +1,10 @@
 import { PropsWithChildren, ReactNode, useCallback, useState } from "react";
-import { Button } from "./Button";
+import { Button, ButtonColor } from "./Button";
 import { Check } from "lucide-react";
 
 type ButtonProps = {
   className?: string;
-  color: "green" | "red" | "yellow";
+  color: ButtonColor;
   onClick: () => void;
   tabIndex?: number;
   disabled?: boolean;

@@ -45,14 +45,14 @@ export function IntegerInput({
     <div
       className={`h-8 flex rounded-lg justify-center overflow-hidden w-24 ${
         animateShow || focus ? "opacity-100" : "opacity-0"
-      } transition-all duration-0 ${className}`}
+      } transition-opacity duration-0 ${className}`}
     >
       {!onDelete && (
         <Button
           className={`text-lg ${
-            animateShow || focus ? "min-w-7 w-7" : "w-0 min-w-0"
-          } transition-all ease-out duration-200`}
-          color={"red"}
+            animateShow || focus ? "min-w-7 w-7" : "min-w-0 w-0"
+          } transition-width ease-out duration-200`}
+          color="red"
           onClick={() => value != min && setValue(value - 1)}
           tabIndex={-1}
           testId={testId && `${testId}-minus`}
@@ -63,9 +63,9 @@ export function IntegerInput({
       {onDelete && (
         <Button
           className={`text-lg ${
-            animateShow || focus ? "min-w-7 w-7" : "w-0 min-w-0"
-          } transition-all ease-out duration-200`}
-          color={"red"}
+            animateShow || focus ? "min-w-7 w-7" : "min-w-0 w-0"
+          } transition-width ease-out duration-200`}
+          color="red"
           onClick={() => (value !== 0 ? setValue(value - 1) : onDelete())}
           tabIndex={-1}
           testId={testId && `${testId}-minus`}
@@ -89,8 +89,8 @@ export function IntegerInput({
       <Button
         className={`text-lg ${
           animateShow || focus ? "min-w-7 w-7" : "w-0 min-w-0"
-        } transition-all ease-out duration-200`}
-        color={"green"}
+        } transition-width ease-out duration-200`}
+        color="green"
         onClick={() => {
           if (max !== undefined && value >= max) return;
           setValue(value + 1);

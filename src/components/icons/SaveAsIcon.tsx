@@ -12,8 +12,8 @@ export function SaveAsIcon({
   backgroundColor,
 }: Readonly<IconProp>) {
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
-      <Save size={size} strokeWidth={strokeWidth} className="absolute" />
+    <div className={`relative h-fit w-fit flex items-center justify-center`}>
+      <Save size={size} strokeWidth={strokeWidth} />
       <div
         className={`absolute translate-x-1/2 translate-y-1/2 ${backgroundColor} rounded-full`}
       >

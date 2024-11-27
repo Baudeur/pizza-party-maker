@@ -53,7 +53,7 @@ test("Slice parameter influences fields", async ({ page }) => {
 test("Fairness parameter can be changed by mouse or keyboard", async ({
   page,
 }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const fairnessParameter = page.getByTestId("fairness-parameter");
@@ -81,7 +81,7 @@ test("Fairness parameter can be changed by mouse or keyboard", async ({
 test("Fairness parameter can be changed by clicking on graph", async ({
   page,
 }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const fairnessParameter = page.getByTestId("fairness-parameter");
@@ -105,7 +105,7 @@ test("Fairness parameter can be changed by clicking on graph", async ({
 test("Fairness parameter can't go lower than 105 or higher than 200", async ({
   page,
 }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const fairnessParameter = page.getByTestId("fairness-parameter");
@@ -131,8 +131,8 @@ test("Fairness parameter can't go lower than 105 or higher than 200", async ({
 });
 
 test("Fairness parameter can't cross", async ({ page }) => {
-  await page.goto("localhost:5173");
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const fairnessParameter = page.getByTestId("fairness-parameter");
@@ -163,7 +163,7 @@ test("Fairness parameter can't cross", async ({ page }) => {
 });
 
 test("Fairness parameter can be reset to default", async ({ page }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const fairnessParameter = page.getByTestId("fairness-parameter");
@@ -181,7 +181,7 @@ test("Fairness parameter can be reset to default", async ({ page }) => {
 });
 
 test("Fairness parameter influences flags", async ({ page }) => {
-  await page.goto("localhost:5173");
+  await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 1, 0, 0);
   await createPizza(page, 1);
   await createPizza(page, 1, "", "pescoVegetarian");

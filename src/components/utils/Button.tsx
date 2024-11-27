@@ -1,8 +1,10 @@
 import { PropsWithChildren } from "react";
 
+export type ButtonColor = "green" | "red" | "yellow" | "primary";
+
 type ButtonProps = {
   className?: string;
-  color: "green" | "red" | "yellow";
+  color: ButtonColor;
   onClick: () => void;
   tabIndex?: number;
   disabled?: boolean;
@@ -25,11 +27,11 @@ export function Button({
   return (
     <button
       tabIndex={tabIndex}
-      className={`${className} hover:brightness-90 active:brightness-[80%] h-8 flex justify-center items-center ${disabledStyle} ${
+      className={`${className} hover:brightness-90 transition-colors active:brightness-[80%] h-8 flex justify-center items-center ${disabledStyle} ${
         color === "red" && "bg-red-500"
       } ${color === "green" && "bg-green-500"} ${
         color === "yellow" && "bg-yellow-500"
-      }`}
+      } ${color === "primary" && "bg-amber-400"}`}
       onClick={onClick}
       disabled={disabled}
       data-testid={testId}

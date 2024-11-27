@@ -53,6 +53,7 @@ const pizzerias = createSlice({
         pizzerias: storeState(
           state.pizzerias.filter((pizzerias) => pizzerias.id !== action.payload)
         ),
+        loaded: action.payload === state.loaded ? undefined : state.loaded,
       };
     },
     modifyPizzeria: (state, action: PayloadAction<Pizzeria>) => {

@@ -98,11 +98,7 @@ export function SaveAsPizzeriaOverlayContent() {
           <span className="text-red-500 mb-2">
             A pizzeria with this name already exists, override ?
           </span>
-          <PizzeriaDisplayer
-            pizzeria={nameConflict}
-            className="max-h-48"
-            testId="save-as-conflict-pizzeria-displayer"
-          />
+          <PizzeriaDisplayer pizzeria={nameConflict} className="max-h-48" />
           <div className="flex w-full gap-2 mt-2">
             <Button
               onClick={handleCancel}
