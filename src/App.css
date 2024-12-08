@@ -43,14 +43,14 @@
   transition: transform --tw-translate-y;
   animation-name: goingDownTwoStepsFirstElement;
   animation-iteration-count: 1;
-  animation-duration: 750ms;
+  animation-duration: 1000ms;
 }
 
 .goingDownTwoStepsSecondElement {
   transition: transform --tw-translate-y;
   animation-name: goingDownTwoStepsSecondElement;
   animation-iteration-count: 1;
-  animation-duration: 750ms;
+  animation-duration: 1000ms;
 }
 
 .transition-width {

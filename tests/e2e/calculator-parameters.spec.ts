@@ -212,6 +212,7 @@ async function setCursorTo(
   moveArea: Locator,
   value: number
 ) {
+  await page.waitForTimeout(500); //wait for animation to end before getting bounding box
   const bounds = await moveArea.boundingBox();
   const percentage = (value - 105) / 95;
   await cursor.hover();

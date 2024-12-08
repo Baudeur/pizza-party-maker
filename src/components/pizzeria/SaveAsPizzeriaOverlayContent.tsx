@@ -53,18 +53,30 @@ export function SaveAsPizzeriaOverlayContent() {
   }, [close, nameConflict, dispatch, pizzas]);
 
   const handleCancel = useCallback(() => {
+    if (nameConflict === undefined) return;
     setNameConflict(undefined);
     setName("");
-  }, []);
+  }, [nameConflict]);
+
+  const handleKeyPress = (event: KeyboardEvent) => {
+    if (event.key == "Enter") handleOverride();
+    if (event.key == "Escape") handleCancel();
+  };
 
   useEffect(() => {
-    if (nameConflict === undefined) inputRef.current?.focus();
+    if (nameConflict === undefined) {
+      inputRef.current?.focus();
+      removeEventListener("keydown", handleKeyPress);
+    } else {
+      addEventListener("keydown", handleKeyPress);
+    }
+    return () => removeEventListener("keydown", handleKeyPress);
   }, [nameConflict]);
 
   return (
     <div className="w-[500px]">
       <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-2 text-center w-full">
-        Save pizzeria as...
+        Save pizzeria as... {nameConflict?.id}
       </p>
       {nameConflict === undefined && (
         <div className="flex justify-between w-full items-center gap-2 mt-2">
@@ -72,6 +84,7 @@ export function SaveAsPizzeriaOverlayContent() {
             className="flex gap-2 w-full"
             onKeyDown={(event) => {
               if (event.key === "Enter") handleCreatePizzeria();
+              event.stopPropagation();
             }}
           >
             <TextInput

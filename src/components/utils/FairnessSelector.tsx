@@ -3,7 +3,8 @@ import { useCallback, useRef } from "react";
 type FairnessSelectorProps = {
   value1: number;
   value2: number;
-  onChange: (value1: number, value2: number) => void;
+  onValue1Change: (value1: number) => void;
+  onValue2Change: (value2: number) => void;
   min: number;
   max: number;
   step: number;
@@ -25,13 +26,15 @@ const marginLeft = 25;
 export function FairnessSelector({
   value1,
   value2,
-  onChange,
+  onValue1Change,
+  onValue2Change,
   min,
   max,
   step,
   className,
 }: Readonly<FairnessSelectorProps>) {
   const ref = useRef<SVGRectElement>(null);
+
   const percentage1 = (value1 - min) / (max - min);
   const percentage2 = (value2 - min) / (max - min);
   //Width that we actually take percentages of
@@ -63,49 +66,62 @@ export function FairnessSelector({
       if (value === 1) {
         percentage = Math.min(percentage, percentage2);
         func = (val: number) => {
-          onChange(val, value2);
+          onValue1Change(val);
         };
       } else {
         percentage = Math.max(percentage1, percentage);
         func = (val: number) => {
-          onChange(value1, val);
+          onValue2Change(val);
         };
       }
       func(roundStep(percentage * (max - min) + min));
     },
-    [
-      ref,
-      max,
-      min,
-      percentage1,
-      percentage2,
-      roundStep,
-      value1,
-      value2,
-      onChange,
-      workingWidth,
-    ]
+    [ref, max, min, step, onValue1Change, onValue2Change]
   );
 
-  const listener1 = (ev: MouseEvent) => {
-    handleMove(1)(ev.pageX);
-  };
+  const listener1 = useCallback(
+    (ev: MouseEvent) => {
+      handleMove(1)(ev.pageX);
+    },
+    [handleMove]
+  );
 
-  const listener2 = (ev: MouseEvent) => {
-    handleMove(2)(ev.pageX);
-  };
+  const listener2 = useCallback(
+    (ev: MouseEvent) => {
+      handleMove(2)(ev.pageX);
+    },
+    [handleMove]
+  );
+
+  const handleStopDrag = useCallback(
+    (ev: MouseEvent) => {
+      removeEventListener("mousemove", listener1);
+      removeEventListener("mousemove", listener2);
+      removeEventListener("mouseup", handleStopDrag);
+      removeEventListener("click", handleStopDrag, true);
+      ev.preventDefault();
+      ev.stopPropagation();
+    },
+    [listener1, listener2]
+  );
+
+  //Exist so the don't exit the overlay if we mouseup in the background
+  const handleClickBlock = useCallback((ev: MouseEvent) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    removeEventListener("click", handleClickBlock, true);
+  }, []);
 
   const handleStartDrag1 = () => {
     addEventListener("mousemove", listener1);
+    addEventListener("mouseup", handleStopDrag);
+    addEventListener("click", handleClickBlock, true);
   };
   const handleStartDrag2 = () => {
     addEventListener("mousemove", listener2);
+    addEventListener("mouseup", handleStopDrag);
+    addEventListener("click", handleClickBlock, true);
   };
-  const handleStopDrag = () => {
-    removeEventListener("mousemove", listener1);
-    removeEventListener("mousemove", listener2);
-  };
-  addEventListener("mouseup", handleStopDrag);
 
   const handleClick = (area: string, x: number) => {
     if (area === "good") {
@@ -268,10 +284,10 @@ export function FairnessSelector({
           onMouseDown={handleStartDrag1}
           onKeyDown={(ev) => {
             if (ev.key === "ArrowRight") {
-              onChange(Math.min(value1 + 0.05, value2), value2);
+              onValue1Change(Math.min(value1 + 0.05, value2));
             }
             if (ev.key === "ArrowLeft") {
-              onChange(Math.max(value1 - 0.05, min), value2);
+              onValue2Change(Math.max(value1 - 0.05, min));
             }
           }}
           tabIndex={-1}
@@ -289,10 +305,10 @@ export function FairnessSelector({
           onMouseDown={handleStartDrag2}
           onKeyDown={(ev) => {
             if (ev.key === "ArrowRight") {
-              onChange(value1, Math.min(value2 + 0.05, max));
+              onValue2Change(Math.min(value2 + 0.05, max));
             }
             if (ev.key === "ArrowLeft") {
-              onChange(value1, Math.max(value2 - 0.05, value1));
+              onValue2Change(Math.max(value2 - 0.05, value1));
             }
           }}
           tabIndex={-1}

@@ -29,7 +29,7 @@ export function NoVisibleEffectButton({
   const handleClickAndAnimate = useCallback(() => {
     onClick();
     setAnimating(true);
-    setTimeout(() => setAnimating(false), 750);
+    setTimeout(() => setAnimating(false), 1000);
   }, [onClick]);
 
   return (

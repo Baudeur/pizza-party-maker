@@ -8,7 +8,9 @@ export async function checkPizza(
   diet: string,
   price: string
 ) {
-  const quantityDisplay = page.getByTestId(`${id}-pizza-display-quantity`);
+  const quantityDisplay = page.getByTestId(
+    `${id}-pizza-display-quantity-display`
+  );
   const nameDisplay = page.getByTestId(`${id}-pizza-display-name`);
   const dietDisplay = page.getByTestId(
     `${id}-pizza-display-diet-${diet}-diet-icon`

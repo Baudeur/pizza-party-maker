@@ -63,6 +63,11 @@ const pizzas = createSlice({
       return {
         ...state,
         pizzas: action.payload,
+        id:
+          action.payload.reduce(
+            (prev, curr) => (curr.id > prev ? curr.id : prev),
+            -1
+          ) + 1,
       };
     },
   },

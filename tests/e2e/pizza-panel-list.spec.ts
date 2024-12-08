@@ -6,9 +6,7 @@ test("User can hover pizza to see interactions", async ({ page }) => {
   await createPizza(page, 1, "4 Cheese", "vegetarian", "12.50");
   const pizzaLine = page.getByTestId("0-pizza-display");
   await pizzaLine.hover();
-  const quantityInput = page.getByTestId(
-    "0-pizza-display-quantity-editable-input"
-  );
+  const quantityInput = page.getByTestId("0-pizza-display-quantity-input");
   const editButton = page.getByTestId("0-pizza-display-edit-button");
   const deleteButton = page.getByTestId("0-pizza-display-delete-button");
   await expect(quantityInput).toBeVisible();
@@ -21,7 +19,7 @@ test("User can delete pizza in two ways", async ({ page }) => {
   await createPizza(page, 0);
   await createPizza(page, 0);
   const quantityMinusButton = page.getByTestId(
-    "0-pizza-display-quantity-editable-minus"
+    "0-pizza-display-quantity-minus"
   );
   const deleteButton = page.getByTestId("1-pizza-display-delete-button");
   const pizza0 = page.getByTestId("0-pizza-display");
@@ -39,15 +37,11 @@ test("User edit quantity without editing the pizza", async ({ page }) => {
   await createPizza(page, 0);
   const pizzaForm = page.getByTestId("pizza-form");
   const quantityMinusButton = page.getByTestId(
-    "0-pizza-display-quantity-editable-minus"
+    "0-pizza-display-quantity-minus"
   );
-  const quantityPlusButton = page.getByTestId(
-    "0-pizza-display-quantity-editable-plus"
-  );
-  const quantityInput = page.getByTestId(
-    "0-pizza-display-quantity-editable-input"
-  );
-  const quantityDisplay = page.getByTestId("0-pizza-display-quantity");
+  const quantityPlusButton = page.getByTestId("0-pizza-display-quantity-plus");
+  const quantityInput = page.getByTestId("0-pizza-display-quantity-input");
+  const quantityDisplay = page.getByTestId("0-pizza-display-quantity-display");
   const pizza0 = page.getByTestId("0-pizza-display");
   await pizza0.hover();
   await quantityInput.fill("4");

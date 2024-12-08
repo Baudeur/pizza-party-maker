@@ -53,7 +53,8 @@ export function Params() {
           <FairnessSelector
             value1={okay}
             value2={bad}
-            onChange={(value1, value2) => setThresholds(value1, value2)}
+            onValue1Change={(value1) => setThresholds(value1, bad)}
+            onValue2Change={(value2) => setThresholds(okay, value2)}
             min={1.05}
             max={2}
             step={0.05}

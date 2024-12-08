@@ -41,21 +41,15 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
       onMouseLeave={() => setHovered(false)}
       data-testid={`${pizza.id}-pizza-display`}
     >
-      <td className="relative">
+      <td>
         <IntegerInput
           value={pizza.quantity}
           setValue={handleQuantityChange}
           animateShow={hovered}
           onDelete={() => dispatch(removePizza(pizza.id))}
-          className="absolute z-[5] top-0"
-          testId={`${pizza.id}-pizza-display-quantity-editable`}
+          className="z-[5]"
+          testId={`${pizza.id}-pizza-display-quantity`}
         />
-        <div
-          className="absolute top-0 h-8 w-full bg-amber-100"
-          data-testid={`${pizza.id}-pizza-display-quantity`}
-        >
-          <div className="pt-[2px] font-bold w-24">{pizza.quantity}</div>
-        </div>
       </td>
       <td
         className="flex relative h-8"
