@@ -43,6 +43,7 @@ export function Calculator() {
         }}
         className="mt-2 font-bold w-full rounded-lg"
         testId="suggester-button"
+        title="Open suggester"
       >
         Struggling to find the right proportions ? Click here
       </Button>
@@ -67,6 +68,7 @@ export function Calculator() {
               setShowOverlay(true);
             }}
             data-testid="details-overlay-button"
+            title="Help"
           >
             <CircleHelp
               size={25}

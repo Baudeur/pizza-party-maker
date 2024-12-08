@@ -63,6 +63,8 @@ export function IntegerInput({
             onClick={() => value != min && setValue(value - 1)}
             tabIndex={-1}
             testId={testId && `${testId}-minus`}
+            disabled={value === min}
+            title="Minus"
           >
             <Minus size={20} strokeWidth={2} />
           </Button>
@@ -73,9 +75,10 @@ export function IntegerInput({
               animateShow || focus ? "min-w-7 w-7" : "min-w-0 w-0"
             } transition-width ease-out duration-200`}
             color="red"
-            onClick={() => (value !== 0 ? setValue(value - 1) : onDelete())}
+            onClick={() => (value !== min ? setValue(value - 1) : onDelete())}
             tabIndex={-1}
             testId={testId && `${testId}-minus`}
+            title={value !== min ? "Minus" : "Delete"}
           >
             {value !== 0 ? (
               <Minus size={20} strokeWidth={2} />
@@ -104,6 +107,8 @@ export function IntegerInput({
           }}
           tabIndex={-1}
           testId={testId && `${testId}-plus`}
+          disabled={value === max}
+          title="Plus"
         >
           <Plus size={20} strokeWidth={2} />
         </Button>

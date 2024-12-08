@@ -52,6 +52,7 @@ export function ManagePizzeriaOverlayContent() {
                 testId={`manage-${formatNameForTestId(
                   pizzeria.name
                 )}-delete-button`}
+                title={`Delete ${pizzeria.name}`}
               >
                 <Trash2 size={20} strokeWidth={2} />
               </Button>
@@ -62,6 +63,7 @@ export function ManagePizzeriaOverlayContent() {
                 testId={`manage-${formatNameForTestId(
                   pizzeria.name
                 )}-load-button`}
+                title={`Load ${pizzeria.name}`}
               >
                 Load
               </Button>
@@ -73,6 +75,7 @@ export function ManagePizzeriaOverlayContent() {
                 data-testid={`manage-${formatNameForTestId(
                   pizzeria.name
                 )}-select-button`}
+                title={`See ${pizzeria.name}`}
               >
                 <div className="truncate text-left" title={pizzeria.name}>
                   {pizzeria.name}

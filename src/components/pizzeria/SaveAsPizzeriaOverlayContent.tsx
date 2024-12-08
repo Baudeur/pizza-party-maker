@@ -100,6 +100,7 @@ export function SaveAsPizzeriaOverlayContent() {
               onClick={handleCreatePizzeria}
               className="min-w-[68px] rounded-lg"
               testId="save-as-pizzeria-save-button"
+              title="Save"
             >
               <Save size={20} strokeWidth={2} />
             </Button>

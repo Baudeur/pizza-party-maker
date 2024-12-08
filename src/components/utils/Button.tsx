@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 
-export type ButtonColor = "green" | "red" | "yellow" | "primary";
+export type ButtonColor = "green" | "red" | "yellow";
 
 type ButtonProps = {
   className?: string;
@@ -31,7 +31,7 @@ export function Button({
         color === "red" && "bg-red-500"
       } ${color === "green" && "bg-green-500"} ${
         color === "yellow" && "bg-yellow-500"
-      } ${color === "primary" && "bg-amber-400"}`}
+      }`}
       onClick={onClick}
       disabled={disabled}
       data-testid={testId}
