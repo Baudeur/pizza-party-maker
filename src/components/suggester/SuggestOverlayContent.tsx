@@ -12,6 +12,7 @@ import { peopleSelector } from "../../modules/people/selector";
 import { Spinner } from "../utils/Spinner";
 import { SuggestionDisplay } from "./SuggestionDisplay";
 import { modifyPizza } from "../../modules/pizzas/slice";
+import spinner from "../../assets/LoadingOmni.png";
 import workerUrl from "/src/services/workerService?worker&url";
 
 const optionsInit = [
@@ -54,6 +55,8 @@ export function SuggestOverlayContent({
   >();
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
+
+  new Image(1, 1).src = spinner; //preload spinner image
 
   function addChoices() {
     const addValue = options[options.length - 1].value;
@@ -185,7 +188,7 @@ export function SuggestOverlayContent({
         <Button
           color="green"
           onClick={handleCompute}
-          className="rounded-lg font-bold disabled:bg-gray-200 disabled:text-gray-400 disabled:hover:brightness-100"
+          className="rounded-lg font-bold"
           disabled={isLoading}
           testId="suggester-compute-button"
         >

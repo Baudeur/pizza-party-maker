@@ -69,10 +69,10 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
         </div>
         <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
           <span className="text-lg" data-testid="price-flag-per-person">
-            {priceToString(pricePerPerson)}€ / pers
+            {priceToString(pricePerPerson)} € / pers
           </span>
           <span className="text-lg" data-testid="price-flag-total">
-            {priceToString(priceTotal)}€ total
+            {priceToString(priceTotal)} € total
           </span>
         </div>
       </div>

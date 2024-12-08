@@ -40,7 +40,7 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
         <TextInput
           tabIndex={tabIndex}
           ref={ref}
-          className="pr-[25px] text-right"
+          className={`pr-[25px] text-right ${className}`}
           value={price}
           onChange={onPriceChange}
           error={false}

@@ -59,8 +59,19 @@ const pizzas = createSlice({
         ],
       };
     },
+    setPizzas: (state, action: PayloadAction<Pizza[]>) => {
+      return {
+        ...state,
+        pizzas: action.payload,
+        id:
+          action.payload.reduce(
+            (prev, curr) => (curr.id > prev ? curr.id : prev),
+            -1
+          ) + 1,
+      };
+    },
   },
 });
 
 export const pizzasReducer = pizzas.reducer;
-export const { addPizza, removePizza, modifyPizza } = pizzas.actions;
+export const { addPizza, removePizza, modifyPizza, setPizzas } = pizzas.actions;

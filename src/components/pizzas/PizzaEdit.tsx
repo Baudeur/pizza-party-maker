@@ -78,6 +78,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
       </td>
       <td>
         <TextInput
+          className="w-full"
           tabIndex={0}
           ref={nameInputRef}
           placeholder="4 Cheese"
@@ -97,6 +98,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
       </td>
       <td>
         <PriceInput
+          className="w-full"
           ref={priceInputRef}
           price={price.toString()}
           setPrice={(price) => setPrice(price)}
@@ -111,6 +113,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
           color="green"
           onClick={() => handleSubmit()}
           testId={`${pizza.id}-pizza-edit-validate-button`}
+          title="Apply changes"
         >
           <Check size={20} strokeWidth={2} />
         </Button>
@@ -120,6 +123,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
           color="yellow"
           onClick={() => handleCancel()}
           testId={`${pizza.id}-pizza-edit-cancel-button`}
+          title="Cancel changes"
         >
           <Undo2 size={20} strokeWidth={2} />
         </Button>

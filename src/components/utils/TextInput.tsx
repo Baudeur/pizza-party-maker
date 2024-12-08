@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 
 type TextInputProps = {
   className?: string;
+
   placeholder?: string;
   value?: string;
   defaultValue?: string;
@@ -34,7 +35,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         defaultValue={defaultValue}
         value={value}
         onChange={onChange}
-        className={`outline-none focus:border-neutral-500 focus:border-2 border-[1px] border-neutral-300 rounded-lg h-8 px-2 w-full text-xl ${className} ${
+        className={`outline-none focus:border-neutral-500 focus:border-2 border-[1px] border-neutral-300 rounded-lg h-8 px-2 text-xl ${className} ${
           error ? "bg-red-200 border-red-500" : ""
         }`}
         data-testid={testId}

@@ -51,6 +51,7 @@ export function PizzaForm() {
       <td className="align-top pt-2">
         <div className="flex flex-col items-start">
           <TextInput
+            className="w-full"
             tabIndex={0}
             ref={nameInputRef}
             placeholder="4 Cheese"
@@ -70,6 +71,7 @@ export function PizzaForm() {
       </td>
       <td className="align-top pt-2">
         <PriceInput
+          className="w-full"
           tabIndex={0}
           price={price}
           setPrice={setPrice}
@@ -83,6 +85,7 @@ export function PizzaForm() {
           color={"green"}
           onClick={handleSubmit}
           testId="pizza-form-submit"
+          title="Add pizza"
         >
           <Plus size={20} strokeWidth={2} />
         </Button>
