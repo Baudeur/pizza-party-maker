@@ -26,6 +26,6 @@ export function LanguageSelector() {
       ]}
       value={language}
       minimal={true}
-    ></DropDown>
+    />
   );
 }

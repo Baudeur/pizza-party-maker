@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { SuggestedQuantityPerPizza } from "../../services/suggestionService";
 import { priceToString } from "../../services/utils";
+import { DietIcon } from "../icons/DietIcon";
 
 type SuggestionDisplayProps = {
   pizzas: SuggestedQuantityPerPizza;
@@ -25,8 +26,9 @@ export function SuggestionDisplay({
         <thead>
           <tr className="border-b-2">
             <th className="text-left w-1/2">{t("pizza-table-name")}</th>
+            <th className="text-left w-1/6">Eaten By</th>
             <th className="text-center w-1/6">{t("pizza-table-quantity")}</th>
-            <th className="text-right w-2/6">{t("pizza-table-price")}</th>
+            <th className="text-right w-1/6">{t("pizza-table-price")}</th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +40,13 @@ export function SuggestionDisplay({
                 data-testid={`suggestion-line-${pizza.id}`}
               >
                 <td className="text-left">{pizza.name}</td>
+                <td className="flex justify-center items-center h-6">
+                  <DietIcon
+                    type={pizza.eatenBy}
+                    color="Color"
+                    className="size-5"
+                  />
+                </td>
                 <td className="text-center">{quantity}</td>
                 <td className="text-right">
                   {priceToString(pizza.price * quantity)} €
@@ -47,6 +56,7 @@ export function SuggestionDisplay({
           })}
           <tr className="font-bold border-t-2" data-testid="suggestion-total">
             <td className="text-left">{t("suggester-suggestion-total")}</td>
+            <td></td>
             <td className="text-center" data-testid="suggestion-total-quantity">
               {total[1]}
             </td>

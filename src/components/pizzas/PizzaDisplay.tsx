@@ -41,21 +41,15 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
       onMouseLeave={() => setHovered(false)}
       data-testid={`${pizza.id}-pizza-display`}
     >
-      <td className="relative">
+      <td>
         <IntegerInput
           value={pizza.quantity}
           setValue={handleQuantityChange}
           animateShow={hovered}
           onDelete={() => dispatch(removePizza(pizza.id))}
-          className="absolute z-[5] top-0"
-          testId={`${pizza.id}-pizza-display-quantity-editable`}
+          className="z-[5]"
+          testId={`${pizza.id}-pizza-display-quantity`}
         />
-        <div
-          className="absolute top-0 h-8 w-full bg-amber-100"
-          data-testid={`${pizza.id}-pizza-display-quantity`}
-        >
-          <div className="pt-[2px] font-bold w-24">{pizza.quantity}</div>
-        </div>
       </td>
       <td
         className="flex relative h-8"
@@ -95,6 +89,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             color="green"
             onClick={() => handleDoubleClick("name")}
             testId={`${pizza.id}-pizza-display-edit-button`}
+            title="Edit pizza"
           >
             <Pencil size={20} strokeWidth={2} />
           </Button>
@@ -103,6 +98,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             color="red"
             onClick={() => dispatch(removePizza(pizza.id))}
             testId={`${pizza.id}-pizza-display-delete-button`}
+            title="Delete pizza"
           >
             <Trash2 size={20} strokeWidth={2} />
           </Button>

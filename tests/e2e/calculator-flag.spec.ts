@@ -68,8 +68,8 @@ test("Price flag is correct", async ({ page }) => {
   await createPizza(page, 1, "", "vegetarian", "11");
   const priceFlag = page.getByTestId("price-flag-per-person");
   const priceFlagTotal = page.getByTestId("price-flag-total");
-  await expect(priceFlag).toHaveText("6.25€ / pers");
-  await expect(priceFlagTotal).toHaveText("25€ total");
+  await expect(priceFlag).toHaveText("6.25 € / pers");
+  await expect(priceFlagTotal).toHaveText("25 € total");
 });
 
 test("Quantity flag is correct", async ({ page }) => {

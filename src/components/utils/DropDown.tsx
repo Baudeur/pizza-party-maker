@@ -45,8 +45,8 @@ export function DropDown<T extends number | string>({
         className={`h-[30px] ${
           selectedOption.icon ? "hover:brightness-[80%]" : "hover:brightness-95"
         } ${
-          !minimal && "bg-white"
-        } rounded-lg flex items-center justify-between pr-2 pl-3 cursor-pointer`}
+          !minimal && "bg-white pr-2 pl-3"
+        } rounded-lg flex items-center justify-between cursor-pointer`}
       >
         <div className="text-left">
           {selectedOption.icon ? selectedOption.icon : selectedOption.label}
@@ -60,7 +60,9 @@ export function DropDown<T extends number | string>({
       </div>
       {dropDownShown && (
         <div
-          className="z-20 absolute bg-white min-w-full rounded-lg overflow-hidden border-gray-200 border-2 shadow-md overflow-y-auto max-h-[150px]"
+          className={`z-20 absolute bg-white min-w-full rounded-lg overflow-hidden border-gray-200 border-2 shadow-md overflow-y-auto max-h-[150px] ${
+            minimal && "-left-[14px]"
+          }`}
           onScroll={handleScroll}
         >
           {options.map(({ value: val, label, disabled = false, icon }) => (

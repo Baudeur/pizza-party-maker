@@ -10,11 +10,10 @@ import {
 } from "../../services/calculatorService";
 import { InfoDisplay } from "./InfoDisplay";
 import { sliceSelector } from "../../modules/params/selector";
-import { Params } from "./Params";
 import { Expand } from "../utils/Expand";
 import { CaseScenario } from "./CaseScenario";
 import { pizzaQuantityEquality } from "../../services/utils";
-import { Info } from "lucide-react";
+import { CircleHelp } from "lucide-react";
 import { useState } from "react";
 import { CaseScenarioOverlayContent } from "./CaseScenarioOverlayContent";
 import { GraphComparison } from "../graph/GraphComparison";
@@ -46,6 +45,7 @@ export function Calculator() {
         }}
         className="mt-2 font-bold w-full rounded-lg"
         testId="suggester-button"
+        title="Open suggester"
       >
         {t("suggester-open-button")}
       </Button>
@@ -70,8 +70,9 @@ export function Calculator() {
               setShowOverlay(true);
             }}
             data-testid="details-overlay-button"
+            title="Help"
           >
-            <Info
+            <CircleHelp
               size={25}
               color="black"
               strokeWidth={2}
@@ -108,14 +109,6 @@ export function Calculator() {
           peopleAte={peopleAteBest}
           testId="best-case"
         />
-      </Expand>
-      <Expand
-        label={t("parameters-expand-title")}
-        heigth="h-32"
-        className="mt-2"
-        testId="parameters-expand"
-      >
-        <Params />
       </Expand>
       <OverlayWrapper
         show={displayOverlay}
