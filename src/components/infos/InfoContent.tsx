@@ -12,6 +12,9 @@ import {
   Minus,
   Pencil,
   Plus,
+  Save,
+  Settings,
+  Store,
   Trash2,
   Undo2,
 } from "lucide-react";
@@ -20,6 +23,7 @@ import priceIcon from "../../assets/Cash.png";
 import sliceIcon from "../../assets/Pizza.png";
 import title from "../../assets/Title.png";
 import { Trans, useTranslation } from "react-i18next";
+import { SaveAsIcon } from "../icons/SaveAsIcon";
 
 const flagStates: FlagState[] = [
   "perfect",
@@ -133,6 +137,27 @@ const components = {
       </Button>
     </span>
   ),
+  saveButton: (
+    <span className="inline-block translate-y-1">
+      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
+        <Save size={20} strokeWidth={2} />
+      </Button>
+    </span>
+  ),
+  saveAsButton: (
+    <span className="inline-block translate-y-1">
+      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
+        <SaveAsIcon size={20} strokeWidth={2} backgroundColor="bg-green-500" />
+      </Button>
+    </span>
+  ),
+  pizzeriasButton: (
+    <span className="inline-block translate-y-1">
+      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
+        <Store size={20} strokeWidth={2} />
+      </Button>
+    </span>
+  ),
   leftArrowKey: (
     <span className="inline-block size-7 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)] translate-y-1">
       <span className="flex items-center justify-center size-full">
@@ -164,6 +189,9 @@ const components = {
   ),
   infoIcon: (
     <Info size={20} strokeWidth={2} color="gray" className="inline-block" />
+  ),
+  parametersIcon: (
+    <Settings size={20} strokeWidth={2} color="gray" className="inline-block" />
   ),
 };
 
@@ -251,11 +279,8 @@ export function InfoContent() {
           <p>
             <Trans i18nKey="info-people-l4" components={components} />
           </p>
-          <p className="mb-2">
-            <Trans i18nKey="info-people-p2" components={components} />
-          </p>
 
-          <p>{t("info-people-p3")}</p>
+          <p className="mt-2">{t("info-people-p3")}</p>
         </div>
 
         {/* ########## The Pizza Panel ########## */}
@@ -266,41 +291,31 @@ export function InfoContent() {
           </p>
           <p className="mb-2">{t("info-pizza-p1")}</p>
           <p className="mb-4">{t("info-pizza-p2")}</p>
-          <p className="mb-2">{t("info-pizza-p3")}</p>
+          <p className="mb-2 underline">{t("info-pizza-p3")}</p>
           <div className="w-40 mb-2">
             <DietSelector tabIndex={0} value={diet} onChange={setDiet} />
           </div>
+          <p>
+            <Trans i18nKey="info-pizza-l1" components={components} />
+            <Trans i18nKey="info-pizza-l2" components={components} />
+            <Trans i18nKey="info-pizza-l3" components={components} />
+            <Trans i18nKey="info-pizza-l4" components={components} />
+          </p>
           <p className="mb-2">
             <Trans i18nKey="info-pizza-p4" components={components} />
           </p>
           <p>
-            <Trans i18nKey="info-pizza-l1" components={components} />
-          </p>
-          <p>
-            <Trans i18nKey="info-pizza-l2" components={components} />
-          </p>
-          <p>
-            <Trans i18nKey="info-pizza-l3" components={components} />
-          </p>
-          <p className="mb-4">
-            <Trans i18nKey="info-pizza-l4" components={components} />
-          </p>
-          <p>
             <Trans i18nKey="info-pizza-p5" components={components} />
           </p>
-          <p className="mb-4">
+          <p className="mt-4">
             <Trans i18nKey="info-pizza-p6" components={components} />
           </p>
+          <p className="mt-4">
+            <Trans i18nKey="info-pizzeria-p1" components={components} />
+          </p>
           <p>
-            <Trans i18nKey="info-pizza-p7" components={components} />
+            <Trans i18nKey="info-pizzeria-p2" components={components} />
           </p>
-          <p className="mb-4">
-            <Trans i18nKey="info-pizza-p8" components={components} />
-          </p>
-          <p className="mb-4">
-            <Trans i18nKey="info-pizza-p9" components={components} />
-          </p>
-          <p>{t("info-pizza-p10")}</p>
         </div>
 
         {/* ########## The Result Panel ########## */}
@@ -333,7 +348,6 @@ export function InfoContent() {
               </div>
             </div>
           </div>
-          <p>{t("info-result-p3")}</p>
 
           <hr className="my-2 border-black w-[90%] mx-[5%]" />
 
@@ -357,13 +371,24 @@ export function InfoContent() {
             <Trans i18nKey="info-result-p5" components={components} />
           </p>
 
-          <p>{t("info-result-p6")}</p>
+          <p>
+            <Trans i18nKey="info-result-p6" components={components} />
+          </p>
           <ul className="list-disc list-inside mb-2">
             <li>
               <Trans i18nKey="info-result-p7" components={components} />
             </li>
-            <li>{t("info-result-p8")}</li>
+            <li>
+              <Trans i18nKey="info-result-p8" components={components} />
+            </li>
           </ul>
+
+          <p className="underline">{t("info-suggester-title")}</p>
+
+          <p>{t("info-suggester-p1")}</p>
+          <p>{t("info-suggester-p2")}</p>
+          <p>{t("info-suggester-p3")}</p>
+          <p>{t("info-suggester-p4")}</p>
         </div>
 
         {/* ########## Thanks ########## */}

@@ -27,11 +27,11 @@ export function Params() {
   return (
     <div>
       <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-4 text-center w-full">
-        Parameters
+        {t("parameters-title")}
       </p>
       <div className="px-4">
         <div className="flex text-lg w-64 items-center mb-2">
-          <span className="mr-2">{t("parameters-slices")}</span>
+          <span className="mr-2 font-bold">{t("parameters-slices")}</span>
           <IntegerInput
             value={slices}
             setValue={(value) => dispatch(setSlices(value))}
@@ -42,7 +42,7 @@ export function Params() {
         </div>
         <div className="flex text-lg mb-2">
           <div className="flex items-center h-fit">
-            <span className="mr-2 w-16 text-start">
+            <span className="mr-2 w-16 text-start font-bold">
               {t("parameters-fairness")}
             </span>
             <button
