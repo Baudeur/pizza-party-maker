@@ -11,8 +11,10 @@ import { setPizzas } from "../../modules/pizzas/slice";
 import { useContext, useState } from "react";
 import { PizzeriaDisplayer } from "./PizzeriaDisplayer";
 import { CloseContext } from "../utils/Overlay";
+import { useTranslation } from "react-i18next";
 
 export function ManagePizzeriaOverlayContent() {
+  const { t } = useTranslation();
   const pizzerias = useSelector(pizzeriasSelector);
   const dispatch = useDispatch();
   const [selected, setSelected] = useState<undefined | Pizzeria>(undefined);
@@ -35,7 +37,7 @@ export function ManagePizzeriaOverlayContent() {
   return (
     <div className="w-[750px]">
       <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-2 text-center w-full">
-        Manage or load pizzerias
+        {t("manage-pizzeria-title")}
       </p>
       <div className="flex w-full gap-2 h-96 mt-4">
         <div
@@ -65,7 +67,7 @@ export function ManagePizzeriaOverlayContent() {
                 )}-load-button`}
                 title={`Load ${pizzeria.name}`}
               >
-                Load
+                {t("manage-pizzeria-load-button")}
               </Button>
               <button
                 className={`flex justify-between rounded-lg ${

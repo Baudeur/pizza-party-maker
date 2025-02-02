@@ -3,22 +3,14 @@ import { DietIcon } from "../icons/DietIcon";
 import { DietSelector } from "../utils/DietSelector";
 import { Diet } from "../../types";
 import { FlagState, PizzaFlag } from "../utils/PizzaFlag";
-import { Button } from "../utils/Button";
-import {
-  ArrowBigLeft,
-  ArrowBigRight,
-  Check,
-  Info,
-  Minus,
-  Pencil,
-  Plus,
-  Trash2,
-  Undo2,
-} from "lucide-react";
 
 import priceIcon from "../../assets/Cash.png";
 import sliceIcon from "../../assets/Pizza.png";
-import title from "../../assets/Title.png";
+import { Trans, useTranslation } from "react-i18next";
+import { CompTrans } from "../utils/TranslationComponents";
+import { Button } from "../utils/Button";
+import { Save, Store } from "lucide-react";
+import { SaveAsIcon } from "../icons/SaveAsIcon";
 
 const flagStates: FlagState[] = [
   "perfect",
@@ -30,15 +22,16 @@ const flagStates: FlagState[] = [
 ];
 
 const flagStatesDescriptions = [
-  "This flag means that vegetarians eat exactly as much as the diet that eats the most.",
-  "This flag means that the diet that eats the most eats less that 125% what vegetarians eat.",
-  "This flag means that the diet that eats the most eats less that 150% what vegetarians eat.",
-  "This flag means that the diet that eats the most eats more that 150% what vegetarians eat.",
-  "This flag means that there is nothing to eat for vegetarians.",
-  "This flag means that there is no vegetarians in the party.",
+  "info-result-flag1",
+  "info-result-flag2",
+  "info-result-flag3",
+  "info-result-flag4",
+  "info-result-flag5",
+  "info-result-flag6",
 ];
 
 export function InfoContent() {
+  const { t } = useTranslation();
   const [diet, setDiet] = useState<Diet>("pescoVegetarian");
   const [flagStateIndex, setFlagStateIndex] = useState(0);
   useEffect(() => {
@@ -54,324 +47,166 @@ export function InfoContent() {
     <div className="h-[80vh] overflow-y-scroll">
       {/* ########## Introduction ########## */}
       <div className="flex text-2xl items-baseline justify-center mb-4">
-        <div>
-          <b>Welcome to</b>
-        </div>
-        <img
-          src={title}
-          className="h-6 mx-2 translate-y-[5px]"
-          alt="Pizza Party Maker"
-        />
-        <div>
-          <b>!</b>
-        </div>
+        <CompTrans i18nKey="info-title" />
       </div>
       <div className="w-[750px] text-left">
+        <p className="mb-2">{t("info-intro-p1")}</p>
+        <p>{t("info-intro-p2")}</p>
         <p className="mb-2">
-          This little website is a tool to plan your pizza party.
-        </p>
-        <p>
-          More specifically, it will help you choose the right amount of
-          specific diet pizzas for your guests.
+          <CompTrans i18nKey="info-intro-p3" />
         </p>
         <p className="mb-2">
-          For instance, imagine you want to create a buffet of pizza for{" "}
-          <strong className="text-pink-600">7 persons</strong>, one of them is{" "}
-          <strong className="text-green-600">vegetarian</strong>, 2 are{" "}
-          <strong className="text-blue-600">pesco-vegetarian</strong> and one is{" "}
-          <strong className="text-orange-600">vegan</strong>, and the last 3
-          eats meat (I will call them{" "}
-          <strong className="text-red-600">omnivorous</strong> for simplicity).
-        </p>
-        <p className="mb-2">
-          <strong>How much of which pizza should you order?</strong>
+          <CompTrans i18nKey="info-intro-p4" />
         </p>
         <p className="mb-6">
-          One might make the assumption that you can order{" "}
-          <strong className="text-red-600">3 pizzas with meat</strong>,{" "}
-          <strong className="text-blue-600">two with fish</strong>,{" "}
-          <strong className="text-green-600">one vegetarian</strong> and{" "}
-          <strong className="text-orange-600">one vegan</strong>. But one would
-          be <strong>wrong!</strong>
+          <CompTrans i18nKey="info-intro-p5" />
         </p>
 
         {/* ########## Theorem ########## */}
 
-        <p className="mb-2">Introducing the completely made-up theorem: </p>
+        <p className="mb-2">{t("info-theorem-p1")}</p>
         <p className="text-xl bg-amber-300 w-fit rounded-md px-2 font-bold mb-2">
-          The theorem of everyone loves the 4 cheese
+          {t("info-theorem-title")}
         </p>
         <p>
-          That's right! One very common choice for a{" "}
-          <strong className="text-green-600">vegetarian</strong> pizza is the 4
-          cheese, but <strong className="text-red-600">omnivorous</strong> and{" "}
-          <strong className="text-blue-600">pesco-vegetarian</strong> will eat a
-          bit of that too.
+          <CompTrans i18nKey="info-theorem-p2" />
         </p>
-        <p className="mb-2">
-          Once the most permissive pizzas in terms of diet are depleted, the
-          remaining slices will be exclusive to the most permissive diets.
-          Leaving restrictive diets behind.
-        </p>
+        <p className="mb-2">{t("info-theorem-p3")}</p>
         <p className="mb-5">
-          One might have already noted that, in such circumstances, even one
-          single pizza with meat will give advantage to{" "}
-          <strong className="text-red-600">omnivorous</strong> people. One is
-          right, but this problem can be greatly mitigated. We'll see how.
+          <CompTrans i18nKey="info-theorem-p4" />
         </p>
 
         {/* ########## How to use ########## */}
 
         <p className="text-xl bg-amber-300 rounded-lg px-2 w-fit font-bold mb-2">
-          But how can this website help me plan a great pizza party?
+          {t("info-how-title")}
         </p>
-        <p className="mb-2">The website is divided in 3 distincts panels:</p>
+        <p className="mb-2">{t("info-how-p1")}</p>
         <ul className="list-disc list-inside mb-2">
           <li>
-            <b>The People Panel:</b> This panel lets you configure the diets of
-            your guests
+            <CompTrans i18nKey="info-how-l1" />
           </li>
           <li>
-            <b>The Pizza Panel:</b> This panel lets you choose which pizza you
-            want to order
+            <CompTrans i18nKey="info-how-l2" />
           </li>
           <li>
-            <b>The Result Panel:</b> This panel give you insights on your plan
-            and help you decide
+            <CompTrans i18nKey="info-how-l3" />
           </li>
         </ul>
-        <p className="mb-5">We will cover them one by one.</p>
+        <p className="mb-5">{t("info-how-p2")}</p>
 
         {/* ########## The People Panel ########## */}
 
         <div className="mb-5">
           <p className="text-xl bg-amber-300 rounded-lg px-2 w-fit font-bold mb-2">
-            The People Panel
+            {t("info-people-title")}
           </p>
-          <p className="mb-2">
-            In this panel, you will find four counters that represent how much
-            of each diet will be at your party.
+          <p className="mb-2">{t("info-people-p1")}</p>
+          <p>
+            <CompTrans i18nKey="info-people-l1" />
           </p>
-          <div className="flex mb-2">
-            <DietIcon type="normal" color="Color" className="size-6 mr-2" />
-            <p>
-              Represents <strong className="text-red-600">omnivorous</strong>{" "}
-              people
-            </p>
-          </div>
-          <div className="flex mb-2">
-            <DietIcon
-              type="pescoVegetarian"
-              color="Color"
-              className="size-6 mr-2"
-            />
-            <p>
-              Represents{" "}
-              <strong className="text-blue-600">pesco-vegetarian</strong> people
-            </p>
-          </div>
-          <div className="flex mb-2">
-            <DietIcon type="vegetarian" color="Color" className="size-6 mr-2" />
-            <p>
-              Represents <strong className="text-green-600">vegetarian</strong>{" "}
-              people
-            </p>
-          </div>
-          <div className="flex mb-2">
-            <DietIcon type="vegan" color="Color" className="size-6 mr-2" />
-            <p>
-              Represents <strong className="text-orange-600">vegan</strong>{" "}
-              people
-            </p>
-          </div>
-          <p className="mb-2">
-            You can both use the{" "}
-            <Button
-              className="inline-flex w-7 rounded-s-lg"
-              color="red"
-              onClick={() => {}}
-            >
-              <Minus size={20} strokeWidth={2} />
-            </Button>{" "}
-            or{" "}
-            <Button
-              className="inline-flex w-7 rounded-e-lg"
-              color="green"
-              onClick={() => {}}
-            >
-              <Plus size={20} strokeWidth={2} />
-            </Button>{" "}
-            button to change the value or you can directly edit the number with
-            the keyboard.
+          <p>
+            <CompTrans i18nKey="info-people-l2" />
+          </p>
+          <p>
+            <CompTrans i18nKey="info-people-l3" />
+          </p>
+          <p>
+            <CompTrans i18nKey="info-people-l4" />
           </p>
 
-          <p>
-            At the bottom of the list you can see the total number of people.
-          </p>
+          <p className="mt-2">{t("info-people-p3")}</p>
         </div>
 
         {/* ########## The Pizza Panel ########## */}
 
         <div className="mb-5">
           <p className="text-xl bg-amber-300 rounded-lg px-2 w-fit font-bold mb-2">
-            The Pizza Panel
+            {t("info-pizza-title")}
           </p>
-          <p className="mb-2">
-            In this panel you will find a table of pizzas described by their
-            quantity, name, diet and price. At the bottom of the table is a form
-            to add new pizzas to the list.
-          </p>
-          <p className="mb-4">
-            In here you can put what you plan to order, since the quantity can
-            be 0 you can also add the whole menu of the pizzeria you are
-            ordering from and only then choose which one you want.
-          </p>
-          <p className="mb-2">
-            Let's take a quick look at the diet selector of the form.
-          </p>
+          <p className="mb-2">{t("info-pizza-p1")}</p>
+          <p className="mb-4">{t("info-pizza-p2")}</p>
+          <p className="mb-2 underline">{t("info-pizza-p3")}</p>
           <div className="w-40 mb-2">
             <DietSelector tabIndex={0} value={diet} onChange={setDiet} />
           </div>
+          <p>
+            <CompTrans i18nKey="info-pizza-l1" />
+            <CompTrans i18nKey="info-pizza-l2" />
+            <CompTrans i18nKey="info-pizza-l3" />
+            <CompTrans i18nKey="info-pizza-l4" />
+          </p>
           <p className="mb-2">
-            You can click the symbols to tell how permissive the pizza is. Or
-            click once to focus it and press{" "}
-            <span className="inline-block size-7 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)] translate-y-1">
-              <span className="flex items-center justify-center size-full">
-                <ArrowBigLeft size={18} />
-              </span>
-            </span>{" "}
-            or{" "}
-            <span className="inline-block size-7 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)] translate-y-1">
-              <span className="flex items-center justify-center size-full">
-                <ArrowBigRight size={18} />
-              </span>
-            </span>{" "}
-            to control it.
+            <CompTrans i18nKey="info-pizza-p4" />
           </p>
-          <div className="flex mb-2">
-            <DietIcon type="normal" color="Color" className="size-6 mr-2" />
-            <p>
-              Represents pizza with meat that can therefore only be eaten by{" "}
-              <strong className="text-red-600">omnivorous</strong> people
-            </p>
-          </div>
-          <div className="flex mb-2">
-            <DietIcon
-              type="pescoVegetarian"
-              color="Color"
-              className="size-6 mr-2"
+          <p>
+            <CompTrans i18nKey="info-pizza-p5" />
+          </p>
+          <p className="mt-4">
+            <CompTrans i18nKey="info-pizza-p6" />
+          </p>
+          <p className="mt-4">
+            <Trans
+              i18nKey="info-pizzeria-p1"
+              components={{
+                saveButton: (
+                  <span className="inline-block translate-y-1">
+                    <Button
+                      onClick={() => {}}
+                      color="green"
+                      className="w-32 border-2 border-b-0 border-green-600 rounded-t-xl"
+                      testId="pizza-panel-manage-button"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Save size={20} strokeWidth={2} />
+                        <span>{t("save")}</span>
+                      </div>
+                    </Button>
+                  </span>
+                ),
+                saveAsButton: (
+                  <span className="inline-block translate-y-1">
+                    <Button
+                      onClick={() => {}}
+                      color="green"
+                      className="w-40 border-2 border-b-0 border-green-600 rounded-t-xl"
+                      testId="pizza-panel-manage-button"
+                    >
+                      <div className="flex items-center gap-2">
+                        <SaveAsIcon
+                          size={20}
+                          strokeWidth={2}
+                          backgroundColor="bg-green-500"
+                        />
+                        <span>{t("save-as")}</span>
+                      </div>
+                    </Button>
+                  </span>
+                ),
+              }}
             />
-            <p>
-              Represents pizza with fish that can be eaten by{" "}
-              <strong className="text-red-600">omnivorous</strong> and{" "}
-              <strong className="text-blue-600">pesco-vegetarian</strong> people
-            </p>
-          </div>
-          <div className="flex mb-2">
-            <DietIcon type="vegetarian" color="Color" className="size-6 mr-2" />
-            <p>
-              Represents pizza with cheese or egg that can be eaten by everybody
-              except <strong className="text-orange-600">vegan</strong> people
-            </p>
-          </div>
-          <div className="flex mb-2">
-            <DietIcon type="vegan" color="Color" className="size-6 mr-2" />
-            <p>
-              Represents <strong className="text-orange-600">vegan</strong>{" "}
-              pizza that can be eaten by everybody
-            </p>
-          </div>
-          <p>
-            In the form you can press{" "}
-            <span className="inline-block h-7 w-10 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-              <span className="flex items-center justify-center size-full">
-                Tab
-              </span>
-            </span>{" "}
-            to go to the next field.
-          </p>
-          <p className="mb-4">
-            When done filling the fields, you can press{" "}
-            <span className="inline-block h-7 w-14 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-              <span className="flex items-center justify-center size-full">
-                Enter
-              </span>
-            </span>{" "}
-            or click{" "}
-            <span className="inline-block translate-y-1">
-              <Button
-                color="green"
-                onClick={() => {}}
-                className="w-16 rounded-lg"
-              >
-                <Plus size={20} strokeWidth={2} />
-              </Button>
-            </span>{" "}
-            to add the pizza.
           </p>
           <p>
-            If you make a mistake, you can edit the pizzas. To do that there is
-            either a button{" "}
-            <span className="inline-block translate-y-1">
-              <Button
-                color="green"
-                onClick={() => {}}
-                className="w-8 rounded-lg"
-              >
-                <Pencil size={20} strokeWidth={2} />
-              </Button>
-            </span>{" "}
-            on the right or you can double click any field.
-          </p>
-          <p className="mb-4">
-            Once in edit mode you can edit all fields, you can validate by
-            clicking the{" "}
-            <span className="inline-block translate-y-1">
-              <Button
-                color="green"
-                onClick={() => {}}
-                className="w-8 rounded-lg"
-              >
-                <Check size={20} strokeWidth={2} />
-              </Button>
-            </span>{" "}
-            button or pressing{" "}
-            <span className="inline-block h-7 w-14 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-              <span className="flex items-center justify-center size-full">
-                Enter
-              </span>
-            </span>
-            , or you can cancel by clicking the{" "}
-            <span className="inline-block translate-y-1">
-              <Button
-                color="yellow"
-                onClick={() => {}}
-                className="w-8 rounded-lg"
-              >
-                <Undo2 size={20} strokeWidth={2} />
-              </Button>
-            </span>{" "}
-            button or pressing{" "}
-            <span className="inline-block h-7 w-20 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-              <span className="flex items-center justify-center size-full">
-                Escape
-              </span>
-            </span>
-            {""}.
-          </p>
-          <p className="mb-4">
-            You can also delete pizzas by clicking on the{" "}
-            <span className="inline-block translate-y-1">
-              <Button color="red" onClick={() => {}} className="w-8 rounded-lg">
-                <Trash2 size={20} strokeWidth={2} />
-              </Button>
-            </span>{" "}
-            button on the right.
-          </p>
-          <p>
-            Once you have your pizza setup, you can choose the quantity on the
-            left by hovering it and using the same controls as for the amount of
-            people.
+            <Trans
+              i18nKey="info-pizzeria-p2"
+              components={{
+                pizzeriasButton: (
+                  <span className="inline-block translate-y-1">
+                    <Button
+                      onClick={() => {}}
+                      color="green"
+                      className="w-32 border-2 border-b-0 border-green-600 rounded-t-xl"
+                      testId="pizza-panel-manage-button"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Store size={20} strokeWidth={2} />
+                        <span>{t("manage-pizzeria-button")}</span>
+                      </div>
+                    </Button>
+                  </span>
+                ),
+              }}
+            />
           </p>
         </div>
 
@@ -379,25 +214,20 @@ export function InfoContent() {
 
         <div className="mb-5">
           <p className="text-xl bg-amber-300 rounded-lg px-2 w-fit font-bold mb-2">
-            The Result Panel
+            {t("info-result-title")}
           </p>
-          <p className="mb-2">
-            In this panel you will find insights about your plan. More
-            specifically you will find how much pizza per person you have, how
-            much money per person it will cost. And most importantly, whether
-            every diet will have a fair share of the pizzas or not.
-          </p>
-          <p className="mb-2">
-            The cost and pizza quantity are represented on the right like this:
-          </p>
+          <p className="mb-2">{t("info-result-p1")}</p>
+          <p className="mb-2">{t("info-result-p2")}</p>
           <div className="w-64 flex mb-2">
             <div className="text-3xl font-bold mr-2 w-full">
               <div className="mb-2 flex justify-center">
                 <img src={priceIcon} className="size-8" alt="Price" />
               </div>
               <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
-                <span className="text-lg">4€ / pers</span>
-                <span className="text-lg">12€ total</span>
+                <span className="text-lg">
+                  4 € / {t("info-display-person")}
+                </span>
+                <span className="text-lg">12 € {t("info-display-total")}</span>
               </div>
             </div>
             <div className="text-3xl font-bold w-full">
@@ -405,23 +235,15 @@ export function InfoContent() {
                 <img src={sliceIcon} className="size-8" alt="Quantity" />
               </div>
               <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
-                <span className="text-lg">4 slices</span>
-                <span className="text-lg">~1/2 pizzas</span>
+                <span className="text-lg">4 {t("info-display-slices")}</span>
+                <span className="text-lg">~1/2 {t("info-display-pizzas")}</span>
               </div>
             </div>
           </div>
-          <p>
-            The slices is the exact number of slices per person, the pizza is an
-            approximation with understandable numbers (1/2, 1/4, 7/8) of what it
-            represents.
-          </p>
 
           <hr className="my-2 border-black w-[90%] mx-[5%]" />
 
-          <p className="mb-2">
-            The fairness for every diet is represented by flag giving
-            qualitative results like this:
-          </p>
+          <p className="mb-2">{t("info-result-p4")}</p>
           <div className="flex items-center w-[500px]">
             <div className="h-full mr-2 text-center min-w-32 mb-4">
               <div className="text-3xl font-bold mb-2 flex justify-center">
@@ -434,50 +256,42 @@ export function InfoContent() {
               <PizzaFlag flagState={flagStates[flagStateIndex]} />
             </div>
             <p className="translate-y-3">
-              {flagStatesDescriptions[flagStateIndex]}
+              <CompTrans i18nKey={flagStatesDescriptions[flagStateIndex]} />
             </p>
           </div>
           <p className="mb-2">
-            Overall you should aim for every diet marked as{" "}
-            <strong className="text-green-600">Good</strong>,{" "}
-            <strong className="text-sky-600">Perfect</strong> is unattainable
-            unless you take only pizzas that everyone can eat.
+            <CompTrans i18nKey="info-result-p5" />
           </p>
 
           <p>
-            On the result panel there are also two element that you can expand:
+            <CompTrans i18nKey="info-result-p6" />
           </p>
           <ul className="list-disc list-inside mb-2">
             <li>
-              The details panel shows you what to expect in terms of reparition
-              of the food. With numbers this time. There are further explanation
-              available by clicking the{" "}
-              <Info
-                size={20}
-                strokeWidth={2}
-                color="gray"
-                className="inline-block"
-              />{" "}
-              next to the table.
+              <CompTrans i18nKey="info-result-p7" />
             </li>
             <li>
-              The params panel allow you to choose in how many slices each pizza
-              have.
+              <CompTrans i18nKey="info-result-p8" />
             </li>
           </ul>
+
+          <p className="underline">{t("info-suggester-title")}</p>
+
+          <p>{t("info-suggester-p1")}</p>
+          <p>{t("info-suggester-p2")}</p>
+          <p>{t("info-suggester-p3")}</p>
+          <p>{t("info-suggester-p4")}</p>
         </div>
 
         {/* ########## Thanks ########## */}
 
         <div className="mb-5">
           <p className="text-xl bg-amber-300 rounded-lg px-2 w-fit font-bold mb-2">
-            Conclusion
+            {t("info-thanks-title")}
           </p>
-          <p>Thanks for using Pizza Party Maker, have a nice Pizza Party!</p>
+          <p>{t("info-thanks-p1")}</p>
         </div>
-        <p className="text-gray-600 text-center w-full">
-          Created by Bertrand Baudeur
-        </p>
+        <p className="text-gray-600 text-center w-full">{t("info-footer")}</p>
       </div>
     </div>
   );

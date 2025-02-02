@@ -1,4 +1,5 @@
 import { useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 type FairnessSelectorProps = {
   value1: number;
@@ -19,7 +20,7 @@ const labelSpace = 20;
 //Margin on the right for the fade of the bad portion
 const badExcess = 40;
 //Width of the handle to move change the value
-const handeWidth = 15;
+const handleWidth = 15;
 //Space Before the graph starts (needed for label no to be cropped)
 const marginLeft = 25;
 
@@ -33,6 +34,10 @@ export function FairnessSelector({
   step,
   className,
 }: Readonly<FairnessSelectorProps>) {
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
   const ref = useRef<SVGRectElement>(null);
 
   const percentage1 = (value1 - min) / (max - min);
@@ -195,7 +200,7 @@ export function FairnessSelector({
           dominantBaseline="central"
           fontSize={graphHeight * 0.3}
         >
-          Good
+          {t("pizza-flag-good")}
         </text>
         {/*Okay*/}
         <rect
@@ -214,22 +219,22 @@ export function FairnessSelector({
           x={
             startX +
             workingWidth * percentage1 +
-            handeWidth / 2 +
+            handleWidth / 2 +
             graphHeight * 0.2
           }
           y={graphHeight / 2}
           transform={`rotate(-90, ${
             startX +
             workingWidth * percentage1 +
-            handeWidth / 2 +
+            handleWidth / 2 +
             graphHeight * 0.2
           },${graphHeight / 2})`}
           className="font-bold pointer-events-none"
           textAnchor="middle"
           dominantBaseline="central"
-          fontSize={graphHeight * 0.3}
+          fontSize={graphHeight * (language === "en" ? 0.3 : 0.25)}
         >
-          Okay
+          {t("pizza-flag-okay")}
         </text>
         {/*Bad*/}
         <rect
@@ -252,7 +257,7 @@ export function FairnessSelector({
             startX +
               workingWidth * percentage2 +
               graphHeight * 0.2 +
-              handeWidth / 2,
+              handleWidth / 2,
             width - startX / 2
           )}
           y={graphHeight / 2}
@@ -260,24 +265,24 @@ export function FairnessSelector({
             startX +
               workingWidth * percentage2 +
               graphHeight * 0.2 +
-              handeWidth / 2,
+              handleWidth / 2,
             width - startX / 2
           )},${graphHeight / 2})`}
           className="font-bold pointer-events-none"
           textAnchor="middle"
           dominantBaseline="central"
-          fontSize={graphHeight * 0.3}
+          fontSize={graphHeight * (language === "en" ? 0.3 : 0.2)}
         >
-          Bad
+          {t("pizza-flag-bad")}
         </text>
         {/*Cursors*/}
         <rect
           data-testid="fairness-parameter-cursor1"
           className="cursor-ew-resize focus:fill-green-500 fill-gray-400 hover:fill-gray-500"
-          x={startX + workingWidth * percentage1 - handeWidth / 2}
-          width={handeWidth}
+          x={startX + workingWidth * percentage1 - handleWidth / 2}
+          width={handleWidth}
           y={borderWidth / 2}
-          rx={handeWidth / 2}
+          rx={handleWidth / 2}
           height={graphHeight - borderWidth}
           strokeWidth={borderWidth}
           stroke="white"
@@ -295,10 +300,10 @@ export function FairnessSelector({
         <rect
           data-testid="fairness-parameter-cursor2"
           className="cursor-ew-resize focus:fill-green-500 fill-gray-400 hover:fill-gray-500"
-          x={startX + workingWidth * percentage2 - handeWidth / 2}
-          width={handeWidth}
+          x={startX + workingWidth * percentage2 - handleWidth / 2}
+          width={handleWidth}
           y={borderWidth / 2}
-          rx={handeWidth / 2}
+          rx={handleWidth / 2}
           height={graphHeight - borderWidth}
           strokeWidth={borderWidth}
           stroke="white"

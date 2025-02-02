@@ -18,8 +18,10 @@ import {
 } from "../../modules/pizzerias/slice";
 import { pizzasSelector } from "../../modules/pizzas/selector";
 import { setPizzas } from "../../modules/pizzas/slice";
+import { useTranslation } from "react-i18next";
 
 export function PizzeriaHotBar() {
+  const { t } = useTranslation();
   const pizzas = useSelector(pizzasSelector);
   const [showSaveAsOverlay, setShowSaveAsOverlay] = useState(false);
   const [showLoadOverlay, setShowLoadOverlay] = useState(false);
@@ -60,7 +62,7 @@ export function PizzeriaHotBar() {
         >
           <div className="flex items-center gap-2">
             <FilePlus size={20} strokeWidth={2} />
-            <span>New</span>
+            <span>{t("new")}</span>
           </div>
         </Button>
         {loadedPizzeriaId && (
@@ -73,7 +75,7 @@ export function PizzeriaHotBar() {
           >
             <div className="flex items-center gap-2">
               <Save size={20} strokeWidth={2} />
-              <span>Save</span>
+              <span>{t("save")}</span>
             </div>
           </NoVisibleEffectButton>
         )}
@@ -87,7 +89,7 @@ export function PizzeriaHotBar() {
           >
             <div className="flex items-center gap-2">
               <Save size={20} strokeWidth={2} />
-              <span>Save</span>
+              <span>{t("save")}</span>
             </div>
           </Button>
         )}
@@ -106,7 +108,7 @@ export function PizzeriaHotBar() {
               strokeWidth={2}
               backgroundColor="bg-green-500"
             />
-            <span>Save as</span>
+            <span>{t("save-as")}</span>
           </div>
         </Button>
         <Button
@@ -120,7 +122,7 @@ export function PizzeriaHotBar() {
         >
           <div className="flex items-center gap-2">
             <Store size={20} strokeWidth={2} />
-            <span>Pizzerias</span>
+            <span>{t("manage-pizzeria-button")}</span>
           </div>
         </Button>
       </div>
