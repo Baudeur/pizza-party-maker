@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 export type FlagState = "perfect" | "good" | "okay" | "bad" | "cantEat" | "N/A";
 
 type FlagStateProps = {
@@ -6,33 +8,34 @@ type FlagStateProps = {
 };
 
 export function PizzaFlag({ flagState, testId }: Readonly<FlagStateProps>) {
+  const { t } = useTranslation();
   let color = "bg-gray-300";
   let label = "N/A";
   let emoji = "❌";
   switch (flagState) {
     case "perfect":
       color = "bg-sky-400";
-      label = "Perfect";
+      label = t("pizza-flag-perfect");
       emoji = "👌";
       break;
     case "good":
       color = "bg-green-400";
-      label = "Good";
+      label = t("pizza-flag-good");
       emoji = "😊";
       break;
     case "okay":
       color = "bg-yellow-400";
-      label = "Okay";
+      label = t("pizza-flag-okay");
       emoji = "😕";
       break;
     case "bad":
       color = "bg-red-400";
-      label = "Bad";
+      label = t("pizza-flag-bad");
       emoji = "😖";
       break;
     case "cantEat":
       color = "bg-purple-400";
-      label = "Can't eat";
+      label = t("pizza-flag-cant-eat");
       emoji = "💀";
       break;
   }

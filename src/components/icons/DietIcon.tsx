@@ -4,6 +4,7 @@ import veganIconUrl from "../../assets/Carrot.png";
 import vegetarianIconUrl from "../../assets/Cheese.png";
 import pescoVegetarianIconUrl from "../../assets/Fish.png";
 import normalIconUrl from "../../assets/Meat.png";
+import { useTranslation } from "react-i18next";
 
 type IconColor = "Color" | "BW";
 
@@ -23,10 +24,10 @@ iconUrlMap.set("vegan", veganIconUrl);
 type TooltipState = "out" | "in" | "display";
 
 const map = new Map<Diet, string>();
-map.set("normal", "omnivorous");
-map.set("pescoVegetarian", "pesco‑vegetarian");
-map.set("vegetarian", "vegetarian");
-map.set("vegan", "vegan");
+map.set("normal", "diet-icon-omnivorous");
+map.set("pescoVegetarian", "diet-icon-pesco-vegetarian");
+map.set("vegetarian", "diet-icon-vegetarian");
+map.set("vegan", "diet-icon-vegan");
 
 export function DietIcon({
   type,
@@ -34,6 +35,7 @@ export function DietIcon({
   className,
   testId,
 }: Readonly<DietIconProps>) {
+  const { t } = useTranslation();
   const [tooltipState, setTooltipState] = useState<TooltipState>("out");
   const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>();
 
@@ -71,7 +73,7 @@ export function DietIcon({
       />
       {tooltipState === "display" && (
         <div className="top-[-100%] translate-x-[-50%] left-1/2 text-base absolute z-20 bg-white border-[1px] border-gray-600 px-2 rounded-md">
-          {map.get(type)}
+          {t(map.get(type) ?? "")}
         </div>
       )}
     </div>

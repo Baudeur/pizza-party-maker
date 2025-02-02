@@ -8,8 +8,10 @@ import { DietSelector } from "../utils/DietSelector";
 import { useDispatch } from "react-redux";
 import { Plus } from "lucide-react";
 import { IntegerInput } from "../utils/IntegerInput";
+import { useTranslation } from "react-i18next";
 
 export function PizzaForm() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -54,7 +56,7 @@ export function PizzaForm() {
             className="w-full"
             tabIndex={0}
             ref={nameInputRef}
-            placeholder="4 Cheese"
+            placeholder={t("pizza-form-placeholder")}
             value={name}
             onChange={(e) => setName(e.target.value)}
             testId="pizza-form-name"

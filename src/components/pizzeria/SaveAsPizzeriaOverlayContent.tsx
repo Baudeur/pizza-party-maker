@@ -13,8 +13,10 @@ import { pizzasSelector } from "../../modules/pizzas/selector";
 import { Button } from "../utils/Button";
 import { PizzeriaDisplayer } from "./PizzeriaDisplayer";
 import { CloseContext } from "../utils/Overlay";
+import { useTranslation } from "react-i18next";
 
 export function SaveAsPizzeriaOverlayContent() {
+  const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -76,7 +78,7 @@ export function SaveAsPizzeriaOverlayContent() {
   return (
     <div className="w-[500px]">
       <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-2 text-center w-full">
-        Save pizzeria as... {nameConflict?.id}
+        {t("save-pizzeria-as-title")}
       </p>
       {nameConflict === undefined && (
         <div className="flex justify-between w-full items-center gap-2 mt-2">
@@ -88,7 +90,7 @@ export function SaveAsPizzeriaOverlayContent() {
             }}
           >
             <TextInput
-              placeholder="Name"
+              placeholder={t("save-pizzeria-name")}
               value={name}
               onChange={(ev) => setName(ev.target.value)}
               className="w-full"
@@ -110,7 +112,7 @@ export function SaveAsPizzeriaOverlayContent() {
       {nameConflict !== undefined && (
         <div className="w-full flex flex-col text-lg">
           <span className="text-red-500 mb-2">
-            A pizzeria with this name already exists, override ?
+            {t("save-pizzeria-name-conflict")}
           </span>
           <PizzeriaDisplayer pizzeria={nameConflict} className="max-h-48" />
           <div className="flex w-full gap-2 mt-2">
@@ -120,7 +122,7 @@ export function SaveAsPizzeriaOverlayContent() {
               className="rounded-lg w-full"
               testId="save-as-conflict-cancel"
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
               onClick={handleOverride}
@@ -128,7 +130,7 @@ export function SaveAsPizzeriaOverlayContent() {
               className="rounded-lg w-full"
               testId="save-as-conflict-override"
             >
-              Override
+              {t("save-pizzeria-override")}
             </Button>
           </div>
         </div>

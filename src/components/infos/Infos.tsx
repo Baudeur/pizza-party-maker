@@ -3,12 +3,16 @@ import { useState } from "react";
 import { InfoContent } from "./InfoContent";
 import { OverlayWrapper } from "../utils/OverlayWrapper";
 import { Params } from "../calculator/Params";
+import { LanguageSelector } from "./LanguageSelector";
 
 export function Infos() {
   const [displayOverlay1, setDisplayOverlay1] = useState(false);
   const [displayOverlay2, setDisplayOverlay2] = useState(false);
   return (
     <div className="flex gap-2">
+      <div>
+        <LanguageSelector />
+      </div>
       <div>
         <button
           onClick={() => setDisplayOverlay2(true)}
