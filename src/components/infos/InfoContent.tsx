@@ -3,26 +3,13 @@ import { DietIcon } from "../icons/DietIcon";
 import { DietSelector } from "../utils/DietSelector";
 import { Diet } from "../../types";
 import { FlagState, PizzaFlag } from "../utils/PizzaFlag";
-import { Button } from "../utils/Button";
-import {
-  ArrowBigLeft,
-  ArrowBigRight,
-  Check,
-  Info,
-  Minus,
-  Pencil,
-  Plus,
-  Save,
-  Settings,
-  Store,
-  Trash2,
-  Undo2,
-} from "lucide-react";
 
 import priceIcon from "../../assets/Cash.png";
 import sliceIcon from "../../assets/Pizza.png";
-import title from "../../assets/Title.png";
 import { Trans, useTranslation } from "react-i18next";
+import { CompTrans } from "../utils/TranslationComponents";
+import { Button } from "../utils/Button";
+import { Save, Store } from "lucide-react";
 import { SaveAsIcon } from "../icons/SaveAsIcon";
 
 const flagStates: FlagState[] = [
@@ -43,158 +30,6 @@ const flagStatesDescriptions = [
   "info-result-flag6",
 ];
 
-const components = {
-  pink: <strong className="text-pink-600" />,
-  green: <strong className="text-green-600" />,
-  sky: <strong className="text-sky-600" />,
-  blue: <strong className="text-blue-600" />,
-  orange: <strong className="text-orange-600" />,
-  red: <strong className="text-red-600" />,
-  bold: <b />,
-  title: (
-    <span className="inline-block">
-      <img
-        src={title}
-        className="h-6 mx-2 translate-y-[5px]"
-        alt="Pizza Party Maker"
-      />
-    </span>
-  ),
-  normalIcon: (
-    <span className="inline-block translate-y-1">
-      <DietIcon type="normal" color="Color" className="size-6 mx-1" />
-    </span>
-  ),
-  pescoVegetarianIcon: (
-    <span className="inline-block translate-y-1">
-      <DietIcon type="pescoVegetarian" color="Color" className="size-6 mx-1" />
-    </span>
-  ),
-  vegetarianIcon: (
-    <span className="inline-block translate-y-1">
-      <DietIcon type="vegetarian" color="Color" className="size-6 mx-1" />
-    </span>
-  ),
-  veganIcon: (
-    <span className="inline-block translate-y-1">
-      <DietIcon type="vegan" color="Color" className="size-6 mx-1" />
-    </span>
-  ),
-  minusButton: (
-    <span className="inline-block translate-y-1">
-      <Button
-        className="inline-flex w-7 rounded-s-lg"
-        color="red"
-        onClick={() => {}}
-      >
-        <Minus size={20} strokeWidth={2} />
-      </Button>
-    </span>
-  ),
-  plusButton: (
-    <span className="inline-block translate-y-1">
-      <Button
-        className="inline-flex w-7 rounded-e-lg"
-        color="green"
-        onClick={() => {}}
-      >
-        <Plus size={20} strokeWidth={2} />
-      </Button>
-    </span>
-  ),
-  addButton: (
-    <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
-        <Plus size={20} strokeWidth={2} />
-      </Button>
-    </span>
-  ),
-  editButton: (
-    <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-8 rounded-lg">
-        <Pencil size={20} strokeWidth={2} />
-      </Button>
-    </span>
-  ),
-  validateButton: (
-    <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-8 rounded-lg">
-        <Check size={20} strokeWidth={2} />
-      </Button>
-    </span>
-  ),
-  cancelButton: (
-    <span className="inline-block translate-y-1">
-      <Button color="yellow" onClick={() => {}} className="w-8 rounded-lg">
-        <Undo2 size={20} strokeWidth={2} />
-      </Button>
-    </span>
-  ),
-  deleteButton: (
-    <span className="inline-block translate-y-1">
-      <Button color="red" onClick={() => {}} className="w-8 rounded-lg">
-        <Trash2 size={20} strokeWidth={2} />
-      </Button>
-    </span>
-  ),
-  saveButton: (
-    <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
-        <Save size={20} strokeWidth={2} />
-      </Button>
-    </span>
-  ),
-  saveAsButton: (
-    <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
-        <SaveAsIcon size={20} strokeWidth={2} backgroundColor="bg-green-500" />
-      </Button>
-    </span>
-  ),
-  pizzeriasButton: (
-    <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
-        <Store size={20} strokeWidth={2} />
-      </Button>
-    </span>
-  ),
-  leftArrowKey: (
-    <span className="inline-block size-7 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)] translate-y-1">
-      <span className="flex items-center justify-center size-full">
-        <ArrowBigLeft size={18} />
-      </span>
-    </span>
-  ),
-  rightArrowKey: (
-    <span className="inline-block size-7 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)] translate-y-1">
-      <span className="flex items-center justify-center size-full">
-        <ArrowBigRight size={18} />
-      </span>
-    </span>
-  ),
-  tabKey: (
-    <span className="inline-block h-7 w-10 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-      <span className="flex items-center justify-center size-full">Tab</span>
-    </span>
-  ),
-  enterKey: (
-    <span className="inline-block h-7 w-14 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-      <span className="flex items-center justify-center size-full">Enter</span>
-    </span>
-  ),
-  escapeKey: (
-    <span className="inline-block h-7 w-20 px-1 bg-gray-100 shadow-[inset_3px_3px_rgb(220,220,220),inset_-3px_-3px_rgb(150,150,150)]">
-      <span className="flex items-center justify-center size-full">Escape</span>
-    </span>
-  ),
-  infoIcon: (
-    <Info size={20} strokeWidth={2} color="gray" className="inline-block" />
-  ),
-  parametersIcon: (
-    <Settings size={20} strokeWidth={2} color="gray" className="inline-block" />
-  ),
-};
-
 export function InfoContent() {
   const { t } = useTranslation();
   const [diet, setDiet] = useState<Diet>("pescoVegetarian");
@@ -212,19 +47,19 @@ export function InfoContent() {
     <div className="h-[80vh] overflow-y-scroll">
       {/* ########## Introduction ########## */}
       <div className="flex text-2xl items-baseline justify-center mb-4">
-        <Trans i18nKey="info-title" components={components} />
+        <CompTrans i18nKey="info-title" />
       </div>
       <div className="w-[750px] text-left">
         <p className="mb-2">{t("info-intro-p1")}</p>
         <p>{t("info-intro-p2")}</p>
         <p className="mb-2">
-          <Trans i18nKey="info-intro-p3" components={components} />
+          <CompTrans i18nKey="info-intro-p3" />
         </p>
         <p className="mb-2">
-          <Trans i18nKey="info-intro-p4" components={components} />
+          <CompTrans i18nKey="info-intro-p4" />
         </p>
         <p className="mb-6">
-          <Trans i18nKey="info-intro-p5" components={components} />
+          <CompTrans i18nKey="info-intro-p5" />
         </p>
 
         {/* ########## Theorem ########## */}
@@ -234,11 +69,11 @@ export function InfoContent() {
           {t("info-theorem-title")}
         </p>
         <p>
-          <Trans i18nKey="info-theorem-p2" components={components} />
+          <CompTrans i18nKey="info-theorem-p2" />
         </p>
         <p className="mb-2">{t("info-theorem-p3")}</p>
         <p className="mb-5">
-          <Trans i18nKey="info-theorem-p4" components={components} />
+          <CompTrans i18nKey="info-theorem-p4" />
         </p>
 
         {/* ########## How to use ########## */}
@@ -249,13 +84,13 @@ export function InfoContent() {
         <p className="mb-2">{t("info-how-p1")}</p>
         <ul className="list-disc list-inside mb-2">
           <li>
-            <Trans i18nKey="info-how-l1" components={components} />
+            <CompTrans i18nKey="info-how-l1" />
           </li>
           <li>
-            <Trans i18nKey="info-how-l2" components={components} />
+            <CompTrans i18nKey="info-how-l2" />
           </li>
           <li>
-            <Trans i18nKey="info-how-l3" components={components} />
+            <CompTrans i18nKey="info-how-l3" />
           </li>
         </ul>
         <p className="mb-5">{t("info-how-p2")}</p>
@@ -268,16 +103,16 @@ export function InfoContent() {
           </p>
           <p className="mb-2">{t("info-people-p1")}</p>
           <p>
-            <Trans i18nKey="info-people-l1" components={components} />
+            <CompTrans i18nKey="info-people-l1" />
           </p>
           <p>
-            <Trans i18nKey="info-people-l2" components={components} />
+            <CompTrans i18nKey="info-people-l2" />
           </p>
           <p>
-            <Trans i18nKey="info-people-l3" components={components} />
+            <CompTrans i18nKey="info-people-l3" />
           </p>
           <p>
-            <Trans i18nKey="info-people-l4" components={components} />
+            <CompTrans i18nKey="info-people-l4" />
           </p>
 
           <p className="mt-2">{t("info-people-p3")}</p>
@@ -296,25 +131,82 @@ export function InfoContent() {
             <DietSelector tabIndex={0} value={diet} onChange={setDiet} />
           </div>
           <p>
-            <Trans i18nKey="info-pizza-l1" components={components} />
-            <Trans i18nKey="info-pizza-l2" components={components} />
-            <Trans i18nKey="info-pizza-l3" components={components} />
-            <Trans i18nKey="info-pizza-l4" components={components} />
+            <CompTrans i18nKey="info-pizza-l1" />
+            <CompTrans i18nKey="info-pizza-l2" />
+            <CompTrans i18nKey="info-pizza-l3" />
+            <CompTrans i18nKey="info-pizza-l4" />
           </p>
           <p className="mb-2">
-            <Trans i18nKey="info-pizza-p4" components={components} />
+            <CompTrans i18nKey="info-pizza-p4" />
           </p>
           <p>
-            <Trans i18nKey="info-pizza-p5" components={components} />
+            <CompTrans i18nKey="info-pizza-p5" />
           </p>
           <p className="mt-4">
-            <Trans i18nKey="info-pizza-p6" components={components} />
+            <CompTrans i18nKey="info-pizza-p6" />
           </p>
           <p className="mt-4">
-            <Trans i18nKey="info-pizzeria-p1" components={components} />
+            <Trans
+              i18nKey="info-pizzeria-p1"
+              components={{
+                saveButton: (
+                  <span className="inline-block translate-y-1">
+                    <Button
+                      onClick={() => {}}
+                      color="green"
+                      className="w-32 border-2 border-b-0 border-green-600 rounded-t-xl"
+                      testId="pizza-panel-manage-button"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Save size={20} strokeWidth={2} />
+                        <span>{t("save")}</span>
+                      </div>
+                    </Button>
+                  </span>
+                ),
+                saveAsButton: (
+                  <span className="inline-block translate-y-1">
+                    <Button
+                      onClick={() => {}}
+                      color="green"
+                      className="w-40 border-2 border-b-0 border-green-600 rounded-t-xl"
+                      testId="pizza-panel-manage-button"
+                    >
+                      <div className="flex items-center gap-2">
+                        <SaveAsIcon
+                          size={20}
+                          strokeWidth={2}
+                          backgroundColor="bg-green-500"
+                        />
+                        <span>{t("save-as")}</span>
+                      </div>
+                    </Button>
+                  </span>
+                ),
+              }}
+            />
           </p>
           <p>
-            <Trans i18nKey="info-pizzeria-p2" components={components} />
+            <Trans
+              i18nKey="info-pizzeria-p2"
+              components={{
+                pizzeriasButton: (
+                  <span className="inline-block translate-y-1">
+                    <Button
+                      onClick={() => {}}
+                      color="green"
+                      className="w-32 border-2 border-b-0 border-green-600 rounded-t-xl"
+                      testId="pizza-panel-manage-button"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Store size={20} strokeWidth={2} />
+                        <span>{t("manage-pizzeria-button")}</span>
+                      </div>
+                    </Button>
+                  </span>
+                ),
+              }}
+            />
           </p>
         </div>
 
@@ -364,22 +256,22 @@ export function InfoContent() {
               <PizzaFlag flagState={flagStates[flagStateIndex]} />
             </div>
             <p className="translate-y-3">
-              {t(flagStatesDescriptions[flagStateIndex])}
+              <CompTrans i18nKey={flagStatesDescriptions[flagStateIndex]} />
             </p>
           </div>
           <p className="mb-2">
-            <Trans i18nKey="info-result-p5" components={components} />
+            <CompTrans i18nKey="info-result-p5" />
           </p>
 
           <p>
-            <Trans i18nKey="info-result-p6" components={components} />
+            <CompTrans i18nKey="info-result-p6" />
           </p>
           <ul className="list-disc list-inside mb-2">
             <li>
-              <Trans i18nKey="info-result-p7" components={components} />
+              <CompTrans i18nKey="info-result-p7" />
             </li>
             <li>
-              <Trans i18nKey="info-result-p8" components={components} />
+              <CompTrans i18nKey="info-result-p8" />
             </li>
           </ul>
 

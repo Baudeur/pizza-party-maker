@@ -69,9 +69,9 @@
 
     "info-how-title": "But how can this website help me plan a great pizza party?",
     "info-how-p1": "The website is divided in 3 distincts panels:",
-    "info-how-l1": "<bold>The People Panel:</bold> This panel lets you configure the diets of your guests",
-    "info-how-l2": "<bold>The Pizza Panel:</bold> This panel lets you choose which pizza you want to order",
-    "info-how-l3": "<bold>The Result Panel:</bold> This panel give you insights on your plan and help you decide",
+    "info-how-l1": "<bold>The People Panel:</bold> This panel lets you configure the diets of your guests.",
+    "info-how-l2": "<bold>The Pizza Panel:</bold> This panel lets you choose which pizza you want to order.",
+    "info-how-l3": "<bold>The Result Panel:</bold> This panel gives you insights on your plan and helps you decide.",
     "info-how-p2": "We will cover them one by one.",
 
     "info-people-title": "The People Panel",
@@ -84,7 +84,7 @@
 
     "info-pizza-title": "The Pizza Panel",
     "info-pizza-p1": "In this panel you will find a table of pizzas described by their quantity, name, diet and price. At the bottom of the table is a form to add new pizzas to the list.",
-    "info-pizza-p2": "In here you can put what you plan to order, since the quantity can be 0 you can also add the whole menu of the pizzeria you are ordering from and only then choose which one you want.",
+    "info-pizza-p2": "In here you can put what you plan to order, since the quantity can be 0, you can also add the whole menu of the pizzeria you are ordering from and only then choose which one you want.",
     "info-pizza-p3": "The pizza diet",
     "info-pizza-p4": "The diet of your pizza is represented by a selector which colorize every diet that can eat your pizza.",
     "info-pizza-l1": "<normalIcon />: <red>omnivorous</red>.",
@@ -114,7 +114,7 @@
     "info-suggester-title": "The suggester",
     "info-suggester-p1": "If you are struggling to find a fair order plan, your can use the suggester.",
     "info-suggester-p2": "The suggester takes your needs into account, that is, the quantity of pizza, the fairness and the diversity of the order plan.",
-    "info-suggester-p3": "The suggester thens suggests an order that tends to maximize the quantity of restrictive diet pizza whist keeping the order fair for most restrictifs diet people.",
+    "info-suggester-p3": "The suggester then suggests an order that tends to maximize the quantity of restrictive diet pizza whist keeping the order fair for most restrictifs diet people.",
     "info-suggester-p4": "You can then choose to either keep or discard the suggestion.",
 
     "info-thanks-title": "Conclusion",
@@ -136,6 +136,29 @@
     "minus": "Minus",
     "new": "New",
     "save-as": "Save As",
-    "save": "Save"
+    "save": "Save",
+
+    "details-panel-title": "The details panel",
+    "details-panel-p1": "This panel shows the underlying mechanism of the website. As well as giving a bit more information than just the flags.",
+    "details-panel-p2": "This panel shows the results of different simulations of your party.",
+    "details-panel-p3": "Each simulation result is presented in form of a line that show how much slices in average each person of each diet get, like so:",
+    "details-panel-example-case": "Example",
+    "details-panel-p4": "So here we know that each <red>omnivorous</red> ate 8 slices of pizza, each <blue>pesco-vegetarian</blue> and each <green>vegetarian</green> ate 6 slices and each <orange>vegan</orange> ate 7 slices.",
+    "details-panel-p5": "There are 4 different case scenario. The differences are explained below.",
+    "details-maths-title": "How are those processed?",
+    "details-maths-p1": "A case scenario takes all the pizza and people you added and perform the following calculation:",
+    "details-maths-p2": "We proceed by round where everybody will have one slice. The order in which people go and the targeted pizzas depends on the scenario type.",
+    "details-maths-l1": "The worst case scenario: In this scenario, each diet will first target the pizza that are the less exclusive to them. For example, <red>omnivorous</red> will first eat the <orange>vegan</orange> pizza, then the <green>vegetarian</green> ones, then the <blue>pesco-vegetarian</blue> ones and only then will they start eating the <red>pizzas with meat</red>.",
+    "details-maths-l2": "The best case scenario: It's the opposite of the worst case scenario, each diet will first target the pizza that correspond to their diet.",
+    "details-maths-l3": "The random case scenario: Each diet will pick a random slice among all the pizzas they can eat.",
+    "details-maths-l4": "The average case scenario: This one is just a random case scenario repeated 100 times and we take the average of the results.",
+    "details-maths-p3": "For the worst and best case scenario, in each round, the <orange>vegan</orange> goes first, then the <green>vegetarian</green>, then the <blue>pesco-vegetarian</blue>, and finally the <red>omnivorous</red>.",
+    "details-maths-p4": "This choice is deliberate, it is there to take into account the fact in reality, everybody goes roughly at the same time and if there are fights over a unique slice, the most restricitve diet will probably have it. (Otherwise I advise you to find other friends :p)",
+    "details-maths-p5": "In the random and average case scenario, the order in which everybody goes is random.",
+    "details-maths-p6": "The results are rounded up to one decimal number, which can lead to a total slices eaten displayed not matching the actual total.",
+    "details-flags-title": "So what are the flags about?",
+    "details-flags-p1": "The flags are based on the average case scenario, which I consider being the most realistic one.",
+    "details-flags-p2": "The fairness is based on the percentage of extra pizza the diet that eats most have. In our example above, each <red>omnivorous</red> ate the most with 8 slices of pizza and <green>vegetarian</green> ate 6 slices. Which means <red>omnivorous</red> had 33% more pizzas than the <green>vegetarian</green>.",
+    "details-flags-p3": "The flag is <sky>Perfect</sky> if this percentage is <strong>exactly 0%</strong>. It is <green>Good</green> if this percentage is between <strong>between 0% and 25%</strong>. It is <orange>Okay</orange> if this percentage is <strong>between 25% and 50%</strong>. And <red>Bad</red> if this percentage is <strong>above 50%</strong>."
   }
 }
