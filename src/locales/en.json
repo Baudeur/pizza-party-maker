@@ -137,6 +137,7 @@
     "new": "New",
     "save-as": "Save As",
     "save": "Save",
+    "add-pizza": "Add pizza",
 
     "details-panel-title": "The details panel",
     "details-panel-p1": "This panel shows the underlying mechanism of the website. As well as giving a bit more information than just the flags.",

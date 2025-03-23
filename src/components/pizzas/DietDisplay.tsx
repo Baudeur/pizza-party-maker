@@ -8,7 +8,7 @@ type DietDisplayProps = {
 
 export function DietDisplay({ diet, testId }: Readonly<DietDisplayProps>) {
   return (
-    <div className="flex justify-between px-2" data-testid={testId}>
+    <div className="flex gap-1 px-2" data-testid={testId}>
       <DietIcon
         type="normal"
         color="Color"

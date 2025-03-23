@@ -18,10 +18,7 @@ export function PeopleCategory({ diet }: Readonly<PeopleCategoryProps>) {
   };
 
   return (
-    <div
-      className="text-2xl flex mb-3 last:mb-0"
-      data-testid={`people-category-${diet}`}
-    >
+    <div className="text-2xl flex mb-3" data-testid={`people-category-${diet}`}>
       <div className="mr-3 ">
         <DietIcon type={diet} color="Color" className="size-7" />
       </div>

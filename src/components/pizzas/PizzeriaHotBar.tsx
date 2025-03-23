@@ -19,6 +19,7 @@ import {
 import { pizzasSelector } from "../../modules/pizzas/selector";
 import { setPizzas } from "../../modules/pizzas/slice";
 import { useTranslation } from "react-i18next";
+import { Desktop } from "../utils/ReactiveComponents";
 
 export function PizzeriaHotBar() {
   const { t } = useTranslation();
@@ -52,90 +53,92 @@ export function PizzeriaHotBar() {
         loadedPizzeriaId ? "h-[3.5rem]" : "h-[1.75rem]"
       } mb-1`}
     >
-      <div className="flex w-full">
-        <Button
-          color="green"
-          onClick={handleNew}
-          className="w-full border-t-4 border-l-4 border-r-2 border-green-600 -mt-1 -ml-1 rounded-tl-xl"
-          title="New pizzeria"
-          testId="pizza-panel-new-pizzeria-button"
-        >
-          <div className="flex items-center gap-2">
-            <FilePlus size={20} strokeWidth={2} />
-            <span>{t("new")}</span>
-          </div>
-        </Button>
-        {loadedPizzeriaId && (
-          <NoVisibleEffectButton
-            color="green"
-            onClick={handleSave}
-            className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
-            title={`Save ${loadedPizzeria?.name}`}
-            testId="pizza-panel-save-button"
-          >
-            <div className="flex items-center gap-2">
-              <Save size={20} strokeWidth={2} />
-              <span>{t("save")}</span>
-            </div>
-          </NoVisibleEffectButton>
-        )}
-        {loadedPizzeriaId === undefined && (
+      <Desktop>
+        <div className="flex w-full">
           <Button
             color="green"
-            onClick={() => setShowSaveAsOverlay(true)}
-            className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
-            title="Save pizzeria"
-            testId="pizza-panel-save-button"
+            onClick={handleNew}
+            className="w-full border-t-4 border-l-4 border-r-2 border-green-600 -mt-1 -ml-1 rounded-tl-xl"
+            title="New pizzeria"
+            testId="pizza-panel-new-pizzeria-button"
           >
             <div className="flex items-center gap-2">
-              <Save size={20} strokeWidth={2} />
-              <span>{t("save")}</span>
+              <FilePlus size={20} strokeWidth={2} />
+              <span>{t("new")}</span>
             </div>
           </Button>
-        )}
-        <Button
-          color="green"
-          onClick={() => {
-            setShowSaveAsOverlay(true);
-          }}
-          className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
-          title="Save pizzeria as"
-          testId="pizza-panel-save-as-button"
-        >
-          <div className="flex items-center gap-2">
-            <SaveAsIcon
-              size={20}
-              strokeWidth={2}
-              backgroundColor="bg-green-500"
-            />
-            <span>{t("save-as")}</span>
-          </div>
-        </Button>
-        <Button
-          color="green"
-          onClick={() => {
-            setShowLoadOverlay(true);
-          }}
-          className="w-full border-t-4 border-l-2 border-r-4 border-green-600 -mt-1 -mr-1 rounded-tr-xl"
-          title="Load and manage pizzeria"
-          testId="pizza-panel-manage-button"
-        >
-          <div className="flex items-center gap-2">
-            <Store size={20} strokeWidth={2} />
-            <span>{t("manage-pizzeria-button")}</span>
-          </div>
-        </Button>
-      </div>
-      {loadedPizzeriaId && (
-        <div className="w-full bg-amber-200 h-7">
-          <span
-            className="text-left font-bold w-[700px] px-4 truncate"
-            data-testid="pizza-panel-pizzeria-name"
+          {loadedPizzeriaId && (
+            <NoVisibleEffectButton
+              color="green"
+              onClick={handleSave}
+              className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
+              title={`Save ${loadedPizzeria?.name}`}
+              testId="pizza-panel-save-button"
+            >
+              <div className="flex items-center gap-2">
+                <Save size={20} strokeWidth={2} />
+                <span>{t("save")}</span>
+              </div>
+            </NoVisibleEffectButton>
+          )}
+          {loadedPizzeriaId === undefined && (
+            <Button
+              color="green"
+              onClick={() => setShowSaveAsOverlay(true)}
+              className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
+              title="Save pizzeria"
+              testId="pizza-panel-save-button"
+            >
+              <div className="flex items-center gap-2">
+                <Save size={20} strokeWidth={2} />
+                <span>{t("save")}</span>
+              </div>
+            </Button>
+          )}
+          <Button
+            color="green"
+            onClick={() => {
+              setShowSaveAsOverlay(true);
+            }}
+            className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
+            title="Save pizzeria as"
+            testId="pizza-panel-save-as-button"
           >
-            {loadedPizzeria?.name}
-          </span>
+            <div className="flex items-center gap-2">
+              <SaveAsIcon
+                size={20}
+                strokeWidth={2}
+                backgroundColor="bg-green-500"
+              />
+              <span>{t("save-as")}</span>
+            </div>
+          </Button>
+          <Button
+            color="green"
+            onClick={() => {
+              setShowLoadOverlay(true);
+            }}
+            className="w-full border-t-4 border-l-2 border-r-4 border-green-600 -mt-1 -mr-1 rounded-tr-xl"
+            title="Load and manage pizzeria"
+            testId="pizza-panel-manage-button"
+          >
+            <div className="flex items-center gap-2">
+              <Store size={20} strokeWidth={2} />
+              <span>{t("manage-pizzeria-button")}</span>
+            </div>
+          </Button>
         </div>
-      )}
+        {loadedPizzeriaId && (
+          <div className="w-full bg-amber-200 h-7">
+            <span
+              className="text-left font-bold w-[700px] px-4 truncate"
+              data-testid="pizza-panel-pizzeria-name"
+            >
+              {loadedPizzeria?.name}
+            </span>
+          </div>
+        )}
+      </Desktop>
       <OverlayWrapper
         show={showSaveAsOverlay}
         close={() => setShowSaveAsOverlay(false)}

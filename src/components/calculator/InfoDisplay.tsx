@@ -15,10 +15,10 @@ import {
   thresholdsSelector,
 } from "../../modules/params/selector";
 import { priceToString, toUnderstandableRational } from "../../services/utils";
-import { DietIcon } from "../icons/DietIcon";
 import priceIcon from "../../assets/Cash.png";
 import sliceIcon from "../../assets/Pizza.png";
 import { useTranslation } from "react-i18next";
+import { EitherDesktopOrMobile } from "../utils/ReactiveComponents";
 
 type InfoDisplayProps = {
   peopleAteAvg: PeopleAte;
@@ -36,70 +36,104 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
   const priceTotal = pizzaPriceTotal(pizzas);
 
   return (
-    <div className="flex w-full">
-      {diets.map((diet) => (
-        <div
-          className="h-full mr-2 w-full"
-          key={diet}
-          data-testid={`${diet}-flag-container`}
-        >
-          <div className="text-3xl font-bold mb-2 flex justify-center">
-            <DietIcon
-              type={diet}
-              color="Color"
-              className="size-8"
-              testId={"flag-container"}
+    <EitherDesktopOrMobile>
+      <div className="flex w-full">
+        {diets.map((diet) => (
+          <div
+            className="h-full mr-2 w-full"
+            key={diet}
+            data-testid={`${diet}-flag-container`}
+          >
+            <PizzaFlag
+              flagState={stateOfDiet(diet, peopleAteAvg, people, okay, bad)}
+              diet={diet}
+              testId={`${diet}-flag`}
             />
           </div>
-          <PizzaFlag
-            flagState={stateOfDiet(diet, peopleAteAvg, people, okay, bad)}
-            testId={`${diet}-flag`}
-          />
+        ))}
+        <div
+          className="text-3xl font-bold mr-2 w-full"
+          data-testid="price-flag-container"
+        >
+          <div className="mb-2 flex justify-center">
+            <img
+              src={priceIcon}
+              className="size-8"
+              alt="Price"
+              data-testid="price-flag-icon"
+            />
+          </div>
+          <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
+            <span className="text-lg" data-testid="price-flag-per-person">
+              {priceToString(pricePerPerson)} € / {t("info-display-person")}
+            </span>
+            <span className="text-lg" data-testid="price-flag-total">
+              {priceToString(priceTotal)} € {t("info-display-total")}
+            </span>
+          </div>
         </div>
-      ))}
-      <div
-        className="text-3xl font-bold mr-2 w-full"
-        data-testid="price-flag-container"
-      >
-        <div className="mb-2 flex justify-center">
-          <img
-            src={priceIcon}
-            className="size-8"
-            alt="Price"
-            data-testid="price-flag-icon"
-          />
-        </div>
-        <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
-          <span className="text-lg" data-testid="price-flag-per-person">
-            {priceToString(pricePerPerson)} € / {t("info-display-person")}
-          </span>
-          <span className="text-lg" data-testid="price-flag-total">
-            {priceToString(priceTotal)} € {t("info-display-total")}
-          </span>
-        </div>
-      </div>
-      <div
-        className="text-3xl font-bold w-full"
-        data-testid="quantity-flag-container"
-      >
-        <div className="mb-2 flex justify-center">
-          <img
-            src={sliceIcon}
-            className="size-8"
-            alt="Quantity"
-            data-testid="quantity-flag-icon"
-          />
-        </div>
-        <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
-          <span className="text-lg" data-testid="quantity-flag-slices">
-            {slicesPerPerson} {t("info-display-slices")}
-          </span>
-          <span className="text-lg" data-testid="quantity-flag-pizzas">
-            {toUnderstandableRational(slicesPerPerson, slices)}{" "}
-            {t("info-display-pizzas")}
-          </span>
+        <div
+          className="text-3xl font-bold w-full"
+          data-testid="quantity-flag-container"
+        >
+          <div className="mb-2 flex justify-center">
+            <img
+              src={sliceIcon}
+              className="size-8"
+              alt="Quantity"
+              data-testid="quantity-flag-icon"
+            />
+          </div>
+          <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
+            <span className="text-lg" data-testid="quantity-flag-slices">
+              {slicesPerPerson} {t("info-display-slices")}
+            </span>
+            <span className="text-lg" data-testid="quantity-flag-pizzas">
+              {toUnderstandableRational(slicesPerPerson, slices)}{" "}
+              {t("info-display-pizzas")}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+      <div className="flex flex-col gap-2">
+        <div className="flex w-full gap-2">
+          {diets.map((diet) => (
+            <PizzaFlag
+              flagState={stateOfDiet(diet, peopleAteAvg, people, okay, bad)}
+              diet={diet}
+              testId={`${diet}-flag`}
+            />
+          ))}
+        </div>
+        <div className="flex gap-2 w-full">
+          <div className="bg-lime-400 rounded-lg h-8 w-full flex justify-between px-2 font-bold items-center">
+            <img
+              src={priceIcon}
+              className="size-6"
+              alt="Price"
+              data-testid="price-flag-icon"
+            />
+            <span className="text-lg" data-testid="price-flag-per-person">
+              {priceToString(pricePerPerson)} €{" "}
+              <span className="text-sm"> / {t("info-display-person")}</span>
+            </span>
+          </div>
+          <div className="flex gap-2 w-full">
+            <div className="bg-amber-400 rounded-lg h-8 w-full flex justify-between px-2 font-bold items-center">
+              <img
+                src={sliceIcon}
+                className="size-6"
+                alt="Quantity"
+                data-testid="quantity-flag-icon"
+              />
+              <span className="text-lg" data-testid="quantity-flag-pizzas">
+                {toUnderstandableRational(slicesPerPerson, slices)}{" "}
+                {t("info-display-pizzas")}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </EitherDesktopOrMobile>
   );
 }

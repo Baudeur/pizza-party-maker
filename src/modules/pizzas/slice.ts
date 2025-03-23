@@ -6,6 +6,7 @@ export type PizzaWithoutID = {
   price: number;
   eatenBy: Diet;
   quantity: number;
+  editable: boolean;
 };
 
 export type Pizza = {
@@ -14,6 +15,7 @@ export type Pizza = {
   price: number;
   eatenBy: Diet;
   quantity: number;
+  editable: boolean;
 };
 
 type PizzaState = {
@@ -22,7 +24,48 @@ type PizzaState = {
 };
 
 const initialState: PizzaState = {
-  pizzas: [],
+  pizzas: [
+    {
+      id: 0,
+      name: "Pizza maxi gourmande",
+      eatenBy: "normal",
+      price: 44.5,
+      quantity: 2,
+      editable: false,
+    },
+    {
+      id: 1,
+      name: "Pizza maxi gourmande",
+      eatenBy: "vegetarian",
+      price: 44.5,
+      quantity: 2,
+      editable: false,
+    },
+    {
+      id: 2,
+      name: "Pizza 1",
+      eatenBy: "pescoVegetarian",
+      price: 44.5,
+      quantity: 99,
+      editable: false,
+    },
+    {
+      id: 3,
+      name: "Pizza maxi gourmande avec un nom trop long",
+      eatenBy: "vegan",
+      price: 999,
+      quantity: 2,
+      editable: false,
+    },
+    {
+      id: 4,
+      name: "",
+      eatenBy: "normal",
+      price: 44.54,
+      quantity: 2,
+      editable: false,
+    },
+  ],
   id: 0,
 };
 
@@ -37,6 +80,7 @@ const pizzas = createSlice({
         price: action.payload.price,
         eatenBy: action.payload.eatenBy,
         quantity: action.payload.quantity,
+        editable: action.payload.editable,
       };
       return { id: state.id + 1, pizzas: [...state.pizzas, newPizza] };
     },
