@@ -9,6 +9,7 @@ import { EditContext } from "./PizzaLineWrapper";
 import { priceToString } from "../../services/utils";
 import { EitherDesktopOrMobile } from "../utils/ReactiveComponents";
 import { useTranslation } from "react-i18next";
+import { Swipable } from "../utils/Swipable";
 
 type PizzaDisplayProps = {
   pizza: Pizza;
@@ -21,6 +22,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
   const { setFocus } = useContext(EditContext);
   const [hovered, setHovered] = useState(false);
   const { t } = useTranslation();
+  const [swipePercentage, setSwipePercentage] = useState(0);
 
   function handleDoubleClick(focus: Focusable) {
     const modifiedPizza: Pizza = {
@@ -73,7 +75,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             className="truncate absolute right-0 left-0 text-left pl-2 h-8 py-[2px]"
             data-testid={`${pizza.id}-pizza-display-name`}
           >
-            {pizza.name}
+            {pizza.name || t("pizza-name-unnamed")}
           </div>
         </td>
         <td onDoubleClick={() => handleDoubleClick("diet")}>
@@ -120,68 +122,65 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
         </td>
       </tr>
       {/* Mobile */}
-      <div className="flex w-full flex-col bg-amber-200 rounded-lg gap-3">
-        <div className="flex">
-          <div className="flex relative h-8 w-full bg-amber-300 rounded-tl-lg">
-            <div
-              className="truncate absolute right-0 left-0 font-bold pl-2 h-8 py-[2px]"
-              data-testid={`${pizza.id}-pizza-display-name`}
-            >
-              {pizza.name || "(undefined)"}
+      <div className="relative">
+        <div
+          style={{
+            opacity: swipePercentage,
+          }}
+          className="absolute bg-red-500 w-full h-full rounded-lg flex items-center"
+        >
+          <Trash2 size={40} className="ml-[80px]" />
+        </div>
+        <Swipable
+          onSwipeFinish={(value) => {
+            if (value >= 190) dispatch(removePizza(pizza.id));
+          }}
+          onSwipeMove={(value) => {
+            setSwipePercentage(Math.min(1, (value - 10) / 180));
+          }}
+          minSwipe={0}
+          maxSwipe={200}
+        >
+          <div className="flex w-full flex-col bg-amber-200 rounded-lg overflow-hidden">
+            <div className="flex bg-amber-300">
+              <div className="flex relative h-8 w-full">
+                <div
+                  onDoubleClick={() => handleDoubleClick("name")}
+                  className="truncate absolute right-0 left-0 font-bold px-2 h-8 py-[2px]"
+                  data-testid={`${pizza.id}-pizza-display-name`}
+                >
+                  {pizza.name || t("pizza-name-unnamed")}
+                </div>
+              </div>
+              <div
+                onDoubleClick={() => handleDoubleClick("price")}
+                className="ml-4 mr-2 h-8 pt-[2px] min-w-fit"
+              >
+                <div data-testid={`${pizza.id}-pizza-display-price`}>
+                  {priceToString(pizza.price)} €
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-between w-full">
+              <div
+                onDoubleClick={() => handleDoubleClick("diet")}
+                className="my-[2px]"
+              >
+                <DietDisplay
+                  diet={pizza.eatenBy}
+                  testId={`${pizza.id}-pizza-display-diet`}
+                />
+              </div>
+              <IntegerInput
+                value={pizza.quantity}
+                setValue={handleQuantityChange}
+                className="z-[5] min-w-24"
+                rounded={false}
+                testId={`${pizza.id}-pizza-display-quantity`}
+              />
             </div>
           </div>
-          <Button
-            className="min-w-8"
-            color="green"
-            onClick={() => handleDoubleClick("name")}
-            testId={`${pizza.id}-pizza-display-edit-button`}
-            title="Edit pizza"
-          >
-            <Pencil size={20} strokeWidth={2} />
-          </Button>
-          <Button
-            className="min-w-8 rounded-tr-lg"
-            color="red"
-            onClick={() => dispatch(removePizza(pizza.id))}
-            testId={`${pizza.id}-pizza-display-delete-button`}
-            title="Delete pizza"
-          >
-            <Trash2 size={20} strokeWidth={2} />
-          </Button>
-        </div>
-
-        <div className="flex">
-          <div className="w-1/2 text-right px-2">
-            {t("pizza-table-eaten-by")}
-          </div>
-          <div className="w-1/2 flex justify-start">
-            <DietDisplay
-              diet={pizza.eatenBy}
-              testId={`${pizza.id}-pizza-display-diet`}
-            />
-          </div>
-        </div>
-        <div className="flex">
-          <div className="w-1/2 text-right px-2">{t("pizza-table-price")}</div>
-          <div className="w-1/2 flex justify-start">
-            <div
-              className="h-8 text-left w-32 px-2 py-[2px]"
-              data-testid={`${pizza.id}-pizza-display-price`}
-            >
-              {priceToString(pizza.price)} €
-            </div>
-          </div>
-        </div>
-        <div className="w-full flex justify-center">
-          <IntegerInput
-            value={pizza.quantity}
-            setValue={handleQuantityChange}
-            onDelete={() => dispatch(removePizza(pizza.id))}
-            className="z-[5]"
-            testId={`${pizza.id}-pizza-display-quantity`}
-          />
-        </div>
-        <div className={`flex w-full`}></div>
+        </Swipable>
       </div>
     </EitherDesktopOrMobile>
   );

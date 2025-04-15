@@ -10,7 +10,6 @@ import { FocusEvent, useContext, useEffect, useRef, useState } from "react";
 import { Diet } from "../../types";
 import { EditContext } from "./PizzaLineWrapper";
 import { EitherDesktopOrMobile } from "../utils/ReactiveComponents";
-import { useTranslation } from "react-i18next";
 
 type PizzaEditProps = {
   pizza: Pizza;
@@ -21,7 +20,6 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
   const nameInputRef = useRef<HTMLInputElement>(null);
   const priceInputRef = useRef<HTMLInputElement>(null);
   const dietInputRef = useRef<HTMLDivElement>(null);
-  const { t } = useTranslation();
   const { focus } = useContext(EditContext);
   const [name, setName] = useState(pizza.name);
   const [diet, setDiet] = useState<Diet>(pizza.eatenBy);
@@ -150,7 +148,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
         </td>
       </tr>
       {/* Mobile */}
-      <div className="flex w-full flex-col bg-amber-200 rounded-lg gap-3">
+      <div className="flex w-full flex-col bg-amber-200 rounded-lg overflow-hidden">
         <div className="flex">
           <TextInput
             className="w-full rounded-none rounded-tl-lg"
@@ -161,33 +159,18 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             onChange={(e) => setName(e.target.value)}
             testId={`${pizza.id}-pizza-edit-name`}
           />
-          <Button
+          <PriceInput
+            className="w-28 rounded-none rounded-tr-lg"
+            ref={priceInputRef}
+            price={price.toString()}
+            setPrice={(price) => setPrice(price)}
             tabIndex={0}
-            className="min-w-8"
-            color="green"
-            onClick={() => handleSubmit()}
-            testId={`${pizza.id}-pizza-edit-validate-button`}
-            title="Apply changes"
-          >
-            <Check size={20} strokeWidth={2} />
-          </Button>
-          <Button
-            tabIndex={0}
-            className="min-w-8 rounded-tr-lg"
-            color="yellow"
-            onClick={() => handleCancel()}
-            testId={`${pizza.id}-pizza-edit-cancel-button`}
-            title="Cancel changes"
-          >
-            <Undo2 size={20} strokeWidth={2} />
-          </Button>
+            testId={`${pizza.id}-pizza-edit-price`}
+          />
         </div>
 
-        <div className="flex">
-          <div className="w-1/2 text-right px-2">
-            {t("pizza-table-eaten-by")}
-          </div>
-          <div className="w-1/2 flex justify-start">
+        <div className="flex justify-between w-full">
+          <div className="my-[2px]">
             <DietSelector
               ref={dietInputRef}
               value={diet}
@@ -196,30 +179,29 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
               testId={`${pizza.id}-pizza-edit-diet`}
             />
           </div>
-        </div>
-        <div className="flex">
-          <div className="w-1/2 text-right px-2">{t("pizza-table-price")}</div>
-          <div className="w-1/2 flex justify-start pr-2">
-            <PriceInput
-              className="w-full"
-              ref={priceInputRef}
-              price={price.toString()}
-              setPrice={(price) => setPrice(price)}
+          <div className="flex">
+            <Button
               tabIndex={0}
-              testId={`${pizza.id}-pizza-edit-price`}
-            />
+              className="min-w-16"
+              color="yellow"
+              onClick={() => handleCancel()}
+              testId={`${pizza.id}-pizza-edit-cancel-button`}
+              title="Cancel changes"
+            >
+              <Undo2 size={20} strokeWidth={2} />
+            </Button>
+            <Button
+              tabIndex={0}
+              className="min-w-16"
+              color="green"
+              onClick={() => handleSubmit()}
+              testId={`${pizza.id}-pizza-edit-validate-button`}
+              title="Apply changes"
+            >
+              <Check size={20} strokeWidth={2} />
+            </Button>
           </div>
         </div>
-        <div className="w-full flex justify-center">
-          <IntegerInput
-            value={pizza.quantity}
-            setValue={handleQuantityChange}
-            onDelete={() => dispatch(removePizza(pizza.id))}
-            className="z-[5]"
-            testId={`${pizza.id}-pizza-display-quantity`}
-          />
-        </div>
-        <div className={`flex w-full`}></div>
       </div>
     </EitherDesktopOrMobile>
   );

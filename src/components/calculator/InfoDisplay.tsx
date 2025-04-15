@@ -99,6 +99,7 @@ export function InfoDisplay({ peopleAteAvg }: Readonly<InfoDisplayProps>) {
         <div className="flex w-full gap-2">
           {diets.map((diet) => (
             <PizzaFlag
+              key={diet}
               flagState={stateOfDiet(diet, peopleAteAvg, people, okay, bad)}
               diet={diet}
               testId={`${diet}-flag`}

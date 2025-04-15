@@ -19,7 +19,7 @@ export function Pizzas() {
   return (
     <Container
       className={`${
-        !isDesktop && "rounded-none border-x-0 overflow-auto"
+        !isDesktop && "rounded-none border-x-0 overflow-auto overflow-x-hidden"
       } text-xl h-[32rem]`}
       testId="pizza-panel"
       header={<PizzeriaHotBar />}

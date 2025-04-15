@@ -8,6 +8,7 @@ type IntegerInputProps = {
   min?: number;
   max?: number;
   animateShow?: boolean;
+  rounded?: boolean;
   onDelete?: () => void;
   className?: string;
   testId?: string;
@@ -19,6 +20,7 @@ export function IntegerInput({
   min = 0,
   max = 99,
   animateShow = true,
+  rounded = true,
   onDelete,
   className,
   testId,
@@ -50,7 +52,9 @@ export function IntegerInput({
         <div className="pt-[2px] font-bold w-24 text-xl ">{value}</div>
       </div>
       <div
-        className={`absolute top-0 h-8 flex rounded-lg justify-center overflow-hidden w-24 ${
+        className={`absolute top-0 h-8 flex ${
+          rounded && "rounded-lg"
+        } justify-center overflow-hidden w-24 ${
           animateShow || focus ? "opacity-100" : "opacity-0"
         } transition-opacity duration-0`}
       >
