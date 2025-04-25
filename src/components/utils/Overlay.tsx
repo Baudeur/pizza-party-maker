@@ -6,9 +6,12 @@ import {
   useState,
 } from "react";
 import { Container } from "../utils/Container";
+import { Button } from "./Button";
+import { X } from "lucide-react";
 
 type Overlay = {
   close: () => void;
+  title: string;
   testId?: string;
 };
 
@@ -16,6 +19,7 @@ export const CloseContext = createContext(() => {});
 
 export function Overlay({
   close,
+  title,
   testId,
   children,
 }: PropsWithChildren<Overlay>) {
@@ -32,7 +36,7 @@ export function Overlay({
   }, [close]);
   return (
     <div
-      className={`z-30 fixed size-full bg-black top-0 left-0 ${
+      className={`z-30 fixed w-full h-[100lvh] bg-black top-0 left-0 ${
         showDelayed ? "bg-opacity-70" : "bg-opacity-0 pointer-events-none"
       } transition-all duration-150`}
       data-testid={`${testId}-background`}
@@ -55,7 +59,24 @@ export function Overlay({
             e.key === "Escape" && animateAndClose();
           }}
         >
-          <Container className="h-fit" testId={`${testId}-container`}>
+          <Container
+            className="h-fit relative max-w-[90vw]"
+            testId={`${testId}-container`}
+            header={
+              <div className="flex mb-4">
+                <div className="bg-amber-400 rounded-tl-xl text-xl px-2 font-bold text-center w-full">
+                  {title}
+                </div>
+                <Button
+                  color="red"
+                  onClick={animateAndClose}
+                  className="-mt-1 -mr-1 w-8 rounded-tr-2xl"
+                >
+                  <X className="pt-[2px] pr-[2px]" />
+                </Button>
+              </div>
+            }
+          >
             <CloseContext.Provider value={animateAndClose}>
               {children}
             </CloseContext.Provider>

@@ -1,12 +1,14 @@
 import { addPizza, PizzaWithoutID } from "../../modules/pizzas/slice";
 import { Button } from "../utils/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { EitherDesktopOrMobile } from "../utils/ReactiveComponents";
+import { pizzasEditableSelector } from "../../modules/pizzas/selector";
 
 export function PizzaForm() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const editable = useSelector(pizzasEditableSelector);
 
   const handleSubmit = () => {
     const pizza: PizzaWithoutID = {
@@ -30,6 +32,7 @@ export function PizzaForm() {
             onClick={handleSubmit}
             testId="pizza-form-submit"
             title="Add pizza"
+            disabled={!editable}
           >
             {t("add-pizza")}
           </Button>
@@ -43,6 +46,7 @@ export function PizzaForm() {
           onClick={handleSubmit}
           testId="pizza-form-submit"
           title="Add pizza"
+          disabled={!editable}
         >
           {t("add-pizza")}
         </Button>

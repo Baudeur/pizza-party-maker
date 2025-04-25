@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import { ReactNode, useState } from "react";
+import { ReactNode, useLayoutEffect, useRef, useState } from "react";
 
 type DropDownProps<T extends number | string> = {
   options: { value: T; label: string; disabled?: boolean; icon?: ReactNode }[];
@@ -21,6 +21,8 @@ export function DropDown<T extends number | string>({
   minimal = false,
 }: Readonly<DropDownProps<T>>) {
   const [dropDownShown, setDropDownShown] = useState(false);
+  const [isOutOfBounds, setIsOutOfBounds] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   function handleScroll(event: React.UIEvent<HTMLDivElement, UIEvent>) {
     const element = event.target as HTMLDivElement;
@@ -30,6 +32,17 @@ export function DropDown<T extends number | string>({
       ) <= 1;
     if (bottom) onScrollBottom();
   }
+
+  useLayoutEffect(() => {
+    const bounding = ref.current?.getBoundingClientRect();
+    if (bounding === undefined) {
+      setIsOutOfBounds(false);
+    } else {
+      if (bounding?.x + bounding?.width > window.innerWidth) {
+        setIsOutOfBounds(true);
+      }
+    }
+  }, [ref, dropDownShown]);
 
   const selectedOption =
     options[options.findIndex((opt) => opt.value === value)];
@@ -60,9 +73,10 @@ export function DropDown<T extends number | string>({
       </div>
       {dropDownShown && (
         <div
+          ref={ref}
           className={`z-20 absolute bg-white min-w-full rounded-lg overflow-hidden border-gray-200 border-2 shadow-md overflow-y-auto max-h-[150px] ${
-            minimal && "-left-[14px]"
-          }`}
+            minimal && !isOutOfBounds && "-left-[14px]"
+          } ${isOutOfBounds && "-right-[8px]"}`}
           onScroll={handleScroll}
         >
           {options.map(({ value: val, label, disabled = false, icon }) => (

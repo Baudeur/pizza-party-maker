@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { DietIcon } from "../icons/DietIcon";
 import { DietSelector } from "../utils/DietSelector";
 import { Diet } from "../../types";
 import { FlagState, PizzaFlag } from "../utils/PizzaFlag";
@@ -11,6 +10,9 @@ import { CompTrans } from "../utils/TranslationComponents";
 import { Button } from "../utils/Button";
 import { Save, Store } from "lucide-react";
 import { SaveAsIcon } from "../icons/SaveAsIcon";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
+import { Mobile } from "../utils/ReactiveComponents";
 
 const flagStates: FlagState[] = [
   "perfect",
@@ -34,9 +36,11 @@ export function InfoContent() {
   const { t } = useTranslation();
   const [diet, setDiet] = useState<Diet>("pescoVegetarian");
   const [flagStateIndex, setFlagStateIndex] = useState(0);
+  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+
   useEffect(() => {
     const intervalId = setInterval(
-      () => setFlagStateIndex((flagStateIndex + 1) % 6),
+      () => setFlagStateIndex((prevState) => (prevState + 1) % 6),
       5000
     );
     return () => {
@@ -44,12 +48,21 @@ export function InfoContent() {
     };
   }, [flagStateIndex]);
   return (
-    <div className="h-[80vh] overflow-y-scroll">
+    <div className={`${isDesktop ? "h-[80vh]" : "h-full"} overflow-y-scroll`}>
+      <Mobile>
+        <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-4 text-center w-full">
+          {t("help")}
+        </p>
+      </Mobile>
       {/* ########## Introduction ########## */}
-      <div className="flex text-2xl items-baseline justify-center mb-4">
+      <div
+        className={`flex text-2xl items-baseline justify-center mb-4 ${
+          !isDesktop && "my-4"
+        }`}
+      >
         <CompTrans i18nKey="info-title" />
       </div>
-      <div className="w-[750px] text-left">
+      <div className={`${isDesktop && "w-[750px]"} text-left`}>
         <p className="mb-2">{t("info-intro-p1")}</p>
         <p>{t("info-intro-p2")}</p>
         <p className="mb-2">
@@ -244,16 +257,20 @@ export function InfoContent() {
           <hr className="my-2 border-black w-[90%] mx-[5%]" />
 
           <p className="mb-2">{t("info-result-p4")}</p>
-          <div className="flex items-center w-[500px]">
-            <div className="h-full mr-2 text-center min-w-32 mb-4">
-              <div className="text-3xl font-bold mb-2 flex justify-center">
-                <DietIcon
-                  type={"vegetarian"}
-                  color="Color"
-                  className="size-8"
-                />
-              </div>
-              <PizzaFlag flagState={flagStates[flagStateIndex]} />
+          <div
+            className={`flex items-center ${
+              isDesktop ? "w-[500px]" : "flex-col"
+            }`}
+          >
+            <div
+              className={`h-full ${
+                isDesktop ? "mr-2 mb-4" : ""
+              } text-center min-w-32`}
+            >
+              <PizzaFlag
+                diet="vegetarian"
+                flagState={flagStates[flagStateIndex]}
+              />
             </div>
             <p className="translate-y-3">
               <CompTrans i18nKey={flagStatesDescriptions[flagStateIndex]} />
@@ -271,7 +288,9 @@ export function InfoContent() {
               <CompTrans i18nKey="info-result-p7" />
             </li>
             <li>
-              <CompTrans i18nKey="info-result-p8" />
+              <CompTrans
+                i18nKey={isDesktop ? "info-result-p8" : "info-result-p8-mobile"}
+              />
             </li>
           </ul>
 

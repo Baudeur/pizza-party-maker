@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { modifyPizza, Pizza, removePizza } from "../../modules/pizzas/slice";
 import { Button } from "../utils/Button";
 import { Pencil, Trash2 } from "lucide-react";
@@ -10,6 +10,7 @@ import { priceToString } from "../../services/utils";
 import { EitherDesktopOrMobile } from "../utils/ReactiveComponents";
 import { useTranslation } from "react-i18next";
 import { Swipable } from "../utils/Swipable";
+import { pizzasEditableSelector } from "../../modules/pizzas/selector";
 
 type PizzaDisplayProps = {
   pizza: Pizza;
@@ -23,8 +24,10 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
   const [hovered, setHovered] = useState(false);
   const { t } = useTranslation();
   const [swipePercentage, setSwipePercentage] = useState(0);
+  const editable = useSelector(pizzasEditableSelector);
 
   function handleDoubleClick(focus: Focusable) {
+    if (!editable) return;
     const modifiedPizza: Pizza = {
       id: pizza.id,
       name: pizza.name,
@@ -62,7 +65,9 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             value={pizza.quantity}
             setValue={handleQuantityChange}
             animateShow={hovered}
-            onDelete={() => dispatch(removePizza(pizza.id))}
+            onDelete={
+              editable ? () => dispatch(removePizza(pizza.id)) : undefined
+            }
             className="z-[5]"
             testId={`${pizza.id}-pizza-display-quantity`}
           />
@@ -98,7 +103,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
           <div
             className={`flex justify-end absolute top-[1px] ${
               hovered ? "right-[1px]" : "right-[100%]"
-            } transition-all ease-out duration-200`}
+            } transition-all ease-out duration-200 ${!editable && "hidden"}`}
           >
             <Button
               className="rounded-lg w-8 mr-1"

@@ -2,49 +2,59 @@ import { CircleHelp, Settings } from "lucide-react";
 import { useState } from "react";
 import { InfoContent } from "./InfoContent";
 import { OverlayWrapper } from "../utils/OverlayWrapper";
-import { Params } from "../calculator/Params";
+import { Params } from "./Params";
 import { LanguageSelector } from "./LanguageSelector";
+import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
+import { Desktop } from "../utils/ReactiveComponents";
 
 export function Infos() {
   const [displayOverlay1, setDisplayOverlay1] = useState(false);
   const [displayOverlay2, setDisplayOverlay2] = useState(false);
+  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const { t } = useTranslation();
   return (
-    <div className="flex gap-2">
+    <div className={`${isDesktop ? "flex gap-2" : "m-2"}`}>
       <div>
         <LanguageSelector />
       </div>
-      <div>
-        <button
-          onClick={() => setDisplayOverlay2(true)}
-          data-testid="param-overlay-button"
-          title="Parameters"
-        >
-          <Settings size={30} color="gray" strokeWidth={2} />
-        </button>
-        <OverlayWrapper
-          show={displayOverlay2}
-          close={() => setDisplayOverlay2(false)}
-          testId="param-overlay"
-        >
-          <Params />
-        </OverlayWrapper>
-      </div>
-      <div>
-        <button
-          onClick={() => setDisplayOverlay1(true)}
-          data-testid="info-overlay-button"
-          title="Help"
-        >
-          <CircleHelp size={30} color="gray" strokeWidth={2} />
-        </button>
-        <OverlayWrapper
-          show={displayOverlay1}
-          close={() => setDisplayOverlay1(false)}
-          testId="info-overlay"
-        >
-          <InfoContent />
-        </OverlayWrapper>
-      </div>
+      <Desktop>
+        <div>
+          <button
+            onClick={() => setDisplayOverlay2(true)}
+            data-testid="param-overlay-button"
+            title="Parameters"
+          >
+            <Settings size={30} color="gray" strokeWidth={2} />
+          </button>
+          <OverlayWrapper
+            show={displayOverlay2}
+            title={t("parameters-title")}
+            close={() => setDisplayOverlay2(false)}
+            testId="param-overlay"
+          >
+            <Params />
+          </OverlayWrapper>
+        </div>
+        <div>
+          <button
+            onClick={() => setDisplayOverlay1(true)}
+            data-testid="info-overlay-button"
+            title="Help"
+          >
+            <CircleHelp size={30} color="gray" strokeWidth={2} />
+          </button>
+          <OverlayWrapper
+            show={displayOverlay1}
+            title={t("help")}
+            close={() => setDisplayOverlay1(false)}
+            testId="info-overlay"
+          >
+            <InfoContent />
+          </OverlayWrapper>
+        </div>
+      </Desktop>
     </div>
   );
 }

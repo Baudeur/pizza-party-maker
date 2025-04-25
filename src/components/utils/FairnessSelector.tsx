@@ -1,5 +1,7 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
 
 type FairnessSelectorProps = {
   value1: number;
@@ -12,16 +14,14 @@ type FairnessSelectorProps = {
   className?: string;
 };
 
-const width = 400;
+//Height of the whole component
 const height = 70;
 const borderWidth = 2;
 //Height of the space for the label under the graph
 const labelSpace = 20;
 //Margin on the right for the fade of the bad portion
 const badExcess = 40;
-//Width of the handle to move change the value
-const handleWidth = 15;
-//Space Before the graph starts (needed for label no to be cropped)
+//Space Before the graph starts (needed for label not to be cropped)
 const marginLeft = 25;
 
 export function FairnessSelector({
@@ -39,6 +39,12 @@ export function FairnessSelector({
     i18n: { language },
   } = useTranslation();
   const ref = useRef<SVGRectElement>(null);
+  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const [dragged, setDragged] = useState(0);
+  //Width of the whole component
+  const width = isDesktop ? 400 : 280;
+  //Width of the handle to move change the value
+  const handleWidth = isDesktop ? 15 : 20;
 
   const percentage1 = (value1 - min) / (max - min);
   const percentage2 = (value2 - min) / (max - min);
@@ -100,9 +106,10 @@ export function FairnessSelector({
 
   const handleStopDrag = useCallback(
     (ev: MouseEvent) => {
-      removeEventListener("mousemove", listener1);
-      removeEventListener("mousemove", listener2);
-      removeEventListener("mouseup", handleStopDrag);
+      setDragged(0);
+      removeEventListener("pointermove", listener1);
+      removeEventListener("pointermove", listener2);
+      removeEventListener("pointerup", handleStopDrag);
       removeEventListener("click", handleStopDrag, true);
       ev.preventDefault();
       ev.stopPropagation();
@@ -118,13 +125,15 @@ export function FairnessSelector({
   }, []);
 
   const handleStartDrag1 = () => {
-    addEventListener("mousemove", listener1);
-    addEventListener("mouseup", handleStopDrag);
+    setDragged(1);
+    addEventListener("pointermove", listener1);
+    addEventListener("pointerup", handleStopDrag);
     addEventListener("click", handleClickBlock, true);
   };
   const handleStartDrag2 = () => {
-    addEventListener("mousemove", listener2);
-    addEventListener("mouseup", handleStopDrag);
+    setDragged(2);
+    addEventListener("pointermove", listener2);
+    addEventListener("pointerup", handleStopDrag);
     addEventListener("click", handleClickBlock, true);
   };
 
@@ -145,7 +154,10 @@ export function FairnessSelector({
     }
   };
   return (
-    <div className={className} data-testid="fairness-parameter">
+    <div
+      className={`${className} ${!isDesktop && "touch-none"}`}
+      data-testid="fairness-parameter"
+    >
       <svg width={width} height={height}>
         {/*Mask for fadout of bad*/}
         <defs>
@@ -278,15 +290,19 @@ export function FairnessSelector({
         {/*Cursors*/}
         <rect
           data-testid="fairness-parameter-cursor1"
-          className="cursor-ew-resize focus:fill-green-500 fill-gray-400 hover:fill-gray-500"
+          className={`cursor-ew-resize fill-gray-400 hover:fill-gray-500 ${
+            isDesktop
+              ? "focus:fill-green-500"
+              : dragged === 1 && "fill-green-500"
+          }`}
           x={startX + workingWidth * percentage1 - handleWidth / 2}
           width={handleWidth}
           y={borderWidth / 2}
-          rx={handleWidth / 2}
+          rx={isDesktop ? handleWidth / 2 : handleWidth / 4}
           height={graphHeight - borderWidth}
           strokeWidth={borderWidth}
           stroke="white"
-          onMouseDown={handleStartDrag1}
+          onPointerDown={handleStartDrag1}
           onKeyDown={(ev) => {
             if (ev.key === "ArrowRight") {
               onValue1Change(Math.min(value1 + 0.05, value2));
@@ -299,15 +315,19 @@ export function FairnessSelector({
         />
         <rect
           data-testid="fairness-parameter-cursor2"
-          className="cursor-ew-resize focus:fill-green-500 fill-gray-400 hover:fill-gray-500"
+          className={`cursor-ew-resize fill-gray-400 hover:fill-gray-500 ${
+            isDesktop
+              ? "focus:fill-green-500"
+              : dragged === 2 && "fill-green-500"
+          }`}
           x={startX + workingWidth * percentage2 - handleWidth / 2}
           width={handleWidth}
           y={borderWidth / 2}
-          rx={handleWidth / 2}
+          rx={isDesktop ? handleWidth / 2 : handleWidth / 4}
           height={graphHeight - borderWidth}
           strokeWidth={borderWidth}
           stroke="white"
-          onMouseDown={handleStartDrag2}
+          onPointerDown={handleStartDrag2}
           onKeyDown={(ev) => {
             if (ev.key === "ArrowRight") {
               onValue2Change(Math.min(value2 + 0.05, max));

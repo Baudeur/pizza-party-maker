@@ -1,4 +1,3 @@
-# Introduction
 ## Welcome to
 <img src="/src/assets/Title.png" width=500px/>
 

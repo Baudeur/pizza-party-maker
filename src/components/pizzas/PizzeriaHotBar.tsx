@@ -1,4 +1,4 @@
-import { FilePlus, Save, Store } from "lucide-react";
+import { FilePlus, Pencil, Save, Store, X } from "lucide-react";
 import { Button } from "../utils/Button";
 import { NoVisibleEffectButton } from "../utils/NoVisibleEffectButton";
 import { SaveAsIcon } from "../icons/SaveAsIcon";
@@ -16,8 +16,11 @@ import {
   Pizzeria,
   unloadPizzeria,
 } from "../../modules/pizzerias/slice";
-import { pizzasSelector } from "../../modules/pizzas/selector";
-import { setPizzas } from "../../modules/pizzas/slice";
+import {
+  pizzasEditableSelector,
+  pizzasSelector,
+} from "../../modules/pizzas/selector";
+import { setPizzas, setPizzasEditable } from "../../modules/pizzas/slice";
 import { useTranslation } from "react-i18next";
 import { Desktop } from "../utils/ReactiveComponents";
 
@@ -32,6 +35,8 @@ export function PizzeriaHotBar() {
   const loadedPizzeria = pizzerias.find(
     (pizzeria) => pizzeria.id === loadedPizzeriaId
   );
+  const editable = useSelector(pizzasEditableSelector);
+  const [pizzeriaEdit, setPizzeriaEdit] = useState(false);
 
   const handleSave = useCallback(() => {
     if (loadedPizzeriaId === undefined || loadedPizzeria === undefined) return;
@@ -41,9 +46,12 @@ export function PizzeriaHotBar() {
       pizzas: pizzas,
     };
     dispatch(modifyPizzeria(modifiedPizzeria));
+    dispatch(setPizzasEditable(false));
+    setPizzeriaEdit(false);
   }, [dispatch, loadedPizzeriaId, pizzas, loadedPizzeria]);
 
   const handleNew = useCallback(() => {
+    dispatch(setPizzasEditable(true));
     dispatch(setPizzas([]));
     dispatch(unloadPizzeria());
   }, [dispatch]);
@@ -67,7 +75,25 @@ export function PizzeriaHotBar() {
               <span>{t("new")}</span>
             </div>
           </Button>
-          {loadedPizzeriaId && (
+          {pizzeriaEdit && loadedPizzeria && (
+            <Button
+              color="yellow"
+              onClick={() => {
+                setPizzeriaEdit(false);
+                dispatch(setPizzasEditable(false));
+                dispatch(setPizzas(loadedPizzeria.pizzas));
+              }}
+              className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
+              title="Save pizzeria as"
+              testId="pizza-panel-save-as-button"
+            >
+              <div className="flex items-center gap-2">
+                <X size={20} strokeWidth={2} />
+                <span>{t("cancel")}</span>
+              </div>
+            </Button>
+          )}
+          {((editable && loadedPizzeriaId) || pizzeriaEdit) && (
             <NoVisibleEffectButton
               color="green"
               onClick={handleSave}
@@ -81,38 +107,43 @@ export function PizzeriaHotBar() {
               </div>
             </NoVisibleEffectButton>
           )}
-          {loadedPizzeriaId === undefined && (
+          {editable && !pizzeriaEdit && loadedPizzeria === undefined && (
             <Button
               color="green"
-              onClick={() => setShowSaveAsOverlay(true)}
+              onClick={() => {
+                setShowSaveAsOverlay(true);
+              }}
               className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
-              title="Save pizzeria"
-              testId="pizza-panel-save-button"
+              title="Save pizzeria as"
+              testId="pizza-panel-save-as-button"
             >
               <div className="flex items-center gap-2">
-                <Save size={20} strokeWidth={2} />
-                <span>{t("save")}</span>
+                <SaveAsIcon
+                  size={20}
+                  strokeWidth={2}
+                  backgroundColor="bg-green-500"
+                />
+                <span>{t("save-as")}</span>
               </div>
             </Button>
           )}
-          <Button
-            color="green"
-            onClick={() => {
-              setShowSaveAsOverlay(true);
-            }}
-            className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
-            title="Save pizzeria as"
-            testId="pizza-panel-save-as-button"
-          >
-            <div className="flex items-center gap-2">
-              <SaveAsIcon
-                size={20}
-                strokeWidth={2}
-                backgroundColor="bg-green-500"
-              />
-              <span>{t("save-as")}</span>
-            </div>
-          </Button>
+          {!editable && !pizzeriaEdit && loadedPizzeria && (
+            <Button
+              color="green"
+              onClick={() => {
+                setPizzeriaEdit(true);
+                dispatch(setPizzasEditable(true));
+              }}
+              className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
+              title="Save pizzeria as"
+              testId="pizza-panel-save-as-button"
+            >
+              <div className="flex items-center gap-2">
+                <Pencil size={20} strokeWidth={2} />
+                <span>{t("edit")}</span>
+              </div>
+            </Button>
+          )}
           <Button
             color="green"
             onClick={() => {
@@ -141,6 +172,7 @@ export function PizzeriaHotBar() {
       </Desktop>
       <OverlayWrapper
         show={showSaveAsOverlay}
+        title={t("save-pizzeria-as-title")}
         close={() => setShowSaveAsOverlay(false)}
         testId="save-as-overlay"
       >
@@ -148,6 +180,7 @@ export function PizzeriaHotBar() {
       </OverlayWrapper>
       <OverlayWrapper
         show={showLoadOverlay}
+        title={t("manage-pizzeria-title")}
         close={() => setShowLoadOverlay(false)}
         testId="manage-overlay"
       >

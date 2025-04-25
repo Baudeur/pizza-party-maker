@@ -77,9 +77,6 @@ export function SaveAsPizzeriaOverlayContent() {
 
   return (
     <div className="w-[500px]">
-      <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-2 text-center w-full">
-        {t("save-pizzeria-as-title")}
-      </p>
       {nameConflict === undefined && (
         <div className="flex justify-between w-full items-center gap-2 mt-2">
           <div

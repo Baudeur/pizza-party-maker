@@ -7,7 +7,7 @@ import {
   Pizzeria,
   removePizzeria,
 } from "../../modules/pizzerias/slice";
-import { setPizzas } from "../../modules/pizzas/slice";
+import { setPizzas, setPizzasEditable } from "../../modules/pizzas/slice";
 import { useContext, useState } from "react";
 import { PizzeriaDisplayer } from "./PizzeriaDisplayer";
 import { CloseContext } from "../utils/Overlay";
@@ -21,6 +21,7 @@ export function ManagePizzeriaOverlayContent() {
   const close = useContext(CloseContext);
 
   const handleLoad = (pizzeria: Pizzeria) => {
+    dispatch(setPizzasEditable(false));
     dispatch(loadPizzeria(pizzeria.id));
     dispatch(setPizzas(pizzeria.pizzas));
     close();
@@ -36,9 +37,6 @@ export function ManagePizzeriaOverlayContent() {
 
   return (
     <div className="w-[750px]">
-      <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-2 text-center w-full">
-        {t("manage-pizzeria-title")}
-      </p>
       <div className="flex w-full gap-2 h-96 mt-4">
         <div
           className={`flex flex-col gap-1 ${

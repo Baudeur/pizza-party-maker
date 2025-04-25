@@ -16,13 +16,13 @@
 
     "pizza-form-placeholder": "4 Fromages",
 
-    "suggester-open-button": "Difficile de trouver les bonne proportions ? Cliquez ici",
+    "suggester-open-button": "Suggérer des Pizzas",
 
     "pizza-flag-perfect": "Parfait",
     "pizza-flag-good": "Bien",
     "pizza-flag-okay": "Moyen",
     "pizza-flag-bad": "Mauvais",
-    "pizza-flag-cant-eat": "Ne mange pas",
+    "pizza-flag-cant-eat": "Rien",
 
     "info-display-person": "pers",
     "info-display-total": "total",
@@ -39,9 +39,13 @@
     "details-average-case-scenario": "Cas moyen",
     "details-best-case-scenario": "Meilleur cas possible",
 
+    "details-and-graphs": "Détails and graphiques",
+
     "parameters-title": "Paramètres",
     "parameters-slices": "Parts par pizzas",
     "parameters-fairness": "Équité",
+
+    "help": "Aide",
 
     "suggester-popup-title": "Calculateur de suggestion",
     "suggester-description": "Choisissez les paramètres de la suggestion",
@@ -111,6 +115,7 @@
     "info-result-p6": "Un bon indicateur d'une bonne commande est d'avoir tous les indicateurs au moins à <green>Bien</green>.",
     "info-result-p7": "La section graphiques montre une représentation graphique des proportions de personnes et pizzas.",
     "info-result-p8": "La section détails montre à quoi s'attendre en terme de répartition des parts de pizza, de manière quantitative cette fois. Vous pouvez cliquer sur l'icône <infoIcon /> dans cette section pour plus d'informations.",
+    "info-result-p8-mobile": "La section détails montre à quoi s'attendre en terme de répartition des parts de pizza, de manière quantitative cette fois. <linkToDetailsHelp>Cliquez ici pour plus d'informations.</linkToDetailsHelp>",
 
     "info-suggester-title": "Le calculateur de solution",
     "info-suggester-p1": "Si vous ne parvenez pas à créer une commande juste, vous pouvez utiliser le calculateur de solution.",

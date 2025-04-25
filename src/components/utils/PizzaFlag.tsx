@@ -9,12 +9,14 @@ type FlagStateProps = {
   flagState: FlagState;
   diet: Diet;
   testId?: string;
+  mobileExtended?: boolean;
 };
 
 export function PizzaFlag({
   flagState,
   diet,
   testId,
+  mobileExtended = false,
 }: Readonly<FlagStateProps>) {
   const { t } = useTranslation();
   let color = "bg-gray-300";
@@ -77,7 +79,12 @@ export function PizzaFlag({
             className="size-6"
             testId={"flag-container"}
           />
-          <span className="font-bold text-lg">{emoji}</span>
+          <div>
+            {mobileExtended && (
+              <span className="font-bold text-lg mr-2">{label}</span>
+            )}
+            <span className="font-bold text-lg">{emoji}</span>
+          </div>
         </div>
       </div>
     </EitherDesktopOrMobile>

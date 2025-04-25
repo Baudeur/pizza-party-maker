@@ -3,6 +3,7 @@ import { Overlay } from "./Overlay";
 
 type OverlayWrapper = {
   show: boolean;
+  title: string;
   close: () => void;
   testId?: string;
 };
@@ -10,13 +11,14 @@ type OverlayWrapper = {
 export function OverlayWrapper({
   show,
   close,
+  title,
   children,
   testId,
 }: PropsWithChildren<OverlayWrapper>) {
   return (
     <div>
       {show && (
-        <Overlay close={close} testId={testId}>
+        <Overlay title={title} close={close} testId={testId}>
           {children}
         </Overlay>
       )}

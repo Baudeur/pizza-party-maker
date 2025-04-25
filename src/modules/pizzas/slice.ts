@@ -21,6 +21,7 @@ export type Pizza = {
 type PizzaState = {
   pizzas: Pizza[];
   id: number;
+  editable: boolean;
 };
 
 const initialState: PizzaState = {
@@ -29,7 +30,7 @@ const initialState: PizzaState = {
       id: 0,
       name: "Pizza maxi gourmande",
       eatenBy: "normal",
-      price: 44.5,
+      price: 14,
       quantity: 2,
       editable: false,
     },
@@ -37,7 +38,7 @@ const initialState: PizzaState = {
       id: 1,
       name: "Pizza maxi gourmande",
       eatenBy: "vegetarian",
-      price: 44.5,
+      price: 13,
       quantity: 2,
       editable: false,
     },
@@ -45,28 +46,21 @@ const initialState: PizzaState = {
       id: 2,
       name: "Pizza 1",
       eatenBy: "pescoVegetarian",
-      price: 44.5,
-      quantity: 99,
+      price: 15.55,
+      quantity: 1,
       editable: false,
     },
     {
       id: 3,
       name: "Pizza maxi gourmande avec un nom trop long",
       eatenBy: "vegan",
-      price: 999,
-      quantity: 2,
-      editable: false,
-    },
-    {
-      id: 4,
-      name: "",
-      eatenBy: "normal",
-      price: 44.54,
+      price: 10,
       quantity: 2,
       editable: false,
     },
   ],
-  id: 0,
+  id: 4,
+  editable: true,
 };
 
 const pizzas = createSlice({
@@ -82,7 +76,11 @@ const pizzas = createSlice({
         quantity: action.payload.quantity,
         editable: action.payload.editable,
       };
-      return { id: state.id + 1, pizzas: [...state.pizzas, newPizza] };
+      return {
+        ...state,
+        id: state.id + 1,
+        pizzas: [...state.pizzas, newPizza],
+      };
     },
     removePizza: (state, action: PayloadAction<number>) => {
       return {
@@ -114,8 +112,20 @@ const pizzas = createSlice({
           ) + 1,
       };
     },
+    setPizzasEditable: (state, action: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        editable: action.payload,
+      };
+    },
   },
 });
 
 export const pizzasReducer = pizzas.reducer;
-export const { addPizza, removePizza, modifyPizza, setPizzas } = pizzas.actions;
+export const {
+  addPizza,
+  removePizza,
+  modifyPizza,
+  setPizzas,
+  setPizzasEditable,
+} = pizzas.actions;

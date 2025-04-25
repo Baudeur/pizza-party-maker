@@ -2,7 +2,7 @@ import {
   ArrowBigLeft,
   ArrowBigRight,
   Check,
-  Info,
+  HelpCircle,
   Minus,
   Pencil,
   Plus,
@@ -17,6 +17,7 @@ import { Button } from "./Button";
 import { SaveAsIcon } from "../icons/SaveAsIcon";
 import title from "../../assets/Title.png";
 import { Trans } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const components = {
   pink: <strong className="text-pink-600" />,
@@ -163,11 +164,17 @@ const components = {
     </span>
   ),
   infoIcon: (
-    <Info size={20} strokeWidth={2} color="gray" className="inline-block" />
+    <HelpCircle
+      size={20}
+      strokeWidth={2}
+      color="black"
+      className="inline-block"
+    />
   ),
   parametersIcon: (
     <Settings size={20} strokeWidth={2} color="gray" className="inline-block" />
   ),
+  linkToDetailsHelp: <Link to={"/help-details"} />,
 };
 
 export function CompTrans({ i18nKey }: { i18nKey: string }) {

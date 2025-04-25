@@ -15,6 +15,8 @@ import { modifyPizza } from "../../modules/pizzas/slice";
 import spinner from "../../assets/LoadingOmni.png";
 import workerUrl from "/src/services/workerService?worker&url";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
 
 const optionsInit = [
   { value: 1 / 8, label: "1/8" },
@@ -57,6 +59,7 @@ export function SuggestOverlayContent({
   >();
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
+  const isDesktop = useMediaQuery({ minWidth: desktopSize });
 
   new Image(1, 1).src = spinner; //preload spinner image
 
@@ -135,13 +138,10 @@ export function SuggestOverlayContent({
   };
 
   return (
-    <div className="w-[500px]">
-      <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-2 text-center w-full">
-        {t("suggester-popup-title")}
-      </p>
+    <div className={`${isDesktop && "w-[500px]"}`}>
       <p className="mb-2">{t("suggester-description")}</p>
       <div className="flex flex-col gap-2">
-        <div className="flex w-full gap-2 items-center">
+        <div className={`flex w-full gap-2 items-center`}>
           <div
             className="w-2/5 text-right"
             data-testid="suggester-quantity-label"
@@ -157,7 +157,7 @@ export function SuggestOverlayContent({
             testId="suggester-quantity-dropdown"
           />
         </div>
-        <div className="flex w-full gap-2 items-center">
+        <div className={`flex w-full gap-2 items-center`}>
           <div
             className="w-2/5 text-right"
             data-testid="suggester-strategy-label"
@@ -175,13 +175,17 @@ export function SuggestOverlayContent({
             testId="suggester-strategy-dropdown"
           />
         </div>
-        <div className="px-2 flex gap-2 w-full">
+        <div className={`px-2 flex gap-2 w-full`}>
           <div className="w-2/5 text-right">{t("suggester-unfairness")}</div>
-          <div className="bg-white font-bold w-16 text-center h-full rounded-lg">
+          <div
+            className={`bg-white font-bold ${
+              isDesktop && "w-16"
+            } text-center h-full rounded-lg`}
+          >
             {(fairness * 100).toFixed(0)}%
           </div>
           <input
-            className="accent-green-500"
+            className="accent-green-500 w-full touch-none"
             type="range"
             value={fairness}
             onChange={(e) => setFairness(Number(e.target.value))}

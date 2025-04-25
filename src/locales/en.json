@@ -17,13 +17,14 @@
 
     "pizza-form-placeholder": "4 Cheese",
 
-    "suggester-open-button": "Struggling to find the right proportions ? Click here",
+    "suggester-open-button": "Suggest Pizzas",
+
 
     "pizza-flag-perfect": "Perfect",
     "pizza-flag-good": "Good",
     "pizza-flag-okay": "Okay",
     "pizza-flag-bad": "Bad",
-    "pizza-flag-cant-eat": "Can't eat",
+    "pizza-flag-cant-eat": "Nothing",
 
     "info-display-person": "pers",
     "info-display-total": "total",
@@ -40,9 +41,13 @@
     "details-average-case-scenario": "Averange case scenario",
     "details-best-case-scenario": "Best case scenario",
 
-    "parameters-expand-title": "Parameters",
+    "details-and-graphs": "Details and graphs",
+
+    "parameters-title": "Parameters",
     "parameters-slices": "Slices per pizzas",
     "parameters-fairness": "Fairness",
+
+    "help": "Help",
 
     "suggester-popup-title": "Suggestion computer",
     "suggester-description": "Select your suggestion parameters below",
@@ -112,6 +117,7 @@
     "info-result-p6": "A good rule indicator that your order is fair is to have all flag to at least <green>Good</green>.",
     "info-result-p7": "The graphs panel shows you the proportions of people and pizzas graphically.",
     "info-result-p8": "The details panel shows you what to expect in terms of reparition of the food. With numbers this time. There are further explanation available by clicking the <infoIcon /> next to the table.",
+    "info-result-p8-mobile": "The details panel shows you what to expect in terms of reparition of the food. With numbers this time. <linkToDetailsHelp>Click here to learn more.</linkToDetailsHelp>",
 
     "info-suggester-title": "The suggester",
     "info-suggester-p1": "If you are struggling to find a fair order plan, your can use the suggester.",
