@@ -2,9 +2,16 @@ import { ChevronDown } from "lucide-react";
 import { ReactNode, useLayoutEffect, useRef, useState } from "react";
 
 type DropDownProps<T extends number | string> = {
-  options: { value: T; label: string; disabled?: boolean; icon?: ReactNode }[];
+  options: {
+    title: string;
+    value: T;
+    label: string;
+    disabled?: boolean;
+    icon?: ReactNode;
+  }[];
   value: T;
   onChange: (value: T) => void;
+  title: string;
   onScrollBottom?: () => void;
   className?: string;
   testId?: string;
@@ -15,6 +22,7 @@ export function DropDown<T extends number | string>({
   options,
   value,
   onChange,
+  title,
   onScrollBottom = () => {},
   className,
   testId,
@@ -53,6 +61,7 @@ export function DropDown<T extends number | string>({
       onClick={() => setDropDownShown(!dropDownShown)}
       onBlur={() => setDropDownShown(false)}
       data-testid={testId && `${testId}-button`}
+      title={title}
     >
       <div
         className={`h-[30px] ${
@@ -79,27 +88,36 @@ export function DropDown<T extends number | string>({
           } ${isOutOfBounds && "-right-[8px]"}`}
           onScroll={handleScroll}
         >
-          {options.map(({ value: val, label, disabled = false, icon }) => (
-            <div
-              className={`flex items-center gap-1 ${
-                disabled ? "text-gray-400 grayscale" : "hover:bg-gray-200"
-              } text-left px-3 min-w-full`}
-              key={label}
-              onClick={() => {
-                if (disabled) return;
-                onChange(val);
-                setDropDownShown(false);
-              }}
-              onKeyDown={() => {
-                onChange(val);
-                setDropDownShown(false);
-              }}
-              data-testid={testId && `${testId}-${val}-option`}
-            >
-              {icon}
-              {label}
-            </div>
-          ))}
+          {options.map(
+            ({
+              title: optionTitle,
+              value: val,
+              label,
+              disabled = false,
+              icon,
+            }) => (
+              <div
+                className={`flex items-center gap-1 ${
+                  disabled ? "text-gray-400 grayscale" : "hover:bg-gray-200"
+                } text-left px-3 min-w-full`}
+                key={label}
+                onClick={() => {
+                  if (disabled) return;
+                  onChange(val);
+                  setDropDownShown(false);
+                }}
+                onKeyDown={() => {
+                  onChange(val);
+                  setDropDownShown(false);
+                }}
+                data-testid={testId && `${testId}-${val}-option`}
+                title={optionTitle}
+              >
+                {icon}
+                {label}
+              </div>
+            )
+          )}
         </div>
       )}
     </button>

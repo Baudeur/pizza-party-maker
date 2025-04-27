@@ -2,15 +2,19 @@ import { forwardRef, useLayoutEffect } from "react";
 import { TextInput } from "./TextInput";
 
 type PriceInputProps = {
-  className?: string;
+  title: string;
   price: string;
   setPrice: (value: React.SetStateAction<string>) => void;
+  className?: string;
   tabIndex?: number;
   testId?: string;
 };
 
 export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
-  function PriceInput({ className, price, setPrice, tabIndex, testId }, ref) {
+  function PriceInput(
+    { className, price, title, setPrice, tabIndex, testId },
+    ref
+  ) {
     function onPriceChange(event: React.ChangeEvent<HTMLInputElement>) {
       const inputPrice = Number(event.target.value);
       if (Number.isNaN(inputPrice) || inputPrice < 0) {
@@ -57,6 +61,7 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
           onChange={onPriceChange}
           error={false}
           testId={testId}
+          title={title}
         />
       </div>
     );

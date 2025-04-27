@@ -6,10 +6,10 @@ type ButtonProps = {
   className?: string;
   color: ButtonColor;
   onClick: () => void;
+  title: string;
   tabIndex?: number;
   disabled?: boolean;
   testId?: string;
-  title?: string;
   confirmationIcon?: ReactNode;
 };
 

@@ -64,7 +64,7 @@ export function Calculator() {
             }}
             className="mt-2 font-bold w-full rounded-lg"
             testId="suggester-button"
-            title="Open suggester"
+            title={t("suggester-open-button")}
           >
             {t("suggester-open-button")}
           </Button>
@@ -154,18 +154,18 @@ export function Calculator() {
                       }}
                       className="font-bold w-full rounded-lg mt-2"
                       testId="suggester-button"
-                      title="Open suggester"
+                      title={t("suggester-open-button")}
                     >
                       {t("suggester-open-button")}
                     </Button>
                     <Button
-                      color="yellow"
+                      color="orange"
                       onClick={() => {
                         setDisplayDetailsOverlay(true);
                       }}
                       className="font-bold w-full rounded-lg mt-2"
                       testId="suggester-button"
-                      title="Open suggester"
+                      title={t("details-and-graphs")}
                     >
                       {t("details-and-graphs")}
                     </Button>

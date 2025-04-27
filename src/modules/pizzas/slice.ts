@@ -21,7 +21,6 @@ export type Pizza = {
 type PizzaState = {
   pizzas: Pizza[];
   id: number;
-  editable: boolean;
 };
 
 const initialState: PizzaState = {
@@ -60,7 +59,6 @@ const initialState: PizzaState = {
     },
   ],
   id: 4,
-  editable: true,
 };
 
 const pizzas = createSlice({
@@ -112,20 +110,8 @@ const pizzas = createSlice({
           ) + 1,
       };
     },
-    setPizzasEditable: (state, action: PayloadAction<boolean>) => {
-      return {
-        ...state,
-        editable: action.payload,
-      };
-    },
   },
 });
 
 export const pizzasReducer = pizzas.reducer;
-export const {
-  addPizza,
-  removePizza,
-  modifyPizza,
-  setPizzas,
-  setPizzasEditable,
-} = pizzas.actions;
+export const { addPizza, removePizza, modifyPizza, setPizzas } = pizzas.actions;

@@ -24,7 +24,7 @@ export function Infos() {
           <button
             onClick={() => setDisplayOverlay2(true)}
             data-testid="param-overlay-button"
-            title="Parameters"
+            title={t("parameters-title")}
           >
             <Settings size={30} color="gray" strokeWidth={2} />
           </button>
@@ -41,7 +41,7 @@ export function Infos() {
           <button
             onClick={() => setDisplayOverlay1(true)}
             data-testid="info-overlay-button"
-            title="Help"
+            title={t("help")}
           >
             <CircleHelp size={30} color="gray" strokeWidth={2} />
           </button>

@@ -1,8 +1,8 @@
 import { forwardRef } from "react";
 
 type TextInputProps = {
+  title: string;
   className?: string;
-
   placeholder?: string;
   value?: string;
   defaultValue?: string;
@@ -15,6 +15,7 @@ type TextInputProps = {
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   function TextInput(
     {
+      title,
       className,
       placeholder,
       defaultValue,
@@ -39,6 +40,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           error ? "bg-red-200 border-red-500" : ""
         }`}
         data-testid={testId}
+        title={title}
       />
     );
   }

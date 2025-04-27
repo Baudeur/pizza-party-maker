@@ -16,10 +16,11 @@ import { DietIcon } from "../icons/DietIcon";
 import { Button } from "./Button";
 import { SaveAsIcon } from "../icons/SaveAsIcon";
 import title from "../../assets/Title.png";
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { TFunction } from "i18next";
 
-const components = {
+const components = (t: TFunction<"translation", undefined>) => ({
   pink: <strong className="text-pink-600" />,
   green: <strong className="text-green-600" />,
   sky: <strong className="text-sky-600" />,
@@ -62,6 +63,7 @@ const components = {
         className="inline-flex w-7 rounded-s-lg"
         color="red"
         onClick={() => {}}
+        title={t("minus")}
       >
         <Minus size={20} strokeWidth={2} />
       </Button>
@@ -73,6 +75,7 @@ const components = {
         className="inline-flex w-7 rounded-e-lg"
         color="green"
         onClick={() => {}}
+        title={t("plus")}
       >
         <Plus size={20} strokeWidth={2} />
       </Button>
@@ -80,56 +83,96 @@ const components = {
   ),
   addButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="w-16 rounded-lg"
+        title={t("plus")}
+      >
         <Plus size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   editButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-8 rounded-lg">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="w-8 rounded-lg"
+        title={t("edit-pizza", { pizza: "pizza" })}
+      >
         <Pencil size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   validateButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-8 rounded-lg">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="w-8 rounded-lg"
+        title={t("apply-changes", { pizza: "pizza" })}
+      >
         <Check size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   cancelButton: (
     <span className="inline-block translate-y-1">
-      <Button color="yellow" onClick={() => {}} className="w-8 rounded-lg">
+      <Button
+        color="orange"
+        onClick={() => {}}
+        className="w-8 rounded-lg"
+        title={t("cancel-changes", { pizza: "pizza" })}
+      >
         <Undo2 size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   deleteButton: (
     <span className="inline-block translate-y-1">
-      <Button color="red" onClick={() => {}} className="w-8 rounded-lg">
+      <Button
+        color="red"
+        onClick={() => {}}
+        className="w-8 rounded-lg"
+        title={t("delete-pizza", { pizza: "pizza" })}
+      >
         <Trash2 size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   saveButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="w-16 rounded-lg"
+        title={t("save")}
+      >
         <Save size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   saveAsButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="w-16 rounded-lg"
+        title={t("save-as-pizzeria")}
+      >
         <SaveAsIcon size={20} strokeWidth={2} backgroundColor="bg-green-500" />
       </Button>
     </span>
   ),
   pizzeriasButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="w-16 rounded-lg"
+        title={t("manage-pizzeria-title")}
+      >
         <Store size={20} strokeWidth={2} />
       </Button>
     </span>
@@ -175,8 +218,9 @@ const components = {
     <Settings size={20} strokeWidth={2} color="gray" className="inline-block" />
   ),
   linkToDetailsHelp: <Link to={"/help-details"} />,
-};
+});
 
 export function CompTrans({ i18nKey }: { i18nKey: string }) {
-  return <Trans i18nKey={i18nKey} components={components} />;
+  const { t } = useTranslation();
+  return <Trans i18nKey={i18nKey} components={components(t)} />;
 }

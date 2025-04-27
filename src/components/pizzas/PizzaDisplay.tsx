@@ -10,7 +10,7 @@ import { priceToString } from "../../services/utils";
 import { EitherDesktopOrMobile } from "../utils/ReactiveComponents";
 import { useTranslation } from "react-i18next";
 import { Swipable } from "../utils/Swipable";
-import { pizzasEditableSelector } from "../../modules/pizzas/selector";
+import { pizzeriaStateSelector } from "../../modules/pizzerias/selector";
 
 type PizzaDisplayProps = {
   pizza: Pizza;
@@ -24,10 +24,10 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
   const [hovered, setHovered] = useState(false);
   const { t } = useTranslation();
   const [swipePercentage, setSwipePercentage] = useState(0);
-  const editable = useSelector(pizzasEditableSelector);
+  const pizzeriaState = useSelector(pizzeriaStateSelector);
 
   function handleDoubleClick(focus: Focusable) {
-    if (!editable) return;
+    if (pizzeriaState === "loaded") return;
     const modifiedPizza: Pizza = {
       id: pizza.id,
       name: pizza.name,
@@ -66,10 +66,13 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             setValue={handleQuantityChange}
             animateShow={hovered}
             onDelete={
-              editable ? () => dispatch(removePizza(pizza.id)) : undefined
+              pizzeriaState !== "loaded"
+                ? () => dispatch(removePizza(pizza.id))
+                : undefined
             }
             className="z-[5]"
             testId={`${pizza.id}-pizza-display-quantity`}
+            title={pizza.name}
           />
         </td>
         <td
@@ -103,14 +106,16 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
           <div
             className={`flex justify-end absolute top-[1px] ${
               hovered ? "right-[1px]" : "right-[100%]"
-            } transition-all ease-out duration-200 ${!editable && "hidden"}`}
+            } transition-all ease-out duration-200 ${
+              pizzeriaState === "loaded" && "hidden"
+            }`}
           >
             <Button
               className="rounded-lg w-8 mr-1"
               color="green"
               onClick={() => handleDoubleClick("name")}
               testId={`${pizza.id}-pizza-display-edit-button`}
-              title="Edit pizza"
+              title={t("edit-pizza", { pizza: pizza.name })}
             >
               <Pencil size={20} strokeWidth={2} />
             </Button>
@@ -119,7 +124,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
               color="red"
               onClick={() => dispatch(removePizza(pizza.id))}
               testId={`${pizza.id}-pizza-display-delete-button`}
-              title="Delete pizza"
+              title={t("delete-pizza", { pizza: pizza.name })}
             >
               <Trash2 size={20} strokeWidth={2} />
             </Button>
@@ -182,6 +187,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
                 className="z-[5] min-w-24"
                 rounded={false}
                 testId={`${pizza.id}-pizza-display-quantity`}
+                title={pizza.name}
               />
             </div>
           </div>

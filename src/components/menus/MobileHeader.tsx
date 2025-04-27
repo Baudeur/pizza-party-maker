@@ -37,6 +37,7 @@ export function MobileHeader() {
               <button
                 className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
                 onClick={() => setExpanded(false)}
+                title={t("help")}
               >
                 <CircleHelp size={30} color="gray" strokeWidth={2} />
                 <span className="ml-2 text-black font-normal">{t("help")}</span>
@@ -47,6 +48,7 @@ export function MobileHeader() {
               <button
                 className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
                 onClick={() => setExpanded(false)}
+                title={t("parameters-title")}
               >
                 <Settings size={30} color="gray" strokeWidth={2} />
                 <span className="ml-2 text-black font-normal">

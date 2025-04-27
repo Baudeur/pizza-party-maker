@@ -36,7 +36,7 @@ export function Details({
             setShowDetailsExplanation(true);
           }}
           data-testid="details-overlay-button"
-          title="Help"
+          title={t("help")}
         >
           <CircleHelp
             size={25}

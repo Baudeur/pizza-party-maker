@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { PropsWithChildren, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type ExpandProps = {
   label: string;
@@ -16,6 +17,7 @@ export function Expand({
   testId,
 }: PropsWithChildren<ExpandProps>) {
   const [expanded, setExpanded] = useState(false);
+  const { t } = useTranslation();
   return (
     <div
       className={`h-fit flex flex-col items-start w-full bg-amber-300 rounded-lg ${className}`}
@@ -24,6 +26,7 @@ export function Expand({
       <button
         className="h-7 flex items-center text-lg font-bold cursor-pointer text-left w-full px-2"
         onClick={() => setExpanded(!expanded)}
+        title={t("expand-element", { element: label })}
       >
         <ChevronDown
           size={15}

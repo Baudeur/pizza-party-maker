@@ -8,6 +8,7 @@ import {
 import { Container } from "../utils/Container";
 import { Button } from "./Button";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 type Overlay = {
   close: () => void;
@@ -24,8 +25,16 @@ export function Overlay({
   children,
 }: PropsWithChildren<Overlay>) {
   const [showDelayed, setShowDelayed] = useState(false);
+  const { t } = useTranslation();
   useEffect(() => {
     setShowDelayed(true);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, []);
 
   const animateAndClose = useCallback(() => {
@@ -71,6 +80,7 @@ export function Overlay({
                   color="red"
                   onClick={animateAndClose}
                   className="-mt-1 -mr-1 w-8 rounded-tr-2xl"
+                  title={t("close")}
                 >
                   <X className="pt-[2px] pr-[2px]" />
                 </Button>

@@ -4,6 +4,10 @@
   text-align: center;
 }
 
+body {
+  padding-left: calc(100vw - 100%);
+}
+
 @keyframes goingDownTwoStepsFirstElement {
   0% {
     --tw-translate-y: -1.75rem;

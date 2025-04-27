@@ -15,6 +15,7 @@ type SquaresProps = {
   proportions: People;
   width: number;
   height: number;
+  title: string;
   className?: string;
   testId?: string;
 };
@@ -25,6 +26,7 @@ export function SquaresSVG({
   proportions,
   width,
   height,
+  title,
   className,
   testId,
 }: Readonly<SquaresProps>) {
@@ -52,6 +54,7 @@ export function SquaresSVG({
   return (
     <div className={`${className}`} data-testid={testId}>
       <svg width={width} height={height}>
+        <title>{title}</title>
         <rect height={height} width={width} />
         {total !== 0 && (
           <>

@@ -1,6 +1,5 @@
-import { FilePlus, Pencil, Save, Store, X } from "lucide-react";
+import { ArrowLeftToLine, Pencil, Save, Store, X } from "lucide-react";
 import { Button } from "../utils/Button";
-import { NoVisibleEffectButton } from "../utils/NoVisibleEffectButton";
 import { SaveAsIcon } from "../icons/SaveAsIcon";
 import { OverlayWrapper } from "../utils/OverlayWrapper";
 import { SaveAsPizzeriaOverlayContent } from "../pizzeria/SaveAsPizzeriaOverlayContent";
@@ -10,19 +9,20 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   loadedPizzeriaSelector,
   pizzeriasSelector,
+  pizzeriaStateSelector,
 } from "../../modules/pizzerias/selector";
 import {
+  editPizzeria,
+  loadPizzeria,
   modifyPizzeria,
   Pizzeria,
   unloadPizzeria,
 } from "../../modules/pizzerias/slice";
-import {
-  pizzasEditableSelector,
-  pizzasSelector,
-} from "../../modules/pizzas/selector";
-import { setPizzas, setPizzasEditable } from "../../modules/pizzas/slice";
+import { pizzasSelector } from "../../modules/pizzas/selector";
+import { setPizzas } from "../../modules/pizzas/slice";
 import { useTranslation } from "react-i18next";
-import { Desktop } from "../utils/ReactiveComponents";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
 
 export function PizzeriaHotBar() {
   const { t } = useTranslation();
@@ -35,8 +35,8 @@ export function PizzeriaHotBar() {
   const loadedPizzeria = pizzerias.find(
     (pizzeria) => pizzeria.id === loadedPizzeriaId
   );
-  const editable = useSelector(pizzasEditableSelector);
-  const [pizzeriaEdit, setPizzeriaEdit] = useState(false);
+  const pizzeriaState = useSelector(pizzeriaStateSelector);
+  const isDesktop = useMediaQuery({ minWidth: desktopSize });
 
   const handleSave = useCallback(() => {
     if (loadedPizzeriaId === undefined || loadedPizzeria === undefined) return;
@@ -46,130 +46,128 @@ export function PizzeriaHotBar() {
       pizzas: pizzas,
     };
     dispatch(modifyPizzeria(modifiedPizzeria));
-    dispatch(setPizzasEditable(false));
-    setPizzeriaEdit(false);
   }, [dispatch, loadedPizzeriaId, pizzas, loadedPizzeria]);
 
-  const handleNew = useCallback(() => {
-    dispatch(setPizzasEditable(true));
+  const handleExit = useCallback(() => {
     dispatch(setPizzas([]));
     dispatch(unloadPizzeria());
   }, [dispatch]);
   return (
-    <div
-      className={`flex flex-col ${
-        loadedPizzeriaId ? "h-[3.5rem]" : "h-[1.75rem]"
-      } mb-1`}
-    >
-      <Desktop>
-        <div className="flex w-full">
+    <div className={`flex flex-col mb-2 -mt-1`}>
+      <div
+        className={`flex w-full gap-2 ${pizzeriaState !== "nothing" && "mb-1"}`}
+      >
+        {pizzeriaState === "loaded" && (
           <Button
-            color="green"
-            onClick={handleNew}
-            className="w-full border-t-4 border-l-4 border-r-2 border-green-600 -mt-1 -ml-1 rounded-tl-xl"
-            title="New pizzeria"
+            color="yellow"
+            onClick={handleExit}
+            className={`w-1/3 rounded-lg`}
+            title={t("exit-pizzeria")}
             testId="pizza-panel-new-pizzeria-button"
           >
             <div className="flex items-center gap-2">
-              <FilePlus size={20} strokeWidth={2} />
-              <span>{t("new")}</span>
+              <ArrowLeftToLine size={20} strokeWidth={2} />
+              {isDesktop && <span>{t("exit-pizzeria")}</span>}
             </div>
           </Button>
-          {pizzeriaEdit && loadedPizzeria && (
-            <Button
-              color="yellow"
-              onClick={() => {
-                setPizzeriaEdit(false);
-                dispatch(setPizzasEditable(false));
-                dispatch(setPizzas(loadedPizzeria.pizzas));
-              }}
-              className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
-              title="Save pizzeria as"
-              testId="pizza-panel-save-as-button"
-            >
-              <div className="flex items-center gap-2">
-                <X size={20} strokeWidth={2} />
-                <span>{t("cancel")}</span>
-              </div>
-            </Button>
-          )}
-          {((editable && loadedPizzeriaId) || pizzeriaEdit) && (
-            <NoVisibleEffectButton
-              color="green"
-              onClick={handleSave}
-              className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
-              title={`Save ${loadedPizzeria?.name}`}
-              testId="pizza-panel-save-button"
-            >
-              <div className="flex items-center gap-2">
-                <Save size={20} strokeWidth={2} />
-                <span>{t("save")}</span>
-              </div>
-            </NoVisibleEffectButton>
-          )}
-          {editable && !pizzeriaEdit && loadedPizzeria === undefined && (
-            <Button
-              color="green"
-              onClick={() => {
-                setShowSaveAsOverlay(true);
-              }}
-              className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
-              title="Save pizzeria as"
-              testId="pizza-panel-save-as-button"
-            >
-              <div className="flex items-center gap-2">
-                <SaveAsIcon
-                  size={20}
-                  strokeWidth={2}
-                  backgroundColor="bg-green-500"
-                />
-                <span>{t("save-as")}</span>
-              </div>
-            </Button>
-          )}
-          {!editable && !pizzeriaEdit && loadedPizzeria && (
-            <Button
-              color="green"
-              onClick={() => {
-                setPizzeriaEdit(true);
-                dispatch(setPizzasEditable(true));
-              }}
-              className="w-full border-t-4 border-x-2 border-green-600 -mt-1"
-              title="Save pizzeria as"
-              testId="pizza-panel-save-as-button"
-            >
-              <div className="flex items-center gap-2">
-                <Pencil size={20} strokeWidth={2} />
-                <span>{t("edit")}</span>
-              </div>
-            </Button>
-          )}
+        )}
+        {pizzeriaState === "editing" && (
           <Button
-            color="green"
+            color="yellow"
             onClick={() => {
-              setShowLoadOverlay(true);
+              if (loadedPizzeria === undefined) return;
+              dispatch(loadPizzeria(loadedPizzeria.id));
+              dispatch(setPizzas(loadedPizzeria.pizzas));
             }}
-            className="w-full border-t-4 border-l-2 border-r-4 border-green-600 -mt-1 -mr-1 rounded-tr-xl"
-            title="Load and manage pizzeria"
-            testId="pizza-panel-manage-button"
+            className={`w-1/3 rounded-lg`}
+            title={t("cancel")}
+            testId="pizza-panel-save-as-button"
           >
             <div className="flex items-center gap-2">
-              <Store size={20} strokeWidth={2} />
-              <span>{t("manage-pizzeria-button")}</span>
+              <X size={20} strokeWidth={2} />
+              {isDesktop && <span>{t("cancel")}</span>}
             </div>
           </Button>
-        </div>
-        {loadedPizzeriaId && (
-          <div className="w-full bg-amber-200 h-7">
-            <span
-              className="text-left font-bold w-[700px] px-4 truncate"
-              data-testid="pizza-panel-pizzeria-name"
-            >
-              {loadedPizzeria?.name}
-            </span>
-          </div>
         )}
-      </Desktop>
+        {pizzeriaState === "editing" && (
+          <Button
+            color="yellow"
+            onClick={handleSave}
+            className={`w-1/3 rounded-lg`}
+            title={t("save-pizzeria", { pizzeriaName: loadPizzeria.name })}
+            testId="pizza-panel-save-button"
+          >
+            <div className="flex items-center gap-2">
+              <Save size={20} strokeWidth={2} />
+              {isDesktop && <span>{t("save")}</span>}
+            </div>
+          </Button>
+        )}
+        {pizzeriaState === "nothing" && (
+          <Button
+            color="yellow"
+            onClick={() => {
+              setShowSaveAsOverlay(true);
+            }}
+            className={`w-2/3 rounded-lg`}
+            title={t("save-as-pizzeria")}
+            testId="pizza-panel-save-as-button"
+          >
+            <div className="flex items-center gap-2">
+              <SaveAsIcon
+                size={20}
+                strokeWidth={2}
+                backgroundColor="bg-amber-300"
+              />
+              {isDesktop ? (
+                <span>{t("save-as-pizzeria")}</span>
+              ) : (
+                <span>{t("save")}</span>
+              )}
+            </div>
+          </Button>
+        )}
+        {pizzeriaState == "loaded" && (
+          <Button
+            color="yellow"
+            onClick={() => {
+              dispatch(editPizzeria());
+            }}
+            className={`w-1/3 rounded-lg`}
+            title={t("edit-pizzeria")}
+            testId="pizza-panel-edit-button"
+          >
+            <div className="flex items-center gap-2">
+              <Pencil size={20} strokeWidth={2} />
+              {isDesktop && <span>{t("edit-pizzeria")}</span>}
+            </div>
+          </Button>
+        )}
+        <Button
+          color="yellow"
+          onClick={() => {
+            setShowLoadOverlay(true);
+          }}
+          className={`w-1/3 rounded-lg`}
+          title={t("manage-pizzeria-title")}
+          testId="pizza-panel-manage-button"
+        >
+          <div className="flex items-center gap-2">
+            <Store size={20} strokeWidth={2} />
+            {isDesktop && <span>{t("manage-pizzeria-button")}</span>}
+          </div>
+        </Button>
+      </div>
+      {loadedPizzeriaId && (
+        <div className="w-full bg-amber-200 h-7 rounded-lg relative">
+          <span
+            className="absolute right-0 left-0 text-left font-bold px-4 truncate"
+            data-testid="pizza-panel-pizzeria-name"
+          >
+            {loadedPizzeria?.name}
+          </span>
+        </div>
+      )}
       <OverlayWrapper
         show={showSaveAsOverlay}
         title={t("save-pizzeria-as-title")}
@@ -180,7 +178,11 @@ export function PizzeriaHotBar() {
       </OverlayWrapper>
       <OverlayWrapper
         show={showLoadOverlay}
-        title={t("manage-pizzeria-title")}
+        title={
+          isDesktop
+            ? t("manage-pizzeria-title")
+            : t("manage-pizzeria-title-short")
+        }
         close={() => setShowLoadOverlay(false)}
         testId="manage-overlay"
       >

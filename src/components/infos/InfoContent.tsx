@@ -169,6 +169,7 @@ export function InfoContent() {
                       color="green"
                       className="w-32 border-2 border-b-0 border-green-600 rounded-t-xl"
                       testId="pizza-panel-manage-button"
+                      title={t("save")}
                     >
                       <div className="flex items-center gap-2">
                         <Save size={20} strokeWidth={2} />
@@ -183,7 +184,7 @@ export function InfoContent() {
                       onClick={() => {}}
                       color="green"
                       className="w-40 border-2 border-b-0 border-green-600 rounded-t-xl"
-                      testId="pizza-panel-manage-button"
+                      title={t("save-as")}
                     >
                       <div className="flex items-center gap-2">
                         <SaveAsIcon
@@ -210,6 +211,7 @@ export function InfoContent() {
                       color="green"
                       className="w-32 border-2 border-b-0 border-green-600 rounded-t-xl"
                       testId="pizza-panel-manage-button"
+                      title={t("manage-pizzeria-button")}
                     >
                       <div className="flex items-center gap-2">
                         <Store size={20} strokeWidth={2} />

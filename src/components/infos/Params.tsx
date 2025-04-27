@@ -50,6 +50,7 @@ export function Params() {
             max={16}
             min={1}
             testId="slice-parameter"
+            title={t("parameters-slices").toLowerCase()}
           />
         </div>
         <div
@@ -64,7 +65,7 @@ export function Params() {
             <button
               onClick={() => setThresholds(1.25, 1.5)}
               className="size-5 rounded-lg flex items-center justify-center hover:bg-black hover:bg-opacity-25"
-              title="Restore default"
+              title={t("parameters-restore-default")}
               data-testid="params-fairness-reset-button"
             >
               <RotateCcw size={15} strokeWidth={2} />

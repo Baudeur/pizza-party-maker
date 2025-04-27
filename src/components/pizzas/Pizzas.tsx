@@ -4,7 +4,7 @@ import { PizzaForm } from "./PizzaForm";
 import { Container } from "../utils/Container";
 import { PizzaLineWrapper } from "./PizzaLineWrapper";
 import { PizzeriaHotBar } from "./PizzeriaHotBar";
-import { loadedPizzeriaSelector } from "../../modules/pizzerias/selector";
+import { pizzeriaStateSelector } from "../../modules/pizzerias/selector";
 import { useTranslation } from "react-i18next";
 import { Desktop, Mobile } from "../utils/ReactiveComponents";
 import { useMediaQuery } from "react-responsive";
@@ -13,21 +13,25 @@ import { desktopSize } from "../../services/constants";
 export function Pizzas() {
   const { t } = useTranslation();
   const pizzas = useSelector(pizzasSelector);
-  const loadedPizzeriaId = useSelector(loadedPizzeriaSelector);
+  const pizzeriaState = useSelector(pizzeriaStateSelector);
   const isDesktop = useMediaQuery({ minWidth: desktopSize });
 
   return (
     <Container
       className={`${
-        !isDesktop && "rounded-none border-x-0 overflow-auto overflow-x-hidden"
-      } text-xl h-[32rem]`}
+        isDesktop
+          ? "h-[32rem]"
+          : "rounded-none border-x-0 overflow-y-hidden overflow-x-hidden h-[70ldh]"
+      } text-xl`}
       testId="pizza-panel"
-      header={<PizzeriaHotBar />}
     >
       <Desktop>
+        <PizzeriaHotBar />
         <div
           className={`overflow-y-auto w-[750px] ${
-            loadedPizzeriaId ? "max-h-[21.75rem]" : "max-h-[23.5rem]"
+            pizzeriaState === "nothing"
+              ? "max-h-[27.50rem]"
+              : "max-h-[25.50rem]"
           }`}
         >
           <table className="w-full">
@@ -68,7 +72,15 @@ export function Pizzas() {
         </div>
       </Desktop>
       <Mobile>
-        <div className={`flex flex-col gap-5`}>
+        <PizzeriaHotBar />
+
+        <div
+          className={`flex flex-col gap-5 overflow-y-auto ${
+            pizzeriaState === "nothing"
+              ? "max-h-[21.50rem]"
+              : "max-h-[19.50rem]"
+          }`}
+        >
           {pizzas.map((pizzaElem) => {
             return <PizzaLineWrapper key={pizzaElem.id} pizza={pizzaElem} />;
           })}

@@ -13,7 +13,9 @@ import { pizzasSelector } from "../../modules/pizzas/selector";
 import { Button } from "../utils/Button";
 import { PizzeriaDisplayer } from "./PizzeriaDisplayer";
 import { CloseContext } from "../utils/Overlay";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
 
 export function SaveAsPizzeriaOverlayContent() {
   const { t } = useTranslation();
@@ -26,6 +28,7 @@ export function SaveAsPizzeriaOverlayContent() {
     undefined
   );
   const close = useContext(CloseContext);
+  const isDesktop = useMediaQuery({ minWidth: desktopSize });
 
   function handleCreatePizzeria() {
     const newPizzeria: PizzeriaWithoutID = {
@@ -76,7 +79,7 @@ export function SaveAsPizzeriaOverlayContent() {
   }, [nameConflict]);
 
   return (
-    <div className="w-[500px]">
+    <div className={isDesktop ? "w-[500px]" : ""}>
       {nameConflict === undefined && (
         <div className="flex justify-between w-full items-center gap-2 mt-2">
           <div
@@ -93,13 +96,14 @@ export function SaveAsPizzeriaOverlayContent() {
               className="w-full"
               ref={inputRef}
               testId="save-as-pizzeria-text-input"
+              title={t("pizzeria-name")}
             />
             <Button
               color="green"
               onClick={handleCreatePizzeria}
               className="min-w-[68px] rounded-lg"
               testId="save-as-pizzeria-save-button"
-              title="Save"
+              title={t("save")}
             >
               <Save size={20} strokeWidth={2} />
             </Button>
@@ -108,16 +112,30 @@ export function SaveAsPizzeriaOverlayContent() {
       )}
       {nameConflict !== undefined && (
         <div className="w-full flex flex-col text-lg">
-          <span className="text-red-500 mb-2">
-            {t("save-pizzeria-name-conflict")}
+          <span className="text-red-500 text-xl mb-2">
+            <Trans
+              i18nKey={"save-pizzeria-name-conflict"}
+              components={{
+                pizzeriaName: <span>{nameConflict.name}</span>,
+              }}
+            />
+          </span>
+          <span className="text-left px-2 font-bold">
+            <Trans
+              i18nKey={"save-pizzeria-content-of"}
+              components={{
+                pizzeriaName: <span>{nameConflict.name}</span>,
+              }}
+            />
           </span>
           <PizzeriaDisplayer pizzeria={nameConflict} className="max-h-48" />
           <div className="flex w-full gap-2 mt-2">
             <Button
               onClick={handleCancel}
-              color="yellow"
+              color="orange"
               className="rounded-lg w-full"
               testId="save-as-conflict-cancel"
+              title={t("cancel")}
             >
               {t("cancel")}
             </Button>
@@ -126,6 +144,7 @@ export function SaveAsPizzeriaOverlayContent() {
               color="green"
               className="rounded-lg w-full"
               testId="save-as-conflict-override"
+              title={t("save-pizzeria-override")}
             >
               {t("save-pizzeria-override")}
             </Button>

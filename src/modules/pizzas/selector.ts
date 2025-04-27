@@ -16,6 +16,3 @@ export const pizzaQuantitySelector = (state: RootState): PizzaQuantity[] =>
       0
     ),
   }));
-
-export const pizzasEditableSelector = (state: RootState): boolean =>
-  state.pizzaList.editable;

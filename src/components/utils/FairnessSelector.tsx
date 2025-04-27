@@ -159,6 +159,7 @@ export function FairnessSelector({
       data-testid="fairness-parameter"
     >
       <svg width={width} height={height}>
+        <title>{t("suggester-unfairness-description")}</title>
         {/*Mask for fadout of bad*/}
         <defs>
           <linearGradient id="gradient">

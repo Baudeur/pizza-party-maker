@@ -32,6 +32,7 @@ export function GraphComparison() {
           width={isDesktop ? 300 : 250}
           height={40}
           testId="people-graph"
+          title={t("graphs-people-description")}
         />
       </div>
       <div
@@ -44,6 +45,7 @@ export function GraphComparison() {
           width={isDesktop ? 300 : 250}
           height={40}
           testId="pizza-graph"
+          title={t("graphs-pizza-description")}
         />
       </div>
     </div>

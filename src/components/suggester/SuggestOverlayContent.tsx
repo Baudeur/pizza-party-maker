@@ -19,22 +19,22 @@ import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 
 const optionsInit = [
-  { value: 1 / 8, label: "1/8" },
-  { value: 1 / 6, label: "1/6" },
-  { value: 1 / 5, label: "1/5" },
-  { value: 1 / 4, label: "1/4" },
-  { value: 1 / 3, label: "1/3" },
-  { value: 3 / 8, label: "3/8" },
-  { value: 2 / 5, label: "2/5" },
-  { value: 1 / 2, label: "1/2" },
-  { value: 3 / 5, label: "3/5" },
-  { value: 5 / 8, label: "5/8" },
-  { value: 2 / 3, label: "2/3" },
-  { value: 3 / 4, label: "3/4" },
-  { value: 4 / 5, label: "4/5" },
-  { value: 5 / 6, label: "5/6" },
-  { value: 7 / 8, label: "7/8" },
-  { value: 1, label: "1" },
+  { title: "1/8", value: 1 / 8, label: "1/8" },
+  { title: "1/6", value: 1 / 6, label: "1/6" },
+  { title: "1/5", value: 1 / 5, label: "1/5" },
+  { title: "1/4", value: 1 / 4, label: "1/4" },
+  { title: "1/3", value: 1 / 3, label: "1/3" },
+  { title: "3/8", value: 3 / 8, label: "3/8" },
+  { title: "2/5", value: 2 / 5, label: "2/5" },
+  { title: "1/2", value: 1 / 2, label: "1/2" },
+  { title: "3/5", value: 3 / 5, label: "3/5" },
+  { title: "5/8", value: 5 / 8, label: "5/8" },
+  { title: "2/3", value: 2 / 3, label: "2/3" },
+  { title: "3/4", value: 3 / 4, label: "3/4" },
+  { title: "4/5", value: 4 / 5, label: "4/5" },
+  { title: "5/6", value: 5 / 6, label: "5/6" },
+  { title: "7/8", value: 7 / 8, label: "7/8" },
+  { title: "1", value: 1, label: "1" },
 ];
 
 type SuggestOverlayContentProps = {
@@ -49,7 +49,7 @@ export function SuggestOverlayContent({
   const [suggestMode, setSuggestMode] = useState<SuggestMode>("lowerCost");
   const [quantity, setQuantity] = useState(1);
   const [options, setOptions] =
-    useState<{ value: number; label: string }[]>(optionsInit);
+    useState<{ title: string; value: number; label: string }[]>(optionsInit);
 
   const pizzas = useSelector(pizzasSelector);
   const people = useSelector(peopleSelector);
@@ -68,6 +68,7 @@ export function SuggestOverlayContent({
     if (addValue === 100) return;
     const newOptions = options.concat(
       optionsInit.map(({ value: val, label }) => ({
+        title: `${val + addValue}`,
         value: val + addValue,
         label: addValue + " + " + label,
       }))
@@ -155,6 +156,7 @@ export function SuggestOverlayContent({
             onChange={(value) => setQuantity(value)}
             onScrollBottom={addChoices}
             testId="suggester-quantity-dropdown"
+            title={t("suggester-quantity-description")}
           />
         </div>
         <div className={`flex w-full gap-2 items-center`}>
@@ -167,27 +169,39 @@ export function SuggestOverlayContent({
           <DropDown<string>
             className="w-[175px]"
             options={[
-              { value: "lowerCost", label: t("suggester-strategy-minimal") },
-              { value: "maxDiversity", label: t("suggester-strategy-maximal") },
+              {
+                title: t("suggester-strategy-minimal-description"),
+                value: "lowerCost",
+                label: t("suggester-strategy-minimal"),
+              },
+              {
+                title: t("suggester-strategy-maximal-description"),
+                value: "maxDiversity",
+                label: t("suggester-strategy-maximal"),
+              },
             ]}
             value={suggestMode}
             onChange={(value) => setSuggestMode(value as SuggestMode)}
             testId="suggester-strategy-dropdown"
+            title={t("suggester-strategy-selection")}
           />
         </div>
         <div className={`px-2 flex gap-2 w-full`}>
           <div className="w-2/5 text-right">{t("suggester-unfairness")}</div>
           <div
             className={`bg-white font-bold ${
-              isDesktop && "w-16"
+              isDesktop ? "w-20" : "px-1"
             } text-center h-full rounded-lg`}
           >
             {(fairness * 100).toFixed(0)}%
           </div>
           <input
-            className="accent-green-500 w-full touch-none"
+            className={`accent-green-500 touch-none ${
+              isDesktop ? "w-full" : "w-1/2"
+            }`}
             type="range"
             value={fairness}
+            title={t("suggester-unfairness-description")}
             onChange={(e) => setFairness(Number(e.target.value))}
             min={1.05}
             max={2}
@@ -201,6 +215,7 @@ export function SuggestOverlayContent({
           className="rounded-lg font-bold"
           disabled={isLoading}
           testId="suggester-compute-button"
+          title={t("suggester-compute")}
         >
           {t("suggester-compute")}
         </Button>
@@ -221,6 +236,7 @@ export function SuggestOverlayContent({
               onClick={handleApply}
               className="w-full font-bold rounded-lg mt-2"
               testId="suggester-apply-button"
+              title={t("suggester-apply")}
             >
               {t("suggester-apply")}
             </Button>

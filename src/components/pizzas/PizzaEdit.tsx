@@ -10,6 +10,7 @@ import { FocusEvent, useContext, useEffect, useRef, useState } from "react";
 import { Diet } from "../../types";
 import { EditContext } from "./PizzaLineWrapper";
 import { EitherDesktopOrMobile } from "../utils/ReactiveComponents";
+import { t } from "i18next";
 
 type PizzaEditProps = {
   pizza: Pizza;
@@ -92,6 +93,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             setValue={handleQuantityChange}
             onDelete={() => dispatch(removePizza(pizza.id))}
             testId={`${pizza.id}-pizza-edit-quantity`}
+            title={pizza.name}
           />
         </td>
         <td>
@@ -103,6 +105,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             testId={`${pizza.id}-pizza-edit-name`}
+            title={t("pizza-name")}
           />
         </td>
         <td>
@@ -122,6 +125,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             setPrice={(price) => setPrice(price)}
             tabIndex={0}
             testId={`${pizza.id}-pizza-edit-price`}
+            title={t("pizza-price", { pizza: pizza.name })}
           />
         </td>
         <td className="flex justify-end">
@@ -131,24 +135,24 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             color="green"
             onClick={() => handleSubmit()}
             testId={`${pizza.id}-pizza-edit-validate-button`}
-            title="Apply changes"
+            title={t("apply-changes", { pizza: pizza.name })}
           >
             <Check size={20} strokeWidth={2} />
           </Button>
           <Button
             tabIndex={0}
             className="rounded-lg w-8"
-            color="yellow"
+            color="orange"
             onClick={() => handleCancel()}
             testId={`${pizza.id}-pizza-edit-cancel-button`}
-            title="Cancel changes"
+            title={t("cancel-changes", { pizza: pizza.name })}
           >
             <Undo2 size={20} strokeWidth={2} />
           </Button>
         </td>
       </tr>
       {/* Mobile */}
-      <div className="flex w-full flex-col bg-amber-200 rounded-lg overflow-hidden">
+      <div className="flex w-full flex-col bg-amber-200 rounded-lg min-h-16 overflow-hidden">
         <div className="flex">
           <TextInput
             className="w-full rounded-none rounded-tl-lg"
@@ -158,6 +162,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             testId={`${pizza.id}-pizza-edit-name`}
+            title={t("pizza-name")}
           />
           <PriceInput
             className="w-28 rounded-none rounded-tr-lg"
@@ -166,9 +171,9 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             setPrice={(price) => setPrice(price)}
             tabIndex={0}
             testId={`${pizza.id}-pizza-edit-price`}
+            title={t("pizza-price", { pizza: pizza.name })}
           />
         </div>
-
         <div className="flex justify-between w-full">
           <div className="my-[2px]">
             <DietSelector
@@ -183,10 +188,10 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             <Button
               tabIndex={0}
               className="min-w-16"
-              color="yellow"
+              color="orange"
               onClick={() => handleCancel()}
               testId={`${pizza.id}-pizza-edit-cancel-button`}
-              title="Cancel changes"
+              title={t("cancel-changes", { pizza: pizza.name })}
             >
               <Undo2 size={20} strokeWidth={2} />
             </Button>
@@ -196,7 +201,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
               color="green"
               onClick={() => handleSubmit()}
               testId={`${pizza.id}-pizza-edit-validate-button`}
-              title="Apply changes"
+              title={t("apply-changes", { pizza: pizza.name })}
             >
               <Check size={20} strokeWidth={2} />
             </Button>

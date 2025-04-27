@@ -20,11 +20,13 @@ export type StoredPizzerias = {
 
 type PizzeriasState = {
   loaded: string | undefined;
+  pizzeriaState: "nothing" | "loaded" | "editing";
   pizzerias: Pizzeria[];
 };
 
 const initialState: PizzeriasState = {
   loaded: undefined,
+  pizzeriaState: "nothing",
   pizzerias: [],
 };
 
@@ -45,6 +47,7 @@ const pizzerias = createSlice({
         ...state,
         pizzerias: storeState([...state.pizzerias, newPizzeria]),
         loaded: newPizzeria.id,
+        pizzeriaState: "loaded",
       };
     },
     removePizzeria: (state, action: PayloadAction<string>) => {
@@ -54,6 +57,8 @@ const pizzerias = createSlice({
           state.pizzerias.filter((pizzerias) => pizzerias.id !== action.payload)
         ),
         loaded: action.payload === state.loaded ? undefined : state.loaded,
+        pizzeriaState:
+          action.payload === state.loaded ? "nothing" : state.pizzeriaState,
       };
     },
     modifyPizzeria: (state, action: PayloadAction<Pizzeria>) => {
@@ -75,6 +80,7 @@ const pizzerias = createSlice({
           ...state.pizzerias.slice(pizzeriaIndex + 1),
         ]),
         loaded: action.payload.id,
+        pizzeriaState: "loaded",
       };
     },
     setPizzerias: (state, action: PayloadAction<Pizzeria[]>) => {
@@ -82,18 +88,27 @@ const pizzerias = createSlice({
         ...state,
         loaded: undefined,
         pizzerias: action.payload,
+        pizzeriaState: "nothing",
       };
     },
     loadPizzeria: (state, action: PayloadAction<string>) => {
       return {
         ...state,
         loaded: action.payload,
+        pizzeriaState: "loaded",
       };
     },
     unloadPizzeria: (state) => {
       return {
         ...state,
         loaded: undefined,
+        pizzeriaState: "nothing",
+      };
+    },
+    editPizzeria: (state) => {
+      return {
+        ...state,
+        pizzeriaState: "editing",
       };
     },
   },
@@ -116,4 +131,5 @@ export const {
   setPizzerias,
   loadPizzeria,
   unloadPizzeria,
+  editPizzeria,
 } = pizzerias.actions;

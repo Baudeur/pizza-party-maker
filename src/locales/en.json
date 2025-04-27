@@ -17,38 +17,76 @@
 
     "pizza-form-placeholder": "4 Cheese",
 
-    "suggester-open-button": "Suggest Pizzas",
-
-
+    
+    
     "pizza-flag-perfect": "Perfect",
     "pizza-flag-good": "Good",
     "pizza-flag-okay": "Okay",
     "pizza-flag-bad": "Bad",
     "pizza-flag-cant-eat": "Nothing",
-
+    
     "info-display-person": "pers",
     "info-display-total": "total",
     "info-display-slices": "slices",
     "info-display-pizzas": "pizzas",
-
+    
     "graphs-expand-title": "Graphs",
     "graphs-people": "People",
     "graphs-pizza": "Pizzas",
-
+    "graphs-people-description": "Distribution of diets among guests",
+    "graphs-pizza-description": "Distribution of diets among pizzas",
+    
     "details-expand-title": "Details",
     "details-worst-case-scenario": "Worst case scenario",
     "details-random-case-scenario": "Random case scenario",
     "details-average-case-scenario": "Averange case scenario",
     "details-best-case-scenario": "Best case scenario",
-
+    
     "details-and-graphs": "Details and graphs",
-
+    
     "parameters-title": "Parameters",
     "parameters-slices": "Slices per pizzas",
     "parameters-fairness": "Fairness",
-
+    "parameters-restore-default": "Restore to default parameters",
+    
     "help": "Help",
+    "created-by": "Created by",
+    "cancel": "Cancel",
+    "plus": "Plus",
+    "minus": "Minus",
+    "close": "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "add-pizza": "Add pizza",
+    "edit-pizza": "Edit pizza {{pizza}}",
+    "delete-pizza": "Delete pizza {{pizza}}",
+    "apply-changes": "Apply changes of {{pizza}}",
+    "cancel-changes": "Cancel changes of {{pizza}}",
+    "pizza-name": "Name of the pizza",
+    "pizza-price": "Price of pizza {{pizza}}",
+    
+    "quantity-of": "Quantity of {{element}}",
+    "plus-of": "Add one {{element}}",
+    "minus-of": "Remove one {{element}}",
+    "delete-element": "Delete {{element}}",
+    "expand-element": "Expand {{element}}",
+    
+    "pizzeria-name": "Name of the pizzeria",
+    "exit-pizzeria": "Exit pizzeria",
+    "save-as-pizzeria": "Save as pizzeria",
+    "edit-pizzeria": "Edit pizzeria",
+    "save-pizzeria": "Save {{pizzeriaName}}",
+    "load-pizzeria": "Load {{pizzeriaName}}",
+    "delete-pizzeria": "Delete pizzeria {{pizzeriaName}}",
+    
+    "normal-person": "Omnivorous person",
+    "pescoVegetarian-person": "Pesco-vegetarian person",
+    "vegetarian-person": "Vegetarian person",
+    "vegan-person": "Vegan person",
+    
+    "language-selection": "Switch language",
 
+    "suggester-open-button": "Suggest pizzas",
     "suggester-popup-title": "Suggestion computer",
     "suggester-description": "Select your suggestion parameters below",
     "suggester-unfairness": "Unfairness:",
@@ -60,6 +98,12 @@
     "suggester-error": "Error: the pizza list is missing diets that people in your group have.",
     "suggester-suggestion-total": "Total",
     "suggester-apply": "Apply suggestion",
+    "suggester-strategy-selection": "Select the pizza picking strategy",
+    "suggester-strategy-minimal-description": "Always picks the lowest price pizza for each diet needed.",
+    "suggester-strategy-maximal-description": "Picks as many different pizza as possible, no matter their prices.",
+    "suggester-quantity-description": "Choose the quantity of pizza per person",
+    "suggester-unfairness-description": "How much more pizza can someone have compared to others.",
+
 
     "info-title": "<bold>Welcome to <title /> ! </bold>",
     "info-intro-p1": "This little website is a tool to plan your pizza party.",
@@ -131,22 +175,16 @@
     "info-footer": "Created by Bertrand Baudeur",
 
     "manage-pizzeria-title": "Manage or load pizzerias",
+    "manage-pizzeria-title-short": "Manage pizzerias",
     "manage-pizzeria-load-button": "Load",
     "manage-pizzeria-button": "Pizzerias",
+    "no-pizzas": "There are no pizzas in this pizzeria.",
     "save-pizzeria-as-title": "Save pizzeria as ...",
-    "save-pizzeria-name-conflict": "A pizzeria with this name already exists, override?",
+    "save-pizzeria-name-conflict": "<pizzeriaName/> already exists, override?",
+    "save-pizzeria-content-of": "The content of <pizzeriaName/>:",
     "save-pizzeria-override": "Override",
     "save-pizzeria-name": "Name",
-
-    "created-by": "Created by",
-    "cancel": "Cancel",
-    "plus": "Plus",
-    "minus": "Minus",
-    "new": "New",
-    "save-as": "Save As",
-    "save": "Save",
-    "add-pizza": "Add pizza",
-
+    
     "details-panel-title": "The details panel",
     "details-panel-p1": "This panel shows the underlying mechanism of the website. As well as giving a bit more information than just the flags.",
     "details-panel-p2": "This panel shows the results of different simulations of your party.",
