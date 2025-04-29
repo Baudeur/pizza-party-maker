@@ -2,10 +2,13 @@
   "translation": {
     "people-panel-title": "Invités",
     "people-panel-total": "Total : {{total}}",
+  
     "diet-icon-omnivorous": "ominvore",
     "diet-icon-pesco-vegetarian": "pesco‑végétarien",
     "diet-icon-vegetarian": "végétarien",
     "diet-icon-vegan": "vegan",
+
+    "no-pizza": "Hmm ça manque de pizzas ici.",
 
     "pizza-table-quantity": "Quantité",
     "pizza-table-name": "Nom",
@@ -181,7 +184,8 @@
     "manage-pizzeria-title-short": "Gérer les pizzerias",
     "manage-pizzeria-load-button": "Charger",
     "manage-pizzeria-button": "Pizzerias",
-    "no-pizzas": "Il n'y a aucune pizzas dans cette pizzeria.",
+    "pizzeria-no-pizza": "Il n'y a aucune pizza dans cette pizzeria.",
+    "no-pizzerias": "Vous n'avez enregistré aucune pizzeria.",
     "save-pizzeria-as-title": "Enregistrer la pizzeria sous ...",
     "save-pizzeria-name-conflict": "<pizzeriaName/> existe déjà, la remplacer ?",
     "save-pizzeria-content-of": "Le contenu de <pizzeriaName/> :",

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { Desktop, Mobile } from "../utils/ReactiveComponents";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
+import { PizzaPlaceholder } from "./PizzaPlaceholder";
 
 export function Pizzas() {
   const { t } = useTranslation();
@@ -56,11 +57,17 @@ export function Pizzas() {
               </tr>
             </thead>
             <tbody className="overflow-auto" data-testid="pizza-list">
-              {pizzas.map((pizzaElem) => {
-                return (
-                  <PizzaLineWrapper key={pizzaElem.id} pizza={pizzaElem} />
-                );
-              })}
+              {pizzas.length > 0 ? (
+                <>
+                  {pizzas.map((pizzaElem) => {
+                    return (
+                      <PizzaLineWrapper key={pizzaElem.id} pizza={pizzaElem} />
+                    );
+                  })}
+                </>
+              ) : (
+                <PizzaPlaceholder />
+              )}
             </tbody>
             <tfoot
               className="sticky bottom-0 bg-gradient-to-t from-amber-100 from-85% to-transparent z-10"
@@ -81,9 +88,17 @@ export function Pizzas() {
               : "max-h-[19.50rem]"
           }`}
         >
-          {pizzas.map((pizzaElem) => {
-            return <PizzaLineWrapper key={pizzaElem.id} pizza={pizzaElem} />;
-          })}
+          {pizzas.length > 0 ? (
+            <>
+              {pizzas.map((pizzaElem) => {
+                return (
+                  <PizzaLineWrapper key={pizzaElem.id} pizza={pizzaElem} />
+                );
+              })}
+            </>
+          ) : (
+            <PizzaPlaceholder />
+          )}
           <div className="w-full">
             <PizzaForm />
           </div>

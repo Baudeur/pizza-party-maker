@@ -8,6 +8,9 @@
     "diet-icon-vegetarian": "vegetarian",
     "diet-icon-vegan": "vegan",
 
+    "no-pizza": "Hmm we need more pizza here.",
+
+
     "pizza-table-quantity": "Quantity",
     "pizza-table-name": "Name",
     "pizza-table-eaten-by": "Eaten by",
@@ -183,7 +186,8 @@
     "manage-pizzeria-title-short": "Manage pizzerias",
     "manage-pizzeria-load-button": "Load",
     "manage-pizzeria-button": "Pizzerias",
-    "no-pizzas": "There are no pizzas in this pizzeria.",
+    "pizzeria-no-pizza": "There are no pizzas in this pizzeria.",
+    "no-pizzerias": "There are no saved pizzerias.",
     "save-pizzeria-as-title": "Save pizzeria as ...",
     "save-pizzeria-name-conflict": "<pizzeriaName/> already exists, override?",
     "save-pizzeria-content-of": "The content of <pizzeriaName/>:",

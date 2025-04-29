@@ -20,7 +20,7 @@ export function PizzeriaDisplayer({
       className={`flex flex-col gap-1 overflow-y-auto my-2 rounded-lg p-1 bg-amber-200 ${className}`}
       data-testid={`${testId}-displayer-pizza-list`}
     >
-      {pizzeria.pizzas.length === 0 && <div>{t("no-pizzas")}</div>}
+      {pizzeria.pizzas.length === 0 && <div>{t("pizzeria-no-pizza")}</div>}
       {pizzeria.pizzas.map((pizza) => (
         <div key={pizza.id} className="w-full flex bg-white rounded-lg px-2">
           <div
