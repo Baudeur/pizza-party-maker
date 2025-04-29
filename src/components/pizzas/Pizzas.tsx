@@ -15,7 +15,7 @@ export function Pizzas() {
   const { t } = useTranslation();
   const pizzas = useSelector(pizzasSelector);
   const pizzeriaState = useSelector(pizzeriaStateSelector);
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   return (
     <Container

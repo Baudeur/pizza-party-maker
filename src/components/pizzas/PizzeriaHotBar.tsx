@@ -36,7 +36,7 @@ export function PizzeriaHotBar() {
     (pizzeria) => pizzeria.id === loadedPizzeriaId
   );
   const pizzeriaState = useSelector(pizzeriaStateSelector);
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   const handleSave = useCallback(() => {
     if (loadedPizzeriaId === undefined || loadedPizzeria === undefined) return;

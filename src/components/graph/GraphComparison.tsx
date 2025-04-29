@@ -11,7 +11,7 @@ export function GraphComparison() {
   const { t } = useTranslation();
   const pizza = useSelector(pizzaQuantitySelector, pizzaQuantityEquality);
   const people = useSelector(peopleSelector);
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   const pizzasCounts = {
     normal: pizza.find((pz) => pz.eatenBy === "normal")?.quantity ?? 0,

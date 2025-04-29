@@ -36,7 +36,7 @@ export function InfoContent() {
   const { t } = useTranslation();
   const [diet, setDiet] = useState<Diet>("pescoVegetarian");
   const [flagStateIndex, setFlagStateIndex] = useState(0);
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   useEffect(() => {
     const intervalId = setInterval(

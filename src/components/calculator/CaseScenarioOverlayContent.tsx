@@ -6,7 +6,7 @@ import { desktopSize } from "../../services/constants";
 
 export function CaseScenarioOverlayContent() {
   const { t } = useTranslation();
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   return (
     <div

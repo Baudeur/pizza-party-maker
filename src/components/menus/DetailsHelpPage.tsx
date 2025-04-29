@@ -5,7 +5,7 @@ import { desktopSize } from "../../services/constants";
 import { CaseScenarioOverlayContent } from "../calculator/CaseScenarioOverlayContent";
 
 export function DetailsHelpPage() {
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -15,7 +15,7 @@ export function CaseScenario({
   peopleAte,
   testId,
 }: Readonly<CaseScenarioProps>) {
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   return (
     <div

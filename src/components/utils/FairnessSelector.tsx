@@ -39,7 +39,7 @@ export function FairnessSelector({
     i18n: { language },
   } = useTranslation();
   const ref = useRef<SVGRectElement>(null);
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   const [dragged, setDragged] = useState(0);
   //Width of the whole component
   const width = isDesktop ? 400 : 280;

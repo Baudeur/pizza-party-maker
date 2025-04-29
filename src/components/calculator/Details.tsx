@@ -24,7 +24,7 @@ export function Details({
 }: DetailsProps) {
   const { t } = useTranslation();
   const [showDetailsExplanation, setShowDetailsExplanation] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   const navigate = useNavigate();
 
   return (

@@ -12,7 +12,7 @@ import { Desktop } from "../utils/ReactiveComponents";
 export function Infos() {
   const [displayOverlay1, setDisplayOverlay1] = useState(false);
   const [displayOverlay2, setDisplayOverlay2] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   const { t } = useTranslation();
   return (
     <div className={`${isDesktop ? "flex gap-2" : "m-2"}`}>

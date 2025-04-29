@@ -22,7 +22,7 @@ export function ManagePizzeriaOverlayContent() {
   const pizzerias = useSelector(pizzeriasSelector);
   const dispatch = useDispatch();
   const close = useContext(CloseContext);
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   const handleLoad = (pizzeria: Pizzeria) => {
     dispatch(loadPizzeria(pizzeria.id));

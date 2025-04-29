@@ -21,7 +21,7 @@ export function Params() {
   const slices = useSelector(sliceSelector);
   const { okay, bad } = useSelector(thresholdsSelector);
   const dispatch = useDispatch();
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   const setThresholds = (value1: number, value2: number) => {
     dispatch(setOkayThresholds(value1));

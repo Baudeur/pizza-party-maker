@@ -11,7 +11,7 @@ import { Desktop, Mobile } from "../utils/ReactiveComponents";
 export function People() {
   const { t } = useTranslation();
   const people = useSelector(peopleSelector);
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   return (
     <Container

@@ -28,7 +28,7 @@ export function SaveAsPizzeriaOverlayContent() {
     undefined
   );
   const close = useContext(CloseContext);
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   function handleCreatePizzeria() {
     const newPizzeria: PizzeriaWithoutID = {

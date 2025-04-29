@@ -5,7 +5,7 @@ import { desktopSize } from "../../services/constants";
 import { Params } from "../infos/Params";
 
 export function ParameterPage() {
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   const navigate = useNavigate();
 
   useEffect(() => {

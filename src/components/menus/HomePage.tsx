@@ -9,7 +9,7 @@ import { Calculator } from "../calculator/Calculator";
 import { Footer } from "./Footer";
 
 export function HomePage() {
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   return (
     <div
       className={`flex flex-col justify-between h-full ${

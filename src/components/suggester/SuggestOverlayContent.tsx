@@ -59,7 +59,7 @@ export function SuggestOverlayContent({
   >();
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   new Image(1, 1).src = spinner; //preload spinner image
 

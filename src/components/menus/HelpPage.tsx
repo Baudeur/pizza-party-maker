@@ -5,7 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 
 export function HelpPage() {
-  const isDesktop = useMediaQuery({ minWidth: desktopSize });
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   const navigate = useNavigate();
 
   useEffect(() => {
