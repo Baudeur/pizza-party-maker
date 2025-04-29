@@ -16,7 +16,13 @@
 
     "pizza-form-placeholder": "4 Fromages",
 
-    
+    "alt-pizza-icon": "Émoji pizza",
+    "alt-cash-icon": "Émoji billet",
+    "alt-diet-icon": "Icône représentant le régime {{diet}} en {{color}}",
+    "alt-diet-color-bw": "noir et blanc",
+    "alt-diet-color-color": "couleur",
+    "alt-loading-spinner": "Icône de chargement",
+
     "pizza-flag-perfect": "Parfait",
     "pizza-flag-good": "Bien",
     "pizza-flag-okay": "Moyen",

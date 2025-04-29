@@ -111,7 +111,10 @@ export function SaveAsPizzeriaOverlayContent() {
         </div>
       )}
       {nameConflict !== undefined && (
-        <div className="w-full flex flex-col text-lg">
+        <div
+          className="w-full flex flex-col text-lg"
+          data-testid="save-as-conflict-already-exists"
+        >
           <span className="text-red-500 text-xl mb-2">
             <Trans
               i18nKey={"save-pizzeria-name-conflict"}
@@ -120,7 +123,10 @@ export function SaveAsPizzeriaOverlayContent() {
               }}
             />
           </span>
-          <span className="text-left px-2 font-bold">
+          <span
+            className="text-left px-2 font-bold"
+            data-testid="save-as-conflict-content-of"
+          >
             <Trans
               i18nKey={"save-pizzeria-content-of"}
               components={{
@@ -128,7 +134,11 @@ export function SaveAsPizzeriaOverlayContent() {
               }}
             />
           </span>
-          <PizzeriaDisplayer pizzeria={nameConflict} className="max-h-48" />
+          <PizzeriaDisplayer
+            pizzeria={nameConflict}
+            className="max-h-48"
+            testId="conflict"
+          />
           <div className="flex w-full gap-2 mt-2">
             <Button
               onClick={handleCancel}

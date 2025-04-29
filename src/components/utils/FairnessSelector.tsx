@@ -309,7 +309,7 @@ export function FairnessSelector({
               onValue1Change(Math.min(value1 + 0.05, value2));
             }
             if (ev.key === "ArrowLeft") {
-              onValue2Change(Math.max(value1 - 0.05, min));
+              onValue1Change(Math.max(value1 - 0.05, min));
             }
           }}
           tabIndex={-1}

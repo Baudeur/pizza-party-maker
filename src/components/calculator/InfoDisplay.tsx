@@ -63,7 +63,7 @@ export function InfoDisplay({
             <img
               src={sliceIcon}
               className="size-8"
-              alt="Quantity"
+              alt={t("alt-pizza-icon")}
               data-testid="quantity-flag-icon"
             />
           </div>
@@ -85,7 +85,7 @@ export function InfoDisplay({
             <img
               src={priceIcon}
               className="size-8"
-              alt="Price"
+              alt={t("alt-cash-icon")}
               data-testid="price-flag-icon"
             />
           </div>
@@ -183,7 +183,7 @@ export function InfoDisplay({
             <img
               src={sliceIcon}
               className="size-6"
-              alt="Quantity"
+              alt={t("alt-pizza-icon")}
               data-testid="quantity-flag-icon"
             />
             <div className="flex flex-col w-full">
@@ -213,7 +213,7 @@ export function InfoDisplay({
             <img
               src={priceIcon}
               className="size-6"
-              alt="Price"
+              alt={t("alt-cash-icon")}
               data-testid="price-flag-icon"
             />
             <div className="flex flex-col w-full">

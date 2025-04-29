@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { formatNameForTestId } from "../../services/utils";
 
 type AccordeonProps = {
   height: string;
@@ -27,6 +28,7 @@ export function Accordeon({ elements, height }: AccordeonProps) {
             className="h-10 flex items-center text-lg font-bold cursor-pointer text-left w-full px-2"
             onClick={() => setExtended(extended === index ? -1 : index)}
             title={t("expand-element", { element: expandable.name })}
+            data-testid={`expand-${formatNameForTestId(expandable.name)}`}
           >
             <ChevronDown
               size={15}

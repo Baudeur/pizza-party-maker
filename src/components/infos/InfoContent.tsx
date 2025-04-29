@@ -236,7 +236,11 @@ export function InfoContent() {
           <div className="w-64 flex mb-2">
             <div className="text-3xl font-bold mr-2 w-full">
               <div className="mb-2 flex justify-center">
-                <img src={priceIcon} className="size-8" alt="Price" />
+                <img
+                  src={priceIcon}
+                  className="size-8"
+                  alt={t("alt-cash-icon")}
+                />
               </div>
               <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
                 <span className="text-lg">
@@ -247,7 +251,11 @@ export function InfoContent() {
             </div>
             <div className="text-3xl font-bold w-full">
               <div className="mb-2 flex justify-center">
-                <img src={sliceIcon} className="size-8" alt="Quantity" />
+                <img
+                  src={sliceIcon}
+                  className="size-8"
+                  alt={t("alt-pizza-icon")}
+                />
               </div>
               <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
                 <span className="text-lg">4 {t("info-display-slices")}</span>

@@ -24,41 +24,8 @@ type PizzaState = {
 };
 
 const initialState: PizzaState = {
-  pizzas: [
-    {
-      id: 0,
-      name: "Pizza maxi gourmande",
-      eatenBy: "normal",
-      price: 14,
-      quantity: 2,
-      editable: false,
-    },
-    {
-      id: 1,
-      name: "Pizza maxi gourmande",
-      eatenBy: "vegetarian",
-      price: 13,
-      quantity: 2,
-      editable: false,
-    },
-    {
-      id: 2,
-      name: "Pizza 1",
-      eatenBy: "pescoVegetarian",
-      price: 15.55,
-      quantity: 1,
-      editable: false,
-    },
-    {
-      id: 3,
-      name: "Pizza maxi gourmande avec un nom trop long",
-      eatenBy: "vegan",
-      price: 10,
-      quantity: 2,
-      editable: false,
-    },
-  ],
-  id: 4,
+  pizzas: [],
+  id: 0,
 };
 
 const pizzas = createSlice({

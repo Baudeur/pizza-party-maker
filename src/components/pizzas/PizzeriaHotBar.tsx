@@ -63,7 +63,7 @@ export function PizzeriaHotBar() {
             onClick={handleExit}
             className={`w-1/3 rounded-lg`}
             title={t("exit-pizzeria")}
-            testId="pizza-panel-new-pizzeria-button"
+            testId="pizza-panel-exit-button"
           >
             <div className="flex items-center gap-2">
               <ArrowLeftToLine size={20} strokeWidth={2} />
@@ -81,7 +81,7 @@ export function PizzeriaHotBar() {
             }}
             className={`w-1/3 rounded-lg`}
             title={t("cancel")}
-            testId="pizza-panel-save-as-button"
+            testId="pizza-panel-cancel-button"
           >
             <div className="flex items-center gap-2">
               <X size={20} strokeWidth={2} />

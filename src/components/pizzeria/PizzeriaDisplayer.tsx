@@ -4,11 +4,13 @@ import { DietIcon } from "../icons/DietIcon";
 
 type PizzeriaDisplayerProps = {
   pizzeria: Pizzeria;
+  testId: string;
   className?: string;
 };
 
 export function PizzeriaDisplayer({
   pizzeria,
+  testId,
   className,
 }: Readonly<PizzeriaDisplayerProps>) {
   const { t } = useTranslation();
@@ -16,7 +18,7 @@ export function PizzeriaDisplayer({
   return (
     <div
       className={`flex flex-col gap-1 overflow-y-auto my-2 rounded-lg p-1 bg-amber-200 ${className}`}
-      data-testid="pizzeria-displayer-pizza-list"
+      data-testid={`${testId}-displayer-pizza-list`}
     >
       {pizzeria.pizzas.length === 0 && <div>{t("no-pizzas")}</div>}
       {pizzeria.pizzas.map((pizza) => (
@@ -24,7 +26,7 @@ export function PizzeriaDisplayer({
           <div
             className="w-1/2 text-left truncate"
             title={pizza.name}
-            data-testid={`pizzeria-displayer-pizza-${pizza.id}-name`}
+            data-testid={`${testId}-displayer-pizza-${pizza.id}-name`}
           >
             {pizza.name}
           </div>
@@ -33,12 +35,12 @@ export function PizzeriaDisplayer({
               type={pizza.eatenBy}
               color="Color"
               className="size-6"
-              testId={`pizzeria-displayer-pizza-${pizza.id}`}
+              testId={`${testId}-displayer-pizza-${pizza.id}`}
             />
           </div>
           <div
             className="w-2/6 text-right"
-            data-testid={`pizzeria-displayer-pizza-${pizza.id}-price`}
+            data-testid={`${testId}-displayer-pizza-${pizza.id}-price`}
           >
             {pizza.price} €
           </div>

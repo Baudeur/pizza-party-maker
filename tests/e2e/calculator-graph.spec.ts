@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { setPeople } from "./test-utils";
+import { scrollToBottom, setPeople } from "./test-utils";
 
 test("Graphs are visible", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
@@ -28,6 +28,7 @@ test("Display all people in proportions", async ({ page }) => {
   const graphExpand = page.getByTestId("graph-expand");
   await graphExpand.click();
   await setPeople(page, 1, 3, 4, 2);
+  await scrollToBottom(page);
   const peopleGraph = page.getByTestId("people-graph");
   await expect(peopleGraph).toHaveScreenshot("graph-all.png");
 });
@@ -37,6 +38,7 @@ test("Don't display missing people", async ({ page }) => {
   const graphExpand = page.getByTestId("graph-expand");
   await graphExpand.click();
   await setPeople(page, 2, 0, 5, 0);
+  await scrollToBottom(page);
   const peopleGraph = page.getByTestId("people-graph");
   await expect(peopleGraph).toHaveScreenshot("graph-missing.png");
 });
@@ -46,6 +48,7 @@ test("Don't display icon if too small", async ({ page }) => {
   const graphExpand = page.getByTestId("graph-expand");
   await graphExpand.click();
   await setPeople(page, 1, 3, 5, 5);
+  await scrollToBottom(page);
   const peopleGraph = page.getByTestId("people-graph");
   await expect(peopleGraph).toHaveScreenshot("graph-no-icon.png");
 });

@@ -86,7 +86,7 @@ export function IntegerInput({
             color="red"
             onClick={() => (value !== min ? setValue(value - 1) : onDelete())}
             tabIndex={-1}
-            testId={testId && `${testId}-minus`}
+            testId={testId && `${testId}-${value !== 0 ? "minus" : "delete"}`}
             title={
               value !== min
                 ? t("minus-of", { element: title })

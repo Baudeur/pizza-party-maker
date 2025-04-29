@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { Accordeon } from "../utils/Accordeon";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
+import { formatNameForTestId } from "../../services/utils";
 
 export function ManagePizzeriaOverlayContent() {
   const { t } = useTranslation();
@@ -81,6 +82,7 @@ export function ManagePizzeriaOverlayContent() {
           expand: (
             <PizzeriaDisplayer
               pizzeria={p}
+              testId={formatNameForTestId(p.name)}
               className="border-none max-h-[14.25rem] "
             />
           ),
@@ -88,13 +90,4 @@ export function ManagePizzeriaOverlayContent() {
       />
     </div>
   );
-}
-
-function formatNameForTestId(name: string) {
-  const regexArray = name
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .match(/([a-z]|\d|-)*/g);
-  if (regexArray) return regexArray.join("");
-  return "";
 }

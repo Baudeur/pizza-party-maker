@@ -30,7 +30,7 @@ export function PizzaForm() {
             className={"rounded-lg w-full mt-4"}
             color={"green"}
             onClick={handleSubmit}
-            testId="pizza-form-submit"
+            testId="add-pizza-button"
             title={t("add-pizza")}
             disabled={pizzeriaState === "loaded"}
           >
@@ -44,7 +44,7 @@ export function PizzaForm() {
           className={"rounded-lg w-full"}
           color={"green"}
           onClick={handleSubmit}
-          testId="pizza-form-submit"
+          testId="add-pizza-button"
           title={t("add-pizza")}
           disabled={pizzeriaState === "loaded"}
         >

@@ -17,7 +17,12 @@
 
     "pizza-form-placeholder": "4 Cheese",
 
-    
+    "alt-pizza-icon": "Pizza icon",
+    "alt-cash-icon": "Cash icon",
+    "alt-diet-icon": "{{color}} {{diet}} icon",
+    "alt-diet-color-bw": "Black and white",
+    "alt-diet-color-color": "Coloured",
+    "alt-loading-spinner": "Loading spinner",
     
     "pizza-flag-perfect": "Perfect",
     "pizza-flag-good": "Good",

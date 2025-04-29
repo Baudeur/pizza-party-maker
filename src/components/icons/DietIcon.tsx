@@ -40,9 +40,11 @@ export function DietIcon({
       <img
         src={iconName}
         className={`size-full ${color === "BW" && "filter grayscale"}`}
-        alt={`${color === "BW" ? "grayed out" : "coloured"} ${map.get(
-          type
-        )} icon`}
+        alt={t("alt-diet-icon", {
+          color:
+            color === "BW" ? t("alt-diet-color-bw") : t("alt-diet-color-color"),
+          diet: t(map.get(type) ?? ""),
+        })}
         data-testid={testId && `${testId}-${type}-diet-icon`}
         title={t(map.get(type) ?? "")}
       />

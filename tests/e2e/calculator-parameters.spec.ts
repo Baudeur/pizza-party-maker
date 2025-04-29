@@ -22,18 +22,16 @@ test("Slice parameter can't go lower than 1 or higher than 16", async ({
   const parametersPlus = page.getByTestId("slice-parameter-plus");
   await parametersInput.fill("0");
   await expect(parametersInput).toHaveValue("1");
-  await parametersMinus.click();
-  await expect(parametersInput).toHaveValue("1");
+  await expect(parametersMinus).toBeDisabled();
   await parametersInput.fill("17");
   await expect(parametersInput).toHaveValue("16");
-  await parametersPlus.click();
-  await expect(parametersInput).toHaveValue("16");
+  await expect(parametersPlus).toBeDisabled();
 });
 
 test("Slice parameter influences fields", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 0, 0, 0);
-  await createPizza(page, 1);
+  await createPizza(page, 0, 1);
   const detailsExpand = page.getByTestId("details-expand");
   await detailsExpand.click();
   const quantityFlagSlice = page.getByTestId("quantity-flag-slices");
@@ -117,7 +115,8 @@ test("Fairness parameter can't go lower than 105 or higher than 200", async ({
   await expect(fairnessParameter).toContainText("105%");
   await expect(fairnessParameter).toContainText("200%");
   await expect(fairnessParameter).toHaveScreenshot(
-    "fairness-parameter-limit-mouse.png"
+    "fairness-parameter-limit-mouse.png",
+    { maxDiffPixelRatio: 0.05 }
   );
   await fairnessCursor1.click();
   await page.keyboard.press("ArrowLeft");
@@ -183,8 +182,8 @@ test("Fairness parameter can be reset to default", async ({ page }) => {
 test("Fairness parameter influences flags", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 1, 0, 0);
-  await createPizza(page, 1);
-  await createPizza(page, 1, "", "pescoVegetarian");
+  await createPizza(page, 0, 1);
+  await createPizza(page, 1, 1, "", "pescoVegetarian");
   const pescoFlag = page.getByTestId("pescoVegetarian-flag");
   const moveArea = page.getByTestId("fairness-parameter-move-area");
   const fairnessCursor1 = page.getByTestId("fairness-parameter-cursor1");

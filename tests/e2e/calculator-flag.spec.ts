@@ -27,8 +27,8 @@ test("All flags are present and contains image", async ({ page }) => {
     vegetarianFlag.getByAltText("coloured vegetarian icon")
   ).toBeVisible();
   await expect(veganFlag.getByAltText("coloured vegan icon")).toBeVisible();
-  await expect(priceFlag.getByAltText("Price")).toBeVisible();
-  await expect(quantityFlag.getByAltText("Quantity")).toBeVisible();
+  await expect(priceFlag.getByAltText("Cash icon")).toBeVisible();
+  await expect(quantityFlag.getByAltText("Pizza icon")).toBeVisible();
 });
 
 test("When a diet is not present, the flag presents N/A", async ({ page }) => {
@@ -41,16 +41,16 @@ test("When a diet can't eat, the flag presents can't eat", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 0, 1, 0, 0);
   const pescoVegetarianFlag = page.getByTestId("pescoVegetarian-flag");
-  await expect(pescoVegetarianFlag).toHaveText("Can't eat💀");
+  await expect(pescoVegetarianFlag).toHaveText("Nothing💀");
 });
 
 test("Flags can have 4 quality states", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 2, 2, 2, 2);
-  await createPizza(page, 1);
-  await createPizza(page, 2, "", "pescoVegetarian");
-  await createPizza(page, 3, "", "vegetarian");
-  await createPizza(page, 1, "", "vegan");
+  await createPizza(page, 0, 1);
+  await createPizza(page, 1, 2, "", "pescoVegetarian");
+  await createPizza(page, 2, 3, "", "vegetarian");
+  await createPizza(page, 3, 1, "", "vegan");
   const normalFlag = page.getByTestId("normal-flag");
   const pescoVegetarianFlag = page.getByTestId("pescoVegetarian-flag");
   const vegetarianFlag = page.getByTestId("vegetarian-flag");
@@ -64,8 +64,8 @@ test("Flags can have 4 quality states", async ({ page }) => {
 test("Price flag is correct", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 1, 1, 1);
-  await createPizza(page, 1, "", "normal", "14");
-  await createPizza(page, 1, "", "vegetarian", "11");
+  await createPizza(page, 0, 1, "", "normal", "14");
+  await createPizza(page, 1, 1, "", "vegetarian", "11");
   const priceFlag = page.getByTestId("price-flag-per-person");
   const priceFlagTotal = page.getByTestId("price-flag-total");
   await expect(priceFlag).toHaveText("6.25 € / pers");
@@ -75,8 +75,8 @@ test("Price flag is correct", async ({ page }) => {
 test("Quantity flag is correct", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 1, 1, 1);
-  await createPizza(page, 1, "", "normal", "14");
-  await createPizza(page, 2, "", "vegetarian", "11");
+  await createPizza(page, 0, 1, "", "normal", "14");
+  await createPizza(page, 1, 2, "", "vegetarian", "11");
   const quantityFlagSlice = page.getByTestId("quantity-flag-slices");
   const quantityFlagPizza = page.getByTestId("quantity-flag-pizzas");
   await expect(quantityFlagSlice).toHaveText("6 slices");
