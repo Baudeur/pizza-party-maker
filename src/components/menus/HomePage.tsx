@@ -29,8 +29,16 @@ export function HomePage() {
             </div>
           </div>
         </Desktop>
-        <div className="flex flex-col items-stretch w-full relative">
-          <div className={`flex gap-8 ${!isDesktop && "flex-col mt-8"} mb-8`}>
+        <div
+          className={`flex flex-col items-stretch w-full relative ${
+            !isDesktop && "h-[100dvh]"
+          }`}
+        >
+          <div
+            className={`flex gap-8 ${
+              !isDesktop && "flex-col mt-8 h-full"
+            } mb-8`}
+          >
             <People />
             <Pizzas />
           </div>
