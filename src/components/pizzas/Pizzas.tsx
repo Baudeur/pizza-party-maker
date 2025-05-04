@@ -22,9 +22,10 @@ export function Pizzas() {
       className={`${
         isDesktop
           ? "h-[32rem]"
-          : "rounded-none border-x-0 overflow-y-hidden overflow-x-hidden h-[70ldh]"
+          : "rounded-none border-none overflow-y-hidden overflow-x-hidden"
       } text-xl`}
       testId="pizza-panel"
+      fullHeight={!isDesktop}
     >
       <Desktop>
         <PizzeriaHotBar />
@@ -79,30 +80,32 @@ export function Pizzas() {
         </div>
       </Desktop>
       <Mobile>
-        <div className="relative">
-          <div className="absolute top-0 w-full z-[11] bg-gradient-to-b from-amber-100 from-85% to-transparent">
+        <div className="flex flex-col h-full overflow-hidden">
+          <div className="w-full z-[11]">
             <PizzeriaHotBar />
           </div>
           <div
-            className={`flex flex-col gap-5 overflow-y-auto overflow-x-hidden pb-14 pt-12 ${
-              pizzeriaState === "nothing"
-                ? "max-h-[21.50rem]"
-                : "max-h-[19.50rem] pt-20"
-            }`}
+            className={`flex flex-col overflow-y-auto overflow-x-hidden h-fit`}
           >
-            {pizzas.length > 0 ? (
-              <>
-                {pizzas.map((pizzaElem) => {
-                  return (
-                    <PizzaLineWrapper key={pizzaElem.id} pizza={pizzaElem} />
-                  );
-                })}
-              </>
-            ) : (
-              <PizzaPlaceholder />
-            )}
+            <div className="sticky top-0 w-full z-10 min-h-2 bg-gradient-to-b from-amber-100 from-0% to-transparent" />
+
+            <div className="flex flex-col gap-5">
+              {pizzas.length > 0 ? (
+                <>
+                  {pizzas.map((pizzaElem) => {
+                    return (
+                      <PizzaLineWrapper key={pizzaElem.id} pizza={pizzaElem} />
+                    );
+                  })}
+                </>
+              ) : (
+                <PizzaPlaceholder />
+              )}
+            </div>
+            <div className="sticky mt-auto bottom-0 w-full z-10 min-h-2 bg-gradient-to-t from-amber-100 from-0% to-transparent" />
           </div>
-          <div className="absolute w-full z-10 bottom-0 pt-2 bg-gradient-to-t from-amber-100 from-85% to-transparent">
+
+          <div className="w-full z-10 pb-2">
             <PizzaForm />
           </div>
         </div>

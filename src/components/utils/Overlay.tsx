@@ -9,6 +9,8 @@ import { Container } from "../utils/Container";
 import { Button } from "./Button";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
 
 type Overlay = {
   close: () => void;
@@ -26,6 +28,7 @@ export function Overlay({
 }: PropsWithChildren<Overlay>) {
   const [showDelayed, setShowDelayed] = useState(false);
   const { t } = useTranslation();
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   useEffect(() => {
     setShowDelayed(true);
   }, []);
@@ -69,11 +72,13 @@ export function Overlay({
           }}
         >
           <Container
-            className="h-fit relative max-w-[90vw]"
+            className={`h-fit relative max-w-[90vw] ${
+              !isDesktop && "w-[90vw]"
+            }`}
             testId={`${testId}-container`}
             header={
               <div className="flex mb-4">
-                <div className="bg-amber-400 rounded-tl-xl text-xl px-2 font-bold text-center w-full">
+                <div className="bg-amber-400 rounded-tl-xl text-xl pr-2 font-bold -ml-1 -mt-1 pt-1 pl-3 text-center w-full">
                   {title}
                 </div>
                 <Button

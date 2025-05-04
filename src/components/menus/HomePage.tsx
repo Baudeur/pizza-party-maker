@@ -1,6 +1,6 @@
 import { useMediaQuery } from "react-responsive";
-import { desktopSize } from "../../services/constants";
-import { Desktop } from "../utils/ReactiveComponents";
+import { desktopSize, smallMobile } from "../../services/constants";
+import { Desktop, Mobile } from "../utils/ReactiveComponents";
 import title from "../../assets/Title.png";
 import { Infos } from "../infos/Infos";
 import { People } from "../people/People";
@@ -11,17 +11,27 @@ import { useLayoutEffect } from "react";
 
 export function HomePage() {
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
+  const isSmallMobile =
+    !isDesktop && useMediaQuery({ maxDeviceHeight: smallMobile });
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   });
   return (
     <div
-      className={`flex flex-col justify-between h-full ${
-        !isDesktop && "w-[100vw]"
+      className={`flex flex-col justify-between  ${
+        isDesktop ? "h-full" : "h-[calc(100dvh-3rem)] w-[100vw]"
       }`}
     >
-      <div className="flex flex-col items-center">
+      <div
+        className={`flex flex-col items-center ${
+          isDesktop
+            ? "h-full"
+            : isSmallMobile
+            ? "h-[38rem]"
+            : "h-full overflow-hidden"
+        }`}
+      >
         <Desktop>
           <div className="relative w-full flex justify-center">
             <img
@@ -34,25 +44,29 @@ export function HomePage() {
             </div>
           </div>
         </Desktop>
-        <div
-          className={`flex flex-col items-stretch w-full relative ${
-            !isDesktop && "h-[100dvh]"
-          }`}
-        >
+        <div className={`flex flex-col items-stretch w-full relative h-full`}>
           <div
-            className={`flex gap-8 ${
-              !isDesktop && "flex-col mt-8 h-full"
-            } mb-8`}
+            className={`flex ${
+              isDesktop ? "mb-8 gap-8" : "flex-col bg-amber-100 h-full"
+            }`}
           >
             <People />
+            <Mobile>
+              <div className="bg-amber-400 h-[2px]"></div>
+            </Mobile>
             <Pizzas />
           </div>
-          <Calculator />
+          <Desktop>
+            <Calculator />
+          </Desktop>
         </div>
       </div>
       <Desktop>
         <Footer />
       </Desktop>
+      <Mobile>
+        <Calculator />
+      </Mobile>
     </div>
   );
 }

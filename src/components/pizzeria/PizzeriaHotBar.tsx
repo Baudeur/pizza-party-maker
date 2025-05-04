@@ -52,7 +52,7 @@ export function PizzeriaHotBar() {
     dispatch(unloadPizzeria());
   }, [dispatch]);
   return (
-    <div className={`flex flex-col mb-2 -mt-1`}>
+    <div className={`flex flex-col mb-2 ${isDesktop && "-mt-1"}`}>
       <div
         className={`flex w-full gap-2 ${pizzeriaState !== "nothing" && "mb-1"}`}
       >

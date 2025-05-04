@@ -35,6 +35,7 @@ export function ManagePizzeriaOverlayContent() {
     >
       {pizzerias.length === 0 && <div>{t("no-pizzerias")}</div>}
       <Accordeon
+        className="w-full"
         height={"15.25rem"}
         elements={pizzerias.map((p) => ({
           expandable: p,
