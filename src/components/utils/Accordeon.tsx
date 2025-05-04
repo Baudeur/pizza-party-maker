@@ -10,13 +10,14 @@ type AccordeonProps = {
     header: ReactNode;
     expand: ReactNode;
   }[];
+  className?: string;
 };
 
-export function Accordeon({ elements, height }: AccordeonProps) {
+export function Accordeon({ elements, height, className }: AccordeonProps) {
   const [extended, setExtended] = useState(-1);
   const { t } = useTranslation();
   return (
-    <div>
+    <div className={className}>
       {elements.map(({ expandable, header, expand }, index) => (
         <div
           id={expandable.id}

@@ -6,7 +6,6 @@ import {
   Minus,
   Pencil,
   Plus,
-  Save,
   Settings,
   Store,
   Trash2,
@@ -19,8 +18,13 @@ import title from "../../assets/Title.png";
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { TFunction } from "i18next";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
 
-const components = (t: TFunction<"translation", undefined>) => ({
+const components = (
+  t: TFunction<"translation", undefined>,
+  isDesktop: boolean
+) => ({
   pink: <strong className="text-pink-600" />,
   green: <strong className="text-green-600" />,
   sky: <strong className="text-sky-600" />,
@@ -144,12 +148,23 @@ const components = (t: TFunction<"translation", undefined>) => ({
   saveButton: (
     <span className="inline-block translate-y-1">
       <Button
-        color="green"
+        color="yellow"
         onClick={() => {}}
-        className="w-16 rounded-lg"
-        title={t("save")}
+        className={`rounded-lg px-2`}
+        title={t("save-as-pizzeria")}
       >
-        <Save size={20} strokeWidth={2} />
+        <div className="flex items-center gap-2">
+          <SaveAsIcon
+            size={20}
+            strokeWidth={2}
+            backgroundColor="bg-amber-300"
+          />
+          {isDesktop ? (
+            <span>{t("save-as-pizzeria")}</span>
+          ) : (
+            <span>{t("save")}</span>
+          )}
+        </div>
       </Button>
     </span>
   ),
@@ -168,12 +183,15 @@ const components = (t: TFunction<"translation", undefined>) => ({
   pizzeriasButton: (
     <span className="inline-block translate-y-1">
       <Button
-        color="green"
+        color="yellow"
         onClick={() => {}}
-        className="w-16 rounded-lg"
+        className={`rounded-lg px-2`}
         title={t("manage-pizzeria-title")}
       >
-        <Store size={20} strokeWidth={2} />
+        <div className="flex items-center gap-2">
+          <Store size={20} strokeWidth={2} />
+          {isDesktop && <span>{t("manage-pizzeria-button")}</span>}
+        </div>
       </Button>
     </span>
   ),
@@ -218,9 +236,22 @@ const components = (t: TFunction<"translation", undefined>) => ({
     <Settings size={20} strokeWidth={2} color="gray" className="inline-block" />
   ),
   linkToDetailsHelp: <Link to={"/help-details"} />,
+  suggesterButton: (
+    <span className="inline-block">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="font-bold rounded-lg px-2"
+        title={t("suggester-open-button")}
+      >
+        {t("suggester-open-button")}
+      </Button>
+    </span>
+  ),
 });
 
 export function CompTrans({ i18nKey }: { i18nKey: string }) {
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   const { t } = useTranslation();
-  return <Trans i18nKey={i18nKey} components={components(t)} />;
+  return <Trans i18nKey={i18nKey} components={components(t, isDesktop)} />;
 }

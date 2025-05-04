@@ -5,14 +5,11 @@ import { FlagState, PizzaFlag } from "../utils/PizzaFlag";
 
 import priceIcon from "../../assets/Cash.png";
 import sliceIcon from "../../assets/Pizza.png";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { CompTrans } from "../utils/TranslationComponents";
-import { Button } from "../utils/Button";
-import { Save, Store } from "lucide-react";
-import { SaveAsIcon } from "../icons/SaveAsIcon";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
-import { Mobile } from "../utils/ReactiveComponents";
+import { EitherDesktopOrMobile, Mobile } from "../utils/ReactiveComponents";
 
 const flagStates: FlagState[] = [
   "perfect",
@@ -128,7 +125,9 @@ export function InfoContent() {
             <CompTrans i18nKey="info-people-l4" />
           </p>
 
-          <p className="mt-2">{t("info-people-p3")}</p>
+          <p className="mt-2">
+            {isDesktop ? t("info-people-p3") : t("info-people-p3-mobile")}
+          </p>
         </div>
 
         {/* ########## The Pizza Panel ########## */}
@@ -159,69 +158,10 @@ export function InfoContent() {
             <CompTrans i18nKey="info-pizza-p6" />
           </p>
           <p className="mt-4">
-            <Trans
-              i18nKey="info-pizzeria-p1"
-              components={{
-                saveButton: (
-                  <span className="inline-block translate-y-1">
-                    <Button
-                      onClick={() => {}}
-                      color="green"
-                      className="w-32 border-2 border-b-0 border-green-600 rounded-t-xl"
-                      testId="pizza-panel-manage-button"
-                      title={t("save")}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Save size={20} strokeWidth={2} />
-                        <span>{t("save")}</span>
-                      </div>
-                    </Button>
-                  </span>
-                ),
-                saveAsButton: (
-                  <span className="inline-block translate-y-1">
-                    <Button
-                      onClick={() => {}}
-                      color="green"
-                      className="w-40 border-2 border-b-0 border-green-600 rounded-t-xl"
-                      title={t("save-as")}
-                    >
-                      <div className="flex items-center gap-2">
-                        <SaveAsIcon
-                          size={20}
-                          strokeWidth={2}
-                          backgroundColor="bg-green-500"
-                        />
-                        <span>{t("save-as")}</span>
-                      </div>
-                    </Button>
-                  </span>
-                ),
-              }}
-            />
+            <CompTrans i18nKey="info-pizzeria-p1" />
           </p>
           <p>
-            <Trans
-              i18nKey="info-pizzeria-p2"
-              components={{
-                pizzeriasButton: (
-                  <span className="inline-block translate-y-1">
-                    <Button
-                      onClick={() => {}}
-                      color="green"
-                      className="w-32 border-2 border-b-0 border-green-600 rounded-t-xl"
-                      testId="pizza-panel-manage-button"
-                      title={t("manage-pizzeria-button")}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Store size={20} strokeWidth={2} />
-                        <span>{t("manage-pizzeria-button")}</span>
-                      </div>
-                    </Button>
-                  </span>
-                ),
-              }}
-            />
+            <CompTrans i18nKey="info-pizzeria-p2" />
           </p>
         </div>
 
@@ -232,44 +172,100 @@ export function InfoContent() {
             {t("info-result-title")}
           </p>
           <p className="mb-2">{t("info-result-p1")}</p>
+          {!isDesktop && <p>{t("info-result-expandable-mobile")}</p>}
           <p className="mb-2">{t("info-result-p2")}</p>
-          <div className="w-64 flex mb-2">
-            <div className="text-3xl font-bold mr-2 w-full">
-              <div className="mb-2 flex justify-center">
-                <img
-                  src={priceIcon}
-                  className="size-8"
-                  alt={t("alt-cash-icon")}
-                />
+          <EitherDesktopOrMobile>
+            <div className="w-64 flex mb-2">
+              <div className="text-3xl font-bold mr-2 w-full">
+                <div className="mb-2 flex justify-center">
+                  <img
+                    src={priceIcon}
+                    className="size-8"
+                    alt={t("alt-cash-icon")}
+                  />
+                </div>
+                <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
+                  <span className="text-lg">
+                    4 € / {t("info-display-person")}
+                  </span>
+                  <span className="text-lg">
+                    12 € {t("info-display-total")}
+                  </span>
+                </div>
               </div>
-              <div className="bg-lime-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
-                <span className="text-lg">
-                  4 € / {t("info-display-person")}
-                </span>
-                <span className="text-lg">12 € {t("info-display-total")}</span>
+              <div className="text-3xl font-bold w-full">
+                <div className="mb-2 flex justify-center">
+                  <img
+                    src={sliceIcon}
+                    className="size-8"
+                    alt={t("alt-pizza-icon")}
+                  />
+                </div>
+                <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
+                  <span className="text-lg">4 {t("info-display-slices")}</span>
+                  <span className="text-lg">
+                    ~1/2 {t("info-display-pizzas")}
+                  </span>
+                </div>
               </div>
             </div>
-            <div className="text-3xl font-bold w-full">
-              <div className="mb-2 flex justify-center">
+            <div className="flex gap-2 w-full">
+              <div
+                className={`bg-amber-400 rounded-lg w-1/2 flex justify-between px-2 font-bold items-center h-14`}
+              >
                 <img
                   src={sliceIcon}
-                  className="size-8"
+                  className="size-6"
                   alt={t("alt-pizza-icon")}
+                  data-testid="quantity-flag-icon"
                 />
+                <div className="flex flex-col w-full">
+                  <span
+                    className="text-lg text-right"
+                    data-testid="quantity-flag-pizzas"
+                  >
+                    1/2{" "}
+                    <span className="text-sm">{t("info-display-pizzas")}</span>
+                  </span>
+
+                  <span
+                    className="text-lg text-right"
+                    data-testid="quantity-flag-pizzas"
+                  >
+                    4{" "}
+                    <span className="text-sm">{t("info-display-slices")}</span>
+                  </span>
+                </div>
               </div>
-              <div className="bg-amber-400 h-14 rounded-lg w-full min-w-24 flex flex-col items-center justify-center">
-                <span className="text-lg">4 {t("info-display-slices")}</span>
-                <span className="text-lg">~1/2 {t("info-display-pizzas")}</span>
+              <div
+                className={`bg-lime-400 rounded-lg w-1/2 flex justify-between px-2 font-bold items-center h-14`}
+              >
+                <img
+                  src={priceIcon}
+                  className="size-6"
+                  alt={t("alt-cash-icon")}
+                  data-testid="price-flag-icon"
+                />
+                <div className="flex flex-col w-full">
+                  <span className="text-base text-right w-full">
+                    28 € {t("info-display-total")}
+                  </span>
+                  <div className="flex justify-between w-full">
+                    <span className="text-base text-right w-full">
+                      14 € / {t("info-display-person")}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </EitherDesktopOrMobile>
 
           <hr className="my-2 border-black w-[90%] mx-[5%]" />
 
           <p className="mb-2">{t("info-result-p4")}</p>
           <div
             className={`flex items-center ${
-              isDesktop ? "w-[500px]" : "flex-col"
+              isDesktop ? "w-[500px]" : "flex-col mb-8"
             }`}
           >
             <div
@@ -310,6 +306,7 @@ export function InfoContent() {
           <p>{t("info-suggester-p2")}</p>
           <p>{t("info-suggester-p3")}</p>
           <p>{t("info-suggester-p4")}</p>
+          <CompTrans i18nKey="info-suggester-p5" />
         </div>
 
         {/* ########## Thanks ########## */}

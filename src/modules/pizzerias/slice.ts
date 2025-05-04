@@ -1,6 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Pizza } from "../pizzas/slice";
+import {
+  createSlice,
+  PayloadAction,
+  ThunkAction,
+  UnknownAction,
+} from "@reduxjs/toolkit";
+import { Pizza, setPizzas } from "../pizzas/slice";
 import { v4 as uuidv4 } from "uuid";
+import { RootState } from "../../store";
 
 export type PizzeriaWithoutID = {
   name: string;
@@ -41,6 +47,7 @@ const pizzerias = createSlice({
         pizzas: action.payload.pizzas.map((pizza) => ({
           ...pizza,
           quantity: 0,
+          editable: false,
         })),
       };
       return {
@@ -70,6 +77,7 @@ const pizzerias = createSlice({
         pizzas: action.payload.pizzas.map((pizza) => ({
           ...pizza,
           quantity: 0,
+          editable: false,
         })),
       };
       return {
@@ -114,6 +122,64 @@ const pizzerias = createSlice({
   },
 });
 
+export function addPizzeria(
+  pizzeria: PizzeriaWithoutID
+): ThunkAction<void, void, unknown, UnknownAction> {
+  return (dispatch) => {
+    dispatch(pizzerias.actions.addPizzeria(pizzeria));
+    dispatch(
+      setPizzas(pizzeria.pizzas.map((p) => ({ ...p, editable: false })))
+    );
+  };
+}
+
+export function removePizzeria(
+  id: string
+): ThunkAction<void, RootState, unknown, UnknownAction> {
+  return (dispatch, getState) => {
+    const loaded = getState().pizzerias.loaded;
+    dispatch(pizzerias.actions.removePizzeria(id));
+    if (loaded === id) {
+      dispatch(setPizzas([]));
+    }
+  };
+}
+
+export function modifyPizzeria(
+  pizzeria: Pizzeria
+): ThunkAction<void, RootState, unknown, UnknownAction> {
+  return (dispatch) => {
+    dispatch(pizzerias.actions.modifyPizzeria(pizzeria));
+    dispatch(
+      setPizzas(pizzeria.pizzas.map((p) => ({ ...p, editable: false })))
+    );
+  };
+}
+
+export function loadPizzeria(
+  id: string
+): ThunkAction<void, RootState, unknown, UnknownAction> {
+  return (dispatch, getState) => {
+    const pizzeriaToLoad = getState().pizzerias.pizzerias.find(
+      (pizzeria) => pizzeria.id === id
+    );
+    dispatch(pizzerias.actions.loadPizzeria(id));
+    dispatch(setPizzas(pizzeriaToLoad?.pizzas ?? []));
+  };
+}
+
+export function unloadPizzeria(): ThunkAction<
+  void,
+  RootState,
+  unknown,
+  UnknownAction
+> {
+  return (dispatch) => {
+    dispatch(pizzerias.actions.unloadPizzeria());
+    dispatch(setPizzas([]));
+  };
+}
+
 function storeState(state: Pizzeria[]) {
   const toStore: StoredPizzerias = {
     version: 1,
@@ -124,12 +190,4 @@ function storeState(state: Pizzeria[]) {
 }
 
 export const pizzeriasReducer = pizzerias.reducer;
-export const {
-  addPizzeria,
-  removePizzeria,
-  modifyPizzeria,
-  setPizzerias,
-  loadPizzeria,
-  unloadPizzeria,
-  editPizzeria,
-} = pizzerias.actions;
+export const { setPizzerias, editPizzeria } = pizzerias.actions;

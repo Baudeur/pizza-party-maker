@@ -70,7 +70,7 @@ export function Swipable({
       onPointerCancel={handleMouseUp}
       className={`${className} relative float-left ${
         vertical ? "touch-none" : "touch-pan-y"
-      } z-10 left-0 w-full h-full`}
+      } left-0 w-full h-full`}
     >
       {children}
     </div>

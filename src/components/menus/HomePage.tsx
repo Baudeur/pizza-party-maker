@@ -7,9 +7,14 @@ import { People } from "../people/People";
 import { Pizzas } from "../pizzas/Pizzas";
 import { Calculator } from "../calculator/Calculator";
 import { Footer } from "./Footer";
+import { useLayoutEffect } from "react";
 
 export function HomePage() {
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  });
   return (
     <div
       className={`flex flex-col justify-between h-full ${

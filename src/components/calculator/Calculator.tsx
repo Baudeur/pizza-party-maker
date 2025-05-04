@@ -90,7 +90,7 @@ export function Calculator() {
             />
           </Expand>
         </Container>
-        <div className="sticky bottom-0 w-full z-10 shadow-[0_-10px_15px_-3px_rgb(0,0,0,0.1),0_4px_6px_-4px_rgb(0,0,0,0.1)]">
+        <div className="sticky bottom-0 w-full z-[15] shadow-[0_-10px_15px_-3px_rgb(0,0,0,0.1),0_4px_6px_-4px_rgb(0,0,0,0.1)]">
           <Swipable
             onSwipeFinish={() => {
               setExtendValue([0, 0]);

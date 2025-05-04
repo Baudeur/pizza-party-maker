@@ -3,7 +3,7 @@ import { pizzasSelector } from "../../modules/pizzas/selector";
 import { PizzaForm } from "./PizzaForm";
 import { Container } from "../utils/Container";
 import { PizzaLineWrapper } from "./PizzaLineWrapper";
-import { PizzeriaHotBar } from "./PizzeriaHotBar";
+import { PizzeriaHotBar } from "../pizzeria/PizzeriaHotBar";
 import { pizzeriaStateSelector } from "../../modules/pizzerias/selector";
 import { useTranslation } from "react-i18next";
 import { Desktop, Mobile } from "../utils/ReactiveComponents";
@@ -79,27 +79,30 @@ export function Pizzas() {
         </div>
       </Desktop>
       <Mobile>
-        <PizzeriaHotBar />
-
-        <div
-          className={`flex flex-col gap-5 overflow-y-auto ${
-            pizzeriaState === "nothing"
-              ? "max-h-[21.50rem]"
-              : "max-h-[19.50rem]"
-          }`}
-        >
-          {pizzas.length > 0 ? (
-            <>
-              {pizzas.map((pizzaElem) => {
-                return (
-                  <PizzaLineWrapper key={pizzaElem.id} pizza={pizzaElem} />
-                );
-              })}
-            </>
-          ) : (
-            <PizzaPlaceholder />
-          )}
-          <div className="w-full">
+        <div className="relative">
+          <div className="absolute top-0 w-full z-[11] bg-gradient-to-b from-amber-100 from-85% to-transparent">
+            <PizzeriaHotBar />
+          </div>
+          <div
+            className={`flex flex-col gap-5 overflow-y-auto overflow-x-hidden pb-14 pt-12 ${
+              pizzeriaState === "nothing"
+                ? "max-h-[21.50rem]"
+                : "max-h-[19.50rem] pt-20"
+            }`}
+          >
+            {pizzas.length > 0 ? (
+              <>
+                {pizzas.map((pizzaElem) => {
+                  return (
+                    <PizzaLineWrapper key={pizzaElem.id} pizza={pizzaElem} />
+                  );
+                })}
+              </>
+            ) : (
+              <PizzaPlaceholder />
+            )}
+          </div>
+          <div className="absolute w-full z-10 bottom-0 pt-2 bg-gradient-to-t from-amber-100 from-85% to-transparent">
             <PizzaForm />
           </div>
         </div>

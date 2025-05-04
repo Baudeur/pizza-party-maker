@@ -184,7 +184,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
               <IntegerInput
                 value={pizza.quantity}
                 setValue={handleQuantityChange}
-                className="z-[5] min-w-24"
+                className="min-w-24"
                 rounded={false}
                 testId={`${pizza.id}-pizza-display-quantity`}
                 title={pizza.name}

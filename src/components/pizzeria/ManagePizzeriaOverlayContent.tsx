@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { pizzeriasSelector } from "../../modules/pizzerias/selector";
 import { ArrowDownToLine, Trash2 } from "lucide-react";
 import { Button } from "../utils/Button";
@@ -7,7 +7,6 @@ import {
   Pizzeria,
   removePizzeria,
 } from "../../modules/pizzerias/slice";
-import { setPizzas } from "../../modules/pizzas/slice";
 import { useContext } from "react";
 import { PizzeriaDisplayer } from "./PizzeriaDisplayer";
 import { CloseContext } from "../utils/Overlay";
@@ -16,17 +15,17 @@ import { Accordeon } from "../utils/Accordeon";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { formatNameForTestId } from "../../services/utils";
+import { useAppDispatch } from "../../hooks";
 
 export function ManagePizzeriaOverlayContent() {
   const { t } = useTranslation();
   const pizzerias = useSelector(pizzeriasSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const close = useContext(CloseContext);
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   const handleLoad = (pizzeria: Pizzeria) => {
     dispatch(loadPizzeria(pizzeria.id));
-    dispatch(setPizzas(pizzeria.pizzas));
     close();
   };
 

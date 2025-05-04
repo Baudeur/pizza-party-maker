@@ -51,12 +51,11 @@
     
     "details-and-graphs": "Détails and graphiques",
     
-    "suggester-open-button": "Suggérer des pizzas",
     "parameters-title": "Paramètres",
     "parameters-slices": "Parts par pizzas",
     "parameters-fairness": "Équité",
     "parameters-restore-default": "Réstorer les paramètres par défaut",
-
+    
     "help": "Aide",    
     "created-by": "Créé par",
     "cancel": "Annuler",
@@ -78,7 +77,7 @@
     "minus-of": "Retirer un(e) {{element}}",
     "delete-element": "Supprimer {{element}}",
     "expand-element": "Étendre {{element}}",
-
+    
     "pizzeria-name": "Nom de la pizzeria",
     "exit-pizzeria": "Quitter la pizzeria",
     "save-as-pizzeria": "Enregister une pizzeria",
@@ -91,9 +90,10 @@
     "pescoVegetarian-person": "Personne pesco-végétarienne",
     "vegetarian-person": "Personne végétarienne",
     "vegan-person": "Personne vegane",
-
+    
     "language-selection": "Changer la langue",
     
+    "suggester-open-button": "Suggérer des pizzas",
     "suggester-popup-title": "Calculateur de suggestion",
     "suggester-description": "Choisissez les paramètres de la suggestion",
     "suggester-unfairness": "Inéquité :",
@@ -125,22 +125,23 @@
     "info-theorem-p4": "Vous avez peut être déjà compris que, dans ces circonstances, ne serait-ce qu'une seule pizza avec de la viande avantagera les <red>omnivores</red>. Vous avez raison, mais ce problème peut être largement atténué. Ce site vous montrera comment.",
 
     "info-how-title": "Comment ce site va-t-il m'aider à planifier un super soirée pizza ?",
-    "info-how-p1": "Le site est divisé en trois panneaux distincts :",
-    "info-how-l1": "<bold>Le Panneau Invités :</bold> Ce panneau vous permet de renseigner les régimes des vos invités.",
-    "info-how-l2": "<bold>Le Panneau Pizzas :</bold> Ce panneau vous permet de renseigner quelles pizza vous comptez commander.",
-    "info-how-l3": "<bold>Le Panneau Résultats :</bold> Ce panneau vous donnes des retours et des détails sur votre plan et vous aide à décider quoi prendre.",
-    "info-how-p2": "La suite détaille chaque panneau.",
+    "info-how-p1": "Le site est divisé en trois sections distinctes :",
+    "info-how-l1": "<bold>La section Invités :</bold> Cette section vous permet de renseigner les régimes des vos invités.",
+    "info-how-l2": "<bold>La section Pizzas :</bold> Cette section vous permet de renseigner quelles pizza vous comptez commander.",
+    "info-how-l3": "<bold>La section Résultats :</bold> Cette section vous donnes des retours et des détails sur votre plan et vous aide à décider quoi prendre.",
+    "info-how-p2": "La suite détaille chaque section.",
 
-    "info-people-title": "Le Panneau Invités",
-    "info-people-p1": "Dans ce panneau, vous trouverez 4 compteurs qui représentent combien de personnes par régime alimentaire seront présentes à votre soirée.",
+    "info-people-title": "La section Invités",
+    "info-people-p1": "Dans cette section, vous trouverez 4 compteurs qui représentent combien de personnes par régime alimentaire seront présentes à votre soirée.",
     "info-people-l1": "<normalIcon/> Représente les <red>omnivores</red>.",
     "info-people-l2": "<pescoVegetarianIcon/> Représente les <blue>pesco-végétariens</blue>.",
     "info-people-l3": "<vegetarianIcon/> Représente les <green>végétariens</green>.",
     "info-people-l4": "<veganIcon/> Représente les <orange>végans</orange>.",
-    "info-people-p3": "En bas du panneau, le nombre total d'invité est affiché.",
+    "info-people-p3": "En bas de cette section, le nombre total d'invité est affiché.",
+    "info-people-p3-mobile": "En haut à droite de cette section, le nombre total d'invité est affiché.",
 
-    "info-pizza-title": "Le Panneau Pizzas",
-    "info-pizza-p1": "Dans ce panneau vous trouverez un tableau de pizzas décrites par leur nom, quantité, régime et prix. En bas du panneau se trouve un formulaire pour en ajouter.",
+    "info-pizza-title": "La section Pizzas",
+    "info-pizza-p1": "Dans cette section vous trouverez un tableau de pizzas décrites par leur nom, quantité, régime et prix. En bas du tableau se trouve un bouton pour en ajouter.",
     "info-pizza-p2": "Ici vous pouvez renseigner ce que vous comptez commander, étant donné que la quantité peut être de 0, vous pouvez aussi renseigner toutes les pizzas de la carte de votre pizzeria et après seulement choisir celles que vous comptez commander.",
     "info-pizza-p3": "Le régime de la pizza",
     "info-pizza-p4": "Le régime est représenté par un selecteur qui met en couleur tous les régimes pouvant manger votre pizza.",
@@ -150,12 +151,13 @@
     "info-pizza-l4": "<veganIcon /> : <orange>végane</orange>.",
     "info-pizza-p5": "Notez qu'il est donc impossible d'indiquer une pizza comme exclusivement vegan, car celle-ci pourra forcément être mangé par des régimes plus permissisfs.",
     "info-pizza-p6": "Pous pouvez à tout moment modifier ou supprimer une pizza.",
-    "info-pizzeria-p1": "Si vous souhaitez sauvegarder les pizzas que vous avez listées. Vous pouvez le faire grâce aux boutons <saveButton/> ou <saveAsButton/> en haut du panneau.",
+    "info-pizzeria-p1": "Si vous souhaitez sauvegarder les pizzas que vous avez listées. Vous pouvez le faire grâce aux boutons <saveButton/> en haut de la section.",
     "info-pizzeria-p2": "Lors de votre prochaine visite, il vous suffira de charger la pizzeria en cliquant sur <pizzeriasButton/>.",
     
-    "info-result-title": "Le Panneau Résultat",
-    "info-result-p1": "Dans ce panneau, vous trouverez des informations sur votre futur commande.",
-    "info-result-p2": "Le prix et la quantité de pizza par personnes est représenté sur la droite de cette manière :",
+    "info-result-title": "La section Résultat",
+    "info-result-p1": "Dans cette section, vous trouverez des informations sur votre futur commande.",
+    "info-result-expandable-mobile": "Cette section en bas de page peut être agrandie pour voir tous les détails mentionnés ci-dessous.",
+    "info-result-p2": "Le prix et la quantité de pizza par personnes est représenté de cette manière :",
     "info-result-p4": "L'équité pour chaque régime est représenté par des indicateurs et donne une évaluation qualitative comme suit :",
     "info-result-flag1": "Cet indicateur signifie que les <green>végétariens</green> mangent exactement la même quantité que le régime qui mange le plus.",
     "info-result-flag2": "Cet indicateur indique que le régime qui mange le plus mange moins de 125% ce que les <green>végétariens</green> mangent.",
@@ -174,6 +176,7 @@
     "info-suggester-p2": "Le calculateur prend en compte vos besoins, à savoir la quantité de pizza, l'équité souhaitée et la diversité de la commande.",
     "info-suggester-p3": "Le calculateur vous propose alors une solution qui tente de maximiser les pizzas à régime restrictif sans pénaliser les personnes à régime restrictif.",
     "info-suggester-p4": "Vous pouvez ensuite choisir de garder ou de rejeter cette solution.",
+    "info-suggester-p5": "Le calculateur est accessible via le bouton <suggesterButton/> placé sous les indicateurs des régimes.",
 
     "info-thanks-title": "Conclusion",
     "info-thanks-p1": "Je vous remercie d'avoir visité Pizza Party Maker ! Bonne soirée pizza !",
@@ -187,6 +190,7 @@
     "pizzeria-no-pizza": "Il n'y a aucune pizza dans cette pizzeria.",
     "no-pizzerias": "Vous n'avez enregistré aucune pizzeria.",
     "save-pizzeria-as-title": "Enregistrer la pizzeria sous ...",
+    "save-pizzeria-as-title-short": "Enregistrer sous ...",
     "save-pizzeria-name-conflict": "<pizzeriaName/> existe déjà, la remplacer ?",
     "save-pizzeria-content-of": "Le contenu de <pizzeriaName/> :",
     "save-pizzeria-override": "Remplacer",

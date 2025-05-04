@@ -20,7 +20,7 @@ import { desktopSize } from "../../services/constants";
 export function SaveAsPizzeriaOverlayContent() {
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const [name, setName] = useState("");
   const pizzerias = useSelector(pizzeriasSelector);
   const pizzas = useSelector(pizzasSelector);

@@ -11,7 +11,7 @@ export function MobileHeader() {
   const { t } = useTranslation();
   return (
     <>
-      <div className={`sticky top-0 w-full z-20 bg-white shadow-lg h-12`}>
+      <div className={`sticky top-0 w-full z-40 bg-white shadow-lg h-12`}>
         <div className="h-12 flex justify-between items-center">
           {!expanded && (
             <Menu size={30} className="m-2" onClick={() => setExpanded(true)} />
@@ -26,7 +26,7 @@ export function MobileHeader() {
         </div>
       </div>
       <div
-        className={`fixed top-12 transition-all duration-[200ms] bg-white z-20 overflow-hidden ${
+        className={`fixed top-12 transition-all duration-[200ms] bg-white z-40 overflow-hidden ${
           expanded ? "h-[calc(100lvh-48px)]" : "h-[0px]"
         }`}
       >

@@ -21,6 +21,8 @@ initPizzerias();
 
 export type RootState = ReturnType<typeof store.getState>;
 
+export type AppDispatch = typeof store.dispatch;
+
 function initPizzerias() {
   const storedPizzeriasString = localStorage.getItem("pizzerias");
   if (storedPizzeriasString === null) return;
