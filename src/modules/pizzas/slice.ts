@@ -9,6 +9,19 @@ export type PizzaWithoutID = {
   editable: boolean;
 };
 
+export type StoredPizza = {
+  id: number;
+  name: string;
+  price: number;
+  eatenBy: Diet;
+  quantity: number;
+};
+
+export type StoredPizzas = {
+  version: number;
+  pizzas: StoredPizza[];
+};
+
 export type Pizza = {
   id: number;
   name: string;
@@ -44,13 +57,15 @@ const pizzas = createSlice({
       return {
         ...state,
         id: state.id + 1,
-        pizzas: [...state.pizzas, newPizza],
+        pizzas: storeState([...state.pizzas, newPizza]),
       };
     },
     removePizza: (state, action: PayloadAction<number>) => {
       return {
         ...state,
-        pizzas: state.pizzas.filter((pizza) => pizza.id !== action.payload),
+        pizzas: storeState(
+          state.pizzas.filter((pizza) => pizza.id !== action.payload)
+        ),
       };
     },
     modifyPizza: (state, action: PayloadAction<Pizza>) => {
@@ -59,17 +74,17 @@ const pizzas = createSlice({
       );
       return {
         ...state,
-        pizzas: [
+        pizzas: storeState([
           ...state.pizzas.slice(0, pizzaIndex),
           action.payload,
           ...state.pizzas.slice(pizzaIndex + 1),
-        ],
+        ]),
       };
     },
     setPizzas: (state, action: PayloadAction<Pizza[]>) => {
       return {
         ...state,
-        pizzas: action.payload,
+        pizzas: storeState(action.payload),
         id:
           action.payload.reduce(
             (prev, curr) => (curr.id > prev ? curr.id : prev),
@@ -79,6 +94,15 @@ const pizzas = createSlice({
     },
   },
 });
+
+function storeState(state: Pizza[]) {
+  const toStore: StoredPizzas = {
+    version: 1,
+    pizzas: state,
+  };
+  localStorage.setItem("pizzas", JSON.stringify(toStore));
+  return state;
+}
 
 export const pizzasReducer = pizzas.reducer;
 export const { addPizza, removePizza, modifyPizza, setPizzas } = pizzas.actions;
