@@ -20,8 +20,8 @@ export type StoredParams = {
 const initialState: Params = {
   slices: 8,
   thresholds: {
-    okay: 1.25,
-    bad: 1.5,
+    okay: 125,
+    bad: 150,
   },
 };
 

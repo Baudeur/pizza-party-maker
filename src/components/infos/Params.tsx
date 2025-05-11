@@ -15,6 +15,7 @@ import { RotateCcw } from "lucide-react";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { Mobile } from "../utils/ReactiveComponents";
+import { Button } from "../utils/Button";
 
 export function Params() {
   const { t } = useTranslation();
@@ -36,6 +37,23 @@ export function Params() {
         </p>
       </Mobile>
       <div className="px-4">
+        <div className="flex w-full justify-center">
+          <Button
+            onClick={() => {
+              setThresholds(125, 150);
+              dispatch(setSlices(8));
+            }}
+            color="orange"
+            className="h-8 rounded-lg w-40 px-2 mb-4"
+            title={t("parameters-restore-default")}
+            data-testid="params-fairness-reset-button"
+          >
+            <div className="flex items-center justify-center gap-2">
+              <RotateCcw size={20} strokeWidth={2} />
+              <span className="text-xl">{t("parameters-reset")}</span>
+            </div>
+          </Button>
+        </div>
         <div
           className={`flex text-lg items-center mb-4 ${
             !isDesktop && "flex-col items-center w-full"
@@ -54,31 +72,23 @@ export function Params() {
           />
         </div>
         <div
-          className={`flex ${
-            !isDesktop && "flex-col items-center"
-          } text-lg mb-2`}
+          className={`flex ${!isDesktop && "flex-col items-center"} text-lg`}
         >
-          <div className={`flex items-center h-fit ${!isDesktop && "mb-2"}`}>
-            <span className="mr-2 w-16 text-start font-bold">
-              {t("parameters-fairness")}
-            </span>
-            <button
-              onClick={() => setThresholds(1.25, 1.5)}
-              className="size-5 rounded-lg flex items-center justify-center hover:bg-black hover:bg-opacity-25"
-              title={t("parameters-restore-default")}
-              data-testid="params-fairness-reset-button"
-            >
-              <RotateCcw size={15} strokeWidth={2} />
-            </button>
-          </div>
+          <span
+            className={`w-16 text-start font-bold self-center ${
+              !isDesktop && "mb-2"
+            }`}
+          >
+            {t("parameters-fairness")}
+          </span>
           <FairnessSelector
             value1={okay}
             value2={bad}
             onValue1Change={(value1) => setThresholds(value1, bad)}
             onValue2Change={(value2) => setThresholds(okay, value2)}
-            min={1.05}
-            max={2}
-            step={0.05}
+            min={105}
+            max={200}
+            step={5}
             data-testid="params-fairness"
           />
         </div>

@@ -17,6 +17,7 @@ import workerUrl from "/src/services/workerService?worker&url";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
+import { okayThresoldsSelector } from "../../modules/params/selector";
 
 const optionsInit = [
   { title: "1/8", value: 1 / 8, label: "1/8" },
@@ -45,7 +46,8 @@ export function SuggestOverlayContent({
   close,
 }: Readonly<SuggestOverlayContentProps>) {
   const { t } = useTranslation();
-  const [fairness, setFairness] = useState(1.25);
+  const okay = useSelector(okayThresoldsSelector);
+  const [fairness, setFairness] = useState(okay);
   const [suggestMode, setSuggestMode] = useState<SuggestMode>("lowerCost");
   const [quantity, setQuantity] = useState(1);
   const [options, setOptions] =
@@ -79,12 +81,12 @@ export function SuggestOverlayContent({
 
   useEffect(() => {
     return () => {
-      setFairness(1.25);
+      setFairness(okay);
       setQuantity(1);
       setSuggestMode("lowerCost");
       setOptions(optionsInit);
     };
-  }, []);
+  }, [okay]);
 
   const handleCompute = () => {
     setIsLoading(true);
@@ -193,7 +195,7 @@ export function SuggestOverlayContent({
               isDesktop ? "w-20" : "px-1"
             } text-center h-full rounded-lg`}
           >
-            {(fairness * 100).toFixed(0)}%
+            {fairness}%
           </div>
           <input
             className={`accent-green-500 touch-none ${
@@ -203,9 +205,9 @@ export function SuggestOverlayContent({
             value={fairness}
             title={t("suggester-unfairness-description")}
             onChange={(e) => setFairness(Number(e.target.value))}
-            min={1.05}
-            max={2}
-            step={0.05}
+            min={105}
+            max={200}
+            step={5}
             data-testid="suggester-fairness-slider"
           />
         </div>

@@ -55,6 +55,7 @@
     "parameters-slices": "Slices per pizzas",
     "parameters-fairness": "Fairness",
     "parameters-restore-default": "Restore to default parameters",
+    "parameters-reset": "Reset",
     
     "help": "Help",
     "created-by": "Created by",

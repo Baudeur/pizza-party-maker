@@ -43,7 +43,7 @@ function getMostRestrictiveDiet(people: People): Diet {
 /* This works this way.
   -It takes a first evaluation as a reference. Called worst.
   -It tries to run a 100 other evaluation.
-  -If we find a worst value than worst 100-percent time.
+  -If we find a worst value than worst 100 minus percent time.
     -worst take the value of the worst value of the 100 check loop. Called greatest.
     -It starts the 100 evaluation over again.
   -Else it stops and returns worst.
@@ -213,7 +213,7 @@ export function suggestPizzas(
   people: People,
   minQuantity: number,
   suggestMode: SuggestMode,
-  fairness: number = 1.25
+  fairness: number = 125
 ): SuggestedQuantityPerPizza {
   const totalPeople = getTotalPeople(people);
   if (totalPeople === 0 || minQuantity === 0) return new Map();
@@ -243,7 +243,7 @@ export function suggestPizzas(
         diet,
         suggestedQuantity,
         people,
-        fairness
+        fairness / 100
       );
     }
   };
