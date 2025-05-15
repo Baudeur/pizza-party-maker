@@ -58,9 +58,15 @@ export function FairnessSelector({
     (width - badExcess - marginLeft - borderWidth * 2) / 21;
   //Height of the graph, without the label
   const graphHeight = height - labelSpace;
+  const cursorDistance = workingWidth * (percentage2 - percentage1);
   //Are the two labels touching eachother?
-  const shouldMerge =
-    workingWidth * (percentage2 - percentage1) < labelSpace * 1.2 * 2;
+  const shouldMerge = cursorDistance < labelSpace * 1.2 * 2;
+  //Are the two curors touching eachother?
+  const cursorTooClose = cursorDistance < handleWidth;
+  //Where should the cursor be touching to share the space?
+  const touchingCursorMiddle = (handleWidth - cursorDistance) / 2;
+
+  const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
   const roundStep = useCallback(
     (number: number): number => {
@@ -110,7 +116,6 @@ export function FairnessSelector({
       removeEventListener("pointermove", listener1);
       removeEventListener("pointermove", listener2);
       removeEventListener("pointerup", handleStopDrag);
-      removeEventListener("click", handleStopDrag, true);
       ev.preventDefault();
       ev.stopPropagation();
     },
@@ -118,10 +123,12 @@ export function FairnessSelector({
   );
 
   //Exist so the don't exit the overlay if we mouseup in the background
-  const handleClickBlock = useCallback((ev: MouseEvent) => {
+  const handleClickBlock = useCallback((ev: MouseEvent | TouchEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
-    removeEventListener("click", handleClickBlock, true);
+    isTouch
+      ? removeEventListener("touchend", handleClickBlock, true)
+      : removeEventListener("click", handleClickBlock, true);
   }, []);
 
   const handleStartDrag1 = (x?: number) => {
@@ -129,14 +136,18 @@ export function FairnessSelector({
     if (x !== undefined) handleMove(1)(x);
     addEventListener("pointermove", listener1);
     addEventListener("pointerup", handleStopDrag);
-    addEventListener("click", handleClickBlock, true);
+    isTouch
+      ? addEventListener("touchend", handleClickBlock, true)
+      : addEventListener("click", handleClickBlock, true);
   };
   const handleStartDrag2 = (x?: number) => {
     setDragged(2);
     if (x !== undefined) handleMove(2)(x);
     addEventListener("pointermove", listener2);
     addEventListener("pointerup", handleStopDrag);
-    addEventListener("click", handleClickBlock, true);
+    isTouch
+      ? addEventListener("touchend", handleClickBlock, true)
+      : addEventListener("click", handleClickBlock, true);
   };
 
   const handleClick = (area: string, x: number) => {
@@ -273,7 +284,8 @@ export function FairnessSelector({
             startX +
               workingWidth * percentage2 +
               graphHeight * 0.2 +
-              (value1 === value2 ? handleWidth : handleWidth / 2),
+              handleWidth / 2 +
+              (cursorTooClose ? touchingCursorMiddle : 0),
             width - startX / 2
           )}
           y={graphHeight / 2}
@@ -281,7 +293,8 @@ export function FairnessSelector({
             startX +
               workingWidth * percentage2 +
               graphHeight * 0.2 +
-              (value1 === value2 ? handleWidth : handleWidth / 2),
+              handleWidth / 2 +
+              (cursorTooClose ? touchingCursorMiddle : 0),
             width - startX / 2
           )},${graphHeight / 2})`}
           className="font-bold pointer-events-none"
@@ -296,7 +309,8 @@ export function FairnessSelector({
           transform={`translate(${
             startX +
             workingWidth * percentage1 -
-            (value1 === value2 ? handleWidth : handleWidth / 2)
+            handleWidth / 2 -
+            (cursorTooClose ? touchingCursorMiddle : 0)
           },${borderWidth / 2})`}
           strokeWidth={borderWidth}
           stroke="white"
@@ -321,7 +335,7 @@ export function FairnessSelector({
             width={handleWidth}
             rx={isDesktop ? handleWidth / 2 : handleWidth / 4}
             height={graphHeight - borderWidth}
-            opacity={value1 === value2 ? 0 : 1}
+            opacity={cursorTooClose ? 0 : 1}
           />
           <path
             d={`M ${handleWidth / 2},0 A ${handleWidth / 2},${
@@ -331,7 +345,7 @@ export function FairnessSelector({
             } 0 0 0 ${handleWidth / 2},${graphHeight - borderWidth} h ${
               handleWidth / 2
             } V ${(graphHeight - borderWidth) / 2} 0 Z`}
-            opacity={value1 === value2 ? 1 : 0}
+            opacity={cursorTooClose ? 1 : 0}
           />
         </g>
         <g
@@ -344,7 +358,8 @@ export function FairnessSelector({
           transform={`translate(${
             startX +
             workingWidth * percentage2 -
-            (value1 === value2 ? 0 : handleWidth / 2)
+            handleWidth / 2 +
+            (cursorTooClose ? touchingCursorMiddle : 0)
           },${borderWidth / 2})`}
           strokeWidth={borderWidth}
           stroke="white"
@@ -363,7 +378,7 @@ export function FairnessSelector({
             width={handleWidth}
             rx={isDesktop ? handleWidth / 2 : handleWidth / 4}
             height={graphHeight - borderWidth}
-            opacity={value1 === value2 ? 0 : 1}
+            opacity={cursorTooClose ? 0 : 1}
           />
           <path
             d={`M ${handleWidth / 2},0 A ${handleWidth / 2},${
@@ -373,7 +388,7 @@ export function FairnessSelector({
             },${(graphHeight - borderWidth) / 2} 0 0 1 ${handleWidth / 2},${
               graphHeight - borderWidth
             } h ${-handleWidth / 2} V ${(graphHeight - borderWidth) / 2} 0 Z`}
-            opacity={value1 === value2 ? 1 : 0}
+            opacity={cursorTooClose ? 1 : 0}
           />
         </g>
         {/*Labels*/}

@@ -1,4 +1,11 @@
-import { PointerEvent, PropsWithChildren, useCallback, useState } from "react";
+import {
+  MouseEvent as ReactMouseEvent,
+  PointerEvent,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 type Swipable = {
   onSwipeFinish: (value: number) => void;
@@ -26,14 +33,16 @@ export function Swipable({
   const [movement, setMovement] = useState(0);
   const [isSwiped, setIsSwiped] = useState(false);
 
-  const handleMouseDown = useCallback((e: PointerEvent) => {
+  const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+  const handleMouseDown = useCallback((e: PointerEvent | ReactMouseEvent) => {
     setIsSwiped(true);
     setStart(vertical ? e.clientY : e.clientX);
     if (onSwipeStart) onSwipeStart();
   }, []);
 
   const handleMouseMove = useCallback(
-    (e: PointerEvent) => {
+    (e: PointerEvent | MouseEvent) => {
       if (!isSwiped) return;
       let newValue = (vertical ? e.clientY : e.clientX) - start;
       if (maxSwipe != undefined) newValue = Math.min(maxSwipe, newValue);
@@ -51,6 +60,13 @@ export function Swipable({
     setMovement(0);
   }, [isSwiped, movement]);
 
+  useEffect(() => {
+    if (!isTouch) addEventListener("mousemove", handleMouseMove);
+    return () => {
+      if (!isTouch) removeEventListener("mousemove", handleMouseMove);
+    };
+  });
+
   return (
     <div
       style={
@@ -64,10 +80,12 @@ export function Swipable({
               }
           : {}
       }
-      onGotPointerCapture={handleMouseDown}
-      onPointerUp={handleMouseUp}
-      onPointerMove={handleMouseMove}
-      onPointerCancel={handleMouseUp}
+      onGotPointerCapture={isTouch ? handleMouseDown : () => {}}
+      onPointerUp={isTouch ? handleMouseUp : () => {}}
+      onPointerMove={isTouch ? handleMouseMove : () => {}}
+      onPointerCancel={isTouch ? handleMouseUp : () => {}}
+      onMouseDown={!isTouch ? handleMouseDown : () => {}}
+      onMouseUp={!isTouch ? handleMouseUp : () => {}}
       className={`${className} relative float-left ${
         vertical ? "touch-none" : "touch-pan-y"
       } left-0 w-full h-full`}
