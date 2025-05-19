@@ -45,7 +45,7 @@ export function InfoContent() {
     };
   }, [flagStateIndex]);
   return (
-    <div className={`${isDesktop ? "h-[80vh]" : "h-full"} overflow-y-scroll`}>
+    <div className={`${!isDesktop && "h-full"}`}>
       <Mobile>
         <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-4 text-center w-full">
           {t("help")}
@@ -59,7 +59,7 @@ export function InfoContent() {
       >
         <CompTrans i18nKey="info-title" />
       </div>
-      <div className={`${isDesktop && "w-[750px]"} text-left`}>
+      <div className={`${isDesktop && "max-w-[750px]"} text-left`}>
         <p className="mb-2">{t("info-intro-p1")}</p>
         <p>{t("info-intro-p2")}</p>
         <p className="mb-2">

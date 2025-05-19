@@ -12,7 +12,7 @@ import {
 import { pizzasSelector } from "../../modules/pizzas/selector";
 import { Button } from "../utils/Button";
 import { PizzeriaDisplayer } from "./PizzeriaDisplayer";
-import { CloseContext } from "../utils/Overlay";
+import { CloseContext } from "../utils/OverlayInside";
 import { Trans, useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";

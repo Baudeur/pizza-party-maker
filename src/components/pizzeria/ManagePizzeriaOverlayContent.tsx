@@ -9,7 +9,7 @@ import {
 } from "../../modules/pizzerias/slice";
 import { useContext } from "react";
 import { PizzeriaDisplayer } from "./PizzeriaDisplayer";
-import { CloseContext } from "../utils/Overlay";
+import { CloseContext } from "../utils/OverlayInside";
 import { useTranslation } from "react-i18next";
 import { Accordeon } from "../utils/Accordeon";
 import { useMediaQuery } from "react-responsive";

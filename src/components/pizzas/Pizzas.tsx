@@ -19,11 +19,11 @@ export function Pizzas() {
 
   return (
     <Container
-      className={`${
-        isDesktop
-          ? "h-[32rem]"
-          : "rounded-none border-none overflow-y-hidden overflow-x-hidden"
-      } text-xl`}
+      layoutClassName={`${isDesktop ? "h-[32rem]" : ""}`}
+      styleClassName={`text-xl ${
+        !isDesktop &&
+        "rounded-none border-none overflow-y-hidden overflow-x-hidden"
+      }`}
       testId="pizza-panel"
       fullHeight={!isDesktop}
     >

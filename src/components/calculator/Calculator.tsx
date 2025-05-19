@@ -14,7 +14,7 @@ import { Expand } from "../utils/Expand";
 import { pizzaQuantityEquality } from "../../services/utils";
 import { useState } from "react";
 import { GraphComparison } from "../graph/GraphComparison";
-import { OverlayWrapper } from "../utils/OverlayWrapper";
+import { Overlay } from "../utils/Overlay";
 import { Button } from "../utils/Button";
 import { SuggestOverlayContent } from "../suggester/SuggestOverlayContent";
 import { useTranslation } from "react-i18next";
@@ -55,7 +55,7 @@ export function Calculator() {
   return (
     <>
       <EitherDesktopOrMobile>
-        <Container className="w-full h-fit">
+        <Container styleClassName="w-full h-fit">
           <InfoDisplay peopleAteAvg={peopleAteRandomAvg} />
           <Button
             color="green"
@@ -128,7 +128,10 @@ export function Calculator() {
                 "transition-all duration-100"
               }`}
             >
-              <Container className="h-full rounded-none border-x-0 border-b-0 w-full">
+              <Container
+                layoutClassName="h-full w-full"
+                styleClassName="rounded-none border-x-0 border-b-0"
+              >
                 <div className="w-full flex justify-center">
                   <div className="rounded mb-2 w-32 -mt-2 bg-gray-400 h-[3px]"></div>
                 </div>
@@ -174,7 +177,7 @@ export function Calculator() {
               </Container>
             </div>
           </Swipable>
-          <OverlayWrapper
+          <Overlay
             show={displayDetailsOverlay}
             title={t("details-and-graphs")}
             close={() => setDisplayDetailsOverlay(false)}
@@ -189,17 +192,17 @@ export function Calculator() {
               />
               <GraphComparison />
             </div>
-          </OverlayWrapper>
+          </Overlay>
         </div>
       </EitherDesktopOrMobile>
-      <OverlayWrapper
+      <Overlay
         show={displayOverlay}
         title={t("suggester-popup-title")}
         close={() => setDisplayOverlay(false)}
         testId="suggester-overlay"
       >
         <SuggestOverlayContent close={() => setDisplayOverlay(false)} />
-      </OverlayWrapper>
+      </Overlay>
     </>
   );
 }

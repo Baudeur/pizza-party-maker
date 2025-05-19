@@ -15,7 +15,7 @@ export function People() {
 
   return (
     <Container
-      className={`${!isDesktop && "rounded-none border-none"}`}
+      styleClassName={`${!isDesktop && "rounded-none border-none"}`}
       testId="people-panel"
     >
       <div className={`${!isDesktop && "flex justify-between px-5"}`}>

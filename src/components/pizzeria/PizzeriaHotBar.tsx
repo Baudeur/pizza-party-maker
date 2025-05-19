@@ -1,7 +1,7 @@
 import { ArrowLeftToLine, Pencil, Save, Store, X } from "lucide-react";
 import { Button } from "../utils/Button";
 import { SaveAsIcon } from "../icons/SaveAsIcon";
-import { OverlayWrapper } from "../utils/OverlayWrapper";
+import { Overlay } from "../utils/Overlay";
 import { SaveAsPizzeriaOverlayContent } from "./SaveAsPizzeriaOverlayContent";
 import { ManagePizzeriaOverlayContent } from "./ManagePizzeriaOverlayContent";
 import { useCallback, useState } from "react";
@@ -166,7 +166,7 @@ export function PizzeriaHotBar() {
           </span>
         </div>
       )}
-      <OverlayWrapper
+      <Overlay
         show={showSaveAsOverlay}
         title={
           isDesktop
@@ -177,8 +177,8 @@ export function PizzeriaHotBar() {
         testId="save-as-overlay"
       >
         <SaveAsPizzeriaOverlayContent />
-      </OverlayWrapper>
-      <OverlayWrapper
+      </Overlay>
+      <Overlay
         show={showLoadOverlay}
         title={
           isDesktop
@@ -189,7 +189,7 @@ export function PizzeriaHotBar() {
         testId="manage-overlay"
       >
         <ManagePizzeriaOverlayContent />
-      </OverlayWrapper>
+      </Overlay>
     </div>
   );
 }

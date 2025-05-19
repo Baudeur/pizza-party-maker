@@ -2,7 +2,7 @@ import { CircleHelp } from "lucide-react";
 import { CaseScenario } from "./CaseScenario";
 import { useTranslation } from "react-i18next";
 import { PeopleAte } from "../../services/calculatorService";
-import { OverlayWrapper } from "../utils/OverlayWrapper";
+import { Overlay } from "../utils/Overlay";
 import { useState } from "react";
 import { CaseScenarioOverlayContent } from "./CaseScenarioOverlayContent";
 import { useMediaQuery } from "react-responsive";
@@ -52,14 +52,14 @@ export function Details({
           />
         </button>
         {isDesktop && (
-          <OverlayWrapper
+          <Overlay
             show={showDetailsExplanation}
             title={t("help")}
             close={() => setShowDetailsExplanation(false)}
             testId="details-overlay"
           >
             <CaseScenarioOverlayContent />
-          </OverlayWrapper>
+          </Overlay>
         )}
       </div>
       <CaseScenario

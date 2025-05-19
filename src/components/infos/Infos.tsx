@@ -1,7 +1,7 @@
 import { CircleHelp, Settings } from "lucide-react";
 import { useState } from "react";
 import { InfoContent } from "./InfoContent";
-import { OverlayWrapper } from "../utils/OverlayWrapper";
+import { Overlay } from "../utils/Overlay";
 import { Params } from "./Params";
 import { LanguageSelector } from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
@@ -28,14 +28,14 @@ export function Infos() {
           >
             <Settings size={30} color="gray" strokeWidth={2} />
           </button>
-          <OverlayWrapper
+          <Overlay
             show={displayOverlay2}
             title={t("parameters-title")}
             close={() => setDisplayOverlay2(false)}
             testId="param-overlay"
           >
             <Params />
-          </OverlayWrapper>
+          </Overlay>
         </div>
         <div>
           <button
@@ -45,14 +45,14 @@ export function Infos() {
           >
             <CircleHelp size={30} color="gray" strokeWidth={2} />
           </button>
-          <OverlayWrapper
+          <Overlay
             show={displayOverlay1}
             title={t("help")}
             close={() => setDisplayOverlay1(false)}
             testId="info-overlay"
           >
             <InfoContent />
-          </OverlayWrapper>
+          </Overlay>
         </div>
       </Desktop>
     </div>
