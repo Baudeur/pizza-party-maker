@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Mobile } from "../utils/ReactiveComponents";
 import { MobileHeader } from "./MobileHeader";
+import { Overlays } from "./Overlays";
 
 export function Layout() {
   return (
@@ -9,6 +10,7 @@ export function Layout() {
         <MobileHeader />
       </Mobile>
       <main>
+        <Overlays />
         <Outlet />
       </main>
     </>

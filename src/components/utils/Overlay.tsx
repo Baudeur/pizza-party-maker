@@ -1,24 +1,26 @@
 import { PropsWithChildren } from "react";
 import { OverlayInside } from "./OverlayInside";
+import { OverlayId } from "../../modules/overlays/slice";
+import { useSelector } from "react-redux";
+import { openedOverlaySelector } from "../../modules/overlays/selector";
 
 type OverlayWrapper = {
-  show: boolean;
+  overlayId: OverlayId;
   title: string;
-  close: () => void;
   testId?: string;
 };
 
 export function Overlay({
-  show,
-  close,
+  overlayId,
   title,
   children,
   testId,
 }: PropsWithChildren<OverlayWrapper>) {
+  const openedOverlay = useSelector(openedOverlaySelector);
   return (
     <div>
-      {show && (
-        <OverlayInside title={title} close={close} testId={testId}>
+      {openedOverlay === overlayId && (
+        <OverlayInside title={title} testId={testId}>
           {children}
         </OverlayInside>
       )}

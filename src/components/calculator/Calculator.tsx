@@ -14,21 +14,20 @@ import { Expand } from "../utils/Expand";
 import { pizzaQuantityEquality } from "../../services/utils";
 import { useState } from "react";
 import { GraphComparison } from "../graph/GraphComparison";
-import { Overlay } from "../utils/Overlay";
 import { Button } from "../utils/Button";
-import { SuggestOverlayContent } from "../suggester/SuggestOverlayContent";
 import { useTranslation } from "react-i18next";
 import { EitherDesktopOrMobile } from "../utils/ReactiveComponents";
 import { Swipable } from "../utils/Swipable";
 import { Details } from "./Details";
+import { useAppDispatch } from "../../hooks";
+import { openOverlay } from "../../modules/overlays/slice";
 
 const EXTENDED_SIZE = 250;
 const RETRACTED_SIZE = 112;
 
 export function Calculator() {
   const { t } = useTranslation();
-  const [displayOverlay, setDisplayOverlay] = useState(false);
-  const [displayDetailsOverlay, setDisplayDetailsOverlay] = useState(false);
+  const dispatch = useAppDispatch();
   const [extendValue, setExtendValue] = useState([0, 0]);
   const [extended, setExtended] = useState(false);
 
@@ -60,7 +59,7 @@ export function Calculator() {
           <Button
             color="green"
             onClick={() => {
-              setDisplayOverlay(true);
+              dispatch(openOverlay("SUGGESTER"));
             }}
             className="mt-2 font-bold w-full rounded-lg"
             testId="suggester-button"
@@ -153,7 +152,7 @@ export function Calculator() {
                     <Button
                       color="green"
                       onClick={() => {
-                        setDisplayOverlay(true);
+                        dispatch(openOverlay("SUGGESTER"));
                       }}
                       className="font-bold w-full rounded-lg mt-2"
                       testId="suggester-button"
@@ -164,7 +163,7 @@ export function Calculator() {
                     <Button
                       color="orange"
                       onClick={() => {
-                        setDisplayDetailsOverlay(true);
+                        dispatch(openOverlay("DETAILS"));
                       }}
                       className="font-bold w-full rounded-lg mt-2"
                       testId="suggester-button"
@@ -177,32 +176,8 @@ export function Calculator() {
               </Container>
             </div>
           </Swipable>
-          <Overlay
-            show={displayDetailsOverlay}
-            title={t("details-and-graphs")}
-            close={() => setDisplayDetailsOverlay(false)}
-            testId="suggester-overlay"
-          >
-            <div className="max-h-[70dvh] overflow-y-auto">
-              <Details
-                worstCaseScenario={peopleAteWorst}
-                randomCaseScenario={peopleAteRandom}
-                averageCaseScenario={peopleAteRandomAvg}
-                bestCaseScenario={peopleAteBest}
-              />
-              <GraphComparison />
-            </div>
-          </Overlay>
         </div>
       </EitherDesktopOrMobile>
-      <Overlay
-        show={displayOverlay}
-        title={t("suggester-popup-title")}
-        close={() => setDisplayOverlay(false)}
-        testId="suggester-overlay"
-      >
-        <SuggestOverlayContent close={() => setDisplayOverlay(false)} />
-      </Overlay>
     </>
   );
 }

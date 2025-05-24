@@ -14,6 +14,7 @@ import {
   setPizzerias,
   StoredPizzerias,
 } from "./modules/pizzerias/slice";
+import { overlaysReducer } from "./modules/overlays/slice";
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     pizzaList: pizzasReducer,
     pizzerias: pizzeriasReducer,
     params: paramsReducer,
+    overlays: overlaysReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });

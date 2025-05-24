@@ -1,10 +1,7 @@
 import { ArrowLeftToLine, Pencil, Save, Store, X } from "lucide-react";
 import { Button } from "../utils/Button";
 import { SaveAsIcon } from "../icons/SaveAsIcon";
-import { Overlay } from "../utils/Overlay";
-import { SaveAsPizzeriaOverlayContent } from "./SaveAsPizzeriaOverlayContent";
-import { ManagePizzeriaOverlayContent } from "./ManagePizzeriaOverlayContent";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import {
   loadedPizzeriaSelector,
@@ -23,12 +20,11 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { useAppDispatch } from "../../hooks";
+import { openOverlay } from "../../modules/overlays/slice";
 
 export function PizzeriaHotBar() {
   const { t } = useTranslation();
   const pizzas = useSelector(pizzasSelector);
-  const [showSaveAsOverlay, setShowSaveAsOverlay] = useState(false);
-  const [showLoadOverlay, setShowLoadOverlay] = useState(false);
   const loadedPizzeriaId = useSelector(loadedPizzeriaSelector);
   const pizzerias = useSelector(pizzeriasSelector);
   const dispatch = useAppDispatch();
@@ -105,7 +101,7 @@ export function PizzeriaHotBar() {
           <Button
             color="yellow"
             onClick={() => {
-              setShowSaveAsOverlay(true);
+              dispatch(openOverlay("SAVE_PIZZERIA"));
             }}
             className={`w-2/3 rounded-lg`}
             title={t("save-as-pizzeria")}
@@ -144,7 +140,7 @@ export function PizzeriaHotBar() {
         <Button
           color="yellow"
           onClick={() => {
-            setShowLoadOverlay(true);
+            dispatch(openOverlay("MANAGE_PIZZERIA"));
           }}
           className={`w-1/3 rounded-lg`}
           title={t("manage-pizzeria-title")}
@@ -166,30 +162,6 @@ export function PizzeriaHotBar() {
           </span>
         </div>
       )}
-      <Overlay
-        show={showSaveAsOverlay}
-        title={
-          isDesktop
-            ? t("save-pizzeria-as-title")
-            : t("save-pizzeria-as-title-short")
-        }
-        close={() => setShowSaveAsOverlay(false)}
-        testId="save-as-overlay"
-      >
-        <SaveAsPizzeriaOverlayContent />
-      </Overlay>
-      <Overlay
-        show={showLoadOverlay}
-        title={
-          isDesktop
-            ? t("manage-pizzeria-title")
-            : t("manage-pizzeria-title-short")
-        }
-        close={() => setShowLoadOverlay(false)}
-        testId="manage-overlay"
-      >
-        <ManagePizzeriaOverlayContent />
-      </Overlay>
     </div>
   );
 }

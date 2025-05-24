@@ -6,7 +6,7 @@ import {
 } from "../../services/suggestionService";
 import { DropDown } from "../utils/DropDown";
 import { Button } from "../utils/Button";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { pizzasSelector } from "../../modules/pizzas/selector";
 import { peopleSelector } from "../../modules/people/selector";
 import { Spinner } from "../utils/Spinner";
@@ -18,6 +18,8 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { okayThresoldsSelector } from "../../modules/params/selector";
+import { closeOverlay } from "../../modules/overlays/slice";
+import { useAppDispatch } from "../../hooks";
 
 const optionsInit = [
   { title: "1/8", value: 1 / 8, label: "1/8" },
@@ -38,13 +40,7 @@ const optionsInit = [
   { title: "1", value: 1, label: "1" },
 ];
 
-type SuggestOverlayContentProps = {
-  close: () => void;
-};
-
-export function SuggestOverlayContent({
-  close,
-}: Readonly<SuggestOverlayContentProps>) {
+export function SuggestOverlayContent() {
   const { t } = useTranslation();
   const okay = useSelector(okayThresoldsSelector);
   const [fairness, setFairness] = useState(okay);
@@ -60,7 +56,7 @@ export function SuggestOverlayContent({
     SuggestedQuantityPerPizza | undefined
   >();
   const [error, setError] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   new Image(1, 1).src = spinner; //preload spinner image
@@ -137,7 +133,7 @@ export function SuggestOverlayContent({
         dispatch(modifyPizza(suggestedPizza));
       }
     });
-    close();
+    dispatch(closeOverlay());
   };
 
   return (

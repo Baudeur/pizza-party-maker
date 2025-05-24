@@ -2,12 +2,11 @@ import { CircleHelp } from "lucide-react";
 import { CaseScenario } from "./CaseScenario";
 import { useTranslation } from "react-i18next";
 import { PeopleAte } from "../../services/calculatorService";
-import { Overlay } from "../utils/Overlay";
-import { useState } from "react";
-import { CaseScenarioOverlayContent } from "./CaseScenarioOverlayContent";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../hooks";
+import { closeOverlay, openOverlay } from "../../modules/overlays/slice";
 
 type DetailsProps = {
   worstCaseScenario: PeopleAte;
@@ -23,9 +22,9 @@ export function Details({
   bestCaseScenario,
 }: DetailsProps) {
   const { t } = useTranslation();
-  const [showDetailsExplanation, setShowDetailsExplanation] = useState(false);
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   return (
     <div className="w-full">
@@ -33,34 +32,18 @@ export function Details({
         <button
           className="absolute"
           onClick={() => {
-            setShowDetailsExplanation(true);
+            if (isDesktop) {
+              dispatch(openOverlay("DETAIL_INFO"));
+            } else {
+              navigate("/help-details");
+              dispatch(closeOverlay());
+            }
           }}
           data-testid="details-overlay-button"
           title={t("help")}
         >
-          <CircleHelp
-            size={25}
-            color="black"
-            strokeWidth={2}
-            onClick={() => {
-              if (isDesktop) {
-                setShowDetailsExplanation(true);
-              } else {
-                navigate("/help-details");
-              }
-            }}
-          />
+          <CircleHelp size={25} color="black" strokeWidth={2} />
         </button>
-        {isDesktop && (
-          <Overlay
-            show={showDetailsExplanation}
-            title={t("help")}
-            close={() => setShowDetailsExplanation(false)}
-            testId="details-overlay"
-          >
-            <CaseScenarioOverlayContent />
-          </Overlay>
-        )}
       </div>
       <CaseScenario
         label={t("details-worst-case-scenario")}

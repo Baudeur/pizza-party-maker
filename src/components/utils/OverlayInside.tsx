@@ -11,9 +11,10 @@ import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
+import { useAppDispatch } from "../../hooks";
+import { closeOverlay } from "../../modules/overlays/slice";
 
 type Overlay = {
-  close: () => void;
   title: string;
   testId?: string;
 };
@@ -21,13 +22,13 @@ type Overlay = {
 export const CloseContext = createContext(() => {});
 
 export function OverlayInside({
-  close,
   title,
   testId,
   children,
 }: PropsWithChildren<Overlay>) {
   const [showDelayed, setShowDelayed] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   useEffect(() => {
     setShowDelayed(true);
@@ -43,13 +44,13 @@ export function OverlayInside({
   const animateAndClose = useCallback(() => {
     setShowDelayed(false);
     setTimeout(() => {
-      close();
+      dispatch(closeOverlay());
     }, 300);
-  }, [close]);
+  }, []);
   return (
     <div>
       <div
-        className={`z-50 fixed w-[100vw] h-[100lvh] bg-black top-0 left-0 ${
+        className={`z-20 fixed w-[100vw] h-[100lvh] bg-black top-0 left-0 ${
           showDelayed ? "bg-opacity-70" : "bg-opacity-0 pointer-events-none"
         } transition-all duration-150`}
         data-testid={`${testId}-background`}
