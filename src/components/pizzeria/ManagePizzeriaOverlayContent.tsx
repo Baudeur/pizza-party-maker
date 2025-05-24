@@ -16,6 +16,7 @@ import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { formatNameForTestId } from "../../services/utils";
 import { useAppDispatch } from "../../hooks";
+import { Desktop } from "../utils/ReactiveComponents";
 
 export function ManagePizzeriaOverlayContent() {
   const { t } = useTranslation();
@@ -56,11 +57,11 @@ export function ManagePizzeriaOverlayContent() {
                   title={t("load-pizzeria", { pizzeriaName: p.name })}
                 >
                   <ArrowDownToLine size={20} strokeWidth={2} />
-                  {isDesktop && (
+                  <Desktop>
                     <span className="ml-1">
                       {t("manage-pizzeria-load-button")}
                     </span>
-                  )}
+                  </Desktop>
                 </Button>
                 <Button
                   color="red"
@@ -73,7 +74,9 @@ export function ManagePizzeriaOverlayContent() {
                   title={t("delete-pizzeria", { pizzeriaName: p.name })}
                 >
                   <Trash2 size={20} strokeWidth={2} />
-                  {isDesktop && <span className="ml-1">{t("delete")}</span>}
+                  <Desktop>
+                    <span className="ml-1">{t("delete")}</span>
+                  </Desktop>
                 </Button>
               </div>
             </div>

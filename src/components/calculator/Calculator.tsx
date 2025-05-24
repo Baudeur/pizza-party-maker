@@ -12,7 +12,7 @@ import { InfoDisplay } from "./InfoDisplay";
 import { sliceSelector } from "../../modules/params/selector";
 import { Expand } from "../utils/Expand";
 import { pizzaQuantityEquality } from "../../services/utils";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { GraphComparison } from "../graph/GraphComparison";
 import { Button } from "../utils/Button";
 import { useTranslation } from "react-i18next";
@@ -46,10 +46,22 @@ export function Calculator() {
   const extendPercentage =
     (extendPosition - RETRACTED_SIZE) / (EXTENDED_SIZE - RETRACTED_SIZE);
 
-  const peopleAteWorst = worstCaseScenario(slices, pizza, people);
-  const peopleAteRandom = randomCaseScenario(slices, pizza, people);
-  const peopleAteRandomAvg = averageCaseScenario(100, slices, pizza, people);
-  const peopleAteBest = bestCaseScenario(slices, pizza, people);
+  const peopleAteWorst = useMemo(
+    () => worstCaseScenario(slices, pizza, people),
+    [slices, pizza, people]
+  );
+  const peopleAteRandom = useMemo(
+    () => randomCaseScenario(slices, pizza, people),
+    [slices, pizza, people]
+  );
+  const peopleAteRandomAvg = useMemo(
+    () => averageCaseScenario(100, slices, pizza, people),
+    [slices, pizza, people]
+  );
+  const peopleAteBest = useMemo(
+    () => bestCaseScenario(slices, pizza, people),
+    [slices, pizza, people]
+  );
 
   return (
     <>

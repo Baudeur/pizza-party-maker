@@ -21,6 +21,7 @@ import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { useAppDispatch } from "../../hooks";
 import { openOverlay } from "../../modules/overlays/slice";
+import { Desktop, EitherDesktopOrMobile } from "../utils/ReactiveComponents";
 
 export function PizzeriaHotBar() {
   const { t } = useTranslation();
@@ -62,7 +63,9 @@ export function PizzeriaHotBar() {
           >
             <div className="flex items-center gap-2">
               <ArrowLeftToLine size={20} strokeWidth={2} />
-              {isDesktop && <span>{t("exit-pizzeria")}</span>}
+              <Desktop>
+                <span>{t("exit-pizzeria")}</span>
+              </Desktop>
             </div>
           </Button>
         )}
@@ -79,7 +82,9 @@ export function PizzeriaHotBar() {
           >
             <div className="flex items-center gap-2">
               <X size={20} strokeWidth={2} />
-              {isDesktop && <span>{t("cancel")}</span>}
+              <Desktop>
+                <span>{t("cancel")}</span>
+              </Desktop>
             </div>
           </Button>
         )}
@@ -93,7 +98,9 @@ export function PizzeriaHotBar() {
           >
             <div className="flex items-center gap-2">
               <Save size={20} strokeWidth={2} />
-              {isDesktop && <span>{t("save")}</span>}
+              <Desktop>
+                <span>{t("save")}</span>
+              </Desktop>
             </div>
           </Button>
         )}
@@ -113,11 +120,10 @@ export function PizzeriaHotBar() {
                 strokeWidth={2}
                 backgroundColor="bg-amber-300"
               />
-              {isDesktop ? (
+              <EitherDesktopOrMobile>
                 <span>{t("save-as-pizzeria")}</span>
-              ) : (
                 <span>{t("save")}</span>
-              )}
+              </EitherDesktopOrMobile>
             </div>
           </Button>
         )}
@@ -133,7 +139,9 @@ export function PizzeriaHotBar() {
           >
             <div className="flex items-center gap-2">
               <Pencil size={20} strokeWidth={2} />
-              {isDesktop && <span>{t("edit-pizzeria")}</span>}
+              <Desktop>
+                <span>{t("edit-pizzeria")}</span>
+              </Desktop>
             </div>
           </Button>
         )}
@@ -148,7 +156,9 @@ export function PizzeriaHotBar() {
         >
           <div className="flex items-center gap-2">
             <Store size={20} strokeWidth={2} />
-            {isDesktop && <span>{t("manage-pizzeria-button")}</span>}
+            <Desktop>
+              <span>{t("manage-pizzeria-button")}</span>
+            </Desktop>
           </div>
         </Button>
       </div>

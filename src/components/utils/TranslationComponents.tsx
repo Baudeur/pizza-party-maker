@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { TFunction } from "i18next";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
+import { Desktop } from "./ReactiveComponents";
 
 const components = (
   t: TFunction<"translation", undefined>,
@@ -190,7 +191,9 @@ const components = (
       >
         <span className="flex items-center gap-2">
           <Store size={20} strokeWidth={2} />
-          {isDesktop && <span>{t("manage-pizzeria-button")}</span>}
+          <Desktop>
+            <span>{t("manage-pizzeria-button")}</span>
+          </Desktop>
         </span>
       </Button>
     </span>

@@ -172,7 +172,9 @@ export function InfoContent() {
             {t("info-result-title")}
           </p>
           <p className="mb-2">{t("info-result-p1")}</p>
-          {!isDesktop && <p>{t("info-result-expandable-mobile")}</p>}
+          <Mobile>
+            <p>{t("info-result-expandable-mobile")}</p>
+          </Mobile>
           <p className="mb-2">{t("info-result-p2")}</p>
           <EitherDesktopOrMobile>
             <div className="w-64 flex mb-2">
