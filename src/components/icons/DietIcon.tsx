@@ -36,7 +36,7 @@ export function DietIcon({
 
   const iconName = iconUrlMap.get(type);
   return (
-    <div className={`relative ${className}`}>
+    <span className={`block relative ${className}`}>
       <img
         src={iconName}
         className={`size-full ${color === "BW" && "filter grayscale"}`}
@@ -48,6 +48,6 @@ export function DietIcon({
         data-testid={testId && `${testId}-${type}-diet-icon`}
         title={t(map.get(type) ?? "")}
       />
-    </div>
+    </span>
   );
 }

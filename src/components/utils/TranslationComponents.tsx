@@ -153,7 +153,7 @@ const components = (
         className={`rounded-lg px-2`}
         title={t("save-as-pizzeria")}
       >
-        <div className="flex items-center gap-2">
+        <span className="flex items-center gap-2">
           <SaveAsIcon
             size={20}
             strokeWidth={2}
@@ -164,7 +164,7 @@ const components = (
           ) : (
             <span>{t("save")}</span>
           )}
-        </div>
+        </span>
       </Button>
     </span>
   ),
@@ -188,10 +188,10 @@ const components = (
         className={`rounded-lg px-2`}
         title={t("manage-pizzeria-title")}
       >
-        <div className="flex items-center gap-2">
+        <span className="flex items-center gap-2">
           <Store size={20} strokeWidth={2} />
           {isDesktop && <span>{t("manage-pizzeria-button")}</span>}
-        </div>
+        </span>
       </Button>
     </span>
   ),

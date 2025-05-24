@@ -20,12 +20,13 @@ export function Accordeon({ elements, height, className }: AccordeonProps) {
     <div className={className}>
       {elements.map(({ expandable, header, expand }, index) => (
         <div
-          id={expandable.id}
+          key={expandable.id}
           className={`h-fit flex flex-col items-start w-full bg-amber-300 ${
             index === 0 && "rounded-t-lg"
           } ${index === elements.length - 1 && "rounded-b-lg"}`}
         >
-          <button
+          <div
+            role="button"
             className="h-10 flex items-center text-lg font-bold cursor-pointer text-left w-full px-2"
             onClick={() => setExtended(extended === index ? -1 : index)}
             title={t("expand-element", { element: expandable.name })}
@@ -39,7 +40,7 @@ export function Accordeon({ elements, height, className }: AccordeonProps) {
               } transition-all`}
             />
             {header}
-          </button>
+          </div>
           <div
             style={{
               height: extended == index ? height : "0rem",

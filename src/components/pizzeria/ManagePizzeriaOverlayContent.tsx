@@ -30,12 +30,10 @@ export function ManagePizzeriaOverlayContent() {
   };
 
   return (
-    <div
-      className={` h-[70dvh] overflow-y-auto ${isDesktop ? "w-[750px]" : ""}`}
-    >
+    <div className={`${isDesktop ? "max-w-[calc(750px+1rem)]" : ""}`}>
       {pizzerias.length === 0 && <div>{t("no-pizzerias")}</div>}
       <Accordeon
-        className="w-full"
+        className={`${isDesktop ? "min-w-[750px] mx-1" : "w-full"}`}
         height={"15.25rem"}
         elements={pizzerias.map((p) => ({
           expandable: p,
