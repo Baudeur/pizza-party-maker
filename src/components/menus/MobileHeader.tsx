@@ -1,4 +1,4 @@
-import { CircleHelp, Menu, Settings, X } from "lucide-react";
+import { CircleHelp, House, Menu, Settings, X } from "lucide-react";
 import title from "../../assets/Title.png";
 import { Infos } from "../infos/Infos";
 import { useState } from "react";
@@ -32,6 +32,17 @@ export function MobileHeader() {
       >
         <div className="flex-col h-[calc(100dvh-48px)] pb-2 flex justify-between">
           <div>
+            <hr />
+            <Link to="/">
+              <button
+                className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
+                onClick={() => setExpanded(false)}
+                title={t("home")}
+              >
+                <House size={30} color="gray" strokeWidth={2} />
+                <span className="ml-2 text-black font-normal">{t("home")}</span>
+              </button>
+            </Link>
             <hr />
             <Link to="/help">
               <button
