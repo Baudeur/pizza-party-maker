@@ -77,9 +77,10 @@ export function OverlayInside({
               layoutClassName={`h-fit max-w-[90vw] ${
                 !isDesktop && "w-[90vw] translate-y-6"
               }`}
-              styleClassName={`overflow-y-auto ${
+              styleClassName={`${
                 isDesktop ? "max-h-[90lvh]" : "max-h-[calc(90lvh-3rem)]"
               }`}
+              yPadding={false}
               testId={`${testId}-container`}
               header={
                 <div className="flex">

@@ -30,7 +30,7 @@ export function Params() {
   };
 
   return (
-    <div>
+    <div className={isDesktop ? "py-4" : ""}>
       <Mobile>
         <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-4 text-center w-full">
           {t("parameters-title")}

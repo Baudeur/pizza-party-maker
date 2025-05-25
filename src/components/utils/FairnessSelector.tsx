@@ -414,7 +414,9 @@ export function FairnessSelector({
               dominantBaseline="central"
               fontSize={labelSpace - 5}
             >
-              {value1 !== value2 ? `${value1}%-${value2}%` : `${value1}%`}
+              {value1 !== value2
+                ? `${value1 - 100}%-${value2 - 100}%`
+                : `${value1 - 100}%`}
             </text>
           </>
         ) : (
@@ -435,7 +437,7 @@ export function FairnessSelector({
               dominantBaseline="central"
               fontSize={labelSpace - 5}
             >
-              {value1}%
+              {value1 - 100}%
             </text>
             <rect
               x={startX + workingWidth * percentage2 - labelSpace * 1.2}
@@ -453,7 +455,7 @@ export function FairnessSelector({
               dominantBaseline="central"
               fontSize={labelSpace - 5}
             >
-              {value2}%
+              {value2 - 100}%
             </text>
           </>
         )}

@@ -23,7 +23,7 @@ export function HelpPage() {
     window.scrollTo(0, 0);
   });
   return (
-    <div className="p-4 bg-amber-100 h-full">
+    <div className="px-4 bg-amber-100 h-full">
       <InfoContent />
     </div>
   );

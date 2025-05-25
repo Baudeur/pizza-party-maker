@@ -10,8 +10,21 @@ export type OverlayId =
   | "DETAILS"
   | undefined;
 
-const initialState: { opened: OverlayId } = {
-  opened: undefined,
+type OverlaysState = {
+  openedOverlay: OverlayId;
+  tooltipContent: string | undefined;
+  tooltipCoordinates: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+};
+
+const initialState: OverlaysState = {
+  openedOverlay: undefined,
+  tooltipContent: undefined,
+  tooltipCoordinates: { x: 0, y: 0, width: 0, height: 0 },
 };
 
 const overlays = createSlice({
@@ -19,13 +32,30 @@ const overlays = createSlice({
   initialState,
   reducers: {
     closeOverlay(state) {
-      return { ...state, opened: undefined };
+      return { ...state, openedOverlay: undefined };
     },
     openOverlay(state, action: PayloadAction<OverlayId>) {
-      return { ...state, opened: action.payload };
+      return { ...state, openedOverlay: action.payload };
+    },
+    closeTooltip(state) {
+      return { ...state, tooltipContent: undefined };
+    },
+    openTooltip(
+      state,
+      action: PayloadAction<{
+        content: string;
+        coords: { x: number; y: number; width: number; height: number };
+      }>
+    ) {
+      return {
+        ...state,
+        tooltipContent: action.payload.content,
+        tooltipCoordinates: action.payload.coords,
+      };
     },
   },
 });
 
 export const overlaysReducer = overlays.reducer;
-export const { closeOverlay, openOverlay } = overlays.actions;
+export const { closeOverlay, openOverlay, openTooltip, closeTooltip } =
+  overlays.actions;

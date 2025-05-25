@@ -20,6 +20,9 @@ import { desktopSize } from "../../services/constants";
 import { okayThresoldsSelector } from "../../modules/params/selector";
 import { closeOverlay } from "../../modules/overlays/slice";
 import { useAppDispatch } from "../../hooks";
+import { CircleHelp } from "lucide-react";
+import { Tooltip } from "../utils/Tooltip";
+import { Desktop, Mobile } from "../utils/ReactiveComponents";
 
 const optionsInit = [
   { title: "1/8", value: 1 / 8, label: "1/8" },
@@ -137,7 +140,7 @@ export function SuggestOverlayContent() {
   };
 
   return (
-    <div className={`${isDesktop && "w-[500px]"}`}>
+    <div className={`${isDesktop && "w-[500px]"} py-4`}>
       <p className="mb-2">{t("suggester-description")}</p>
       <div className="flex flex-col gap-2">
         <div className={`flex w-full gap-2 items-center`}>
@@ -183,29 +186,54 @@ export function SuggestOverlayContent() {
             testId="suggester-strategy-dropdown"
             title={t("suggester-strategy-selection")}
           />
+          <Tooltip content={t("suggester-strategy-help")}>
+            <CircleHelp size={20} />
+          </Tooltip>
         </div>
-        <div className={`px-2 flex gap-2 w-full`}>
-          <div className="w-2/5 text-right">{t("suggester-unfairness")}</div>
+        <div
+          className={`${
+            !isDesktop && "flex-col"
+          } px-2 flex gap-2 items-center w-full`}
+        >
           <div
-            className={`bg-white font-bold ${
-              isDesktop ? "w-20" : "px-1"
-            } text-center h-full rounded-lg`}
+            className={`${
+              isDesktop ? "w-2/5 justify-end" : "w-full justify-center"
+            } flex gap-2 items-center`}
           >
-            {fairness}%
+            <div className="text-right">{t("suggester-unfairness")}</div>
+            <Mobile>
+              <Tooltip content={t("suggester-unfairness-help")}>
+                <CircleHelp size={20} />
+              </Tooltip>
+            </Mobile>
           </div>
-          <input
-            className={`accent-green-500 touch-none ${
-              isDesktop ? "w-full" : "w-1/2"
-            }`}
-            type="range"
-            value={fairness}
-            title={t("suggester-unfairness-description")}
-            onChange={(e) => setFairness(Number(e.target.value))}
-            min={105}
-            max={200}
-            step={5}
-            data-testid="suggester-fairness-slider"
-          />
+          <div className={`${isDesktop ? " w-1/2" : "w-full"} flex gap-2`}>
+            <div
+              className={`bg-white font-bold ${
+                isDesktop ? "w-20" : "px-1"
+              } text-center h-full rounded-lg`}
+            >
+              {fairness - 100}%
+            </div>
+            <input
+              className={`accent-green-500 touch-none ${
+                isDesktop ? "w-full" : "w-full"
+              }`}
+              type="range"
+              value={fairness}
+              title={t("suggester-unfairness-description")}
+              onChange={(e) => setFairness(Number(e.target.value))}
+              min={105}
+              max={200}
+              step={5}
+              data-testid="suggester-fairness-slider"
+            />
+          </div>
+          <Desktop>
+            <Tooltip content={t("suggester-unfairness-help")}>
+              <CircleHelp size={20} />
+            </Tooltip>
+          </Desktop>
         </div>
         <Button
           color="green"

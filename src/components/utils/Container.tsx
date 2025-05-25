@@ -6,6 +6,8 @@ type ContainerProps = {
   testId?: string;
   header?: ReactNode;
   fullHeight?: boolean;
+  xPadding?: boolean;
+  yPadding?: boolean;
 };
 
 export function Container({
@@ -15,6 +17,8 @@ export function Container({
   testId,
   header,
   fullHeight = false,
+  xPadding = true,
+  yPadding = true,
 }: PropsWithChildren<ContainerProps>) {
   return (
     <div
@@ -23,7 +27,9 @@ export function Container({
     >
       {header && <div className="w-full rounded-t-xl">{header}</div>}
       <div
-        className={`${styleClassName} w-full px-4 py-4 bg-amber-100 border-amber-400 border-4 rounded-2xl h-full ${
+        className={`${styleClassName} w-full ${xPadding && "px-4"} ${
+          yPadding && "py-4"
+        } bg-amber-100 border-amber-400 border-4 rounded-2xl h-full ${
           header ? "border-t-0 rounded-t-none" : ""
         }`}
       >

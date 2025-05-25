@@ -80,9 +80,9 @@ export function SaveAsPizzeriaOverlayContent() {
   }, [nameConflict]);
 
   return (
-    <div className={isDesktop ? "w-[500px]" : ""}>
+    <div className={`${isDesktop ? "w-[500px]" : ""} py-4`}>
       {nameConflict === undefined && (
-        <div className="flex justify-between w-full items-center gap-2 mt-2">
+        <div className="flex justify-between w-full items-center gap-2">
           <div
             className={`flex gap-2 w-full ${!isDesktop && "flex-col"}`}
             onKeyDown={(event) => {

@@ -10,6 +10,7 @@ import { desktopSize } from "../../services/constants";
 import { SaveAsPizzeriaOverlayContent } from "../pizzeria/SaveAsPizzeriaOverlayContent";
 import { ManagePizzeriaOverlayContent } from "../pizzeria/ManagePizzeriaOverlayContent";
 import { MobileDetailsOverlayContent } from "./MobileDetailsOverlayContent";
+import { TooltipOverlay } from "../utils/TooltipOverlay";
 
 export function Overlays() {
   const { t } = useTranslation();
@@ -17,6 +18,7 @@ export function Overlays() {
 
   return (
     <>
+      <TooltipOverlay />
       <Overlay
         overlayId="SUGGESTER"
         title={t("suggester-popup-title")}

@@ -10,7 +10,9 @@ export function CaseScenarioOverlayContent() {
 
   return (
     <div
-      className={`text-left ${isDesktop ? "max-w-[750px]" : "w-full h-full"}`}
+      className={`text-left ${
+        isDesktop ? "w-[750px] py-4 overflow-y-auto h-[80lvh]" : "w-full h-full"
+      }`}
     >
       {/* ########## The detail panel ########## */}
 
