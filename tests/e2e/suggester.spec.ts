@@ -21,16 +21,16 @@ test("User can change fairness from 105 to 200 with steps of 5", async ({
   await overlayButton.click();
   const fairnessSlider = page.getByTestId("suggester-fairness-slider");
   await setSliderTo(fairnessSlider, 105);
-  await expect(fairnessSlider).toHaveValue("1.05");
+  await expect(fairnessSlider).toHaveValue("105");
   await page.keyboard.press("ArrowLeft");
-  await expect(fairnessSlider).toHaveValue("1.05");
+  await expect(fairnessSlider).toHaveValue("105");
   await setSliderTo(fairnessSlider, 200);
-  await expect(fairnessSlider).toHaveValue("2");
+  await expect(fairnessSlider).toHaveValue("200");
   await page.keyboard.press("ArrowRight");
-  await expect(fairnessSlider).toHaveValue("2");
+  await expect(fairnessSlider).toHaveValue("200");
   if (browserName !== "webkit") {
     await page.keyboard.press("ArrowLeft");
-    await expect(fairnessSlider).toHaveValue("1.95");
+    await expect(fairnessSlider).toHaveValue("195");
   }
 });
 

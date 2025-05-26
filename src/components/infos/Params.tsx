@@ -46,7 +46,7 @@ export function Params() {
             color="orange"
             className="h-8 rounded-lg w-40 px-2 mb-4"
             title={t("parameters-restore-default")}
-            data-testid="params-fairness-reset-button"
+            testId="params-fairness-reset-button"
           >
             <div className="flex items-center justify-center gap-2">
               <RotateCcw size={20} strokeWidth={2} />

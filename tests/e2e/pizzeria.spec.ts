@@ -113,6 +113,7 @@ test("Pizzerias can have name conflict and be overriden", async ({ page }) => {
   const saveAsButton = page.getByTestId("pizza-panel-save-as-button");
   const saveAsBackground = page.getByTestId("save-as-overlay-background");
   const manageBackground = page.getByTestId("manage-overlay-background");
+  const manageOverlay = page.getByTestId("manage-overlay-container");
 
   const saveAsInput = page.getByTestId("save-as-pizzeria-text-input");
   const saveAsInputButton = page.getByTestId("save-as-pizzeria-save-button");
@@ -131,6 +132,7 @@ test("Pizzerias can have name conflict and be overriden", async ({ page }) => {
   //Save
   await createPizza(page, 0, 1, "4 Cheese", "vegetarian", "14.02");
   await saveAsButton.click();
+  await expect(saveAsOverlay).toBeVisible();
   await saveAsInput.fill("Pizza de la mama");
   await saveAsInputButton.click();
   await expect(saveAsOverlay).not.toBeVisible();
@@ -140,6 +142,7 @@ test("Pizzerias can have name conflict and be overriden", async ({ page }) => {
   await createPizza(page, 0, 1, "4 Cheese", "vegetarian", "14.02");
   await createPizza(page, 1, 1, "Bourguignonne", "normal", "15.80");
   await saveAsButton.click();
+  await expect(saveAsOverlay).toBeVisible();
   await saveAsInput.fill("Pizza de la mama");
   await saveAsInputButton.click();
   await expect(alreadyExists).toBeVisible();
@@ -148,12 +151,14 @@ test("Pizzerias can have name conflict and be overriden", async ({ page }) => {
   await expect(alreadyExists).not.toBeVisible();
   await expect(contentOf).not.toBeVisible();
   await saveAsBackground.click({ position: { x: 0, y: 0 } });
+  await expect(saveAsOverlay).not.toBeVisible();
 
   //Check pizzeria didn't change
   await manageButton.click();
   await manageSelect.click();
   await expect(pizza1name).not.toBeVisible();
   await manageBackground.click({ position: { x: 0, y: 0 } });
+  await expect(manageOverlay).not.toBeVisible();
 
   //Change pizzeria and override
   await saveAsButton.click();
