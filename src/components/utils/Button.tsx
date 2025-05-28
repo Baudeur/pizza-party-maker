@@ -1,16 +1,16 @@
-import { PropsWithChildren } from "react";
+import { MouseEvent, PropsWithChildren } from "react";
 
-export type ButtonColor = "green" | "red" | "yellow";
+export type ButtonColor = "green" | "red" | "yellow" | "orange";
 
 type ButtonProps = {
   className?: string;
   color: ButtonColor;
-  onClick: () => void;
+  onClick: (event: MouseEvent) => void;
+  title: string;
   tabIndex?: number;
   disabled?: boolean;
   disabledStyle?: string;
   testId?: string;
-  title?: string;
 };
 
 export function Button({
@@ -30,8 +30,9 @@ export function Button({
       className={`${className} hover:brightness-90 active:brightness-[80%] h-8 flex justify-center items-center ${disabledStyle} ${
         color === "red" && "bg-red-500"
       } ${color === "green" && "bg-green-500"} ${
-        color === "yellow" && "bg-yellow-500"
-      }`}
+        color === "orange" && "bg-yellow-500"
+      } ${color === "yellow" && "bg-amber-300"}
+      `}
       onClick={onClick}
       disabled={disabled}
       data-testid={testId}

@@ -6,7 +6,7 @@ import {
 } from "../../services/suggestionService";
 import { DropDown } from "../utils/DropDown";
 import { Button } from "../utils/Button";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { pizzasSelector } from "../../modules/pizzas/selector";
 import { peopleSelector } from "../../modules/people/selector";
 import { Spinner } from "../utils/Spinner";
@@ -15,39 +15,42 @@ import { modifyPizza } from "../../modules/pizzas/slice";
 import spinner from "../../assets/LoadingOmni.png";
 import workerUrl from "/src/services/workerService?worker&url";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
+import { okayThresoldsSelector } from "../../modules/params/selector";
+import { closeOverlay } from "../../modules/overlays/slice";
+import { useAppDispatch } from "../../hooks";
+import { CircleHelp } from "lucide-react";
+import { Tooltip } from "../utils/Tooltip";
+import { Desktop, Mobile } from "../utils/ReactiveComponents";
 
 const optionsInit = [
-  { value: 1 / 8, label: "1/8" },
-  { value: 1 / 6, label: "1/6" },
-  { value: 1 / 5, label: "1/5" },
-  { value: 1 / 4, label: "1/4" },
-  { value: 1 / 3, label: "1/3" },
-  { value: 3 / 8, label: "3/8" },
-  { value: 2 / 5, label: "2/5" },
-  { value: 1 / 2, label: "1/2" },
-  { value: 3 / 5, label: "3/5" },
-  { value: 5 / 8, label: "5/8" },
-  { value: 2 / 3, label: "2/3" },
-  { value: 3 / 4, label: "3/4" },
-  { value: 4 / 5, label: "4/5" },
-  { value: 5 / 6, label: "5/6" },
-  { value: 7 / 8, label: "7/8" },
-  { value: 1, label: "1" },
+  { title: "1/8", value: 1 / 8, label: "1/8" },
+  { title: "1/6", value: 1 / 6, label: "1/6" },
+  { title: "1/5", value: 1 / 5, label: "1/5" },
+  { title: "1/4", value: 1 / 4, label: "1/4" },
+  { title: "1/3", value: 1 / 3, label: "1/3" },
+  { title: "3/8", value: 3 / 8, label: "3/8" },
+  { title: "2/5", value: 2 / 5, label: "2/5" },
+  { title: "1/2", value: 1 / 2, label: "1/2" },
+  { title: "3/5", value: 3 / 5, label: "3/5" },
+  { title: "5/8", value: 5 / 8, label: "5/8" },
+  { title: "2/3", value: 2 / 3, label: "2/3" },
+  { title: "3/4", value: 3 / 4, label: "3/4" },
+  { title: "4/5", value: 4 / 5, label: "4/5" },
+  { title: "5/6", value: 5 / 6, label: "5/6" },
+  { title: "7/8", value: 7 / 8, label: "7/8" },
+  { title: "1", value: 1, label: "1" },
 ];
 
-type SuggestOverlayContentProps = {
-  close: () => void;
-};
-
-export function SuggestOverlayContent({
-  close,
-}: Readonly<SuggestOverlayContentProps>) {
+export function SuggestOverlayContent() {
   const { t } = useTranslation();
-  const [fairness, setFairness] = useState(1.25);
+  const okay = useSelector(okayThresoldsSelector);
+  const [fairness, setFairness] = useState(okay);
   const [suggestMode, setSuggestMode] = useState<SuggestMode>("lowerCost");
   const [quantity, setQuantity] = useState(1);
   const [options, setOptions] =
-    useState<{ value: number; label: string }[]>(optionsInit);
+    useState<{ title: string; value: number; label: string }[]>(optionsInit);
 
   const pizzas = useSelector(pizzasSelector);
   const people = useSelector(peopleSelector);
@@ -56,7 +59,8 @@ export function SuggestOverlayContent({
     SuggestedQuantityPerPizza | undefined
   >();
   const [error, setError] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   new Image(1, 1).src = spinner; //preload spinner image
 
@@ -65,6 +69,7 @@ export function SuggestOverlayContent({
     if (addValue === 100) return;
     const newOptions = options.concat(
       optionsInit.map(({ value: val, label }) => ({
+        title: `${val + addValue}`,
         value: val + addValue,
         label: addValue + " + " + label,
       }))
@@ -75,12 +80,12 @@ export function SuggestOverlayContent({
 
   useEffect(() => {
     return () => {
-      setFairness(1.25);
+      setFairness(okay);
       setQuantity(1);
       setSuggestMode("lowerCost");
       setOptions(optionsInit);
     };
-  }, []);
+  }, [okay]);
 
   const handleCompute = () => {
     setIsLoading(true);
@@ -131,17 +136,14 @@ export function SuggestOverlayContent({
         dispatch(modifyPizza(suggestedPizza));
       }
     });
-    close();
+    dispatch(closeOverlay());
   };
 
   return (
-    <div className="w-[500px]">
-      <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-2 text-center w-full">
-        {t("suggester-popup-title")}
-      </p>
+    <div className={`${isDesktop && "w-[500px]"} py-4`}>
       <p className="mb-2">{t("suggester-description")}</p>
       <div className="flex flex-col gap-2">
-        <div className="flex w-full gap-2 items-center">
+        <div className={`flex w-full gap-2 items-center`}>
           <div
             className="w-2/5 text-right"
             data-testid="suggester-quantity-label"
@@ -155,9 +157,10 @@ export function SuggestOverlayContent({
             onChange={(value) => setQuantity(value)}
             onScrollBottom={addChoices}
             testId="suggester-quantity-dropdown"
+            title={t("suggester-quantity-description")}
           />
         </div>
-        <div className="flex w-full gap-2 items-center">
+        <div className={`flex w-full gap-2 items-center`}>
           <div
             className="w-2/5 text-right"
             data-testid="suggester-strategy-label"
@@ -167,29 +170,70 @@ export function SuggestOverlayContent({
           <DropDown<string>
             className="w-[175px]"
             options={[
-              { value: "lowerCost", label: t("suggester-strategy-minimal") },
-              { value: "maxDiversity", label: t("suggester-strategy-maximal") },
+              {
+                title: t("suggester-strategy-minimal-description"),
+                value: "lowerCost",
+                label: t("suggester-strategy-minimal"),
+              },
+              {
+                title: t("suggester-strategy-maximal-description"),
+                value: "maxDiversity",
+                label: t("suggester-strategy-maximal"),
+              },
             ]}
             value={suggestMode}
             onChange={(value) => setSuggestMode(value as SuggestMode)}
             testId="suggester-strategy-dropdown"
+            title={t("suggester-strategy-selection")}
           />
+          <Tooltip content={t("suggester-strategy-help")}>
+            <CircleHelp size={20} />
+          </Tooltip>
         </div>
-        <div className="px-2 flex gap-2 w-full">
-          <div className="w-2/5 text-right">{t("suggester-unfairness")}</div>
-          <div className="bg-white font-bold w-16 text-center h-full rounded-lg">
-            {(fairness * 100).toFixed(0)}%
+        <div
+          className={`${
+            !isDesktop && "flex-col"
+          } px-2 flex gap-2 items-center w-full`}
+        >
+          <div
+            className={`${
+              isDesktop ? "w-2/5 justify-end" : "w-full justify-center"
+            } flex gap-2 items-center`}
+          >
+            <div className="text-right">{t("suggester-unfairness")}</div>
+            <Mobile>
+              <Tooltip content={t("suggester-unfairness-help")}>
+                <CircleHelp size={20} />
+              </Tooltip>
+            </Mobile>
           </div>
-          <input
-            className="accent-green-500"
-            type="range"
-            value={fairness}
-            onChange={(e) => setFairness(Number(e.target.value))}
-            min={1.05}
-            max={2}
-            step={0.05}
-            data-testid="suggester-fairness-slider"
-          />
+          <div className={`${isDesktop ? " w-1/2" : "w-full"} flex gap-2`}>
+            <div
+              className={`bg-white font-bold ${
+                isDesktop ? "w-20" : "px-1"
+              } text-center h-full rounded-lg`}
+            >
+              {fairness - 100}%
+            </div>
+            <input
+              className={`accent-green-500 touch-none ${
+                isDesktop ? "w-full" : "w-full"
+              }`}
+              type="range"
+              value={fairness}
+              title={t("suggester-unfairness-description")}
+              onChange={(e) => setFairness(Number(e.target.value))}
+              min={105}
+              max={200}
+              step={5}
+              data-testid="suggester-fairness-slider"
+            />
+          </div>
+          <Desktop>
+            <Tooltip content={t("suggester-unfairness-help")}>
+              <CircleHelp size={20} />
+            </Tooltip>
+          </Desktop>
         </div>
         <Button
           color="green"
@@ -197,6 +241,7 @@ export function SuggestOverlayContent({
           className="rounded-lg font-bold"
           disabled={isLoading}
           testId="suggester-compute-button"
+          title={t("suggester-compute")}
         >
           {t("suggester-compute")}
         </Button>
@@ -217,6 +262,7 @@ export function SuggestOverlayContent({
               onClick={handleApply}
               className="w-full font-bold rounded-lg mt-2"
               testId="suggester-apply-button"
+              title={t("suggester-apply")}
             >
               {t("suggester-apply")}
             </Button>

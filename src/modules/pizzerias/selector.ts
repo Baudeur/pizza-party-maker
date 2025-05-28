@@ -5,3 +5,6 @@ export const pizzeriasSelector = (state: RootState) =>
 
 export const loadedPizzeriaSelector = (state: RootState) =>
   state.pizzerias.loaded;
+
+export const pizzeriaStateSelector = (state: RootState) =>
+  state.pizzerias.pizzeriaState;

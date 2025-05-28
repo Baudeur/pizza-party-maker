@@ -86,3 +86,12 @@ export function priceToString(number: number) {
     return number.toFixed(2);
   }
 }
+
+export function formatNameForTestId(name: string) {
+  const regexArray = name
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .match(/([a-z]|\d|-)*/g);
+  if (regexArray) return regexArray.join("");
+  return "";
+}

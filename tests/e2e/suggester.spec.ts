@@ -21,16 +21,16 @@ test("User can change fairness from 105 to 200 with steps of 5", async ({
   await overlayButton.click();
   const fairnessSlider = page.getByTestId("suggester-fairness-slider");
   await setSliderTo(fairnessSlider, 105);
-  await expect(fairnessSlider).toHaveValue("1.05");
+  await expect(fairnessSlider).toHaveValue("105");
   await page.keyboard.press("ArrowLeft");
-  await expect(fairnessSlider).toHaveValue("1.05");
+  await expect(fairnessSlider).toHaveValue("105");
   await setSliderTo(fairnessSlider, 200);
-  await expect(fairnessSlider).toHaveValue("2");
+  await expect(fairnessSlider).toHaveValue("200");
   await page.keyboard.press("ArrowRight");
-  await expect(fairnessSlider).toHaveValue("2");
+  await expect(fairnessSlider).toHaveValue("200");
   if (browserName !== "webkit") {
     await page.keyboard.press("ArrowLeft");
-    await expect(fairnessSlider).toHaveValue("1.95");
+    await expect(fairnessSlider).toHaveValue("195");
   }
 });
 
@@ -122,7 +122,7 @@ test("Computing with minimal price selects only the lowest price pizzas", async 
   let i = 0;
   for (const diet of diets) {
     for (let j = 0; j < 2; j++) {
-      await createPizza(page, 1, i.toString(), diet, (j + 12).toString());
+      await createPizza(page, i, 1, i.toString(), diet, (j + 12).toString());
       i++;
     }
   }
@@ -142,7 +142,7 @@ test("Computing with maximal diversity selects as much pizzas as possible", asyn
   let i = 0;
   for (const diet of diets) {
     for (let j = 0; j < 2; j++) {
-      await createPizza(page, 1, i.toString(), diet, (j + 12).toString());
+      await createPizza(page, i, 1, i.toString(), diet, (j + 12).toString());
       i++;
     }
   }
@@ -169,7 +169,7 @@ test("Computing respects quantity", async ({ page }) => {
   let i = 0;
   for (const diet of diets) {
     for (let j = 0; j < 2; j++) {
-      await createPizza(page, 1, i.toString(), diet, (j + 12).toString());
+      await createPizza(page, i, 1, i.toString(), diet, (j + 12).toString());
       i++;
     }
   }
@@ -207,7 +207,7 @@ test("The solution is satisfying", async ({ page }) => {
   let i = 0;
   for (const diet of diets) {
     for (let j = 0; j < 2; j++) {
-      await createPizza(page, 1, i.toString(), diet, (j + 12).toString());
+      await createPizza(page, i, 1, i.toString(), diet, (j + 12).toString());
       i++;
     }
   }
@@ -240,7 +240,7 @@ test("The price in the suggestion is the same after applying", async ({
   let i = 0;
   for (const diet of diets) {
     for (let j = 0; j < 2; j++) {
-      await createPizza(page, 1, i.toString(), diet, (j + 12).toString());
+      await createPizza(page, i, 1, i.toString(), diet, (j + 12).toString());
       i++;
     }
   }

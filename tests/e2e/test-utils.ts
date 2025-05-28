@@ -20,7 +20,7 @@ export async function checkPizza(
   );
   const priceDisplay = page.getByTestId(`${id}-pizza-display-price`);
   await expect(quantityDisplay).toHaveText(quantity.toString());
-  await expect(nameDisplay).toHaveText(name);
+  await expect(nameDisplay).toHaveText(name === "" ? "Unnamed" : name);
   await expect(dietDisplay).toBeVisible();
   await expect(dietNot).not.toBeVisible();
   await expect(priceDisplay).toHaveText(price + " €");
@@ -35,16 +35,21 @@ function nextDiet(diet) {
 
 export async function createPizza(
   page: Page,
+  id: number,
   quantity: number = 1,
   name: string = "",
   diet: string = "normal",
   price: string = ""
 ) {
-  const quantityInput = page.getByTestId("pizza-form-quantity-input");
-  const nameInput = page.getByTestId("pizza-form-name");
-  const dietInputButton = page.getByTestId(`pizza-form-diet-${diet}-button`);
-  const priceInput = page.getByTestId("pizza-form-price");
-  const submit = page.getByTestId("pizza-form-submit");
+  const addPizzaButton = page.getByTestId("add-pizza-button");
+  await addPizzaButton.click();
+  const quantityInput = page.getByTestId(`${id}-pizza-edit-quantity-input`);
+  const nameInput = page.getByTestId(`${id}-pizza-edit-name`);
+  const dietInputButton = page.getByTestId(
+    `${id}-pizza-edit-diet-${diet}-button`
+  );
+  const priceInput = page.getByTestId(`${id}-pizza-edit-price`);
+  const submit = page.getByTestId(`${id}-pizza-edit-validate-button`);
   await quantityInput.fill(quantity.toString());
   await nameInput.fill(name);
   await dietInputButton.click();
@@ -69,6 +74,10 @@ export async function setPeople(
   await inputPescoVegetarian.fill(pescoVegetarian.toString());
   await inputVegetarian.fill(vegetarian.toString());
   await inputVegan.fill(vegan.toString());
+}
+
+export async function scrollToBottom(page: Page) {
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
 }
 
 export const diets = ["normal", "pescoVegetarian", "vegetarian", "vegan"];

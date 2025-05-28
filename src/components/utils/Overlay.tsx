@@ -1,67 +1,29 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import { Container } from "../utils/Container";
+import { PropsWithChildren } from "react";
+import { OverlayInside } from "./OverlayInside";
+import { OverlayId } from "../../modules/overlays/slice";
+import { useSelector } from "react-redux";
+import { openedOverlaySelector } from "../../modules/overlays/selector";
 
-type Overlay = {
-  close: () => void;
+type OverlayWrapper = {
+  overlayId: OverlayId;
+  title: string;
   testId?: string;
 };
 
-export const CloseContext = createContext(() => {});
-
 export function Overlay({
-  close,
-  testId,
+  overlayId,
+  title,
   children,
-}: PropsWithChildren<Overlay>) {
-  const [showDelayed, setShowDelayed] = useState(false);
-  useEffect(() => {
-    setShowDelayed(true);
-  }, []);
-
-  const animateAndClose = useCallback(() => {
-    setShowDelayed(false);
-    setTimeout(() => {
-      close();
-    }, 300);
-  }, [close]);
+  testId,
+}: PropsWithChildren<OverlayWrapper>) {
+  const openedOverlay = useSelector(openedOverlaySelector);
   return (
-    <div
-      className={`z-30 fixed size-full bg-black top-0 left-0 ${
-        showDelayed ? "bg-opacity-70" : "bg-opacity-0 pointer-events-none"
-      } transition-all duration-150`}
-      data-testid={`${testId}-background`}
-    >
-      <div
-        className="flex items-center justify-center h-full w-full"
-        onClick={animateAndClose}
-        onKeyDown={(e) => {
-          e.key === "Escape" && animateAndClose();
-        }}
-      >
-        <div
-          className={`size-fit transition-all ease-out duration-300 ${
-            showDelayed
-              ? "transform-none opacity-100"
-              : " opacity-0 translate-y-[-100px]"
-          }`}
-          onClick={(e) => e.stopPropagation()}
-          onKeyDown={(e) => {
-            e.key === "Escape" && animateAndClose();
-          }}
-        >
-          <Container className="h-fit" testId={`${testId}-container`}>
-            <CloseContext.Provider value={animateAndClose}>
-              {children}
-            </CloseContext.Provider>
-          </Container>
-        </div>
-      </div>
+    <div>
+      {openedOverlay === overlayId && (
+        <OverlayInside title={title} testId={testId}>
+          {children}
+        </OverlayInside>
+      )}
     </div>
   );
 }

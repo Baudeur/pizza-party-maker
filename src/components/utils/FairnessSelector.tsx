@@ -1,5 +1,7 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
 
 type FairnessSelectorProps = {
   value1: number;
@@ -12,16 +14,14 @@ type FairnessSelectorProps = {
   className?: string;
 };
 
-const width = 400;
+//Height of the whole component
 const height = 70;
 const borderWidth = 2;
 //Height of the space for the label under the graph
 const labelSpace = 20;
 //Margin on the right for the fade of the bad portion
 const badExcess = 40;
-//Width of the handle to move change the value
-const handleWidth = 15;
-//Space Before the graph starts (needed for label no to be cropped)
+//Space Before the graph starts (needed for label not to be cropped)
 const marginLeft = 25;
 
 export function FairnessSelector({
@@ -39,6 +39,12 @@ export function FairnessSelector({
     i18n: { language },
   } = useTranslation();
   const ref = useRef<SVGRectElement>(null);
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
+  const [dragged, setDragged] = useState(0);
+  //Width of the whole component
+  const width = isDesktop ? 400 : 280;
+  //Width of the handle to move change the value
+  const handleWidth = isDesktop ? 15 : 20;
 
   const percentage1 = (value1 - min) / (max - min);
   const percentage2 = (value2 - min) / (max - min);
@@ -52,12 +58,18 @@ export function FairnessSelector({
     (width - badExcess - marginLeft - borderWidth * 2) / 21;
   //Height of the graph, without the label
   const graphHeight = height - labelSpace;
+  const cursorDistance = workingWidth * (percentage2 - percentage1);
   //Are the two labels touching eachother?
-  const shouldMerge =
-    workingWidth * (percentage2 - percentage1) < labelSpace * 1.2 * 2;
+  const shouldMerge = cursorDistance < labelSpace * 1.2 * 2;
+  //Are the two curors touching eachother?
+  const cursorTooClose = cursorDistance < handleWidth;
+  //Where should the cursor be touching to share the space?
+  const touchingCursorMiddle = (handleWidth - cursorDistance) / 2;
+
+  const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
   const roundStep = useCallback(
-    (number: number) => {
+    (number: number): number => {
       return Math.round(number / step) * step;
     },
     [step]
@@ -100,10 +112,10 @@ export function FairnessSelector({
 
   const handleStopDrag = useCallback(
     (ev: MouseEvent) => {
-      removeEventListener("mousemove", listener1);
-      removeEventListener("mousemove", listener2);
-      removeEventListener("mouseup", handleStopDrag);
-      removeEventListener("click", handleStopDrag, true);
+      setDragged(0);
+      removeEventListener("pointermove", listener1);
+      removeEventListener("pointermove", listener2);
+      removeEventListener("pointerup", handleStopDrag);
       ev.preventDefault();
       ev.stopPropagation();
     },
@@ -111,42 +123,56 @@ export function FairnessSelector({
   );
 
   //Exist so the don't exit the overlay if we mouseup in the background
-  const handleClickBlock = useCallback((ev: MouseEvent) => {
+  const handleClickBlock = useCallback((ev: MouseEvent | TouchEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
-    removeEventListener("click", handleClickBlock, true);
+    isTouch
+      ? removeEventListener("touchend", handleClickBlock, true)
+      : removeEventListener("click", handleClickBlock, true);
   }, []);
 
-  const handleStartDrag1 = () => {
-    addEventListener("mousemove", listener1);
-    addEventListener("mouseup", handleStopDrag);
-    addEventListener("click", handleClickBlock, true);
+  const handleStartDrag1 = (x?: number) => {
+    setDragged(1);
+    if (x !== undefined) handleMove(1)(x);
+    addEventListener("pointermove", listener1);
+    addEventListener("pointerup", handleStopDrag);
+    isTouch
+      ? addEventListener("touchend", handleClickBlock, true)
+      : addEventListener("click", handleClickBlock, true);
   };
-  const handleStartDrag2 = () => {
-    addEventListener("mousemove", listener2);
-    addEventListener("mouseup", handleStopDrag);
-    addEventListener("click", handleClickBlock, true);
+  const handleStartDrag2 = (x?: number) => {
+    setDragged(2);
+    if (x !== undefined) handleMove(2)(x);
+    addEventListener("pointermove", listener2);
+    addEventListener("pointerup", handleStopDrag);
+    isTouch
+      ? addEventListener("touchend", handleClickBlock, true)
+      : addEventListener("click", handleClickBlock, true);
   };
 
   const handleClick = (area: string, x: number) => {
     if (area === "good") {
-      handleMove(1)(x);
+      handleStartDrag1(x);
     }
     if (area === "bad") {
-      handleMove(2)(x);
+      handleStartDrag2(x);
     }
     const rect = ref.current?.getBoundingClientRect();
     const percentage =
       Math.min(Math.max(0, x - (rect?.x ?? 0)), workingWidth) / workingWidth;
     if (percentage - percentage1 < percentage2 - percentage) {
-      handleMove(1)(x);
+      handleStartDrag1(x);
     } else {
-      handleMove(2)(x);
+      handleStartDrag2(x);
     }
   };
   return (
-    <div className={className} data-testid="fairness-parameter">
+    <div
+      className={`${className} ${!isDesktop && "touch-none"}`}
+      data-testid="fairness-parameter"
+    >
       <svg width={width} height={height}>
+        <title>{t("suggester-unfairness-description")}</title>
         {/*Mask for fadout of bad*/}
         <defs>
           <linearGradient id="gradient">
@@ -187,7 +213,7 @@ export function FairnessSelector({
           className="fill-green-400"
           strokeWidth={borderWidth}
           stroke="black"
-          onClick={(ev) => {
+          onPointerDown={(ev) => {
             handleClick("good", ev.pageX);
           }}
         />
@@ -211,7 +237,7 @@ export function FairnessSelector({
           className="fill-yellow-400"
           strokeWidth={borderWidth}
           stroke="black"
-          onClick={(ev) => {
+          onPointerDown={(ev) => {
             handleClick("okay", ev.pageX);
           }}
         />
@@ -233,6 +259,7 @@ export function FairnessSelector({
           textAnchor="middle"
           dominantBaseline="central"
           fontSize={graphHeight * (language === "en" ? 0.3 : 0.25)}
+          opacity={value2 - value1 <= 5 ? 0 : 1}
         >
           {t("pizza-flag-okay")}
         </text>
@@ -248,7 +275,7 @@ export function FairnessSelector({
           strokeWidth={borderWidth}
           stroke="black"
           mask="url(#fade)"
-          onClick={(ev) => {
+          onPointerDown={(ev) => {
             handleClick("bad", ev.pageX);
           }}
         />
@@ -257,7 +284,8 @@ export function FairnessSelector({
             startX +
               workingWidth * percentage2 +
               graphHeight * 0.2 +
-              handleWidth / 2,
+              handleWidth / 2 +
+              (cursorTooClose ? touchingCursorMiddle : 0),
             width - startX / 2
           )}
           y={graphHeight / 2}
@@ -265,7 +293,8 @@ export function FairnessSelector({
             startX +
               workingWidth * percentage2 +
               graphHeight * 0.2 +
-              handleWidth / 2,
+              handleWidth / 2 +
+              (cursorTooClose ? touchingCursorMiddle : 0),
             width - startX / 2
           )},${graphHeight / 2})`}
           className="font-bold pointer-events-none"
@@ -276,48 +305,92 @@ export function FairnessSelector({
           {t("pizza-flag-bad")}
         </text>
         {/*Cursors*/}
-        <rect
+        <g
+          transform={`translate(${
+            startX +
+            workingWidth * percentage1 -
+            handleWidth / 2 -
+            (cursorTooClose ? touchingCursorMiddle : 0)
+          },${borderWidth / 2})`}
+          strokeWidth={borderWidth}
+          stroke="white"
+          className={`cursor-ew-resize fill-gray-400 hover:fill-gray-500 ${
+            isDesktop
+              ? "focus:fill-green-500"
+              : dragged === 1 && "fill-green-500"
+          }`}
           data-testid="fairness-parameter-cursor1"
-          className="cursor-ew-resize focus:fill-green-500 fill-gray-400 hover:fill-gray-500"
-          x={startX + workingWidth * percentage1 - handleWidth / 2}
-          width={handleWidth}
-          y={borderWidth / 2}
-          rx={handleWidth / 2}
-          height={graphHeight - borderWidth}
-          strokeWidth={borderWidth}
-          stroke="white"
-          onMouseDown={handleStartDrag1}
+          onPointerDown={() => handleStartDrag1()}
           onKeyDown={(ev) => {
             if (ev.key === "ArrowRight") {
-              onValue1Change(Math.min(value1 + 0.05, value2));
+              onValue1Change(Math.min(value1 + step, value2));
             }
             if (ev.key === "ArrowLeft") {
-              onValue2Change(Math.max(value1 - 0.05, min));
+              onValue1Change(Math.max(value1 - step, min));
             }
           }}
           tabIndex={-1}
-        />
-        <rect
+        >
+          <rect
+            width={handleWidth}
+            rx={isDesktop ? handleWidth / 2 : handleWidth / 4}
+            height={graphHeight - borderWidth}
+            opacity={cursorTooClose ? 0 : 1}
+          />
+          <path
+            d={`M ${handleWidth / 2},0 A ${handleWidth / 2},${
+              (graphHeight - borderWidth) / 2
+            } 0 0 0 0,${(graphHeight - borderWidth) / 2} ${handleWidth / 2},${
+              (graphHeight - borderWidth) / 2
+            } 0 0 0 ${handleWidth / 2},${graphHeight - borderWidth} h ${
+              handleWidth / 2
+            } V ${(graphHeight - borderWidth) / 2} 0 Z`}
+            opacity={cursorTooClose ? 1 : 0}
+          />
+        </g>
+        <g
           data-testid="fairness-parameter-cursor2"
-          className="cursor-ew-resize focus:fill-green-500 fill-gray-400 hover:fill-gray-500"
-          x={startX + workingWidth * percentage2 - handleWidth / 2}
-          width={handleWidth}
-          y={borderWidth / 2}
-          rx={handleWidth / 2}
-          height={graphHeight - borderWidth}
+          className={`cursor-ew-resize fill-gray-400 hover:fill-gray-500 ${
+            isDesktop
+              ? "focus:fill-green-500"
+              : dragged === 2 && "fill-green-500"
+          }`}
+          transform={`translate(${
+            startX +
+            workingWidth * percentage2 -
+            handleWidth / 2 +
+            (cursorTooClose ? touchingCursorMiddle : 0)
+          },${borderWidth / 2})`}
           strokeWidth={borderWidth}
           stroke="white"
-          onMouseDown={handleStartDrag2}
+          onPointerDown={() => handleStartDrag2()}
           onKeyDown={(ev) => {
             if (ev.key === "ArrowRight") {
-              onValue2Change(Math.min(value2 + 0.05, max));
+              onValue2Change(Math.min(value2 + step, max));
             }
             if (ev.key === "ArrowLeft") {
-              onValue2Change(Math.max(value2 - 0.05, value1));
+              onValue2Change(Math.max(value2 - step, value1));
             }
           }}
           tabIndex={-1}
-        />
+        >
+          <rect
+            width={handleWidth}
+            rx={isDesktop ? handleWidth / 2 : handleWidth / 4}
+            height={graphHeight - borderWidth}
+            opacity={cursorTooClose ? 0 : 1}
+          />
+          <path
+            d={`M ${handleWidth / 2},0 A ${handleWidth / 2},${
+              (graphHeight - borderWidth) / 2
+            } 0 0 1 ${handleWidth},${(graphHeight - borderWidth) / 2} ${
+              handleWidth / 2
+            },${(graphHeight - borderWidth) / 2} 0 0 1 ${handleWidth / 2},${
+              graphHeight - borderWidth
+            } h ${-handleWidth / 2} V ${(graphHeight - borderWidth) / 2} 0 Z`}
+            opacity={cursorTooClose ? 1 : 0}
+          />
+        </g>
         {/*Labels*/}
         {shouldMerge ? (
           <>
@@ -342,8 +415,8 @@ export function FairnessSelector({
               fontSize={labelSpace - 5}
             >
               {value1 !== value2
-                ? `${Math.round(value1 * 100)}%-${Math.round(value2 * 100)}%`
-                : `${Math.round(value1 * 100)}%`}
+                ? `${value1 - 100}%-${value2 - 100}%`
+                : `${value1 - 100}%`}
             </text>
           </>
         ) : (
@@ -364,7 +437,7 @@ export function FairnessSelector({
               dominantBaseline="central"
               fontSize={labelSpace - 5}
             >
-              {Math.round(value1 * 100)}%
+              {value1 - 100}%
             </text>
             <rect
               x={startX + workingWidth * percentage2 - labelSpace * 1.2}
@@ -382,7 +455,7 @@ export function FairnessSelector({
               dominantBaseline="central"
               fontSize={labelSpace - 5}
             >
-              {Math.round(value2 * 100)}%
+              {value2 - 100}%
             </text>
           </>
         )}

@@ -8,11 +8,20 @@ export type Params = {
   };
 };
 
+export type StoredParams = {
+  version: number;
+  slices: number;
+  thresholds: {
+    okay: number;
+    bad: number;
+  };
+};
+
 const initialState: Params = {
   slices: 8,
   thresholds: {
-    okay: 1.25,
-    bad: 1.5,
+    okay: 125,
+    bad: 150,
   },
 };
 
@@ -21,22 +30,32 @@ const params = createSlice({
   initialState,
   reducers: {
     setSlices(state, action: PayloadAction<number>) {
-      return { ...state, slices: action.payload };
+      return storeState({ ...state, slices: action.payload });
     },
     setOkayThresholds(state, action: PayloadAction<number>) {
-      return {
+      return storeState({
         ...state,
         thresholds: { ...state.thresholds, okay: action.payload },
-      };
+      });
     },
     setBadThresholds(state, action: PayloadAction<number>) {
-      return {
+      return storeState({
         ...state,
         thresholds: { ...state.thresholds, bad: action.payload },
-      };
+      });
     },
   },
 });
+
+function storeState(state: Params) {
+  const toStore: StoredParams = {
+    version: 1,
+    slices: state.slices,
+    thresholds: state.thresholds,
+  };
+  localStorage.setItem("parameters", JSON.stringify(toStore));
+  return state;
+}
 
 export const paramsReducer = params.reducer;
 export const { setSlices, setOkayThresholds, setBadThresholds } =

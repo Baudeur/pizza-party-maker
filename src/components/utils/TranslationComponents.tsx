@@ -2,11 +2,10 @@ import {
   ArrowBigLeft,
   ArrowBigRight,
   Check,
-  Info,
+  HelpCircle,
   Minus,
   Pencil,
   Plus,
-  Save,
   Settings,
   Store,
   Trash2,
@@ -16,9 +15,17 @@ import { DietIcon } from "../icons/DietIcon";
 import { Button } from "./Button";
 import { SaveAsIcon } from "../icons/SaveAsIcon";
 import title from "../../assets/Title.png";
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { TFunction } from "i18next";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
+import { Desktop } from "./ReactiveComponents";
 
-const components = {
+const components = (
+  t: TFunction<"translation", undefined>,
+  isDesktop: boolean
+) => ({
   pink: <strong className="text-pink-600" />,
   green: <strong className="text-green-600" />,
   sky: <strong className="text-sky-600" />,
@@ -61,6 +68,7 @@ const components = {
         className="inline-flex w-7 rounded-s-lg"
         color="red"
         onClick={() => {}}
+        title={t("minus")}
       >
         <Minus size={20} strokeWidth={2} />
       </Button>
@@ -72,6 +80,7 @@ const components = {
         className="inline-flex w-7 rounded-e-lg"
         color="green"
         onClick={() => {}}
+        title={t("plus")}
       >
         <Plus size={20} strokeWidth={2} />
       </Button>
@@ -79,57 +88,113 @@ const components = {
   ),
   addButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="w-16 rounded-lg"
+        title={t("plus")}
+      >
         <Plus size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   editButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-8 rounded-lg">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="w-8 rounded-lg"
+        title={t("edit-pizza", { pizza: "pizza" })}
+      >
         <Pencil size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   validateButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-8 rounded-lg">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="w-8 rounded-lg"
+        title={t("apply-changes", { pizza: "pizza" })}
+      >
         <Check size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   cancelButton: (
     <span className="inline-block translate-y-1">
-      <Button color="yellow" onClick={() => {}} className="w-8 rounded-lg">
+      <Button
+        color="orange"
+        onClick={() => {}}
+        className="w-8 rounded-lg"
+        title={t("cancel-changes", { pizza: "pizza" })}
+      >
         <Undo2 size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   deleteButton: (
     <span className="inline-block translate-y-1">
-      <Button color="red" onClick={() => {}} className="w-8 rounded-lg">
+      <Button
+        color="red"
+        onClick={() => {}}
+        className="w-8 rounded-lg"
+        title={t("delete-pizza", { pizza: "pizza" })}
+      >
         <Trash2 size={20} strokeWidth={2} />
       </Button>
     </span>
   ),
   saveButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
-        <Save size={20} strokeWidth={2} />
+      <Button
+        color="yellow"
+        onClick={() => {}}
+        className={`rounded-lg px-2`}
+        title={t("save-as-pizzeria")}
+      >
+        <span className="flex items-center gap-2">
+          <SaveAsIcon
+            size={20}
+            strokeWidth={2}
+            backgroundColor="bg-amber-300"
+          />
+          {isDesktop ? (
+            <span>{t("save-as-pizzeria")}</span>
+          ) : (
+            <span>{t("save")}</span>
+          )}
+        </span>
       </Button>
     </span>
   ),
   saveAsButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="w-16 rounded-lg"
+        title={t("save-as-pizzeria")}
+      >
         <SaveAsIcon size={20} strokeWidth={2} backgroundColor="bg-green-500" />
       </Button>
     </span>
   ),
   pizzeriasButton: (
     <span className="inline-block translate-y-1">
-      <Button color="green" onClick={() => {}} className="w-16 rounded-lg">
-        <Store size={20} strokeWidth={2} />
+      <Button
+        color="yellow"
+        onClick={() => {}}
+        className={`rounded-lg px-2`}
+        title={t("manage-pizzeria-title")}
+      >
+        <span className="flex items-center gap-2">
+          <Store size={20} strokeWidth={2} />
+          <Desktop>
+            <span>{t("manage-pizzeria-button")}</span>
+          </Desktop>
+        </span>
       </Button>
     </span>
   ),
@@ -163,13 +228,33 @@ const components = {
     </span>
   ),
   infoIcon: (
-    <Info size={20} strokeWidth={2} color="gray" className="inline-block" />
+    <HelpCircle
+      size={20}
+      strokeWidth={2}
+      color="black"
+      className="inline-block"
+    />
   ),
   parametersIcon: (
     <Settings size={20} strokeWidth={2} color="gray" className="inline-block" />
   ),
-};
+  linkToDetailsHelp: <Link to={"/help-details"} />,
+  suggesterButton: (
+    <span className="inline-block">
+      <Button
+        color="green"
+        onClick={() => {}}
+        className="font-bold rounded-lg px-2"
+        title={t("suggester-open-button")}
+      >
+        {t("suggester-open-button")}
+      </Button>
+    </span>
+  ),
+});
 
 export function CompTrans({ i18nKey }: { i18nKey: string }) {
-  return <Trans i18nKey={i18nKey} components={components} />;
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
+  const { t } = useTranslation();
+  return <Trans i18nKey={i18nKey} components={components(t, isDesktop)} />;
 }

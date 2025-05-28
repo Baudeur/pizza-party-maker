@@ -1,35 +1,23 @@
+import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
-import { Calculator } from "./components/calculator/Calculator";
-import { Infos } from "./components/infos/Infos";
-import { People } from "./components/people/People";
-import { Pizzas } from "./components/pizzas/Pizzas";
-import title from "./assets/Title.png";
-import { Footer } from "./components/utils/Footer";
+import { HomePage } from "./components/menus/HomePage";
+import { Layout } from "./components/menus/Layout";
+import { HelpPage } from "./components/menus/HelpPage";
+import { ParameterPage } from "./components/menus/ParameterPage";
+import { DetailsHelpPage } from "./components/menus/DetailsHelpPage";
 
 function App() {
   return (
-    <div className="flex flex-col justify-between h-full">
-      <div className="flex flex-col items-center">
-        <div className="relative w-full flex justify-center">
-          <img
-            src={title}
-            className="w-[800px] my-11"
-            alt="Pizza Party Maker"
-          />
-          <div className="w-full flex justify-end bottom-0 absolute">
-            <Infos />
-          </div>
-        </div>
-        <div className="flex flex-col items-stretch">
-          <div className="flex">
-            <People />
-            <Pizzas />
-          </div>
-          <Calculator />
-        </div>
-      </div>
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/help" element={<HelpPage />} />
+          <Route path="/help-details" element={<DetailsHelpPage />} />
+          <Route path="/settings" element={<ParameterPage />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

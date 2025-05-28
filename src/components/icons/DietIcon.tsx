@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Diet } from "../../types";
 import veganIconUrl from "../../assets/Carrot.png";
 import vegetarianIconUrl from "../../assets/Cheese.png";
@@ -21,8 +20,6 @@ iconUrlMap.set("pescoVegetarian", pescoVegetarianIconUrl);
 iconUrlMap.set("vegetarian", vegetarianIconUrl);
 iconUrlMap.set("vegan", veganIconUrl);
 
-type TooltipState = "out" | "in" | "display";
-
 const map = new Map<Diet, string>();
 map.set("normal", "diet-icon-omnivorous");
 map.set("pescoVegetarian", "diet-icon-pesco-vegetarian");
@@ -36,46 +33,21 @@ export function DietIcon({
   testId,
 }: Readonly<DietIconProps>) {
   const { t } = useTranslation();
-  const [tooltipState, setTooltipState] = useState<TooltipState>("out");
-  const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>();
-
-  useEffect(() => {
-    if (tooltipState === "out") {
-      clearTimeout(timerId);
-      setTimerId(undefined);
-    }
-    if (tooltipState === "in" && timerId === undefined) {
-      setTimerId(
-        setTimeout(() => {
-          setTooltipState("display");
-        }, 1000)
-      );
-    }
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [tooltipState, timerId]);
 
   const iconName = iconUrlMap.get(type);
   return (
-    <div
-      className={`relative ${className}`}
-      onMouseEnter={() => setTooltipState("in")}
-      onMouseLeave={() => setTooltipState("out")}
-    >
+    <span className={`block relative ${className}`}>
       <img
         src={iconName}
         className={`size-full ${color === "BW" && "filter grayscale"}`}
-        alt={`${color === "BW" ? "grayed out" : "coloured"} ${map.get(
-          type
-        )} icon`}
+        alt={t("alt-diet-icon", {
+          color:
+            color === "BW" ? t("alt-diet-color-bw") : t("alt-diet-color-color"),
+          diet: t(map.get(type) ?? ""),
+        })}
         data-testid={testId && `${testId}-${type}-diet-icon`}
+        title={t(map.get(type) ?? "")}
       />
-      {tooltipState === "display" && (
-        <div className="top-[-100%] translate-x-[-50%] left-1/2 text-base absolute z-20 bg-white border-[1px] border-gray-600 px-2 rounded-md">
-          {t(map.get(type) ?? "")}
-        </div>
-      )}
-    </div>
+    </span>
   );
 }

@@ -10,32 +10,24 @@ type PizzaLineWrapperProps = {
 type Focusable = "name" | "diet" | "price";
 
 type EditContext = {
-  editable: boolean;
-  setEditable: (value: boolean) => void;
   focus: Focusable;
   setFocus: (value: Focusable) => void;
 };
 export const EditContext = createContext<EditContext>({
-  editable: false,
-  setEditable: () => {},
   focus: "name",
   setFocus: () => {},
 });
 
 export function PizzaLineWrapper({ pizza }: Readonly<PizzaLineWrapperProps>) {
-  const [editable, setEditable] = useState(false);
   const [focus, setFocus] = useState<Focusable>("name");
 
-  const val = useMemo(
-    () => ({ editable, setEditable, focus, setFocus }),
-    [editable, focus]
-  );
+  const val = useMemo(() => ({ focus, setFocus }), [focus]);
 
   return (
     <EditContext.Provider value={val}>
       <>
-        {!editable && <PizzaDisplay pizza={pizza} />}
-        {editable && <PizzaEdit pizza={pizza} />}
+        {!pizza.editable && <PizzaDisplay pizza={pizza} />}
+        {pizza.editable && <PizzaEdit pizza={pizza} />}
       </>
     </EditContext.Provider>
   );

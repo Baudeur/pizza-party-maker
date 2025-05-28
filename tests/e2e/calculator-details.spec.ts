@@ -18,10 +18,10 @@ test("The four case scenario are displayed", async ({ page }) => {
 test("The worst case scenario is correct (deterministic)", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 1, 1, 1);
-  await createPizza(page, 1, "", "normal");
-  await createPizza(page, 1, "", "pescoVegetarian");
-  await createPizza(page, 1, "", "vegetarian");
-  await createPizza(page, 1, "", "vegan");
+  await createPizza(page, 0, 1, "", "normal");
+  await createPizza(page, 1, 1, "", "pescoVegetarian");
+  await createPizza(page, 2, 1, "", "vegetarian");
+  await createPizza(page, 3, 1, "", "vegan");
   const detailsExpand = page.getByTestId("details-expand");
   await detailsExpand.click();
   const normalValue = page.getByTestId("worst-case-normal-value");
@@ -39,10 +39,10 @@ test("The worst case scenario is correct (deterministic)", async ({ page }) => {
 test("The best case scenario is correct (deterministic)", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 1, 1, 1);
-  await createPizza(page, 1, "", "normal");
-  await createPizza(page, 1, "", "pescoVegetarian");
-  await createPizza(page, 1, "", "vegetarian");
-  await createPizza(page, 1, "", "vegan");
+  await createPizza(page, 0, 1, "", "normal");
+  await createPizza(page, 1, 1, "", "pescoVegetarian");
+  await createPizza(page, 2, 1, "", "vegetarian");
+  await createPizza(page, 3, 1, "", "vegan");
   const detailsExpand = page.getByTestId("details-expand");
   await detailsExpand.click();
   const normalValue = page.getByTestId("best-case-normal-value");
@@ -60,10 +60,10 @@ test("The best case scenario is correct (deterministic)", async ({ page }) => {
 test("The random case scenario is correct", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 1, 1, 1);
-  await createPizza(page, 1, "", "normal");
-  await createPizza(page, 1, "", "pescoVegetarian");
-  await createPizza(page, 1, "", "vegetarian");
-  await createPizza(page, 1, "", "vegan");
+  await createPizza(page, 0, 1, "", "normal");
+  await createPizza(page, 1, 1, "", "pescoVegetarian");
+  await createPizza(page, 2, 1, "", "vegetarian");
+  await createPizza(page, 3, 1, "", "vegan");
   const detailsExpand = page.getByTestId("details-expand");
   await detailsExpand.click();
   const normalValue = await page
@@ -87,10 +87,10 @@ test("The random case scenario is correct", async ({ page }) => {
 test("The average case scenario is correct", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
   await setPeople(page, 1, 1, 1, 1);
-  await createPizza(page, 1, "", "normal");
-  await createPizza(page, 1, "", "pescoVegetarian");
-  await createPizza(page, 1, "", "vegetarian");
-  await createPizza(page, 1, "", "vegan");
+  await createPizza(page, 0, 1, "", "normal");
+  await createPizza(page, 1, 1, "", "pescoVegetarian");
+  await createPizza(page, 2, 1, "", "vegetarian");
+  await createPizza(page, 3, 1, "", "vegan");
   const detailsExpand = page.getByTestId("details-expand");
   await detailsExpand.click();
   const normalValue = await page

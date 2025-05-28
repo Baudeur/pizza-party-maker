@@ -1,11 +1,19 @@
 import { useTranslation } from "react-i18next";
 import { CaseScenario } from "./CaseScenario";
 import { CompTrans } from "../utils/TranslationComponents";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
 
 export function CaseScenarioOverlayContent() {
   const { t } = useTranslation();
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
+
   return (
-    <div className="w-[700px] text-left overflow-y-auto h-[80vh]">
+    <div
+      className={`text-left ${
+        isDesktop ? "w-[750px] py-4 overflow-y-auto h-[80lvh]" : "w-full h-full"
+      }`}
+    >
       {/* ########## The detail panel ########## */}
 
       <div className="mb-5">
@@ -15,7 +23,7 @@ export function CaseScenarioOverlayContent() {
         <p className="mb-2">{t("details-panel-p1")}</p>
         <p className="mb-2">{t("details-panel-p2")}</p>
         <p>{t("details-panel-p3")}</p>
-        <div className="text-center">
+        <div className="w-full text-center">
           <CaseScenario
             peopleAte={{
               normal: 8,

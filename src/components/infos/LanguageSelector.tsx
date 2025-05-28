@@ -3,6 +3,7 @@ import { DropDown } from "../utils/DropDown";
 //{language === "en" ? "" : "🇫🇷"}
 export function LanguageSelector() {
   const {
+    t,
     i18n: { changeLanguage, language },
   } = useTranslation();
   return (
@@ -12,12 +13,14 @@ export function LanguageSelector() {
       }}
       options={[
         {
+          title: "Switch to English",
           label: "English",
           value: "en",
           disabled: language === "en",
           icon: <div className="text-3xl">🇬🇧</div>,
         },
         {
+          title: "Choisir le français",
           label: "Français",
           value: "fr",
           disabled: language === "fr",
@@ -26,6 +29,7 @@ export function LanguageSelector() {
       ]}
       value={language}
       minimal={true}
+      title={t("language-selection")}
     />
   );
 }

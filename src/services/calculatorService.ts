@@ -270,8 +270,8 @@ export function stateOfDiet(
   );
   if (peopleAte[diet] === 0) return "cantEat";
   if (peopleAte[diet] === maxAte) return "perfect";
-  if (peopleAte[diet] * badThreshold < maxAte) return "bad";
-  if (peopleAte[diet] * okayThreshold < maxAte) return "okay";
+  if ((peopleAte[diet] * badThreshold) / 100 < maxAte) return "bad";
+  if ((peopleAte[diet] * okayThreshold) / 100 < maxAte) return "okay";
   if (peopleAte[diet] < maxAte) return "good";
   return "N/A";
 }

@@ -16,7 +16,7 @@ export const DietSelector = forwardRef<HTMLDivElement, DietSelectorProps>(
       <div
         ref={ref}
         tabIndex={tabIndex}
-        className="flex justify-between items-center px-2"
+        className="flex gap-1 items-center px-2"
         onKeyDown={(event) => {
           switch (event.key) {
             case "ArrowRight":

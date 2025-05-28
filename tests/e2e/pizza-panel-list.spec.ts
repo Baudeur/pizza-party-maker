@@ -3,7 +3,7 @@ import { checkPizza, createPizza } from "./test-utils";
 
 test("User can hover pizza to see interactions", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
-  await createPizza(page, 1, "4 Cheese", "vegetarian", "12.50");
+  await createPizza(page, 0, 1, "4 Cheese", "vegetarian", "12.50");
   const pizzaLine = page.getByTestId("0-pizza-display");
   await pizzaLine.hover();
   const quantityInput = page.getByTestId("0-pizza-display-quantity-input");
@@ -16,16 +16,16 @@ test("User can hover pizza to see interactions", async ({ page }) => {
 
 test("User can delete pizza in two ways", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
-  await createPizza(page, 0);
-  await createPizza(page, 0);
-  const quantityMinusButton = page.getByTestId(
-    "0-pizza-display-quantity-minus"
+  await createPizza(page, 0, 0);
+  await createPizza(page, 1, 0);
+  const quantityDeleteButton = page.getByTestId(
+    "0-pizza-display-quantity-delete"
   );
   const deleteButton = page.getByTestId("1-pizza-display-delete-button");
   const pizza0 = page.getByTestId("0-pizza-display");
   const pizza1 = page.getByTestId("1-pizza-display");
   await pizza0.hover();
-  await quantityMinusButton.click();
+  await quantityDeleteButton.click();
   await pizza1.hover();
   await deleteButton.click();
   await expect(pizza0).not.toBeVisible();
@@ -55,8 +55,8 @@ test("User edit quantity without editing the pizza", async ({ page }) => {
 
 test("User can start editing pizza in two ways", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
-  await createPizza(page, 1, "4 Cheese", "vegetarian", "10");
-  await createPizza(page, 1, "Burrata", "vegan", "15");
+  await createPizza(page, 0, 1, "4 Cheese", "vegetarian", "10");
+  await createPizza(page, 1, 1, "Burrata", "vegan", "15");
   const pizza0 = page.getByTestId("0-pizza-display");
   const pizza0Edit = page.getByTestId("0-pizza-edit");
   const pizza1Edit = page.getByTestId("1-pizza-edit");
@@ -64,14 +64,14 @@ test("User can start editing pizza in two ways", async ({ page }) => {
   const pizzaName = page.getByTestId("1-pizza-display-name");
   await pizza0.hover();
   await editButton.click();
-  await pizzaName.dblclick();
   await expect(pizza0Edit).toBeVisible();
+  await pizzaName.dblclick();
   await expect(pizza1Edit).toBeVisible();
 });
 
 test("User can edit fields and cancel", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
-  await createPizza(page, 1, "4 Chrrse", "normal", "100");
+  await createPizza(page, 0, 1, "4 Chrrse", "normal", "100");
   const pizza0 = page.getByTestId("0-pizza-display");
   const editButton = page.getByTestId("0-pizza-display-edit-button");
 
@@ -102,7 +102,7 @@ test("User can edit fields and cancel", async ({ page }) => {
 
 test("User can edit fields and validate", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
-  await createPizza(page, 1, "4 Chrrse", "normal", "100");
+  await createPizza(page, 0, 1, "4 Chrrse", "normal", "100");
   const pizza0 = page.getByTestId("0-pizza-display");
   const editButton = page.getByTestId("0-pizza-display-edit-button");
   const nameDisplay = page.getByTestId("0-pizza-display-name");
@@ -139,7 +139,7 @@ test("Initial edit focus depend on where user double click", async ({
   page,
 }) => {
   await page.goto(process.env.BASE_URL ?? "localhost:5173");
-  await createPizza(page, 1, "4 Chrrse", "normal", "100");
+  await createPizza(page, 0, 1, "4 Chrrse", "normal", "100");
   const pizza0Edit = page.getByTestId("0-pizza-edit");
   const nameDisplay = page.getByTestId("0-pizza-display-name");
   const dietDisplay = page.getByTestId("0-pizza-display-diet");
@@ -164,9 +164,8 @@ test("Header and footer should always be visible", async ({ page }) => {
   const pizzaFooter = page.getByTestId("pizza-footer");
   const pizza0 = page.getByTestId("0-pizza-display");
   const pizza14 = page.getByTestId("14-pizza-display");
-  const pizzaAdd = page.getByTestId("pizza-form-submit");
   for (let i = 0; i < 15; i++) {
-    await pizzaAdd.click();
+    await createPizza(page, i);
   }
   await pizza0.scrollIntoViewIfNeeded();
   await expect(pizzaHeader).toBeVisible();

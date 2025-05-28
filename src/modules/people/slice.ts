@@ -8,6 +8,10 @@ type PeopleActionPayload = {
   type: Diet;
 };
 
+export type StoredPeople = {
+  version: number;
+} & Record<Diet, number>;
+
 const initialState: People = {
   normal: 0,
   vegetarian: 0,
@@ -22,22 +26,43 @@ const people = createSlice({
     setNumber: (state, action: PayloadAction<PeopleActionPayload>) => {
       switch (action.payload.type) {
         case "normal":
-          return { ...state, normal: Math.max(action.payload.quantity, 0) };
+          return storeState({
+            ...state,
+            normal: Math.max(action.payload.quantity, 0),
+          });
         case "vegetarian":
-          return { ...state, vegetarian: Math.max(action.payload.quantity, 0) };
+          return storeState({
+            ...state,
+            vegetarian: Math.max(action.payload.quantity, 0),
+          });
         case "vegan":
-          return { ...state, vegan: Math.max(action.payload.quantity, 0) };
+          return storeState({
+            ...state,
+            vegan: Math.max(action.payload.quantity, 0),
+          });
         case "pescoVegetarian":
-          return {
+          return storeState({
             ...state,
             pescoVegetarian: Math.max(action.payload.quantity, 0),
-          };
+          });
         default:
           return state;
       }
     },
   },
 });
+
+function storeState(state: People) {
+  const toStore: StoredPeople = {
+    version: 1,
+    normal: state.normal,
+    pescoVegetarian: state.pescoVegetarian,
+    vegetarian: state.vegetarian,
+    vegan: state.vegan,
+  };
+  localStorage.setItem("people", JSON.stringify(toStore));
+  return state;
+}
 
 export const peopleReducer = people.reducer;
 export const { setNumber } = people.actions;

@@ -34,14 +34,12 @@ test("User cannot go below 0 or over 99", async ({ page }) => {
   const plusButton = page.getByTestId("people-category-normal-plus");
   const minusButton = page.getByTestId("people-category-normal-minus");
   const input = page.getByTestId("people-category-normal-input");
-  await minusButton.click();
-  await expect(input).toHaveValue("0");
+  await expect(minusButton).toBeDisabled();
   await input.fill("-1");
   await expect(input).toHaveValue("0");
   await input.fill("100");
   await expect(input).toHaveValue("99");
-  await plusButton.click();
-  await expect(input).toHaveValue("99");
+  await expect(plusButton).toBeDisabled();
 });
 
 test("User cannot enter decimal numbers", async ({ page }) => {
