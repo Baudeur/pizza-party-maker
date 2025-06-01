@@ -50,9 +50,9 @@ export function OverlayInside({
   return (
     <div>
       <div
-        className={`z-20 fixed w-[100vw] h-[100lvh] bg-black top-0 left-0 ${
+        className={`z-20 fixed w-[100vw] h-[100dvh] bg-black top-0 left-0 ${
           showDelayed ? "bg-opacity-70" : "bg-opacity-0 pointer-events-none"
-        } transition-all duration-150`}
+        } transition-opacity duration-150`}
         data-testid={`${testId}-background`}
       >
         <div
@@ -78,7 +78,7 @@ export function OverlayInside({
                 !isDesktop && "w-[90vw] translate-y-6"
               }`}
               styleClassName={`${
-                isDesktop ? "max-h-[90lvh]" : "max-h-[calc(90lvh-3rem)]"
+                isDesktop ? "max-h-[90vh]" : "max-h-[calc(90dvh-5rem)]"
               }`}
               yPadding={false}
               testId={`${testId}-container`}

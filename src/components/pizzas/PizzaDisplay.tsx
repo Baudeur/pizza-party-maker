@@ -18,6 +18,13 @@ type PizzaDisplayProps = {
 
 type Focusable = "name" | "diet" | "price";
 
+const binSize = 40;
+const maxSwipe = 200;
+const deleteThreshold = 95;
+const opacityRampUpBy = 20;
+const opacityRampUpTo = 50; //Must be greater than opacityRampUpTo
+const opacityFinishedBy = deleteThreshold; //Should be linked to delete threshold
+
 export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
   const dispatch = useDispatch();
   const { setFocus } = useContext(EditContext);
@@ -135,21 +142,28 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
       <div className="relative">
         <div
           style={{
-            opacity: swipePercentage,
+            opacity: opactityCurve(swipePercentage) / 100,
           }}
           className="absolute bg-red-500 w-full h-full rounded-lg flex items-center"
         >
-          <Trash2 size={40} className="ml-[80px]" />
+          <Trash2
+            size={binSize}
+            style={{
+              marginLeft: marginLeftCurve(swipePercentage),
+            }}
+          />
         </div>
         <Swipable
           onSwipeFinish={(value) => {
-            if (value >= 190) dispatch(removePizza(pizza.id));
+            if (value >= Math.round((maxSwipe * deleteThreshold) / 100))
+              dispatch(removePizza(pizza.id));
           }}
           onSwipeMove={(value) => {
-            setSwipePercentage(Math.min(1, (value - 10) / 180));
+            setSwipePercentage(Math.round(value * 100) / maxSwipe);
           }}
           minSwipe={0}
-          maxSwipe={200}
+          maxSwipe={maxSwipe}
+          disabled={pizzeriaState === "loaded"}
         >
           <div className="flex w-full flex-col bg-amber-200 rounded-lg overflow-hidden">
             <div className="flex bg-amber-300">
@@ -195,4 +209,28 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
       </div>
     </EitherDesktopOrMobile>
   );
+}
+
+const a = (100 - opacityRampUpTo) / (opacityFinishedBy - opacityRampUpBy);
+const b = opacityRampUpTo - a * opacityRampUpBy;
+
+const bPrime = (2 * opacityRampUpTo) / opacityRampUpBy - a;
+const aPrime = (a - bPrime) / opacityRampUpBy;
+
+function opactityCurve(swipePercentage: number): number {
+  if (swipePercentage >= opacityFinishedBy) return 100;
+  if (swipePercentage > opacityRampUpBy) return a * swipePercentage + b;
+  return (
+    (aPrime * swipePercentage * swipePercentage) / 2 + bPrime * swipePercentage
+  );
+}
+
+const binStartMovingPercentage = (binSize * 100) / maxSwipe;
+const maxBinMove = (maxSwipe - binSize) / 2;
+const aBin = maxBinMove / (100 - binStartMovingPercentage);
+const bBin = -(aBin * binStartMovingPercentage);
+
+function marginLeftCurve(swipePercentage: number): number {
+  if (swipePercentage < binStartMovingPercentage) return 0;
+  return swipePercentage * aBin + bBin;
 }

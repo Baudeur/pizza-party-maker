@@ -143,9 +143,16 @@ export function SuggestOverlayContent() {
     <div className={`${isDesktop && "w-[500px]"} py-4`}>
       <p className="mb-2">{t("suggester-description")}</p>
       <div className="flex flex-col gap-2">
-        <div className={`flex w-full gap-2 items-center`}>
+        <Mobile>
+          <hr className="border-black" />
+        </Mobile>
+        <div
+          className={`flex w-full gap-2  ${
+            isDesktop ? "items-center" : "flex-col"
+          }`}
+        >
           <div
-            className="w-2/5 text-right"
+            className={`${isDesktop ? "w-2/5 text-right" : "w-full text-left"}`}
             data-testid="suggester-quantity-label"
           >
             {t("suggester-quantity")}
@@ -160,12 +167,31 @@ export function SuggestOverlayContent() {
             title={t("suggester-quantity-description")}
           />
         </div>
-        <div className={`flex w-full gap-2 items-center`}>
+        <Mobile>
+          <hr className="border-black" />
+        </Mobile>
+        <div
+          className={`flex w-full gap-2  ${
+            isDesktop ? "items-center" : "flex-col"
+          }`}
+        >
           <div
-            className="w-2/5 text-right"
-            data-testid="suggester-strategy-label"
+            className={`${
+              isDesktop ? "w-2/5 justify-end" : "w-full"
+            } flex gap-2 items-center`}
           >
-            {t("suggester-strategy")}
+            <div
+              className={`${isDesktop ? "text-right" : "text-left"}`}
+              data-testid="suggester-strategy-label"
+            >
+              {t("suggester-strategy")}
+            </div>
+
+            <Mobile>
+              <Tooltip content={t("suggester-strategy-help")}>
+                <CircleHelp size={20} />
+              </Tooltip>
+            </Mobile>
           </div>
           <DropDown<string>
             className="w-[175px]"
@@ -186,21 +212,28 @@ export function SuggestOverlayContent() {
             testId="suggester-strategy-dropdown"
             title={t("suggester-strategy-selection")}
           />
-          <Tooltip content={t("suggester-strategy-help")}>
-            <CircleHelp size={20} />
-          </Tooltip>
+          <Desktop>
+            <Tooltip content={t("suggester-strategy-help")}>
+              <CircleHelp size={20} />
+            </Tooltip>
+          </Desktop>
         </div>
+        <Mobile>
+          <hr className="border-black" />
+        </Mobile>
         <div
           className={`${
-            !isDesktop && "flex-col"
-          } px-2 flex gap-2 items-center w-full`}
+            isDesktop ? "px-2 items-center" : "pr-2 flex-col"
+          } flex gap-2  w-full`}
         >
           <div
             className={`${
-              isDesktop ? "w-2/5 justify-end" : "w-full justify-center"
+              isDesktop ? "w-2/5 justify-end" : "w-full"
             } flex gap-2 items-center`}
           >
-            <div className="text-right">{t("suggester-unfairness")}</div>
+            <div className={`${isDesktop && "text-right"}`}>
+              {t("suggester-unfairness")}
+            </div>
             <Mobile>
               <Tooltip content={t("suggester-unfairness-help")}>
                 <CircleHelp size={20} />
