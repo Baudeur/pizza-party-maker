@@ -16,6 +16,7 @@ type Swipable = {
   className?: string;
   vertical?: boolean;
   noMovement?: boolean;
+  disabled?: boolean;
 };
 
 export function Swipable({
@@ -28,6 +29,7 @@ export function Swipable({
   className = "",
   vertical = false,
   noMovement = false,
+  disabled = false,
 }: PropsWithChildren<Swipable>) {
   const [start, setStart] = useState(0);
   const [movement, setMovement] = useState(0);
@@ -67,7 +69,9 @@ export function Swipable({
     };
   });
 
-  return (
+  return disabled ? (
+    <div>{children}</div>
+  ) : (
     <div
       style={
         !noMovement

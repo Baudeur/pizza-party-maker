@@ -23,7 +23,7 @@ export function ParameterPage() {
     window.scrollTo(0, 0);
   });
   return (
-    <div className="p-4 bg-amber-100 h-[calc(100vh-48px)]">
+    <div className="p-4 bg-amber-100 h-[calc(100vh-48px)] w-[100vw]">
       <Params />
     </div>
   );

@@ -19,8 +19,12 @@ export function MobileHeader() {
           {expanded && (
             <X size={30} className="m-2" onClick={() => setExpanded(false)} />
           )}
-          <Link to="/" className="w-3/5" onClick={() => setExpanded(false)}>
-            <img src={title} alt="Pizza Party Maker" />
+          <Link
+            to="/"
+            className="w-3/5 flex justify-center items-center"
+            onClick={() => setExpanded(false)}
+          >
+            <img src={title} className="max-h-10" alt="Pizza Party Maker" />
           </Link>
           <Infos />
         </div>

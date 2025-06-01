@@ -48,7 +48,7 @@ export function InfoContent() {
     <div
       className={`${
         isDesktop ? "w-[750px]" : "h-full"
-      } overflow-y-auto pt-4 h-[80lvh]`}
+      } overflow-y-auto pt-4 h-[80dvh]`}
     >
       <Mobile>
         <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-4 text-center w-full">

@@ -101,7 +101,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             className="w-full"
             tabIndex={0}
             ref={nameInputRef}
-            placeholder="4 Cheese"
+            placeholder={t("pizza-form-placeholder")}
             value={name}
             onChange={(e) => setName(e.target.value)}
             testId={`${pizza.id}-pizza-edit-name`}
@@ -158,7 +158,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             className="w-full rounded-none rounded-tl-lg"
             tabIndex={0}
             ref={nameInputRef}
-            placeholder="4 Cheese"
+            placeholder={t("pizza-form-placeholder")}
             value={name}
             onChange={(e) => setName(e.target.value)}
             testId={`${pizza.id}-pizza-edit-name`}

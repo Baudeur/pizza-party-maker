@@ -33,8 +33,8 @@ export function ManagePizzeriaOverlayContent() {
   return (
     <div
       className={`${
-        isDesktop ? "w-[750px]" : ""
-      } py-4 overflow-y-auto h-[80lvh]`}
+        isDesktop ? "w-[750px] h-[80dvh]" : "h-[calc(80dvh-5rem)]"
+      } py-4 overflow-y-auto`}
     >
       {pizzerias.length === 0 && <div>{t("no-pizzerias")}</div>}
       <Accordeon
