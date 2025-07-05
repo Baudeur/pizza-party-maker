@@ -40,7 +40,7 @@ export function DietIcon({
           diet: t(dietTranslationMap.get(type) ?? ""),
         })}
         data-testid={testId && `${testId}-${type}-diet-icon`}
-        title={dietTranslationMap.get(type) ?? ""}
+        title={t(dietTranslationMap.get(type) ?? "")}
       />
     </span>
   );

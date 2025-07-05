@@ -42,7 +42,12 @@ export function Details({
           data-testid="details-overlay-button"
           title={t("help")}
         >
-          <CircleHelp size={25} color="black" strokeWidth={2} />
+          <CircleHelp
+            size={25}
+            color="black"
+            strokeWidth={2}
+            className="hover:fill-amber-200 hover:stroke-amber-700"
+          />
         </button>
       </div>
       <CaseScenario

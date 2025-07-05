@@ -189,7 +189,10 @@ export function SuggestOverlayContent() {
 
             <Mobile>
               <Tooltip content={t("suggester-strategy-help")}>
-                <CircleHelp size={20} />
+                <CircleHelp
+                  size={20}
+                  className="hover:fill-amber-300 hover:stroke-amber-700"
+                />
               </Tooltip>
             </Mobile>
           </div>
@@ -214,7 +217,10 @@ export function SuggestOverlayContent() {
           />
           <Desktop>
             <Tooltip content={t("suggester-strategy-help")}>
-              <CircleHelp size={20} />
+              <CircleHelp
+                size={20}
+                className="hover:fill-amber-300 hover:stroke-amber-700"
+              />
             </Tooltip>
           </Desktop>
         </div>
@@ -236,7 +242,10 @@ export function SuggestOverlayContent() {
             </div>
             <Mobile>
               <Tooltip content={t("suggester-unfairness-help")}>
-                <CircleHelp size={20} />
+                <CircleHelp
+                  size={20}
+                  className="hover:fill-amber-300 hover:stroke-amber-700"
+                />
               </Tooltip>
             </Mobile>
           </div>
@@ -262,7 +271,10 @@ export function SuggestOverlayContent() {
           </div>
           <Desktop>
             <Tooltip content={t("suggester-unfairness-help")}>
-              <CircleHelp size={20} />
+              <CircleHelp
+                size={20}
+                className="hover:fill-amber-300 hover:stroke-amber-700"
+              />
             </Tooltip>
           </Desktop>
         </div>

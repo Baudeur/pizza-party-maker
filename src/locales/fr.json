@@ -232,11 +232,8 @@
     "details-flags-p3": "L'indicateur est à <sky>Parfait</sky> si ce pourcentage est <strong>exactement 0%</strong>. Il est à <green>Bien</green> si ce pourcentage est <strong>entre 0% et 25%</strong>. Il est à <orange>Moyen</orange> si ce pourcentage est <strong>entre 25% et 50%</strong>. Et à <red>Mauvais</red> si ce pourcentage est <strong>au dessus de 50%</strong>.",
 
     "light-fairness-strict": "Très équitable",
-    "light-fairness-strict-title": "Très équitable",
     "light-fairness-medium": "Plutôt équitable",
-    "light-fairness-medium-title": "Plutôt équitable",
     "light-fairness-lenient": "Peu équitable",
-    "light-fairness-lenient-title": "Peu équitable",
 
     "light-people-label": "Selectionnez le nombre de personne pour chaque régime alimentaire.",
     "light-fairness-label": "Selectionnez à quel point la commande doit être équitable.",
@@ -272,6 +269,9 @@
     "slices-icon-title": "{{quantity}} parts par personnes. 1 pizza = 8 parts.",
 
     "light-suggestion-title": "Voici les pizzas que vous devriez commander :",
-    "light-suggestion-flag": "Les indicateurs ci-dessous vous précise si votre commande est équitable pour chaque régime."
+    "light-suggestion-flag": "Les indicateurs ci-dessous vous précise si votre commande est équitable pour chaque régime.",
+
+    "go-previous-ver": "Ancienne version",
+    "go-light-ver": "Nouvelle version"
   }
 }

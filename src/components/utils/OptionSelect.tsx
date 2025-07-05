@@ -9,13 +9,21 @@ type SelectOption = {
 type OptionSelectProps = {
   color: ButtonColor;
   options: SelectOption[];
+  value: number;
   onSelect: (value: number) => void;
+  className?: string;
 };
 
-export function OptionSelect({ color, options, onSelect }: OptionSelectProps) {
-  const [selected, setSelected] = useState<number | undefined>(undefined);
+export function OptionSelect({
+  color,
+  options,
+  value,
+  onSelect,
+  className,
+}: OptionSelectProps) {
+  const [selected, setSelected] = useState<number>(value);
   return (
-    <div className="flex gap-2 w-full">
+    <div className={`flex gap-2 w-full ${className}`}>
       {options.map(({ title, label }, index) => {
         return (
           <Button

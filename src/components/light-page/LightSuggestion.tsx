@@ -13,11 +13,12 @@ import {
 } from "../../services/calculatorService";
 import { useSelector } from "react-redux";
 import { peopleSelector } from "../../modules/people/selector";
-import { lightPizzas } from "../../services/constants";
+import { desktopSize, lightPizzas } from "../../services/constants";
 import {
   lightFairnessSelector,
   lightSuggestionSelector,
 } from "../../modules/light-pizzas/selector";
+import { useMediaQuery } from "react-responsive";
 
 export function LightSuggestion() {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ export function LightSuggestion() {
   const people = useSelector(peopleSelector);
   const suggestion = useSelector(lightSuggestionSelector);
   const { okay, bad } = useSelector(lightFairnessSelector);
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   const dietToDisplay = useMemo(() => diets.filter((d) => people[d] > 0), []);
 
@@ -48,7 +50,7 @@ export function LightSuggestion() {
       </div>
       {edit ? (
         <div className="w-full flex flex-col items-center gap-2">
-          <p className="text-xl w-[600px] text-wrap">
+          <p className={isDesktop ? "text-xl w-[600px] text-wrap" : ""}>
             {t("light-suggestion-flag")}
           </p>
           <div className="flex w-full gap-2 justify-between">

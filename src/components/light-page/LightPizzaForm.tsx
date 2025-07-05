@@ -10,7 +10,7 @@ import {
   suggestPizzas,
 } from "../../services/suggestionService";
 import workerUrl from "/src/services/workerService?worker&url";
-import { lightPizzas } from "../../services/constants";
+import { desktopSize, lightPizzas } from "../../services/constants";
 import { OptionSelect } from "../utils/OptionSelect";
 import { useAppDispatch } from "../../hooks";
 import {
@@ -21,6 +21,7 @@ import {
   setLightSuggestion,
 } from "../../modules/light-pizzas/slice";
 import { lightFairnessSelector } from "../../modules/light-pizzas/selector";
+import { useMediaQuery } from "react-responsive";
 
 const maxFairness = { okay: 105, bad: 110 };
 const medFairness = { okay: 125, bad: 150 };
@@ -50,6 +51,7 @@ export function LightPizzaForm() {
   const { okay } = useSelector(lightFairnessSelector);
   const people = useSelector(peopleSelector);
   const dispatch = useAppDispatch();
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   const handleCalculate = () => {
     dispatch(setLightState("loading"));
@@ -86,11 +88,27 @@ export function LightPizzaForm() {
   return (
     <div>
       <span className="text-xl mb-2">{t("light-people-label")}</span>
-      <div className="flex justify-between w-full">
-        <LightPeopleCategory diet="normal" />
-        <LightPeopleCategory diet="pescoVegetarian" />
-        <LightPeopleCategory diet="vegetarian" />
-        <LightPeopleCategory diet="vegan" />
+      <div
+        className={
+          isDesktop ? "flex justify-around w-full" : "flex flex-col gap-4"
+        }
+      >
+        <div
+          className={
+            isDesktop ? "flex justify-around w-full" : "flex justify-around"
+          }
+        >
+          <LightPeopleCategory diet="normal" />
+          <LightPeopleCategory diet="pescoVegetarian" />
+        </div>
+        <div
+          className={
+            isDesktop ? "flex justify-around w-full" : "flex justify-around"
+          }
+        >
+          <LightPeopleCategory diet="vegetarian" />
+          <LightPeopleCategory diet="vegan" />
+        </div>
       </div>
       <hr className="border-black my-2" />
       <span className="text-xl mb-2">{t("light-fairness-label")}</span>
@@ -101,6 +119,7 @@ export function LightPizzaForm() {
             setLightFormFairness(selectMap.get(selected) ?? medFairness)
           );
         }}
+        value={1}
         options={[
           {
             label: t("light-fairness-strict"),
@@ -115,6 +134,7 @@ export function LightPizzaForm() {
             title: t("light-fairness-lenient"),
           },
         ]}
+        className="flex-col"
       />
       <hr className="border-black my-2" />
       <span className="text-xl mb-2">{t("light-quantity-label")}</span>
@@ -132,7 +152,7 @@ export function LightPizzaForm() {
           className={`accent-green-500 touch-none w-full`}
         />
       </div>
-      <div className="flex w-full justify-center">
+      <div className="flex w-full justify-center mt-8">
         <Button
           className="rounded-lg text-lg px-4"
           color="green"

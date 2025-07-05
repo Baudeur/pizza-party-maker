@@ -46,7 +46,7 @@
     "details-expand-title": "Details",
     "details-worst-case-scenario": "Worst case scenario",
     "details-random-case-scenario": "Random case scenario",
-    "details-average-case-scenario": "Averange case scenario",
+    "details-average-case-scenario": "Average case scenario",
     "details-best-case-scenario": "Best case scenario",
     
     "details-and-graphs": "Details and graphs",
@@ -269,6 +269,9 @@
     "slices-icon-title": "{{quantity}} slices per persons. 1 pizza = 8 slices.",
 
     "light-suggestion-title": "Here are the pizzas you should order:",
-    "light-suggestion-flag": "Those flags indicate how fair is your order for each diet."
+    "light-suggestion-flag": "Those flags indicate how fair is your order for each diet.",
+
+    "go-previous-ver": "Old version",
+    "go-light-ver": "New version"
   }
 }

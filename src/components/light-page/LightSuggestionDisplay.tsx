@@ -8,6 +8,8 @@ import { dietOrder } from "../../services/calculatorService";
 import { IntegerInput } from "../utils/IntegerInput";
 import { setLightSuggestionForDiet } from "../../modules/light-pizzas/slice";
 import { useAppDispatch } from "../../hooks";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
 
 type LightSuggestionDisplayProps = {
   diet: Diet;
@@ -22,6 +24,7 @@ export function LightSuggestionDisplay({
   const suggestion = useSelector(lightSuggestionDietSelector(diet));
   const people = useSelector(peopleSelector);
   const dispatch = useAppDispatch();
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   let dietIndex = dietOrder.indexOf(diet) - 1;
   const dietsToDisplay = [diet];
@@ -45,33 +48,41 @@ export function LightSuggestionDisplay({
 
   return (
     suggestion !== 0 && (
-      <div className="flex gap-4 bg-amber-200 rounded-lg px-2 items-center w-full">
-        <div className="flex gap-1">
-          {dietsToDisplay.map((d) => (
-            <DietIcon key={d} color="Color" type={d} className="size-6" />
-          ))}
-          {biggestLine - dietsToDisplay.length === 2 && (
-            <div className="size-6"></div>
-          )}
-          {biggestLine - dietsToDisplay.length >= 1 && (
-            <div className="size-6"></div>
+      <div
+        className={`flex bg-amber-200 rounded-lg px-2 items-center w-full ${
+          isDesktop ? "h-8 gap-2" : "flex-col"
+        }`}
+      >
+        <div className="flex gap-4 items-center">
+          <div className="flex gap-1">
+            {dietsToDisplay.map((d) => (
+              <DietIcon key={d} color="Color" type={d} className="size-6" />
+            ))}
+            {biggestLine - dietsToDisplay.length === 2 && (
+              <div className="size-6"></div>
+            )}
+            {biggestLine - dietsToDisplay.length >= 1 && (
+              <div className="size-6"></div>
+            )}
+          </div>
+          {edit ? (
+            <IntegerInput
+              title={{ value: nameKey, isKey: true, isFeminin: true }}
+              setValue={(value) => {
+                dispatch(
+                  setLightSuggestionForDiet({ quantity: value, type: diet })
+                );
+              }}
+              value={suggestion}
+              min={1}
+            />
+          ) : (
+            <span>{suggestion}</span>
           )}
         </div>
-        {edit ? (
-          <IntegerInput
-            title={{ value: nameKey, isKey: true, isFeminin: true }}
-            setValue={(value) => {
-              dispatch(
-                setLightSuggestionForDiet({ quantity: value, type: diet })
-              );
-            }}
-            value={suggestion}
-            min={1}
-          />
-        ) : (
-          <span>{suggestion}</span>
-        )}
-        <span>{t(nameKey, { count: suggestion })}</span>
+        <span className={isDesktop ? "" : "text-sm"}>
+          {t(nameKey, { count: suggestion })}
+        </span>
       </div>
     )
   );
