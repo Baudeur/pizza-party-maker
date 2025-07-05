@@ -79,7 +79,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             }
             className="z-[5]"
             testId={`${pizza.id}-pizza-display-quantity`}
-            title={pizza.name}
+            title={{ value: pizza.name, isKey: false, isFeminin: true }}
           />
         </td>
         <td
@@ -201,7 +201,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
                 className="min-w-24"
                 rounded={false}
                 testId={`${pizza.id}-pizza-display-quantity`}
-                title={pizza.name}
+                title={{ value: pizza.name, isKey: false, isFeminin: true }}
               />
             </div>
           </div>

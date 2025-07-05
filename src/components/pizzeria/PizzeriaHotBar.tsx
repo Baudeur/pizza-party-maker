@@ -93,7 +93,9 @@ export function PizzeriaHotBar() {
             color="yellow"
             onClick={handleSave}
             className={`w-1/3 rounded-lg`}
-            title={t("save-pizzeria", { pizzeriaName: loadPizzeria.name })}
+            title={t("save-pizzeria", {
+              pizzeriaName: loadedPizzeria?.name ?? "",
+            })}
             testId="pizza-panel-save-button"
           >
             <div className="flex items-center gap-2">

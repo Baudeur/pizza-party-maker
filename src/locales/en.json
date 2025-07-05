@@ -3,10 +3,10 @@
     "people-panel-title": "People",
     "people-panel-total": "Total: {{total}}",
 
-    "diet-icon-omnivorous": "omnivorous",
-    "diet-icon-pesco-vegetarian": "pesco‑vegetarian",
-    "diet-icon-vegetarian": "vegetarian",
-    "diet-icon-vegan": "vegan",
+    "omnivorous": "Omnivorous",
+    "pesco-vegetarian": "Pesco‑vegetarian",
+    "vegetarian": "Vegetarian",
+    "vegan": "Vegan",
 
     "no-pizza": "Hmm we need more pizza here.",
 
@@ -53,6 +53,8 @@
     
     "parameters-title": "Parameters",
     "parameters-slices": "Slices per pizzas",
+    "parameters-slices_lowercase_one": "slice per pizzas",
+    "parameters-slices_lowercase_other": "slices per pizzas",
     "parameters-fairness": "Fairness",
     "parameters-restore-default": "Restore to default parameters",
     "parameters-reset": "Reset",
@@ -74,9 +76,11 @@
     "pizza-name": "Name of the pizza",
     "pizza-price": "Price of pizza {{pizza}}",
     
-    "quantity-of": "Quantity of {{element}}",
+    "quantity-of": "Number of {{element}}",
     "plus-of": "Add one {{element}}",
     "minus-of": "Remove one {{element}}",
+
+
     "delete-element": "Delete {{element}}",
     "expand-element": "Expand {{element}}",
     
@@ -88,10 +92,14 @@
     "load-pizzeria": "Load {{pizzeriaName}}",
     "delete-pizzeria": "Delete pizzeria {{pizzeriaName}}",
     
-    "normal-person": "Omnivorous person",
-    "pescoVegetarian-person": "Pesco-vegetarian person",
-    "vegetarian-person": "Vegetarian person",
-    "vegan-person": "Vegan person",
+    "normal-person_one": "omnivorous person",
+    "pescoVegetarian-person_one": "pesco-vegetarian person",
+    "vegetarian-person_one": "vegetarian person",
+    "vegan-person_one": "vegan person",
+    "normal-person_other": "omnivorous persons",
+    "pescoVegetarian-person_other": "pesco-vegetarian persons",
+    "vegetarian-person_other": "vegetarian persons",
+    "vegan-person_other": "vegan persons",
     
     "language-selection": "Switch language",
 
@@ -221,6 +229,46 @@
     "details-flags-title": "So what are the flags about?",
     "details-flags-p1": "The flags are based on the average case scenario, which I consider being the most realistic one.",
     "details-flags-p2": "The fairness is based on the percentage of extra pizza the diet that eats most have. In our example above, each <red>omnivorous</red> ate the most with 8 slices of pizza and <green>vegetarian</green> ate 6 slices. Which means <red>omnivorous</red> had 33% more pizzas than the <green>vegetarian</green>.",
-    "details-flags-p3": "The flag is <sky>Perfect</sky> if this percentage is <strong>exactly 0%</strong>. It is <green>Good</green> if this percentage is between <strong>between 0% and 25%</strong>. It is <orange>Okay</orange> if this percentage is <strong>between 25% and 50%</strong>. And <red>Bad</red> if this percentage is <strong>above 50%</strong>."
+    "details-flags-p3": "The flag is <sky>Perfect</sky> if this percentage is <strong>exactly 0%</strong>. It is <green>Good</green> if this percentage is between <strong>between 0% and 25%</strong>. It is <orange>Okay</orange> if this percentage is <strong>between 25% and 50%</strong>. And <red>Bad</red> if this percentage is <strong>above 50%</strong>.",
+
+    "light-fairness-strict": "Very fair",
+    "light-fairness-medium": "Rather fair",
+    "light-fairness-lenient": "Not very fair",
+
+    "light-people-label": "Select de number of people of each diet.",
+    "light-fairness-label": "Select how fair should the order be.",
+    "light-quantity-label": "Select the amount of pizza per person.",
+
+    "light-compute-label": "Compute",
+
+    "light-omnivorous-pizza-quantity_one": "pizza with meat",
+    "light-omnivorous-pesco-vegetarian-pizza-quantity_one": "pizza with meat / fish",
+    "light-omnivorous-pesco-vegetarian-vegetarian-pizza-quantity_one": "non-vegan pizza",
+    "light-omnivorous-pesco-vegetarian-vegetarian-vegan-pizza-quantity_one": "any kind of pizza",
+    "light-pesco-vegetarian-pizza-quantity_one": "pesco-vegetarian pizza",
+    "light-pesco-vegetarian-vegetarian-pizza-quantity_one": "pesco-vegetarian / vegetarian pizza",
+    "light-pesco-vegetarian-vegetarian-vegan-pizza-quantity_one": "pizza without meat",
+    "light-vegetarian-pizza-quantity_one": "vegetarian pizza",
+    "light-vegetarian-vegan-pizza-quantity_one": "vegetarian / vegan pizza",
+    "light-vegan-pizza-quantity_one": "vegan pizza",
+
+    "light-omnivorous-pizza-quantity_other": "pizzas with meat",
+    "light-omnivorous-pesco-vegetarian-pizza-quantity_other": "pizzas with meat / fish",
+    "light-omnivorous-pesco-vegetarian-vegetarian-pizza-quantity_other": "non-vegan pizzas",
+    "light-omnivorous-pesco-vegetarian-vegetarian-vegan-pizza-quantity_other": "any kind of pizzas",
+    "light-pesco-vegetarian-pizza-quantity_other": "pesco-vegetarian pizzas",
+    "light-pesco-vegetarian-vegetarian-pizza-quantity_other": "pesco-vegetarian / vegetarian pizzas",
+    "light-pesco-vegetarian-vegetarian-vegan-pizza-quantity_other": "pizzas without meat",
+    "light-vegetarian-pizza-quantity_other": "vegetarian pizzas",
+    "light-vegetarian-vegan-pizza-quantity_other": "vegetarian / vegan pizzas",
+    "light-vegan-pizza-quantity_other": "vegan pizzas",
+
+    "light-back-button": "Restart",
+    "light-edit-button": "Edit suggestion",
+
+    "slices-icon-title": "{{quantity}} slices per persons. 1 pizza = 8 slices.",
+
+    "light-suggestion-title": "Here are the pizzas you should order:",
+    "light-suggestion-flag": "Those flags indicate how fair is your order for each diet."
   }
 }

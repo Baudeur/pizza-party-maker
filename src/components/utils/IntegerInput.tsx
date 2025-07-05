@@ -6,7 +6,11 @@ import { useTranslation } from "react-i18next";
 type IntegerInputProps = {
   value: number;
   setValue: (value: number) => void;
-  title: string;
+  title: {
+    value: string;
+    isKey: boolean;
+    isFeminin: boolean;
+  };
   min?: number;
   max?: number;
   animateShow?: boolean;
@@ -73,7 +77,11 @@ export function IntegerInput({
             tabIndex={-1}
             testId={testId && `${testId}-minus`}
             disabled={value === min}
-            title={t("minus-of", { element: title })}
+            title={t("minus-of", {
+              element: title.isKey ? t(title.value, { count: 1 }) : title.value,
+              interpolation: { escapeValue: title.isKey },
+              context: title.isFeminin ? "feminin" : "masculin",
+            })}
           >
             <Minus size={20} strokeWidth={2} />
           </Button>
@@ -89,8 +97,17 @@ export function IntegerInput({
             testId={testId && `${testId}-${value !== 0 ? "minus" : "delete"}`}
             title={
               value !== min
-                ? t("minus-of", { element: title })
-                : t("delete-element", { element: title })
+                ? t("minus-of", {
+                    element: title.isKey
+                      ? t(title.value, { count: 1 })
+                      : title.value,
+                    interpolation: { escapeValue: title.isKey },
+                    context: title.isFeminin ? "feminin" : "masculin",
+                  })
+                : t("delete-element", {
+                    element: title.isKey ? t(title.value) : title.value,
+                    interpolation: { escapeValue: title.isKey },
+                  })
             }
           >
             {value !== 0 ? (
@@ -108,7 +125,10 @@ export function IntegerInput({
           onChange={onValueChange}
           className={`h-8 px-2 w-[40px] text-xl text-center font-bold outline-none`}
           data-testid={testId && `${testId}-input`}
-          title={t("quantity-of", { element: title })}
+          title={t("quantity-of", {
+            element: title.isKey ? t(title.value, { count: 2 }) : title.value,
+            interpolation: { escapeValue: title.isKey },
+          })}
         />
         <Button
           className={`text-lg ${
@@ -122,7 +142,11 @@ export function IntegerInput({
           tabIndex={-1}
           testId={testId && `${testId}-plus`}
           disabled={value === max}
-          title={t("plus-of", { element: title })}
+          title={t("plus-of", {
+            element: title.isKey ? t(title.value, { count: 1 }) : title.value,
+            interpolation: { escapeValue: title.isKey },
+            context: title.isFeminin ? "feminin" : "masculin",
+          })}
         >
           <Plus size={20} strokeWidth={2} />
         </Button>

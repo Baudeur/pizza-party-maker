@@ -15,11 +15,13 @@ import {
   StoredPizzerias,
 } from "./modules/pizzerias/slice";
 import { overlaysReducer } from "./modules/overlays/slice";
+import { lightPizzasReducer } from "./modules/light-pizzas/slice";
 
 export const store = configureStore({
   reducer: {
     people: peopleReducer,
     pizzaList: pizzasReducer,
+    lightPizzas: lightPizzasReducer,
     pizzerias: pizzeriasReducer,
     params: paramsReducer,
     overlays: overlaysReducer,

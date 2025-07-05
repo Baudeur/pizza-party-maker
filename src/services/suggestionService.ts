@@ -4,6 +4,7 @@ import { Pizza } from "../modules/pizzas/slice";
 import { Diet, diets } from "../types";
 import {
   averageCaseScenario,
+  dietOrder,
   getTotalPeople,
   PeopleAte,
 } from "./calculatorService";
@@ -30,58 +31,28 @@ function isTherePizzaForEveryone(
 }
 
 //Get the most restrictive diet present at the party.
-function getMostRestrictiveDiet(people: People): Diet {
-  for (const diet of diets.slice().reverse()) {
-    if (people[diet] !== 0) return diet;
+
+//Get a list of present diet in most restrictive to less restrictive order
+function getPresentDietsInOrder(people: People): Diet[] {
+  let presentDiets: Diet[] = [];
+  for (const diet of dietOrder) {
+    if (people[diet] !== 0) presentDiets.push(diet);
   }
-  throw Error("Nobody in the party");
+  if (presentDiets.length === 0) throw Error("Nobody in the party");
+  return presentDiets;
 }
 
 // #################### SIMULATION ####################
 
-// Find the fairness such that percent% of tries will be below.
+// Find the fairness such that percent% of tries will be below. Let's call the percent X.
 /* This works this way.
-  -It takes a first evaluation as a reference. Called worst.
-  -It tries to run a 100 other evaluation.
-  -If we find a worst value than worst 100 minus percent time.
-    -worst take the value of the worst value of the 100 check loop. Called greatest.
+  -It takes a first evaluation as a reference. Called 'worstGapGlobal'.
+  -It tries to run a 100 other evaluation. Counting every time we find a worse case than 'worstGapGlobal'
+  -If we find a worse value than 'worstGapGlobal' more than (100 - X) times.
+    -'worstGapGlobal' take the value of the worst value of the 100 check loop. Called worstGapLoop.
     -It starts the 100 evaluation over again.
   -Else it stops and returns worst.
-
 */
-function findXPercentWorst(
-  percent: number,
-  suggestedQuantity: SuggestedQuantityPerDiet,
-  people: People
-) {
-  let worst = evaluatePeopleAte(
-    simulateSuggestionQuality(suggestedQuantity, people),
-    people
-  );
-  let continueLoop = true;
-  while (continueLoop) {
-    let fails = 0;
-    let greatest = 0;
-    continueLoop = false;
-    for (let i = 0; i < 100; i++) {
-      const gap = evaluatePeopleAte(
-        simulateSuggestionQuality(suggestedQuantity, people),
-        people
-      );
-      if (gap > worst) {
-        if (gap > greatest) greatest = gap;
-        fails += 1;
-        //Have we exceeded the max percentage ?
-        if (fails > 100 - percent) {
-          worst = greatest;
-          continueLoop = true;
-          break;
-        }
-      }
-    }
-  }
-  return worst;
-}
 
 function simulateSuggestionQuality(
   suggestedQuantity: SuggestedQuantityPerDiet,
@@ -94,7 +65,7 @@ function simulateSuggestionQuality(
   return averageCaseScenario(100, 8, pizzas, people);
 }
 
-//Returns the biggest different of eating among the present diets.
+//Returns the biggest difference of eating among the present diets.
 function evaluatePeopleAte(peopleAte: PeopleAte, people: People) {
   let percentageGap = 1;
   let best: Diet = "normal";
@@ -113,51 +84,61 @@ function evaluatePeopleAte(peopleAte: PeopleAte, people: People) {
 
 // #################### ALGORITHM ####################
 
-function makeInitialSuggestion(
-  howManyPizza: number,
-  startingDiet: Diet
-): SuggestedQuantityPerDiet {
-  const initialSuggestion = {
-    normal: 0,
-    pescoVegetarian: 0,
-    vegetarian: 0,
-    vegan: 0,
-  };
-  initialSuggestion[startingDiet] = howManyPizza;
-  return initialSuggestion;
-}
-
-/* Tries to upgrade pizza from starting diet to target diet until it breaks fairness
-Takes the highest value that does not break fairness */
+/* Loop over less diets less restrictive than starting diet and try to
+increment their quantity without breaking fairness. */
 function fillDiet(
-  startingDiet: Diet,
-  targetDiet: Diet,
-  suggestedQuantity: SuggestedQuantityPerDiet,
+  presentDiets: Diet[],
+  howManyPizza: number,
   people: People,
   fairness: number
 ) {
-  let before = suggestedQuantity;
-  let suggested = createNewSuggestedQuantity(
-    suggestedQuantity,
-    startingDiet,
-    targetDiet
-  );
-  while (findXPercentWorst(99, suggested, people) < fairness) {
-    before = suggested;
-    suggested = createNewSuggestedQuantity(suggested, startingDiet, targetDiet);
+  let given = 0;
+
+  const lowestDiet = presentDiets[0];
+
+  let suggestedQuantity: SuggestedQuantityPerDiet = {
+    normal: 0,
+    pescoVegetarian: lowestDiet === "pescoVegetarian" ? 1 : 0,
+    vegetarian: lowestDiet === "vegetarian" ? 1 : 0,
+    vegan: lowestDiet === "vegan" ? 1 : 0,
+  };
+
+  while (given < howManyPizza) {
+    const sortedDiets = presentDiets.sort((a, b) => {
+      return (
+        people[a] - suggestedQuantity[a] - (people[b] - suggestedQuantity[b])
+      );
+    });
+    let whichDietIndex = sortedDiets.length - 1;
+
+    let suggested = addOneTo(suggestedQuantity, sortedDiets[whichDietIndex]);
+
+    while (
+      evaluatePeopleAte(simulateSuggestionQuality(suggested, people), people) >
+      fairness
+    ) {
+      whichDietIndex--;
+      if (whichDietIndex === -1) {
+        suggested = addOneTo(suggestedQuantity, lowestDiet);
+        break;
+      }
+      suggested = addOneTo(suggestedQuantity, sortedDiets[whichDietIndex]);
+    }
+
+    suggestedQuantity = suggested;
+
+    given++;
   }
-  return before;
+
+  return suggestedQuantity;
 }
 
-//Takes one from starting diet and add one to target diet.
-function createNewSuggestedQuantity(
+function addOneTo(
   suggestedQuantity: SuggestedQuantityPerDiet,
-  startingDiet: Diet,
-  targetDiet: Diet
+  diet: Diet
 ): SuggestedQuantityPerDiet {
   const newSuggestedQuantity = { ...suggestedQuantity };
-  newSuggestedQuantity[targetDiet] += 1;
-  newSuggestedQuantity[startingDiet] -= 1;
+  newSuggestedQuantity[diet] += 1;
   return newSuggestedQuantity;
 }
 
@@ -227,29 +208,30 @@ export function suggestPizzas(
   if (!isTherePizzaForEveryone(people, pizzasPerDiet))
     throw Error("Some people can't eat !");
 
+  //How many pizzas should be ordered
   const howManyPizza = Math.ceil(minQuantity * totalPeople);
-  const startingDiet = getMostRestrictiveDiet(people);
 
-  //Decide how much of each diet
-  let suggestedQuantity = makeInitialSuggestion(howManyPizza, startingDiet);
-  const fillDietIfNecessary = (diet: Diet) => {
-    if (
-      people[diet] > 0 &&
-      pizzasPerDiet[diet].length > 0 &&
-      startingDiet !== diet
-    ) {
-      suggestedQuantity = fillDiet(
-        startingDiet,
-        diet,
-        suggestedQuantity,
-        people,
-        fairness / 100
-      );
-    }
+  //What kind of diet is present at the party
+  const presentDiets = getPresentDietsInOrder(people);
+
+  let suggestedQuantity: SuggestedQuantityPerDiet = {
+    normal: 0,
+    pescoVegetarian: 0,
+    vegetarian: 0,
+    vegan: 0,
   };
-  fillDietIfNecessary("normal");
-  fillDietIfNecessary("pescoVegetarian");
-  fillDietIfNecessary("vegetarian");
+
+  //If only one diet present give it all pizzas
+  if (presentDiets.length === 1) {
+    suggestedQuantity[presentDiets[0]] = howManyPizza;
+  } else {
+    suggestedQuantity = fillDiet(
+      presentDiets,
+      howManyPizza,
+      people,
+      fairness / 100
+    );
+  }
 
   //Select pizzas accordingly
   const suggestedQuantityPerPizza: SuggestedQuantityPerPizza = new Map();

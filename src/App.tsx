@@ -5,6 +5,7 @@ import { Layout } from "./components/menus/Layout";
 import { HelpPage } from "./components/menus/HelpPage";
 import { ParameterPage } from "./components/menus/ParameterPage";
 import { DetailsHelpPage } from "./components/menus/DetailsHelpPage";
+import { LightPage } from "./components/menus/LightPage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/light" element={<LightPage />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/help-details" element={<DetailsHelpPage />} />
           <Route path="/settings" element={<ParameterPage />} />

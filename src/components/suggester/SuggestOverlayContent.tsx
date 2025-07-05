@@ -249,9 +249,7 @@ export function SuggestOverlayContent() {
               {fairness - 100}%
             </div>
             <input
-              className={`accent-green-500 touch-none ${
-                isDesktop ? "w-full" : "w-full"
-              }`}
+              className={`accent-green-500 touch-none w-full`}
               type="range"
               value={fairness}
               title={t("suggester-unfairness-description")}

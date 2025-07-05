@@ -1,4 +1,4 @@
-import { Diet } from "../../types";
+import { Diet, dietTranslationMap } from "../../types";
 import veganIconUrl from "../../assets/Carrot.png";
 import vegetarianIconUrl from "../../assets/Cheese.png";
 import pescoVegetarianIconUrl from "../../assets/Fish.png";
@@ -20,12 +20,6 @@ iconUrlMap.set("pescoVegetarian", pescoVegetarianIconUrl);
 iconUrlMap.set("vegetarian", vegetarianIconUrl);
 iconUrlMap.set("vegan", veganIconUrl);
 
-const map = new Map<Diet, string>();
-map.set("normal", "diet-icon-omnivorous");
-map.set("pescoVegetarian", "diet-icon-pesco-vegetarian");
-map.set("vegetarian", "diet-icon-vegetarian");
-map.set("vegan", "diet-icon-vegan");
-
 export function DietIcon({
   type,
   color,
@@ -43,10 +37,10 @@ export function DietIcon({
         alt={t("alt-diet-icon", {
           color:
             color === "BW" ? t("alt-diet-color-bw") : t("alt-diet-color-color"),
-          diet: t(map.get(type) ?? ""),
+          diet: t(dietTranslationMap.get(type) ?? ""),
         })}
         data-testid={testId && `${testId}-${type}-diet-icon`}
-        title={t(map.get(type) ?? "")}
+        title={dietTranslationMap.get(type) ?? ""}
       />
     </span>
   );

@@ -4,7 +4,6 @@ import { IntegerInput } from "../utils/IntegerInput";
 import { peopleDietSelector } from "../../modules/people/selector";
 import { setNumber } from "../../modules/people/slice";
 import { DietIcon } from "../icons/DietIcon";
-import { useTranslation } from "react-i18next";
 
 type PeopleCategoryProps = {
   diet: Diet;
@@ -13,7 +12,6 @@ type PeopleCategoryProps = {
 export function PeopleCategory({ diet }: Readonly<PeopleCategoryProps>) {
   const dispatch = useDispatch();
   const quantity = useSelector(peopleDietSelector(diet));
-  const { t } = useTranslation();
 
   const setQuantity = (name: Diet) => (value: number) => {
     dispatch(setNumber({ type: name, quantity: value }));
@@ -28,7 +26,7 @@ export function PeopleCategory({ diet }: Readonly<PeopleCategoryProps>) {
         value={quantity}
         setValue={setQuantity(diet)}
         testId={`people-category-${diet}`}
-        title={t(`${diet}-person`).toLowerCase()}
+        title={{ value: `${diet}-person`, isKey: true, isFeminin: true }}
       />
     </div>
   );
