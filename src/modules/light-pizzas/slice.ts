@@ -13,10 +13,10 @@ export type LightFairness = {
 
 export type LightCalculationState = "form" | "loading" | "done";
 
-export type LigthSuggestion = Record<Diet, number>;
+export type LightSuggestion = Record<Diet, number>;
 
 export type LightState = {
-  suggestion: LigthSuggestion;
+  suggestion: LightSuggestion;
   state: LightCalculationState;
   form: {
     // quantity: number;

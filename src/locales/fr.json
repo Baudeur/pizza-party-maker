@@ -272,6 +272,13 @@
     "light-suggestion-flag": "Les indicateurs ci-dessous vous précise si votre commande est équitable pour chaque régime.",
 
     "go-previous-ver": "Ancienne version",
-    "go-light-ver": "Nouvelle version"
+    "go-light-ver": "Nouvelle version",
+    "light-why": "(Vous n'aviez pas besoin de ce site pour savoir ça.)",
+    "light-quantity-slices_one": "{{count}} part",
+    "light-quantity-slices_other": "{{count}} parts",
+    "light-quantity-equal": "/",
+    "light-quantity-pizzas_one": "{{pizzas}} pizza",
+    "light-quantity-pizzas_other": "{{pizzas}} pizzas",
+    "light-quantity-per-persons": "par personnes"
   }
 }

@@ -1,8 +1,8 @@
 import { test, expect, Locator, Page } from "@playwright/test";
-import { createPizza, setPeople } from "./test-utils";
+import { createPizza, defaultURL, setPeople } from "./test-utils";
 
 test("Parameters are visible", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const parametersInput = page.getByTestId("slice-parameter-input");
@@ -14,7 +14,7 @@ test("Parameters are visible", async ({ page }) => {
 test("Slice parameter can't go lower than 1 or higher than 16", async ({
   page,
 }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const parametersInput = page.getByTestId("slice-parameter-input");
@@ -29,7 +29,7 @@ test("Slice parameter can't go lower than 1 or higher than 16", async ({
 });
 
 test("Slice parameter influences fields", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   await setPeople(page, 1, 0, 0, 0);
   await createPizza(page, 0, 1);
   const detailsExpand = page.getByTestId("details-expand");
@@ -51,7 +51,7 @@ test("Slice parameter influences fields", async ({ page }) => {
 test("Fairness parameter can be changed by mouse or keyboard", async ({
   page,
 }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const fairnessParameter = page.getByTestId("fairness-parameter");
@@ -79,7 +79,7 @@ test("Fairness parameter can be changed by mouse or keyboard", async ({
 test("Fairness parameter can be changed by clicking on graph", async ({
   page,
 }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const fairnessParameter = page.getByTestId("fairness-parameter");
@@ -103,7 +103,7 @@ test("Fairness parameter can be changed by clicking on graph", async ({
 test("Fairness parameter can't go lower than 105 or higher than 200", async ({
   page,
 }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const fairnessParameter = page.getByTestId("fairness-parameter");
@@ -130,8 +130,7 @@ test("Fairness parameter can't go lower than 105 or higher than 200", async ({
 });
 
 test("Fairness parameter can't cross", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const fairnessParameter = page.getByTestId("fairness-parameter");
@@ -162,7 +161,7 @@ test("Fairness parameter can't cross", async ({ page }) => {
 });
 
 test("Fairness parameter can be reset to default", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const parametersButton = page.getByTestId("param-overlay-button");
   await parametersButton.click();
   const fairnessParameter = page.getByTestId("fairness-parameter");
@@ -180,7 +179,7 @@ test("Fairness parameter can be reset to default", async ({ page }) => {
 });
 
 test("Fairness parameter influences flags", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   await setPeople(page, 1, 1, 0, 0);
   await createPizza(page, 0, 1);
   await createPizza(page, 1, 1, "", "pescoVegetarian");

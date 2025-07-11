@@ -12,8 +12,8 @@ function App() {
     <Router>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/light" element={<LightPage />} />
+          <Route path="/" element={<LightPage />} />
+          <Route path="/old" element={<HomePage />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/help-details" element={<DetailsHelpPage />} />
           <Route path="/settings" element={<ParameterPage />} />

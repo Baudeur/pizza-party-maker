@@ -1,5 +1,7 @@
 import { expect, Page } from "@playwright/test";
 
+export const defaultURL = "localhost:5173/#/old";
+
 export async function checkPizza(
   page: Page,
   id: number,

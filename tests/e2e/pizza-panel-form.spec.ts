@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { checkPizza } from "./test-utils";
+import { checkPizza, defaultURL } from "./test-utils";
 
 test("The pizza panel is visible", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const pizzaPanel = page.getByTestId("pizza-panel");
   await expect(pizzaPanel).toBeVisible();
 });
@@ -12,7 +12,7 @@ test("The pizza panel is visible", async ({ page }) => {
 test("User can select the diet of the pizza with arrow key and the mouse", async ({
   page,
 }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
 
@@ -38,7 +38,7 @@ test("User can select the diet of the pizza with arrow key and the mouse", async
 });
 
 test("User cannot unselect normal diet", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
 
@@ -53,7 +53,7 @@ test("User cannot unselect normal diet", async ({ page }) => {
 // #### Price input tests ####
 
 test("User can enter price with decimals", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
 
@@ -72,7 +72,7 @@ test("User can enter price with decimals", async ({ page }) => {
 });
 
 test("User cannot go over two decimal number", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
 
@@ -82,7 +82,7 @@ test("User cannot go over two decimal number", async ({ page }) => {
 });
 
 test("User cannot go over 999 or below 0", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
 
@@ -95,19 +95,19 @@ test("User cannot go over 999 or below 0", async ({ page }) => {
 });
 
 test("User cannot enter letters", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
 
   const priceInput = page.getByTestId("0-pizza-edit-price");
   await priceInput.fill("Salut");
-  await expect(priceInput).toHaveValue("0");
+  await expect(priceInput).toHaveValue("");
 });
 
 // #### Whole form tests ####
 
 test("User can add a pizza", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
 
@@ -130,7 +130,7 @@ test("User can add a pizza", async ({ page }) => {
 });
 
 test("User can add a pizza using only the keyboard", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
 
@@ -150,7 +150,7 @@ test("User can add a pizza using only the keyboard", async ({ page }) => {
 });
 
 test("Pizza can have empty name and price", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
 
@@ -161,7 +161,7 @@ test("Pizza can have empty name and price", async ({ page }) => {
 });
 
 test("Pizza can have duplicate names", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
 
@@ -183,7 +183,7 @@ test("Pizza can have duplicate names", async ({ page }) => {
 test("If pizza price has decimals show two decimals otherwise 0", async ({
   page,
 }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const addPizzaButton = page.getByTestId("add-pizza-button");
   await addPizzaButton.click();
   const priceInput = page.getByTestId("0-pizza-edit-price");

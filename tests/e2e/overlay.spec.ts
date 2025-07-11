@@ -1,7 +1,8 @@
 import test, { expect } from "@playwright/test";
+import { defaultURL } from "./test-utils";
 
 test("Info overlay can be opened and closed", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const infoButton = page.getByTestId("info-overlay-button");
   await infoButton.click();
   const overlayBackground = page.getByTestId("info-overlay-background");
@@ -12,7 +13,7 @@ test("Info overlay can be opened and closed", async ({ page }) => {
 });
 
 test("Details overlay can be opened and closed", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const detailsExpand = page.getByTestId("details-expand");
   await detailsExpand.click();
   const detailsButton = page.getByTestId("details-overlay-button");

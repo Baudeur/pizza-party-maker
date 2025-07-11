@@ -18,7 +18,7 @@ export function Infos() {
         <LanguageSelector />
       </div>
       <Desktop>
-        <Link to="/light" title={t("go-light-ver")}>
+        <Link to="/" title={t("go-light-ver")}>
           <Star
             size={30}
             color="gray"

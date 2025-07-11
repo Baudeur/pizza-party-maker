@@ -12,6 +12,7 @@ import { Desktop } from "../utils/ReactiveComponents";
 import { Link } from "react-router-dom";
 import { History } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Footer } from "./Footer";
 
 export function LightPage() {
   const state = useSelector(lightStateSelector);
@@ -19,7 +20,13 @@ export function LightPage() {
   const { t } = useTranslation();
 
   return (
-    <div className={isDesktop ? "" : "bg-amber-100 h-[100dvh]"}>
+    <div
+      className={
+        isDesktop
+          ? ""
+          : "bg-amber-100 min-h-[calc(100dvh-3rem)] flex flex-col justify-between"
+      }
+    >
       <Desktop>
         <div className="flex justify-center">
           <img
@@ -29,7 +36,7 @@ export function LightPage() {
           />
         </div>
         <div className="flex gap-2 items-center w-full justify-end">
-          <Link to="/" title={t("go-previous-ver")}>
+          <Link to="/old" title={t("go-previous-ver")}>
             <History
               size={30}
               color="gray"
@@ -50,6 +57,9 @@ export function LightPage() {
         {state === "loading" && <Spinner />}
         {state === "done" && <LightSuggestion />}
       </Container>
+      <Desktop>
+        <Footer />
+      </Desktop>
     </div>
   );
 }

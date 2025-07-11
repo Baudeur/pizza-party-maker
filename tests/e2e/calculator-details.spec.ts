@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { createPizza, setPeople } from "./test-utils";
+import { createPizza, defaultURL, setPeople } from "./test-utils";
 
 test("The four case scenario are displayed", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const detailsExpand = page.getByTestId("details-expand");
   await detailsExpand.click();
   const worstCase = page.getByTestId("worst-case");
@@ -16,7 +16,7 @@ test("The four case scenario are displayed", async ({ page }) => {
 });
 
 test("The worst case scenario is correct (deterministic)", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   await setPeople(page, 1, 1, 1, 1);
   await createPizza(page, 0, 1, "", "normal");
   await createPizza(page, 1, 1, "", "pescoVegetarian");
@@ -37,7 +37,7 @@ test("The worst case scenario is correct (deterministic)", async ({ page }) => {
 });
 
 test("The best case scenario is correct (deterministic)", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   await setPeople(page, 1, 1, 1, 1);
   await createPizza(page, 0, 1, "", "normal");
   await createPizza(page, 1, 1, "", "pescoVegetarian");
@@ -58,7 +58,7 @@ test("The best case scenario is correct (deterministic)", async ({ page }) => {
 });
 
 test("The random case scenario is correct", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   await setPeople(page, 1, 1, 1, 1);
   await createPizza(page, 0, 1, "", "normal");
   await createPizza(page, 1, 1, "", "pescoVegetarian");
@@ -85,7 +85,7 @@ test("The random case scenario is correct", async ({ page }) => {
 });
 
 test("The average case scenario is correct", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   await setPeople(page, 1, 1, 1, 1);
   await createPizza(page, 0, 1, "", "normal");
   await createPizza(page, 1, 1, "", "pescoVegetarian");

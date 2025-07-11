@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { LightPeopleCategory } from "./LightPeopleCategory";
 import { SlicesIcon } from "../icons/SlicesIcon";
 import { Button } from "../utils/Button";
 import { useState } from "react";
@@ -15,13 +14,14 @@ import { OptionSelect } from "../utils/OptionSelect";
 import { useAppDispatch } from "../../hooks";
 import {
   LightFairness,
-  LigthSuggestion,
+  LightSuggestion,
   setLightFormFairness,
   setLightState,
   setLightSuggestion,
 } from "../../modules/light-pizzas/slice";
 import { lightFairnessSelector } from "../../modules/light-pizzas/selector";
 import { useMediaQuery } from "react-responsive";
+import { LightPeopleCategory } from "../people/PeopleCategory";
 
 const maxFairness = { okay: 105, bad: 110 };
 const medFairness = { okay: 125, bad: 150 };
@@ -33,7 +33,7 @@ selectMap.set(1, medFairness);
 selectMap.set(2, lowFairness);
 
 function toLightSuggestion(value: SuggestedQuantityPerPizza) {
-  const rep: LigthSuggestion = {
+  const rep: LightSuggestion = {
     normal: 0,
     pescoVegetarian: 0,
     vegetarian: 0,
@@ -98,21 +98,30 @@ export function LightPizzaForm() {
             isDesktop ? "flex justify-around w-full" : "flex justify-around"
           }
         >
-          <LightPeopleCategory diet="normal" />
-          <LightPeopleCategory diet="pescoVegetarian" />
+          <div className="w-40">
+            <LightPeopleCategory diet="normal" />
+          </div>
+          <div className="w-40">
+            <LightPeopleCategory diet="pescoVegetarian" />
+          </div>
         </div>
         <div
           className={
             isDesktop ? "flex justify-around w-full" : "flex justify-around"
           }
         >
-          <LightPeopleCategory diet="vegetarian" />
-          <LightPeopleCategory diet="vegan" />
+          <div className="w-40">
+            <LightPeopleCategory diet="vegetarian" />
+          </div>
+          <div className="w-40">
+            <LightPeopleCategory diet="vegan" />
+          </div>
         </div>
       </div>
       <hr className="border-black my-2" />
       <span className="text-xl mb-2">{t("light-fairness-label")}</span>
       <OptionSelect
+        className={isDesktop ? "" : "flex-col"}
         color="yellow"
         onSelect={(selected) => {
           dispatch(
@@ -134,7 +143,6 @@ export function LightPizzaForm() {
             title: t("light-fairness-lenient"),
           },
         ]}
-        className="flex-col"
       />
       <hr className="border-black my-2" />
       <span className="text-xl mb-2">{t("light-quantity-label")}</span>
@@ -154,7 +162,7 @@ export function LightPizzaForm() {
       </div>
       <div className="flex w-full justify-center mt-8">
         <Button
-          className="rounded-lg text-lg px-4"
+          className="text-2xl px-4 min-h-12 w-52 rounded-lg"
           color="green"
           onClick={handleCalculate}
           title={t("light-compute-label")}

@@ -8,6 +8,7 @@ import {
   getTotalPeople,
   PeopleAte,
 } from "./calculatorService";
+import { compareDiet } from "./utils";
 
 // #################### TYPES ####################
 
@@ -33,10 +34,24 @@ function isTherePizzaForEveryone(
 //Get the most restrictive diet present at the party.
 
 //Get a list of present diet in most restrictive to less restrictive order
-function getPresentDietsInOrder(people: People): Diet[] {
+function getPresentDietsInOrder(people: People, pizzas: Pizza[]): Diet[] {
   let presentDiets: Diet[] = [];
-  for (const diet of dietOrder) {
-    if (people[diet] !== 0) presentDiets.push(diet);
+  const pizzasDiets = dietOrder.filter(
+    (d) => pizzas.find((p) => p.eatenBy === d) !== undefined
+  );
+  const peopleDiets = dietOrder.filter((d) => people[d] !== 0);
+  for (const diet of pizzasDiets) {
+    // Among all pizza which diets should we keep ?
+    if (peopleDiets.includes(diet)) {
+      //It's useful directly. Add we keep it.
+      presentDiets.push(diet);
+      continue;
+    }
+    const toCheck = peopleDiets.filter((d) => compareDiet(diet, d) === 1); //Other diet that could need the pizza
+    for (const dietCheck of toCheck) {
+      if (pizzasDiets.includes(dietCheck)) break; //If there is a pizza of that upper diet, no need to use this one. Stop.
+      presentDiets.push(diet); //Other wise you have a diet that doesn't have a pizza to suit its need, we keep it.
+    }
   }
   if (presentDiets.length === 0) throw Error("Nobody in the party");
   return presentDiets;
@@ -44,15 +59,71 @@ function getPresentDietsInOrder(people: People): Diet[] {
 
 // #################### SIMULATION ####################
 
-// Find the fairness such that percent% of tries will be below. Let's call the percent X.
+// Find the fairness such that percent% of tries will be below.
 /* This works this way.
-  -It takes a first evaluation as a reference. Called 'worstGapGlobal'.
-  -It tries to run a 100 other evaluation. Counting every time we find a worse case than 'worstGapGlobal'
-  -If we find a worse value than 'worstGapGlobal' more than (100 - X) times.
-    -'worstGapGlobal' take the value of the worst value of the 100 check loop. Called worstGapLoop.
+  -It takes a first evaluation as a reference. Called worst.
+  -It tries to run a 100 other evaluation.
+  -If we find a worst value than worst 100 minus percent time.
+    -worst take the value of the worst value of the 100 check loop. Called greatest.
     -It starts the 100 evaluation over again.
   -Else it stops and returns worst.
+
 */
+
+function findXPercentWorst(
+  percent: number,
+  suggestedQuantity: SuggestedQuantityPerDiet,
+  people: People
+) {
+  let worst = evaluatePeopleAte(
+    simulateSuggestionQuality(suggestedQuantity, people),
+    people
+  );
+  let continueLoop = true;
+  while (continueLoop) {
+    let fails = 0;
+    let greatest = 0;
+    continueLoop = false;
+    for (let i = 0; i < 100; i++) {
+      const gap = evaluatePeopleAte(
+        simulateSuggestionQuality(suggestedQuantity, people),
+        people
+      );
+      if (gap > worst) {
+        if (gap > greatest) greatest = gap;
+        fails += 1;
+        //Have we exceeded the max percentage ?
+        if (fails > 100 - percent) {
+          worst = greatest;
+          continueLoop = true;
+          break;
+        }
+      }
+    }
+  }
+  return worst;
+}
+
+function worstOfX(
+  x: number,
+  suggestedQuantity: SuggestedQuantityPerDiet,
+  people: People
+) {
+  let worst = evaluatePeopleAte(
+    simulateSuggestionQuality(suggestedQuantity, people),
+    people
+  );
+  for (let i = 0; i < x - 1; i++) {
+    const newEval = evaluatePeopleAte(
+      simulateSuggestionQuality(suggestedQuantity, people),
+      people
+    );
+    if (newEval > worst) {
+      worst = newEval;
+    }
+  }
+  return worst;
+}
 
 function simulateSuggestionQuality(
   suggestedQuantity: SuggestedQuantityPerDiet,
@@ -103,7 +174,7 @@ function fillDiet(
     vegan: lowestDiet === "vegan" ? 1 : 0,
   };
 
-  while (given < howManyPizza) {
+  while (given < howManyPizza - 1) {
     const sortedDiets = presentDiets.sort((a, b) => {
       return (
         people[a] - suggestedQuantity[a] - (people[b] - suggestedQuantity[b])
@@ -113,10 +184,7 @@ function fillDiet(
 
     let suggested = addOneTo(suggestedQuantity, sortedDiets[whichDietIndex]);
 
-    while (
-      evaluatePeopleAte(simulateSuggestionQuality(suggested, people), people) >
-      fairness
-    ) {
+    while (findXPercentWorst(99.9, suggested, people) > fairness) {
       whichDietIndex--;
       if (whichDietIndex === -1) {
         suggested = addOneTo(suggestedQuantity, lowestDiet);
@@ -212,7 +280,7 @@ export function suggestPizzas(
   const howManyPizza = Math.ceil(minQuantity * totalPeople);
 
   //What kind of diet is present at the party
-  const presentDiets = getPresentDietsInOrder(people);
+  const presentDiets = getPresentDietsInOrder(people, pizzas);
 
   let suggestedQuantity: SuggestedQuantityPerDiet = {
     normal: 0,

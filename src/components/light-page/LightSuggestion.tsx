@@ -6,38 +6,25 @@ import { useAppDispatch } from "../../hooks";
 import { setLightState } from "../../modules/light-pizzas/slice";
 import { useMemo, useState } from "react";
 import { diets } from "../../types";
-import { PizzaFlag } from "../utils/PizzaFlag";
-import {
-  averageCaseScenario,
-  stateOfDiet,
-} from "../../services/calculatorService";
 import { useSelector } from "react-redux";
 import { peopleSelector } from "../../modules/people/selector";
-import { desktopSize, lightPizzas } from "../../services/constants";
-import {
-  lightFairnessSelector,
-  lightSuggestionSelector,
-} from "../../modules/light-pizzas/selector";
+import { desktopSize } from "../../services/constants";
 import { useMediaQuery } from "react-responsive";
+import { LightFlags } from "./LightFlags";
 
 export function LightSuggestion() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [edit, setEdit] = useState(false);
   const people = useSelector(peopleSelector);
-  const suggestion = useSelector(lightSuggestionSelector);
-  const { okay, bad } = useSelector(lightFairnessSelector);
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
-  const dietToDisplay = useMemo(() => diets.filter((d) => people[d] > 0), []);
-
-  const peopleAteRandomAvg = useMemo(() => {
-    const pizzas = lightPizzas.map((p) => ({
-      ...p,
-      quantity: suggestion[p.eatenBy],
-    }));
-    return averageCaseScenario(100, 8, pizzas, people);
-  }, [suggestion]);
+  const onlyOneDiet = useMemo(
+    () =>
+      diets.reduce((acc, curr) => (people[curr] === 0 ? acc : acc + 1), 0) ===
+      1,
+    [people]
+  );
 
   return (
     <div className="flex flex-col gap-2 items-center">
@@ -53,46 +40,31 @@ export function LightSuggestion() {
           <p className={isDesktop ? "text-xl w-[600px] text-wrap" : ""}>
             {t("light-suggestion-flag")}
           </p>
-          <div className="flex w-full gap-2 justify-between">
-            {dietToDisplay.map((diet) => (
-              <div
-                className="h-full w-full"
-                key={diet}
-                data-testid={`${diet}-flag-container`}
-              >
-                <PizzaFlag
-                  flagState={stateOfDiet(
-                    diet,
-                    peopleAteRandomAvg,
-                    people,
-                    okay,
-                    bad
-                  )}
-                  diet={diet}
-                  testId={`${diet}-flag`}
-                />
-              </div>
-            ))}
-          </div>
+          <LightFlags />
         </div>
       ) : (
-        <Button
-          onClick={() => {
-            setEdit(true);
-          }}
-          color="green"
-          title={t("light-edit-button")}
-          className="rounded-lg px-2 gap-2 text-xl"
-        >
-          <Pencil size={20} />
-          {t("light-edit-button")}
-        </Button>
+        <>
+          {onlyOneDiet && (
+            <span className="text-sm text-gray-600">{t("light-why")}</span>
+          )}
+          <Button
+            onClick={() => {
+              setEdit(true);
+            }}
+            color="green"
+            title={t("light-edit-button")}
+            className="rounded-lg px-2 gap-2 text-xl"
+          >
+            <Pencil size={20} />
+            {t("light-edit-button")}
+          </Button>
+        </>
       )}
       <Button
         onClick={() => dispatch(setLightState("form"))}
         color="orange"
         title={t("light-back-button")}
-        className="rounded-lg px-2 gap-2 text-xl"
+        className="rounded-lg px-2 gap-2 text-xl mt-8"
       >
         <RotateCcw size={20} />
         {t("light-back-button")}

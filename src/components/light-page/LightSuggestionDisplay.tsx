@@ -47,22 +47,31 @@ export function LightSuggestionDisplay({
   const nameKey = pizzaNameKey(dietsToDisplay);
 
   return (
-    suggestion !== 0 && (
+    (suggestion !== 0 || (edit && people[diet] !== 0)) && (
       <div
         className={`flex bg-amber-200 rounded-lg px-2 items-center w-full ${
-          isDesktop ? "h-8 gap-2" : "flex-col"
+          isDesktop ? "h-8 gap-2" : "flex-col h-20 justify-between"
         }`}
       >
-        <div className="flex gap-4 items-center">
-          <div className="flex gap-1">
+        <div
+          className={`flex items-center ${
+            isDesktop ? "gap-4" : "gap-4 pt-1 justify-start w-full pl-1 h-10"
+          }`}
+        >
+          <div className={`flex ${isDesktop ? "gap-1" : "gap-3"}`}>
             {dietsToDisplay.map((d) => (
-              <DietIcon key={d} color="Color" type={d} className="size-6" />
+              <DietIcon
+                key={d}
+                color="Color"
+                type={d}
+                className={isDesktop ? "size-6" : "size-8"}
+              />
             ))}
             {biggestLine - dietsToDisplay.length === 2 && (
-              <div className="size-6"></div>
+              <div className={isDesktop ? "size-6" : "size-8"}></div>
             )}
             {biggestLine - dietsToDisplay.length >= 1 && (
-              <div className="size-6"></div>
+              <div className={isDesktop ? "size-6" : "size-8"}></div>
             )}
           </div>
           {edit ? (
@@ -74,13 +83,13 @@ export function LightSuggestionDisplay({
                 );
               }}
               value={suggestion}
-              min={1}
+              min={0}
             />
           ) : (
-            <span>{suggestion}</span>
+            <span className={isDesktop ? "" : "text-3xl"}>{suggestion}</span>
           )}
         </div>
-        <span className={isDesktop ? "" : "text-sm"}>
+        <span className={isDesktop ? "" : "text-sm text-left w-full pb-1 pl-1"}>
           {t(nameKey, { count: suggestion })}
         </span>
       </div>

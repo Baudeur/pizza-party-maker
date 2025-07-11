@@ -272,6 +272,13 @@
     "light-suggestion-flag": "Those flags indicate how fair is your order for each diet.",
 
     "go-previous-ver": "Old version",
-    "go-light-ver": "New version"
+    "go-light-ver": "New version",
+    "light-why": "(Why would you even use this site ?)",
+    "light-quantity-slices_one": "{{count}} slice",
+    "light-quantity-slices_other": "{{count}} slices",
+    "light-quantity-equal": "/",
+    "light-quantity-pizzas_one": "{{pizzas}} pizza",
+    "light-quantity-pizzas_other": "{{pizzas}} pizzas",
+    "light-quantity-per-persons": "per persons"
   }
 }

@@ -90,3 +90,84 @@ export function PizzaFlag({
     </EitherDesktopOrMobile>
   );
 }
+
+export function LightPizzaFlag({
+  flagState,
+  diet,
+  testId,
+}: Readonly<FlagStateProps>) {
+  const { t } = useTranslation();
+  let color = "bg-gray-300";
+  let label = "N/A";
+  let emoji = "❌";
+  switch (flagState) {
+    case "perfect":
+      color = "bg-sky-400";
+      label = t("pizza-flag-perfect");
+      emoji = "👌";
+      break;
+    case "good":
+      color = "bg-green-400";
+      label = t("pizza-flag-good");
+      emoji = "😊";
+      break;
+    case "okay":
+      color = "bg-yellow-400";
+      label = t("pizza-flag-okay");
+      emoji = "😕";
+      break;
+    case "bad":
+      color = "bg-red-400";
+      label = t("pizza-flag-bad");
+      emoji = "😖";
+      break;
+    case "cantEat":
+      color = "bg-purple-400";
+      label = t("pizza-flag-cant-eat");
+      emoji = "💀";
+      break;
+  }
+  return (
+    <EitherDesktopOrMobile>
+      <div>
+        <div
+          className={`${color} h-full w-full rounded-lg flex items-center min-w-32 min-h-14 cursor-default`}
+          data-testid={testId}
+        >
+          <div
+            className={`flex items-center ${color} rounded-lg shadow-[10px_0px_15px_-3px_rgb(0,0,0,0.1),4px_0px_6px_-4px_rgb(0,0,0,0.1)]`}
+          >
+            <DietIcon
+              type={diet}
+              color="Color"
+              className="size-8 m-4"
+              testId={"flag-container"}
+            />
+          </div>
+          <div className="flex flex-col mr-2 justify-center h-full w-full pt-1">
+            <span className="font-bold text-xl">{emoji}</span>
+            <span className="font-bold text-xl">{label}</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          className={`${color} h-full w-full rounded-lg flex items-center min-w-32 min-h-6 cursor-default`}
+          data-testid={testId}
+        >
+          <div
+            className={`flex items-center ${color} rounded-lg shadow-[10px_0px_15px_-3px_rgb(0,0,0,0.1),4px_0px_6px_-4px_rgb(0,0,0,0.1)]`}
+          >
+            <DietIcon
+              type={diet}
+              color="Color"
+              className="size-4 m-2"
+              testId={"flag-container"}
+            />
+          </div>
+          <span className="font-bold text-xl w-full text-center">{label}</span>
+        </div>
+      </div>
+    </EitherDesktopOrMobile>
+  );
+}

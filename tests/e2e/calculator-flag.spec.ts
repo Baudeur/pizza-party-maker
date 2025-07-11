@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { createPizza, setPeople } from "./test-utils";
+import { createPizza, defaultURL, setPeople } from "./test-utils";
 
 test("All flags are present and contains image", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const normalFlag = page.getByTestId("normal-flag-container");
   const pescoVegetarianFlag = page.getByTestId(
     "pescoVegetarian-flag-container"
@@ -32,20 +32,20 @@ test("All flags are present and contains image", async ({ page }) => {
 });
 
 test("When a diet is not present, the flag presents N/A", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const vegetarianFlag = page.getByTestId("vegetarian-flag");
   await expect(vegetarianFlag).toHaveText("N/A❌");
 });
 
 test("When a diet can't eat, the flag presents can't eat", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   await setPeople(page, 0, 1, 0, 0);
   const pescoVegetarianFlag = page.getByTestId("pescoVegetarian-flag");
   await expect(pescoVegetarianFlag).toHaveText("Nothing💀");
 });
 
 test("Flags can have 4 quality states", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   await setPeople(page, 2, 2, 2, 2);
   await createPizza(page, 0, 1);
   await createPizza(page, 1, 2, "", "pescoVegetarian");
@@ -62,7 +62,7 @@ test("Flags can have 4 quality states", async ({ page }) => {
 });
 
 test("Price flag is correct", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   await setPeople(page, 1, 1, 1, 1);
   await createPizza(page, 0, 1, "", "normal", "14");
   await createPizza(page, 1, 1, "", "vegetarian", "11");
@@ -73,7 +73,7 @@ test("Price flag is correct", async ({ page }) => {
 });
 
 test("Quantity flag is correct", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   await setPeople(page, 1, 1, 1, 1);
   await createPizza(page, 0, 1, "", "normal", "14");
   await createPizza(page, 1, 2, "", "vegetarian", "11");

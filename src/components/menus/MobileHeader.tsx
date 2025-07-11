@@ -19,10 +19,14 @@ export function MobileHeader() {
   const { t } = useTranslation();
   const location = useLocation();
 
-  const isLight = location.pathname === "/light";
+  const isLight = location.pathname === "/";
   return (
     <>
-      <div className={`sticky top-0 w-full z-40 bg-white shadow-lg h-12`}>
+      <div
+        className={`sticky top-0 w-full z-40 bg-white ${
+          expanded ? "ease-[step-start]" : "shadow-lg ease-[step-end]"
+        } h-12 transition-shadow duration-200`}
+      >
         <div className="h-12 flex justify-between items-center">
           {!expanded && (
             <Menu size={30} className="m-2" onClick={() => setExpanded(true)} />
@@ -31,7 +35,7 @@ export function MobileHeader() {
             <X size={30} className="m-2" onClick={() => setExpanded(false)} />
           )}
           <Link
-            to={isLight ? "/light" : "/"}
+            to={isLight ? "/" : "/old"}
             className="w-3/5 flex justify-center items-center"
             onClick={() => setExpanded(false)}
           >
@@ -41,7 +45,7 @@ export function MobileHeader() {
         </div>
       </div>
       <div
-        className={`fixed top-12 transition-all duration-[200ms] bg-white z-40 overflow-hidden ${
+        className={`fixed top-12 transition-all duration-200 bg-white z-30 overflow-hidden ${
           expanded ? "h-[calc(100lvh-48px)]" : "h-[0px]"
         }`}
       >
@@ -50,7 +54,7 @@ export function MobileHeader() {
             <hr />
             {isLight ? (
               <>
-                <Link to="/">
+                <Link to="/old">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
                     onClick={() => setExpanded(false)}
@@ -65,7 +69,7 @@ export function MobileHeader() {
               </>
             ) : (
               <>
-                <Link to="/">
+                <Link to="/old">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
                     onClick={() => setExpanded(false)}
@@ -104,7 +108,7 @@ export function MobileHeader() {
                   </button>
                 </Link>
                 <hr />
-                <Link to="/light">
+                <Link to="/">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
                     onClick={() => setExpanded(false)}

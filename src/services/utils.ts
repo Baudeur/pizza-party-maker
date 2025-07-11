@@ -95,3 +95,11 @@ export function formatNameForTestId(name: string) {
   if (regexArray) return regexArray.join("");
   return "";
 }
+
+export function compareDiet(a: Diet, b: Diet) {
+  if (a === b) return 0;
+  if (b === "normal") return 1;
+  if (b === "pescoVegetarian" && a !== "normal") return 1;
+  if (b === "vegetarian" && a === "vegan") return 1;
+  return -1;
+}
