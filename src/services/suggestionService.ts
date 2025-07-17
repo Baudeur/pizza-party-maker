@@ -1,3 +1,4 @@
+import { LightSuggestion } from "../modules/light-pizzas/slice";
 import { People } from "../modules/people/slice";
 import { PizzaQuantity } from "../modules/pizzas/selector";
 import { Pizza } from "../modules/pizzas/slice";
@@ -8,7 +9,8 @@ import {
   getTotalPeople,
   PeopleAte,
 } from "./calculatorService";
-import { compareDiet } from "./utils";
+import { LIGHT_FAIRNESS_MIN, lightPizzas } from "./constants";
+import { compareDiet, toLightSuggestion } from "./utils";
 
 // #################### TYPES ####################
 
@@ -59,70 +61,20 @@ function getPresentDietsInOrder(people: People, pizzas: Pizza[]): Diet[] {
 
 // #################### SIMULATION ####################
 
-// Find the fairness such that percent% of tries will be below.
-/* This works this way.
-  -It takes a first evaluation as a reference. Called worst.
-  -It tries to run a 100 other evaluation.
-  -If we find a worst value than worst 100 minus percent time.
-    -worst take the value of the worst value of the 100 check loop. Called greatest.
-    -It starts the 100 evaluation over again.
-  -Else it stops and returns worst.
-
-*/
-
-function findXPercentWorst(
-  percent: number,
-  suggestedQuantity: SuggestedQuantityPerDiet,
-  people: People
-) {
-  let worst = evaluatePeopleAte(
-    simulateSuggestionQuality(suggestedQuantity, people),
-    people
-  );
-  let continueLoop = true;
-  while (continueLoop) {
-    let fails = 0;
-    let greatest = 0;
-    continueLoop = false;
-    for (let i = 0; i < 100; i++) {
-      const gap = evaluatePeopleAte(
-        simulateSuggestionQuality(suggestedQuantity, people),
-        people
-      );
-      if (gap > worst) {
-        if (gap > greatest) greatest = gap;
-        fails += 1;
-        //Have we exceeded the max percentage ?
-        if (fails > 100 - percent) {
-          worst = greatest;
-          continueLoop = true;
-          break;
-        }
-      }
-    }
-  }
-  return worst;
-}
-
-function worstOfX(
+function avgOfXTries(
   x: number,
   suggestedQuantity: SuggestedQuantityPerDiet,
   people: People
 ) {
-  let worst = evaluatePeopleAte(
-    simulateSuggestionQuality(suggestedQuantity, people),
-    people
-  );
-  for (let i = 0; i < x - 1; i++) {
+  let sum = 0;
+  for (let i = 0; i < x; i++) {
     const newEval = evaluatePeopleAte(
       simulateSuggestionQuality(suggestedQuantity, people),
       people
     );
-    if (newEval > worst) {
-      worst = newEval;
-    }
+    sum += newEval;
   }
-  return worst;
+  return sum / x;
 }
 
 function simulateSuggestionQuality(
@@ -159,6 +111,7 @@ function evaluatePeopleAte(peopleAte: PeopleAte, people: People) {
 increment their quantity without breaking fairness. */
 function fillDiet(
   presentDiets: Diet[],
+  minQuantity: number,
   howManyPizza: number,
   people: People,
   fairness: number
@@ -177,14 +130,16 @@ function fillDiet(
   while (given < howManyPizza - 1) {
     const sortedDiets = presentDiets.sort((a, b) => {
       return (
-        people[a] - suggestedQuantity[a] - (people[b] - suggestedQuantity[b])
+        people[a] * minQuantity -
+        suggestedQuantity[a] -
+        (people[b] * minQuantity - suggestedQuantity[b])
       );
     });
     let whichDietIndex = sortedDiets.length - 1;
 
     let suggested = addOneTo(suggestedQuantity, sortedDiets[whichDietIndex]);
 
-    while (findXPercentWorst(99.9, suggested, people) > fairness) {
+    while (avgOfXTries(10, suggested, people) > fairness) {
       whichDietIndex--;
       if (whichDietIndex === -1) {
         suggested = addOneTo(suggestedQuantity, lowestDiet);
@@ -295,6 +250,7 @@ export function suggestPizzas(
   } else {
     suggestedQuantity = fillDiet(
       presentDiets,
+      minQuantity,
       howManyPizza,
       people,
       fairness / 100
@@ -313,4 +269,69 @@ export function suggestPizzas(
     );
   });
   return suggestedQuantityPerPizza;
+}
+
+/* 
+  Increase fairness index (hence making the order less fair) until the suggestion of {diet} is increased by one.
+  While doing so it tries to keep the {diet} that have more people than pizza at the same value or more.
+*/
+
+export function suggestMore(
+  suggestedQuantity: LightSuggestion,
+  people: People,
+  diet: Diet,
+  fairness: number,
+  minQuantity: number
+) {
+  const check = (suggestion: LightSuggestion) => {
+    return (
+      diets
+        .filter((d) => people[d] * minQuantity > suggestedQuantity[d])
+        .every((d) => suggestion[d] >= suggestedQuantity[d]) &&
+      suggestion[diet] > suggestedQuantity[diet]
+    );
+  };
+  let newSuggestion = suggestedQuantity;
+  let newFairness = fairness;
+  while (!check(newSuggestion)) {
+    newFairness += 10;
+    const result = suggestPizzas(
+      lightPizzas,
+      people,
+      minQuantity,
+      "lowerCost",
+      newFairness
+    );
+    newSuggestion = toLightSuggestion(result);
+  }
+  return { suggestion: newSuggestion, fairness: newFairness };
+}
+
+/* 
+  Reduces fairness index (hence making the order more fair) until the suggestion changes
+*/
+
+export function suggestLess(
+  suggestedQuantity: LightSuggestion,
+  people: People,
+  fairness: number,
+  minQuantity: number
+) {
+  let newSuggestion = suggestedQuantity;
+  let newFairness = fairness;
+  while (
+    diets.every((d) => suggestedQuantity[d] === newSuggestion[d]) &&
+    newFairness > LIGHT_FAIRNESS_MIN
+  ) {
+    newFairness -= 10;
+    const result = suggestPizzas(
+      lightPizzas,
+      people,
+      minQuantity,
+      "lowerCost",
+      newFairness
+    );
+    newSuggestion = toLightSuggestion(result);
+  }
+  return { suggestion: newSuggestion, fairness: newFairness };
 }

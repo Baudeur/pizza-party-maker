@@ -99,7 +99,7 @@ export function LightQuantityFlag() {
 
   return (
     <div
-      className={`bg-amber-300 w-full rounded-lg flex items-center min-w-32 cursor-default`}
+      className={`bg-amber-300 rounded-lg flex items-center w-fit min-w-96 cursor-default`}
       data-testid={"quantity-flag"}
     >
       <div
@@ -108,13 +108,13 @@ export function LightQuantityFlag() {
         <span>
           <img
             src={sliceIcon}
-            className={isDesktop ? "size-7 m-2" : "size-10 m-2"}
+            className={isDesktop ? "size-5 m-2" : "size-10 m-2"}
           />
         </span>
       </div>
       <div className="flex flex-col justify-center w-[calc(100%-2.75rem)]">
         <Desktop>
-          <span className="font-bold text-xl">
+          <span className="font-bold text-lg">
             {t("light-quantity-slices", {
               count: Math.round(slicesPerPerson),
             }) +

@@ -54,7 +54,7 @@ export function LightPage() {
       >
         <div className={`${isDesktop ? "w-[700px]" : "w-full"}`}></div>
         {state === "form" && <LightPizzaForm />}
-        {state === "loading" && <Spinner />}
+        {state === "loading" && <Spinner size={16} />}
         {state === "done" && <LightSuggestion />}
       </Container>
       <Desktop>

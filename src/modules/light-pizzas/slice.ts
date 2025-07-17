@@ -1,14 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Diet } from "../../types";
+import { LightSuggestion } from "../../components/light-page/LightSuggestion";
 
 type LightPizzasActionPayload = {
   quantity: number;
   type: Diet;
-};
-
-export type LightFairness = {
-  okay: number;
-  bad: number;
 };
 
 export type LightCalculationState = "form" | "loading" | "done";
@@ -16,16 +12,15 @@ export type LightCalculationState = "form" | "loading" | "done";
 export type LightSuggestion = Record<Diet, number>;
 
 export type LightState = {
-  suggestion: LightSuggestion;
+  suggested: LightSuggestion;
   state: LightCalculationState;
   form: {
-    // quantity: number;
-    fairness: LightFairness;
+    quantity: number;
   };
 };
 
 const initialState: LightState = {
-  suggestion: {
+  suggested: {
     normal: 0,
     pescoVegetarian: 0,
     vegetarian: 0,
@@ -33,15 +28,11 @@ const initialState: LightState = {
   },
   state: "form",
   form: {
-    // quantity: 8,
-    fairness: {
-      okay: 125,
-      bad: 150,
-    },
+    quantity: 8,
   },
 };
 
-const ligthPizzas = createSlice({
+const lightPizzas = createSlice({
   name: "light-pizzas",
   initialState,
   reducers: {
@@ -53,32 +44,32 @@ const ligthPizzas = createSlice({
         case "normal":
           return {
             ...state,
-            suggestion: {
-              ...state.suggestion,
+            suggested: {
+              ...state.suggested,
               normal: Math.max(action.payload.quantity, 0),
             },
           };
         case "vegetarian":
           return {
             ...state,
-            suggestion: {
-              ...state.suggestion,
+            suggested: {
+              ...state.suggested,
               vegetarian: Math.max(action.payload.quantity, 0),
             },
           };
         case "vegan":
           return {
             ...state,
-            suggestion: {
-              ...state.suggestion,
+            suggested: {
+              ...state.suggested,
               vegan: Math.max(action.payload.quantity, 0),
             },
           };
         case "pescoVegetarian":
           return {
             ...state,
-            suggestion: {
-              ...state.suggestion,
+            suggested: {
+              ...state.suggested,
               pescoVegetarian: Math.max(action.payload.quantity, 0),
             },
           };
@@ -92,7 +83,7 @@ const ligthPizzas = createSlice({
     ) => {
       return {
         ...state,
-        suggestion: action.payload,
+        suggested: action.payload,
       };
     },
     setLightState: (state, action: PayloadAction<LightCalculationState>) => {
@@ -101,26 +92,19 @@ const ligthPizzas = createSlice({
         state: action.payload,
       };
     },
-    // setLightFormQuantity: (state, action: PayloadAction<number>) => {
-    //   return {
-    //     ...state,
-    //     form: { ...state.form, quantity: action.payload },
-    //   };
-    // },
-    setLightFormFairness: (state, action: PayloadAction<LightFairness>) => {
+    setLightFormQuantity: (state, action: PayloadAction<number>) => {
       return {
         ...state,
-        form: { ...state.form, fairness: action.payload },
+        form: { ...state.form, quantity: action.payload },
       };
     },
   },
 });
 
-export const lightPizzasReducer = ligthPizzas.reducer;
+export const lightPizzasReducer = lightPizzas.reducer;
 export const {
   setLightSuggestionForDiet,
   setLightSuggestion,
-  setLightFormFairness,
-  // setLightFormQuantity,
+  setLightFormQuantity,
   setLightState,
-} = ligthPizzas.actions;
+} = lightPizzas.actions;

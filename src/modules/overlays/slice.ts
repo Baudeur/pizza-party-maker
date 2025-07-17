@@ -15,16 +15,15 @@ type OverlaysState = {
   tooltipContent: string | undefined;
   tooltipCoordinates: {
     x: number;
-    y: number;
-    width: number;
-    height: number;
+    top: number;
+    bottom: number;
   };
 };
 
 const initialState: OverlaysState = {
   openedOverlay: undefined,
   tooltipContent: undefined,
-  tooltipCoordinates: { x: 0, y: 0, width: 0, height: 0 },
+  tooltipCoordinates: { x: 0, top: 0, bottom: 0 },
 };
 
 const overlays = createSlice({
@@ -44,7 +43,7 @@ const overlays = createSlice({
       state,
       action: PayloadAction<{
         content: string;
-        coords: { x: number; y: number; width: number; height: number };
+        coords: { x: number; top: number; bottom: number };
       }>
     ) {
       return {

@@ -2,7 +2,10 @@ import { useSelector } from "react-redux";
 import { DietIcon } from "../icons/DietIcon";
 import { Diet, dietTranslationMap } from "../../types";
 import { useTranslation } from "react-i18next";
-import { lightSuggestionDietSelector } from "../../modules/light-pizzas/selector";
+import {
+  lightQuantitySelector,
+  lightSuggestionDietSelector,
+} from "../../modules/light-pizzas/selector";
 import { peopleSelector } from "../../modules/people/selector";
 import { dietOrder } from "../../services/calculatorService";
 import { IntegerInput } from "../utils/IntegerInput";
@@ -10,19 +13,25 @@ import { setLightSuggestionForDiet } from "../../modules/light-pizzas/slice";
 import { useAppDispatch } from "../../hooks";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
+import { Button } from "../utils/Button";
+import { Plus } from "lucide-react";
+import { Tooltip } from "../utils/Tooltip";
 
 type LightSuggestionDisplayProps = {
   diet: Diet;
   edit: boolean;
+  more: (diet: Diet) => void;
 };
 
 export function LightSuggestionDisplay({
   diet,
   edit,
+  more,
 }: LightSuggestionDisplayProps) {
   const { t } = useTranslation();
   const suggestion = useSelector(lightSuggestionDietSelector(diet));
   const people = useSelector(peopleSelector);
+  const quantity = useSelector(lightQuantitySelector);
   const dispatch = useAppDispatch();
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
@@ -47,51 +56,88 @@ export function LightSuggestionDisplay({
   const nameKey = pizzaNameKey(dietsToDisplay);
 
   return (
-    (suggestion !== 0 || (edit && people[diet] !== 0)) && (
-      <div
-        className={`flex bg-amber-200 rounded-lg px-2 items-center w-full ${
-          isDesktop ? "h-8 gap-2" : "flex-col h-20 justify-between"
-        }`}
-      >
+    people[diet] !== 0 && (
+      <div className="flex gap-2">
         <div
-          className={`flex items-center ${
-            isDesktop ? "gap-4" : "gap-4 pt-1 justify-start w-full pl-1 h-10"
+          className={`flex bg-amber-200 rounded-lg px-2 items-center w-full ${
+            isDesktop ? "h-8 gap-2" : "flex-col h-20 justify-between"
           }`}
         >
-          <div className={`flex ${isDesktop ? "gap-1" : "gap-3"}`}>
-            {dietsToDisplay.map((d) => (
-              <DietIcon
-                key={d}
-                color="Color"
-                type={d}
-                className={isDesktop ? "size-6" : "size-8"}
+          <div
+            className={`flex items-center ${
+              isDesktop ? "gap-4" : "gap-4 pt-1 justify-start w-full pl-1 h-10"
+            }`}
+          >
+            <div className={`flex ${isDesktop ? "gap-1" : "gap-3"}`}>
+              {dietsToDisplay.map((d) => (
+                <DietIcon
+                  key={d}
+                  color={suggestion === 0 ? "BW" : "Color"}
+                  type={d}
+                  className={`${isDesktop ? "size-6" : "size-8"} ${
+                    suggestion === 0 ? "opacity-35" : ""
+                  }`}
+                />
+              ))}
+              {biggestLine - dietsToDisplay.length === 2 && (
+                <div className={isDesktop ? "size-6" : "size-8"} />
+              )}
+              {biggestLine - dietsToDisplay.length >= 1 && (
+                <div className={isDesktop ? "size-6" : "size-8"} />
+              )}
+            </div>
+            {edit ? (
+              <IntegerInput
+                title={{ value: nameKey, isKey: true, isFeminin: true }}
+                setValue={(value) => {
+                  dispatch(
+                    setLightSuggestionForDiet({ quantity: value, type: diet })
+                  );
+                }}
+                value={suggestion}
+                min={0}
               />
-            ))}
-            {biggestLine - dietsToDisplay.length === 2 && (
-              <div className={isDesktop ? "size-6" : "size-8"}></div>
-            )}
-            {biggestLine - dietsToDisplay.length >= 1 && (
-              <div className={isDesktop ? "size-6" : "size-8"}></div>
+            ) : (
+              <span
+                className={`${isDesktop ? "" : "text-3xl"} ${
+                  suggestion === 0 && "opacity-35"
+                }`}
+              >
+                {suggestion}
+              </span>
             )}
           </div>
-          {edit ? (
-            <IntegerInput
-              title={{ value: nameKey, isKey: true, isFeminin: true }}
-              setValue={(value) => {
-                dispatch(
-                  setLightSuggestionForDiet({ quantity: value, type: diet })
-                );
-              }}
-              value={suggestion}
-              min={0}
-            />
-          ) : (
-            <span className={isDesktop ? "" : "text-3xl"}>{suggestion}</span>
-          )}
+          <span
+            className={`${
+              isDesktop ? "" : "text-sm text-left w-full pb-1 pl-1"
+            } ${suggestion === 0 && "opacity-35"}`}
+          >
+            {t(nameKey, { count: suggestion })}
+          </span>
         </div>
-        <span className={isDesktop ? "" : "text-sm text-left w-full pb-1 pl-1"}>
-          {t(nameKey, { count: suggestion })}
-        </span>
+        {!edit && suggestion < (people[diet] * quantity) / 8 && (
+          <Tooltip
+            content={t(`light-less-fair-warning`, {
+              interpolation: { escapeValue: false },
+              pizza: t(nameKey, { count: 2 }),
+            })}
+          >
+            <Button
+              onClick={() => {
+                more(diet);
+              }}
+              color="green"
+              title={t("light-less-fair-title", {
+                interpolation: { escapeValue: false },
+                pizza: t(nameKey, { count: 2 }),
+              })}
+              className="px-2 rounded-lg text-black flex items-center gap-1"
+            >
+              <Plus size={20} />
+              {t("more")}
+            </Button>
+          </Tooltip>
+        )}
       </div>
     )
   );

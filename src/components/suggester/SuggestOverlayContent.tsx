@@ -23,6 +23,7 @@ import { useAppDispatch } from "../../hooks";
 import { CircleHelp } from "lucide-react";
 import { Tooltip } from "../utils/Tooltip";
 import { Desktop, Mobile } from "../utils/ReactiveComponents";
+import { suggest } from "../../services/utils";
 
 const optionsInit = [
   { title: "1/8", value: 1 / 8, label: "1/8" },
@@ -88,6 +89,25 @@ export function SuggestOverlayContent() {
   }, [okay]);
 
   const handleCompute = () => {
+    suggest(
+      () => {
+        setIsLoading(true);
+        setError(false);
+      },
+      (data) => setSuggestions(data),
+      () => {
+        setError(true);
+        setIsLoading(false);
+      },
+      () => setIsLoading(false),
+      {
+        pizzas,
+        people,
+        minQuantity: quantity,
+        suggestMode,
+        fairness,
+      }
+    );
     setIsLoading(true);
     setError(false);
 
@@ -103,11 +123,13 @@ export function SuggestOverlayContent() {
         setIsLoading(false);
       };
       suggestWorker.postMessage({
-        pizzas,
-        people,
-        minQuantity: quantity,
-        suggestMode,
-        fairness,
+        suggest: {
+          pizzas,
+          people,
+          minQuantity: quantity,
+          suggestMode,
+          fairness,
+        },
       });
     } else {
       try {
