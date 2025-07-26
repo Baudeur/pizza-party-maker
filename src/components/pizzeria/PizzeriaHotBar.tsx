@@ -110,7 +110,7 @@ export function PizzeriaHotBar() {
           <Button
             color="yellow"
             onClick={() => {
-              dispatch(openOverlay("SAVE_PIZZERIA"));
+              dispatch(openOverlay({ id: "SAVE_PIZZERIA" }));
             }}
             className={`w-2/3 rounded-lg`}
             title={t("save-as-pizzeria")}
@@ -150,7 +150,7 @@ export function PizzeriaHotBar() {
         <Button
           color="yellow"
           onClick={() => {
-            dispatch(openOverlay("MANAGE_PIZZERIA"));
+            dispatch(openOverlay({ id: "MANAGE_PIZZERIA" }));
           }}
           className={`w-1/3 rounded-lg`}
           title={t("manage-pizzeria-title")}

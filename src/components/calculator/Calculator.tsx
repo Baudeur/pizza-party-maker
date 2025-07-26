@@ -71,7 +71,7 @@ export function Calculator() {
           <Button
             color="green"
             onClick={() => {
-              dispatch(openOverlay("SUGGESTER"));
+              dispatch(openOverlay({ id: "SUGGESTER" }));
             }}
             className="mt-2 font-bold w-full rounded-lg"
             testId="suggester-button"
@@ -164,7 +164,7 @@ export function Calculator() {
                     <Button
                       color="green"
                       onClick={() => {
-                        dispatch(openOverlay("SUGGESTER"));
+                        dispatch(openOverlay({ id: "SUGGESTER" }));
                       }}
                       className="font-bold w-full rounded-lg mt-2"
                       testId="suggester-button"
@@ -175,7 +175,7 @@ export function Calculator() {
                     <Button
                       color="orange"
                       onClick={() => {
-                        dispatch(openOverlay("DETAILS"));
+                        dispatch(openOverlay({ id: "DETAILS" }));
                       }}
                       className="font-bold w-full rounded-lg mt-2"
                       testId="suggester-button"

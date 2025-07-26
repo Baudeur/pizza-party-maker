@@ -11,6 +11,7 @@ import { EitherDesktopOrMobile } from "../utils/ReactiveComponents";
 import { useTranslation } from "react-i18next";
 import { Swipable } from "../utils/Swipable";
 import { pizzeriaStateSelector } from "../../modules/pizzerias/selector";
+import { useLongPress } from "../../hooks";
 
 type PizzaDisplayProps = {
   pizza: Pizza;
@@ -32,6 +33,7 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
   const { t } = useTranslation();
   const [swipePercentage, setSwipePercentage] = useState(0);
   const pizzeriaState = useSelector(pizzeriaStateSelector);
+  const onLongPress = useLongPress();
 
   function handleDoubleClick(focus: Focusable) {
     if (pizzeriaState === "loaded") return;
@@ -170,6 +172,10 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
               <div className="flex relative h-8 w-full">
                 <div
                   onDoubleClick={() => handleDoubleClick("name")}
+                  {...onLongPress(
+                    () => {},
+                    () => handleDoubleClick("name")
+                  )}
                   className="truncate absolute right-0 left-0 font-bold px-2 h-8 py-[2px]"
                   data-testid={`${pizza.id}-pizza-display-name`}
                 >
@@ -178,6 +184,10 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
               </div>
               <div
                 onDoubleClick={() => handleDoubleClick("price")}
+                {...onLongPress(
+                  () => {},
+                  () => handleDoubleClick("price")
+                )}
                 className="ml-4 mr-2 h-8 pt-[2px] min-w-fit"
               >
                 <div data-testid={`${pizza.id}-pizza-display-price`}>
@@ -188,6 +198,10 @@ export function PizzaDisplay({ pizza }: Readonly<PizzaDisplayProps>) {
             <div className="flex justify-between w-full">
               <div
                 onDoubleClick={() => handleDoubleClick("diet")}
+                {...onLongPress(
+                  () => {},
+                  () => handleDoubleClick("diet")
+                )}
                 className="my-[2px]"
               >
                 <DietDisplay

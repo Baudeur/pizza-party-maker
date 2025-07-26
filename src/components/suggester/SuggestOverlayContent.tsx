@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   SuggestedQuantityPerPizza,
   SuggestMode,
@@ -18,12 +18,12 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { okayThresoldsSelector } from "../../modules/params/selector";
-import { closeOverlay } from "../../modules/overlays/slice";
 import { useAppDispatch } from "../../hooks";
 import { CircleHelp } from "lucide-react";
 import { Tooltip } from "../utils/Tooltip";
 import { Desktop, Mobile } from "../utils/ReactiveComponents";
 import { suggest } from "../../services/utils";
+import { CloseContext } from "../utils/OverlayInside";
 
 const optionsInit = [
   { title: "1/8", value: 1 / 8, label: "1/8" },
@@ -62,6 +62,7 @@ export function SuggestOverlayContent() {
   const [error, setError] = useState(false);
   const dispatch = useAppDispatch();
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
+  const animateAndClose = useContext(CloseContext);
 
   new Image(1, 1).src = spinner; //preload spinner image
 
@@ -158,7 +159,7 @@ export function SuggestOverlayContent() {
         dispatch(modifyPizza(suggestedPizza));
       }
     });
-    dispatch(closeOverlay());
+    animateAndClose();
   };
 
   return (

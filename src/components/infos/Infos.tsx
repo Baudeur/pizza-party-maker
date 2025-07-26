@@ -28,7 +28,7 @@ export function Infos() {
         </Link>
         <div>
           <button
-            onClick={() => dispatch(openOverlay("PARAM"))}
+            onClick={() => dispatch(openOverlay({ id: "PARAM" }))}
             data-testid="param-overlay-button"
             title={t("parameters-title")}
           >
@@ -42,7 +42,7 @@ export function Infos() {
         </div>
         <div>
           <button
-            onClick={() => dispatch(openOverlay("INFO"))}
+            onClick={() => dispatch(openOverlay({ id: "INFO" }))}
             data-testid="info-overlay-button"
             title={t("help")}
           >

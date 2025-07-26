@@ -5,16 +5,17 @@ import { useSelector } from "react-redux";
 import { peopleSelector } from "../../modules/people/selector";
 import { pizzasSelector } from "../../modules/pizzas/selector";
 import { sliceSelector } from "../../modules/params/selector";
-import { pizzaSlicesPerPerson } from "../../services/calculatorService";
 import {
-  Desktop,
-  EitherDesktopOrMobile,
-  Mobile,
-} from "../utils/ReactiveComponents";
-import { lightSuggestionSelector } from "../../modules/light-pizzas/selector";
+  getTotalPeople,
+  pizzaSlicesPerPerson,
+} from "../../services/calculatorService";
+import { EitherDesktopOrMobile } from "../utils/ReactiveComponents";
+import {
+  lightQuantitySelector,
+  lightSuggestionSelector,
+} from "../../modules/light-pizzas/selector";
 import { diets } from "../../types";
-import { useMediaQuery } from "react-responsive";
-import { desktopSize } from "../../services/constants";
+import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 
 type QuantityFlagProps = {
   mobileExtended?: boolean;
@@ -88,67 +89,55 @@ export function QuantityFlag({ mobileExtended }: QuantityFlagProps) {
 export function LightQuantityFlag() {
   const suggestion = useSelector(lightSuggestionSelector);
   const people = useSelector(peopleSelector);
+  const quantity = useSelector(lightQuantitySelector);
   const { t } = useTranslation();
-  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
-  const slices = diets.reduce((acc, diet) => acc + suggestion[diet], 0) * 8;
-  const persons = diets.reduce((acc, diet) => acc + people[diet], 0);
-
-  const slicesPerPerson = slices / persons;
-  const pizzasPerPerson = toUnderstandableRational(slicesPerPerson, 8);
+  const originalTotal = Math.ceil((quantity / 8) * getTotalPeople(people));
+  const currentTotal = diets.reduce((acc, curr) => acc + suggestion[curr], 0);
+  const diff = currentTotal - originalTotal;
 
   return (
     <div
-      className={`bg-amber-300 rounded-lg flex items-center w-fit min-w-96 cursor-default`}
+      className={`bg-amber-300 rounded-lg flex items-center w-fit min-w-72 cursor-default ${
+        diff === 0 ? "m-[2px]" : "border-2 border-orange-700"
+      }`}
       data-testid={"quantity-flag"}
     >
       <div
         className={`flex items-center justify-center rounded-lg shadow-[10px_0px_15px_-3px_rgb(0,0,0,0.1),4px_0px_6px_-4px_rgb(0,0,0,0.1)]`}
       >
         <span>
-          <img
-            src={sliceIcon}
-            className={isDesktop ? "size-5 m-2" : "size-10 m-2"}
-          />
+          <img src={sliceIcon} className="size-5 m-2" />
         </span>
       </div>
-      <div className="flex flex-col justify-center w-[calc(100%-2.75rem)]">
-        <Desktop>
-          <span className="font-bold text-lg">
-            {t("light-quantity-slices", {
-              count: Math.round(slicesPerPerson),
-            }) +
-              " " +
-              t("light-quantity-equal") +
-              " " +
-              t("light-quantity-pizzas", {
-                count: Math.ceil(slicesPerPerson / 8),
-                pizzas: pizzasPerPerson,
-                interpolation: { escapeValue: false },
-              }) +
-              " " +
-              t("light-quantity-per-persons")}
-          </span>
-        </Desktop>
-        <Mobile>
-          <span className="font-bold text-xl">
-            {t("light-quantity-slices", {
-              count: Math.round(slicesPerPerson),
-            }) +
-              " " +
-              t("light-quantity-equal") +
-              " " +
-              t("light-quantity-pizzas", {
-                count: Math.ceil(slicesPerPerson / 8),
-                pizzas: pizzasPerPerson,
-                interpolation: { escapeValue: false },
-              })}
-          </span>
-          <span className="text-xl font-bold">
-            {" "}
-            {t("light-quantity-per-persons")}
-          </span>
-        </Mobile>
+      <div className="flex justify-center w-[calc(100%-1.75rem)]">
+        <span
+          className={`font-bold flex items-center text-lg ${
+            diff !== 0 && "text-orange-700"
+          }`}
+        >
+          {diff === 0 && t("light-quantity-exact")}
+          {diff > 0 && (
+            <>
+              <ArrowBigUp
+                className="fill-orange-700"
+                stroke="black"
+                strokeWidth={0}
+              />
+              {t("light-quantity-extra", { count: diff })}
+            </>
+          )}
+          {diff < 0 && (
+            <>
+              <ArrowBigDown
+                className="fill-orange-700"
+                stroke="black"
+                strokeWidth={0}
+              />
+              {t("light-quantity-missing", { count: -diff })}
+            </>
+          )}
+        </span>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ export function MobileHeader() {
   const { t } = useTranslation();
   const location = useLocation();
 
-  const isLight = location.pathname === "/";
+  const isLight = ["/", "/help-light"].includes(location.pathname);
   return (
     <>
       <div
@@ -54,6 +54,32 @@ export function MobileHeader() {
             <hr />
             {isLight ? (
               <>
+                <Link to="/">
+                  <button
+                    className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
+                    onClick={() => setExpanded(false)}
+                    title={t("home")}
+                  >
+                    <House size={30} color="gray" strokeWidth={2} />
+                    <span className="ml-2 text-black font-normal">
+                      {t("home")}
+                    </span>
+                  </button>
+                </Link>
+                <hr />
+                <Link to="/help-light">
+                  <button
+                    className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
+                    onClick={() => setExpanded(false)}
+                    title={t("help")}
+                  >
+                    <CircleHelp size={30} color="gray" strokeWidth={2} />
+                    <span className="ml-2 text-black font-normal">
+                      {t("help")}
+                    </span>
+                  </button>
+                </Link>
+                <hr />
                 <Link to="/old">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"

@@ -21,6 +21,8 @@ import {
   lightSuggestionSelector,
 } from "../../modules/light-pizzas/selector";
 import { less, more } from "../../services/utils";
+import { neverShowAgainSelector } from "../../modules/params/selector";
+import { openOverlay } from "../../modules/overlays/slice";
 
 export function LightSuggestion() {
   const { t } = useTranslation();
@@ -32,6 +34,7 @@ export function LightSuggestion() {
   const quantity = useSelector(lightQuantitySelector);
   const [isLoading, setIsLoading] = useState(false);
   const [fairness, setFairness] = useState(LIGHT_FAIRNESS_MIN);
+  const neverShowAgain = useSelector(neverShowAgainSelector);
 
   const dietPeopleCount = useMemo(
     () => diets.reduce((acc, curr) => (people[curr] === 0 ? acc : acc + 1), 0),
@@ -84,7 +87,14 @@ export function LightSuggestion() {
     <div className="flex flex-col gap-2 items-center">
       <p className="text-xl">{t("light-suggestion-title")}</p>
       {isLoading ? (
-        <div className="flex items-center" style={{ height: `12rem` }}>
+        <div
+          className="flex items-center"
+          style={{
+            height: isDesktop
+              ? `${2 + 2.5 * dietPeopleCount}rem`
+              : `${2 + 5.5 * dietPeopleCount}rem`,
+          }}
+        >
           <Spinner size={16} />
         </div>
       ) : (
@@ -101,9 +111,6 @@ export function LightSuggestion() {
             more={handleMore}
           />
           <LightSuggestionDisplay diet="vegan" edit={edit} more={handleMore} />
-          {dietPeopleCount < 4 && <div className="h-8" />}
-          {dietPeopleCount < 3 && <div className="h-8" />}
-          {dietPeopleCount < 2 && <div className="h-8" />}
           {dietPeopleCount === 1 && (
             <span className="text-sm text-gray-600">{t("light-why")}</span>
           )}
@@ -135,53 +142,31 @@ export function LightSuggestion() {
         </div>
       ) : (
         <>
-          {/* <div className="flex gap-2">
-            <Button
-              onClick={() => {
-                setFairness(fairness - 10);
-                handleCalculate();
-              }}
-              disabled={fairness == LIGHT_FAIRNESS_MIN}
-              color="green"
-              title={t("light-more-fair-button")}
-              className="rounded-lg px-2 gap-2 text-xl w-48"
-            >
-              <Scale size={20} />
-              {t("light-more-fair-button")}
-            </Button>
-            <Tooltip
-              content={t(
-                `light-less-fair-${dietTranslationMap.get(highestDiet)}-warning`
-              )}
-              delayed={500}
-            >
-              <Button
-                onClick={() => {
-                  setFairness(fairness + 10);
-                  handleCalculate();
-                }}
-                color="green"
-                title={t(
-                  `light-more-${dietTranslationMap.get(highestDiet)}-button`
-                )}
-                className="rounded-lg px-2 gap-2 text-xl w-48"
-                disabled={diets.every((d) => suggestion[d] === people[d])}
-              >
-                <DietIcon color="Color" type={highestDiet} className="size-5" />
-                {t(`light-more-${dietTranslationMap.get(highestDiet)}-button`)}
-              </Button>
-            </Tooltip>
-          </div> */}
           <Button
             onClick={() => {
-              setEdit(true);
+              if (neverShowAgain.modifyWarning) {
+                setEdit(true);
+              } else {
+                dispatch(
+                  openOverlay({
+                    id: "LIGHT_WARNING",
+                    props: {
+                      confirmAction: () => setEdit(true),
+                      confirmLabel: t("modify"),
+                      confirmTitle: t("light-edit-button"),
+                      message: t("light-warning-edit-text"),
+                      neverShowAgainKey: "modifyWarning",
+                    },
+                  })
+                );
+              }
             }}
             color="green"
             title={t("light-edit-button")}
-            className="rounded-lg px-2 gap-2 text-xl mb-1"
+            className="rounded-lg px-2 gap-2 text-xl mb-2"
           >
             <Pencil size={20} />
-            {t("light-edit-button")}
+            {isDesktop ? t("light-edit-button") : t("light-edit-button-short")}
           </Button>
         </>
       )}

@@ -6,6 +6,7 @@ import { HelpPage } from "./components/menus/HelpPage";
 import { ParameterPage } from "./components/menus/ParameterPage";
 import { DetailsHelpPage } from "./components/menus/DetailsHelpPage";
 import { LightPage } from "./components/menus/LightPage";
+import { LightHelpPage } from "./components/menus/LightHelpPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/old" element={<HomePage />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/help-details" element={<DetailsHelpPage />} />
+          <Route path="/help-light" element={<LightHelpPage />} />
           <Route path="/settings" element={<ParameterPage />} />
         </Route>
       </Routes>

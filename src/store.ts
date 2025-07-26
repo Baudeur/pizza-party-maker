@@ -4,6 +4,7 @@ import { pizzasReducer, setPizzas, StoredPizzas } from "./modules/pizzas/slice";
 import {
   paramsReducer,
   setBadThresholds,
+  setNeverShowAgain,
   setOkayThresholds,
   setSlices,
   StoredParams,
@@ -26,7 +27,13 @@ export const store = configureStore({
     params: paramsReducer,
     overlays: overlaysReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredPaths: ["overlays.overlayProps.confirmAction"],
+        ignoredActions: ["overlays/openOverlay"],
+      },
+    }),
 });
 initPizzerias();
 initParameters();
@@ -56,9 +63,17 @@ function initParameters() {
   const storedParametersString = localStorage.getItem("parameters");
   if (storedParametersString === null) return;
   const storedParams: StoredParams = JSON.parse(storedParametersString);
-  store.dispatch(setSlices(storedParams.slices));
-  store.dispatch(setOkayThresholds(storedParams.thresholds.okay));
-  store.dispatch(setBadThresholds(storedParams.thresholds.bad));
+  if (storedParams.version === 1) {
+    store.dispatch(setSlices(storedParams.slices));
+    store.dispatch(setOkayThresholds(storedParams.thresholds.okay));
+    store.dispatch(setBadThresholds(storedParams.thresholds.bad));
+  }
+  if (storedParams.version === 2) {
+    store.dispatch(setSlices(storedParams.slices));
+    store.dispatch(setOkayThresholds(storedParams.thresholds.okay));
+    store.dispatch(setBadThresholds(storedParams.thresholds.bad));
+    store.dispatch(setNeverShowAgain(storedParams.neverShowAgain));
+  }
 }
 
 function initPeople() {
