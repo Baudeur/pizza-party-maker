@@ -15,10 +15,9 @@ import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { Button } from "../utils/Button";
 import { Plus } from "lucide-react";
-import { Tooltip } from "../utils/Tooltip";
-import { Desktop, Mobile } from "../utils/ReactiveComponents";
 import { neverShowAgainSelector } from "../../modules/params/selector";
 import { openOverlay } from "../../modules/overlays/slice";
+import { useCallback } from "react";
 
 type LightSuggestionDisplayProps = {
   diet: Diet;
@@ -58,6 +57,31 @@ export function LightSuggestionDisplay({
   });
 
   const nameKey = pizzaNameKey(dietsToDisplay);
+
+  const handleMore = useCallback(() => {
+    if (neverShowAgain.plusWarning) {
+      more(diet);
+    } else {
+      dispatch(
+        openOverlay({
+          id: "LIGHT_WARNING",
+          props: {
+            confirmAction: () => more(diet),
+            confirmLabel: t("add"),
+            confirmTitle: t("light-less-fair-title", {
+              interpolation: { escapeValue: false },
+              pizza: t(nameKey, { count: 2 }),
+            }),
+            message: t(`light-warning-plus-text`, {
+              interpolation: { escapeValue: false },
+              pizza: t(nameKey, { count: 2 }),
+            }),
+            neverShowAgainKey: "plusWarning",
+          },
+        })
+      );
+    }
+  }, [more, diet, neverShowAgain]);
 
   return (
     people[diet] !== 0 && (
@@ -121,66 +145,20 @@ export function LightSuggestionDisplay({
         </div>
         {!edit && suggestion < (people[diet] * quantity) / 8 && (
           <>
-            <Desktop>
-              <Tooltip
-                content={t(`light-less-fair-warning`, {
-                  interpolation: { escapeValue: false },
-                  pizza: t(nameKey, { count: 2 }),
-                })}
-              >
-                <Button
-                  onClick={() => {
-                    more(diet);
-                  }}
-                  color="green"
-                  title={t("light-less-fair-title", {
-                    interpolation: { escapeValue: false },
-                    pizza: t(nameKey, { count: 2 }),
-                  })}
-                  className={`px-2 rounded-lg text-black flex items-center gap-1`}
-                >
-                  <Plus size={20} />
-                  {t("more")}
-                </Button>
-              </Tooltip>
-            </Desktop>
-            <Mobile>
-              <Button
-                onClick={() => {
-                  if (neverShowAgain.plusWarning) {
-                    more(diet);
-                  } else {
-                    dispatch(
-                      openOverlay({
-                        id: "LIGHT_WARNING",
-                        props: {
-                          confirmAction: () => more(diet),
-                          confirmLabel: t("add"),
-                          confirmTitle: t("light-less-fair-title", {
-                            interpolation: { escapeValue: false },
-                            pizza: t(nameKey, { count: 2 }),
-                          }),
-                          message: t(`light-warning-plus-text`, {
-                            interpolation: { escapeValue: false },
-                            pizza: t(nameKey, { count: 2 }),
-                          }),
-                          neverShowAgainKey: "plusWarning",
-                        },
-                      })
-                    );
-                  }
-                }}
-                color="green"
-                title={t("light-less-fair-title", {
-                  interpolation: { escapeValue: false },
-                  pizza: t(nameKey, { count: 2 }),
-                })}
-                className={`px-2 rounded-lg text-black flex items-center min-h-20 flex-col`}
-              >
-                <Plus size={20} />
-                {t("more")}
-              </Button>
-            </Mobile>
+            <Button
+              onClick={handleMore}
+              color="green"
+              title={t("light-less-fair-title", {
+                interpolation: { escapeValue: false },
+                pizza: t(nameKey, { count: 2 }),
+              })}
+              className={`px-2 rounded-lg text-black flex items-center ${
+                isDesktop ? "gap-1" : "flex-col min-h-20"
+              }`}
+            >
+              <Plus size={20} />
+              {t("more")}
+            </Button>
           </>
         )}
       </div>

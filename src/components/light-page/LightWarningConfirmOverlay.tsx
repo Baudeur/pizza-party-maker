@@ -26,7 +26,7 @@ export function LightWarningConfirmOverlay() {
   };
 
   return (
-    <div className="mb-2">
+    <div className="mb-2 max-w-[400px]">
       <p className="text-start pt-2">{props.message}</p>
       <div className="flex justify-end items-center gap-2 my-4">
         <input

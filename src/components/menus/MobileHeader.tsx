@@ -13,13 +13,21 @@ import { useState } from "react";
 import { Footer } from "./Footer";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
+import { useAppDispatch } from "../../hooks";
+import { closeOverlay } from "../../modules/overlays/slice";
 
 export function MobileHeader() {
   const [expanded, setExpanded] = useState(false);
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const location = useLocation();
 
-  const isLight = ["/", "/help-light"].includes(location.pathname);
+  const handleRedirect = () => {
+    setExpanded(false);
+    dispatch(closeOverlay());
+  };
+
+  const isLight = ["/", "/help"].includes(location.pathname);
   return (
     <>
       <div
@@ -37,7 +45,7 @@ export function MobileHeader() {
           <Link
             to={isLight ? "/" : "/old"}
             className="w-3/5 flex justify-center items-center"
-            onClick={() => setExpanded(false)}
+            onClick={handleRedirect}
           >
             <img src={title} className="max-h-10" alt="Pizza Party Maker" />
           </Link>
@@ -57,7 +65,7 @@ export function MobileHeader() {
                 <Link to="/">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
-                    onClick={() => setExpanded(false)}
+                    onClick={handleRedirect}
                     title={t("home")}
                   >
                     <House size={30} color="gray" strokeWidth={2} />
@@ -67,15 +75,15 @@ export function MobileHeader() {
                   </button>
                 </Link>
                 <hr />
-                <Link to="/help-light">
+                <Link to="/help">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
-                    onClick={() => setExpanded(false)}
+                    onClick={handleRedirect}
                     title={t("help")}
                   >
                     <CircleHelp size={30} color="gray" strokeWidth={2} />
                     <span className="ml-2 text-black font-normal">
-                      {t("help")}
+                      {t("light-about")}
                     </span>
                   </button>
                 </Link>
@@ -83,7 +91,7 @@ export function MobileHeader() {
                 <Link to="/old">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
-                    onClick={() => setExpanded(false)}
+                    onClick={handleRedirect}
                     title={t("go-previous-ver")}
                   >
                     <History size={30} color="gray" strokeWidth={2} />
@@ -98,7 +106,7 @@ export function MobileHeader() {
                 <Link to="/old">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
-                    onClick={() => setExpanded(false)}
+                    onClick={handleRedirect}
                     title={t("home")}
                   >
                     <House size={30} color="gray" strokeWidth={2} />
@@ -108,10 +116,10 @@ export function MobileHeader() {
                   </button>
                 </Link>
                 <hr />
-                <Link to="/help">
+                <Link to="/help-old">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
-                    onClick={() => setExpanded(false)}
+                    onClick={handleRedirect}
                     title={t("help")}
                   >
                     <CircleHelp size={30} color="gray" strokeWidth={2} />
@@ -124,7 +132,7 @@ export function MobileHeader() {
                 <Link to="/settings">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
-                    onClick={() => setExpanded(false)}
+                    onClick={handleRedirect}
                     title={t("parameters-title")}
                   >
                     <Settings size={30} color="gray" strokeWidth={2} />
@@ -137,7 +145,7 @@ export function MobileHeader() {
                 <Link to="/">
                   <button
                     className="h-10 text-xl flex items-center pl-2 w-full active:bg-gray-200"
-                    onClick={() => setExpanded(false)}
+                    onClick={handleRedirect}
                     title={t("go-light-ver")}
                   >
                     <Star size={30} color="gray" strokeWidth={2} />

@@ -15,9 +15,9 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<LightPage />} />
           <Route path="/old" element={<HomePage />} />
-          <Route path="/help" element={<HelpPage />} />
+          <Route path="/help-old" element={<HelpPage />} />
           <Route path="/help-details" element={<DetailsHelpPage />} />
-          <Route path="/help-light" element={<LightHelpPage />} />
+          <Route path="/help" element={<LightHelpPage />} />
           <Route path="/settings" element={<ParameterPage />} />
         </Route>
       </Routes>

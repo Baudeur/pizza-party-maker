@@ -21,7 +21,7 @@ export function LightAboutOverlayContent() {
     >
       <Mobile>
         <p className="text-xl bg-amber-300 rounded-lg px-2 font-bold mb-4 text-center w-full">
-          {t("help")}
+          {t("light-about")}
         </p>
       </Mobile>
       {/* ########## Introduction ########## */}

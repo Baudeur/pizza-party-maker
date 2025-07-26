@@ -65,6 +65,7 @@
     "cancel": "Cancel",
     "plus": "Plus",
     "minus": "Minus",
+    "more": "More",
     "close": "Close",
     "save": "Save",
     "delete": "Delete",
@@ -231,12 +232,7 @@
     "details-flags-p2": "The fairness is based on the percentage of extra pizza the diet that eats most have. In our example above, each <red>omnivorous</red> ate the most with 8 slices of pizza and <green>vegetarian</green> ate 6 slices. Which means <red>omnivorous</red> had 33% more pizzas than the <green>vegetarian</green>.",
     "details-flags-p3": "The flag is <sky>Perfect</sky> if this percentage is <strong>exactly 0%</strong>. It is <green>Good</green> if this percentage is between <strong>between 0% and 25%</strong>. It is <orange>Okay</orange> if this percentage is <strong>between 25% and 50%</strong>. And <red>Bad</red> if this percentage is <strong>above 50%</strong>.",
 
-    "light-fairness-strict": "Very fair",
-    "light-fairness-medium": "Rather fair",
-    "light-fairness-lenient": "Not very fair",
-
     "light-people-label": "Select de number of people of each diet.",
-    "light-fairness-label": "Select how fair should the order be.",
     "light-quantity-label": "Select the amount of pizza per person.",
 
     "light-compute-label": "Compute",
@@ -264,7 +260,8 @@
     "light-vegan-pizza-quantity_other": "vegan pizzas",
 
     "light-back-button": "Restart",
-    "light-edit-button": "Edit suggestion",
+    "light-edit-button": "Edit suggestion manually",
+    "light-edit-button-short": "Edit suggestion",
 
     "slices-icon-title": "{{quantity}} slices per persons. 1 pizza = 8 slices.",
 
@@ -274,11 +271,45 @@
     "go-previous-ver": "Old version",
     "go-light-ver": "New version",
     "light-why": "(Why would you even use this site ?)",
+    "light-quantity-missing_one": "Missing {{count}} pizza",
+    "light-quantity-missing_other": "Missing {{count}} pizzas",
+    "light-quantity-extra_one": "There is {{count}} extra pizza",
+    "light-quantity-extra_other": "There are {{count}} extra pizzas",
+    "light-quantity-exact": "Perfect",
     "light-quantity-slices_one": "{{count}} slice",
     "light-quantity-slices_other": "{{count}} slices",
-    "light-quantity-equal": "/",
-    "light-quantity-pizzas_one": "{{pizzas}} pizza",
-    "light-quantity-pizzas_other": "{{pizzas}} pizzas",
-    "light-quantity-per-persons": "per persons"
+
+    "light-more-fair-button": "More fair",
+
+    "light-0-people": "Add at least one person",
+
+    "light-less-fair-title" : "More {{pizza}}.",
+
+    "light-about": "About - Help",
+
+    "light-about-how-to": "How to use this website?",
+    "light-about-p1": "First, enter how many people of each diet will attend your party using the following indicators:",
+    "light-about-p2": "Then, choose how much pizza per person you want to have, then click on the big <computeButton /> button.",
+    "light-about-p3": "The site will then suggest the most fair solution.",
+    "light-about-p4": "<bold>You like it?</bold> Perfect, you can use it and close the site.",
+    "light-about-p5": "<bold>You don't like it?</bold> You have multiple solution to make it suits your needs.",
+
+    "light-about-change": "Modify the suggestion",
+    "light-about-p6": "To modify the solution, you have the following options:",
+    "light-about-p7": "You can use the <moreButton/> buttons next to each type of pizza that allows you to ask for suggestion that contains at least one more of that pizza type.",
+    "light-about-p8": "You can also click on <modifyButton/> to edit manually how much of each type of pizza you want. To help you keep the right amount of pizza, the following indicator appears:",
+    "light-about-p8-short": "You can also click on <modifyButtonShort/> to edit manually how much of each type of pizza you want. To help you keep the right amount of pizza, the following indicator appears:",
+    "light-about-p9": "You can also click on <moreFairButton/> which will modify the suggestion a little to make it more fair.",
+    "light-about-p10": "⚠ Be careful ! Using the two options above will make the order less fair.",
+    "light-about-p11": "To tell how fair is your order, you can use the indicator that looks like this:",
+    "light-about-p12": "These indicator shows how much, in average, a person from each diet will eat. Simply compare the quantity of each diet to see if the order seems fair to you. For instance here, omnivorous people will eat 9 slices in average, and vegetarian will eat 6. That is not very fair.",
+    "light-about-p13": "There ! You know it all ! Have a nice pizza party !",
+  
+    "light-warning": "⚠ Warning ⚠",
+    "light-warning-edit-text": "By editing the suggestion manually, you may make it less fair, keep an eye on the indicator of the quantity eaten by each diets.",
+    "light-warning-checkbox": "Don't show again",
+    "light-warning-plus-text": "By adding {{pizza}}, you will make the suggestion less fair.",
+    "add": "Add",
+    "modify": "Edit"
   }
 }

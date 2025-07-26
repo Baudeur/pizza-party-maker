@@ -276,15 +276,13 @@
     "light-quantity-extra_one": "Il y a {{count}} pizza en trop",
     "light-quantity-extra_other": "Il y a {{count}} pizzas en trop",
     "light-quantity-exact": "Parfait",
+    "light-quantity-slices_one": "{{count}} part",
+    "light-quantity-slices_other": "{{count}} parts",
 
-    "light-more-omnivorous-button": "Plus de viande",
-    "light-more-pesco-vegetarian-button": "Plus de poisson",
-    "light-more-vegetarian-button": "Plus de fromage",
     "light-more-fair-button": "Plus équitable",
 
     "light-0-people": "Ajoutez au moins une personne",
 
-    "light-less-fair-warning" : "⚠ En ajoutant des {{pizza}}, vous rendez la commande moins équitable.",
     "light-less-fair-title" : "Plus de {{pizza}}.",
 
     "light-about": "À propos de ce site - Aide",

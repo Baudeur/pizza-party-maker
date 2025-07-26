@@ -57,6 +57,13 @@ export function Overlays() {
       >
         <ManagePizzeriaOverlayContent />
       </Overlay>
+      <Overlay
+        overlayId="LIGHT_WARNING"
+        title={t("light-warning")}
+        testId="warning-confirm-overlay"
+      >
+        <LightWarningConfirmOverlay />
+      </Overlay>
       <Desktop>
         <Overlay
           overlayId="DETAIL_INFO"
@@ -83,13 +90,6 @@ export function Overlays() {
           testId="suggester-overlay"
         >
           <MobileDetailsOverlayContent />
-        </Overlay>
-        <Overlay
-          overlayId="LIGHT_WARNING"
-          title={t("light-warning")}
-          testId="warning-confirm-overlay"
-        >
-          <LightWarningConfirmOverlay />
         </Overlay>
       </Mobile>
     </>
