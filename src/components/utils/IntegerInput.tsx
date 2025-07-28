@@ -2,11 +2,17 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "./Button";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { desktopSize } from "../../services/constants";
 
 type IntegerInputProps = {
   value: number;
   setValue: (value: number) => void;
-  title: string;
+  title: {
+    value: string;
+    isKey: boolean;
+    isFeminin: boolean;
+  };
   min?: number;
   max?: number;
   animateShow?: boolean;
@@ -30,14 +36,16 @@ export function IntegerInput({
 }: Readonly<IntegerInputProps>) {
   const [focus, setFocus] = useState(false);
   const { t } = useTranslation();
+  const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
 
   function onValueChange(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.target.value[-1] === ".") return;
     let inputValue = Number(event.target.value);
     if (Number.isNaN(inputValue)) {
       return;
     }
     inputValue = Math.floor(inputValue);
-    if (inputValue < min) {
+    if (min !== undefined && inputValue < min) {
       setValue(min);
       return;
     }
@@ -73,7 +81,11 @@ export function IntegerInput({
             tabIndex={-1}
             testId={testId && `${testId}-minus`}
             disabled={value === min}
-            title={t("minus-of", { element: title })}
+            title={t("minus-of", {
+              element: title.isKey ? t(title.value, { count: 1 }) : title.value,
+              interpolation: { escapeValue: title.isKey },
+              context: title.isFeminin ? "feminin" : "masculin",
+            })}
           >
             <Minus size={20} strokeWidth={2} />
           </Button>
@@ -89,8 +101,17 @@ export function IntegerInput({
             testId={testId && `${testId}-${value !== 0 ? "minus" : "delete"}`}
             title={
               value !== min
-                ? t("minus-of", { element: title })
-                : t("delete-element", { element: title })
+                ? t("minus-of", {
+                    element: title.isKey
+                      ? t(title.value, { count: 1 })
+                      : title.value,
+                    interpolation: { escapeValue: title.isKey },
+                    context: title.isFeminin ? "feminin" : "masculin",
+                  })
+                : t("delete-element", {
+                    element: title.isKey ? t(title.value) : title.value,
+                    interpolation: { escapeValue: title.isKey },
+                  })
             }
           >
             {value !== 0 ? (
@@ -103,12 +124,15 @@ export function IntegerInput({
         <input
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          type="text"
+          type={isDesktop ? "text" : "number"}
           value={String(value)}
           onChange={onValueChange}
-          className={`h-8 px-2 w-[40px] text-xl text-center font-bold outline-none`}
+          className={`h-8 px-2 w-[40px] text-xl text-center font-bold outline-none number-no-arrows`}
           data-testid={testId && `${testId}-input`}
-          title={t("quantity-of", { element: title })}
+          title={t("quantity-of", {
+            element: title.isKey ? t(title.value, { count: 2 }) : title.value,
+            interpolation: { escapeValue: title.isKey },
+          })}
         />
         <Button
           className={`text-lg ${
@@ -122,7 +146,11 @@ export function IntegerInput({
           tabIndex={-1}
           testId={testId && `${testId}-plus`}
           disabled={value === max}
-          title={t("plus-of", { element: title })}
+          title={t("plus-of", {
+            element: title.isKey ? t(title.value, { count: 1 }) : title.value,
+            interpolation: { escapeValue: title.isKey },
+            context: title.isFeminin ? "feminin" : "masculin",
+          })}
         >
           <Plus size={20} strokeWidth={2} />
         </Button>

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { NeverShowAgain } from "../params/slice";
 
 export type OverlayId =
   | "PARAM"
@@ -8,23 +9,36 @@ export type OverlayId =
   | "SAVE_PIZZERIA"
   | "MANAGE_PIZZERIA"
   | "DETAILS"
+  | "LIGHT_ABOUT"
+  | "LIGHT_WARNING"
   | undefined;
+
+type WarningConfirmOverlayProps = {
+  confirmAction: () => void;
+  confirmLabel: string;
+  confirmTitle: string;
+  message: string;
+  neverShowAgainKey: keyof NeverShowAgain;
+};
+
+type OverlayProps = WarningConfirmOverlayProps | undefined;
 
 type OverlaysState = {
   openedOverlay: OverlayId;
+  overlayProps: OverlayProps;
   tooltipContent: string | undefined;
   tooltipCoordinates: {
     x: number;
-    y: number;
-    width: number;
-    height: number;
+    top: number;
+    bottom: number;
   };
 };
 
 const initialState: OverlaysState = {
   openedOverlay: undefined,
+  overlayProps: undefined,
   tooltipContent: undefined,
-  tooltipCoordinates: { x: 0, y: 0, width: 0, height: 0 },
+  tooltipCoordinates: { x: 0, top: 0, bottom: 0 },
 };
 
 const overlays = createSlice({
@@ -34,8 +48,15 @@ const overlays = createSlice({
     closeOverlay(state) {
       return { ...state, openedOverlay: undefined };
     },
-    openOverlay(state, action: PayloadAction<OverlayId>) {
-      return { ...state, openedOverlay: action.payload };
+    openOverlay(
+      state,
+      action: PayloadAction<{ id: OverlayId; props?: OverlayProps }>
+    ) {
+      return {
+        ...state,
+        openedOverlay: action.payload.id,
+        overlayProps: action.payload.props,
+      };
     },
     closeTooltip(state) {
       return { ...state, tooltipContent: undefined };
@@ -44,7 +65,7 @@ const overlays = createSlice({
       state,
       action: PayloadAction<{
         content: string;
-        coords: { x: number; y: number; width: number; height: number };
+        coords: { x: number; top: number; bottom: number };
       }>
     ) {
       return {

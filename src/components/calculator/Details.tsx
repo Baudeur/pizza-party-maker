@@ -6,7 +6,9 @@ import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks";
-import { closeOverlay, openOverlay } from "../../modules/overlays/slice";
+import { openOverlay } from "../../modules/overlays/slice";
+import { useContext } from "react";
+import { CloseContext } from "../utils/OverlayInside";
 
 type DetailsProps = {
   worstCaseScenario: PeopleAte;
@@ -25,6 +27,7 @@ export function Details({
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const animateAndClose = useContext(CloseContext);
 
   return (
     <div className="w-full">
@@ -33,16 +36,21 @@ export function Details({
           className="absolute"
           onClick={() => {
             if (isDesktop) {
-              dispatch(openOverlay("DETAIL_INFO"));
+              dispatch(openOverlay({ id: "DETAIL_INFO" }));
             } else {
               navigate("/help-details");
-              dispatch(closeOverlay());
+              animateAndClose();
             }
           }}
           data-testid="details-overlay-button"
           title={t("help")}
         >
-          <CircleHelp size={25} color="black" strokeWidth={2} />
+          <CircleHelp
+            size={25}
+            color="black"
+            strokeWidth={2}
+            className="hover:fill-amber-200 hover:stroke-amber-700"
+          />
         </button>
       </div>
       <CaseScenario

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   SuggestedQuantityPerPizza,
   SuggestMode,
@@ -18,11 +18,12 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";
 import { okayThresoldsSelector } from "../../modules/params/selector";
-import { closeOverlay } from "../../modules/overlays/slice";
 import { useAppDispatch } from "../../hooks";
 import { CircleHelp } from "lucide-react";
 import { Tooltip } from "../utils/Tooltip";
 import { Desktop, Mobile } from "../utils/ReactiveComponents";
+import { suggest } from "../../services/utils";
+import { CloseContext } from "../utils/OverlayInside";
 
 const optionsInit = [
   { title: "1/8", value: 1 / 8, label: "1/8" },
@@ -61,6 +62,7 @@ export function SuggestOverlayContent() {
   const [error, setError] = useState(false);
   const dispatch = useAppDispatch();
   const isDesktop = useMediaQuery({ minDeviceWidth: desktopSize });
+  const animateAndClose = useContext(CloseContext);
 
   new Image(1, 1).src = spinner; //preload spinner image
 
@@ -88,6 +90,25 @@ export function SuggestOverlayContent() {
   }, [okay]);
 
   const handleCompute = () => {
+    suggest(
+      () => {
+        setIsLoading(true);
+        setError(false);
+      },
+      (data) => setSuggestions(data),
+      () => {
+        setError(true);
+        setIsLoading(false);
+      },
+      () => setIsLoading(false),
+      {
+        pizzas,
+        people,
+        minQuantity: quantity,
+        suggestMode,
+        fairness,
+      }
+    );
     setIsLoading(true);
     setError(false);
 
@@ -103,11 +124,13 @@ export function SuggestOverlayContent() {
         setIsLoading(false);
       };
       suggestWorker.postMessage({
-        pizzas,
-        people,
-        minQuantity: quantity,
-        suggestMode,
-        fairness,
+        suggest: {
+          pizzas,
+          people,
+          minQuantity: quantity,
+          suggestMode,
+          fairness,
+        },
       });
     } else {
       try {
@@ -136,7 +159,7 @@ export function SuggestOverlayContent() {
         dispatch(modifyPizza(suggestedPizza));
       }
     });
-    dispatch(closeOverlay());
+    animateAndClose();
   };
 
   return (
@@ -189,7 +212,10 @@ export function SuggestOverlayContent() {
 
             <Mobile>
               <Tooltip content={t("suggester-strategy-help")}>
-                <CircleHelp size={20} />
+                <CircleHelp
+                  size={20}
+                  className="hover:fill-amber-300 hover:stroke-amber-700"
+                />
               </Tooltip>
             </Mobile>
           </div>
@@ -214,7 +240,10 @@ export function SuggestOverlayContent() {
           />
           <Desktop>
             <Tooltip content={t("suggester-strategy-help")}>
-              <CircleHelp size={20} />
+              <CircleHelp
+                size={20}
+                className="hover:fill-amber-300 hover:stroke-amber-700"
+              />
             </Tooltip>
           </Desktop>
         </div>
@@ -236,7 +265,10 @@ export function SuggestOverlayContent() {
             </div>
             <Mobile>
               <Tooltip content={t("suggester-unfairness-help")}>
-                <CircleHelp size={20} />
+                <CircleHelp
+                  size={20}
+                  className="hover:fill-amber-300 hover:stroke-amber-700"
+                />
               </Tooltip>
             </Mobile>
           </div>
@@ -249,9 +281,7 @@ export function SuggestOverlayContent() {
               {fairness - 100}%
             </div>
             <input
-              className={`accent-green-500 touch-none ${
-                isDesktop ? "w-full" : "w-full"
-              }`}
+              className={`accent-green-500 touch-none w-full`}
               type="range"
               value={fairness}
               title={t("suggester-unfairness-description")}
@@ -264,7 +294,10 @@ export function SuggestOverlayContent() {
           </div>
           <Desktop>
             <Tooltip content={t("suggester-unfairness-help")}>
-              <CircleHelp size={20} />
+              <CircleHelp
+                size={20}
+                className="hover:fill-amber-300 hover:stroke-amber-700"
+              />
             </Tooltip>
           </Desktop>
         </div>

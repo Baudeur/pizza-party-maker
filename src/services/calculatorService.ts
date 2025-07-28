@@ -22,7 +22,13 @@ export type PeopleAte = Record<Diet, number>;
 
 // ####################### CONSTANTS #######################
 
-const dietOrder: Diet[] = ["vegan", "vegetarian", "pescoVegetarian", "normal"];
+//Do not use diets constant, it would be a false semantic link
+export const dietOrder: Diet[] = [
+  "vegan",
+  "vegetarian",
+  "pescoVegetarian",
+  "normal",
+];
 
 // ####################### UTILITY FUNCTION #######################
 
@@ -161,6 +167,7 @@ const eatOneRound =
     for (const diet of peopleList) {
       const simuDiet = simulation[diet] as SimulationDiet;
       if (simuDiet.pizzas.reduce((acc, cur) => acc + cur.slicesLeft, 0) === 0)
+        //No pizza to eat left
         continue;
 
       if (eat(simuDiet.pizzas)) {
