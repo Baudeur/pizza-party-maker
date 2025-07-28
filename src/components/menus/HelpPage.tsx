@@ -10,7 +10,7 @@ export function HelpPage() {
 
   useEffect(() => {
     addEventListener("popstate", (e) => {
-      navigate("/");
+      navigate("/old");
       e.preventDefault();
       e.stopPropagation();
     });
@@ -18,7 +18,7 @@ export function HelpPage() {
 
   useLayoutEffect(() => {
     if (isDesktop) {
-      navigate("/");
+      navigate("/old");
     }
     window.scrollTo(0, 0);
   });

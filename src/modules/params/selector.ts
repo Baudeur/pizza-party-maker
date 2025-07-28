@@ -9,3 +9,6 @@ export const okayThresoldsSelector = (state: RootState) =>
 
 export const badThresoldsSelector = (state: RootState) =>
   state.params.thresholds.bad;
+
+export const neverShowAgainSelector = (state: RootState) =>
+  state.params.neverShowAgain;

@@ -11,6 +11,8 @@ import { SaveAsPizzeriaOverlayContent } from "../pizzeria/SaveAsPizzeriaOverlayC
 import { ManagePizzeriaOverlayContent } from "../pizzeria/ManagePizzeriaOverlayContent";
 import { MobileDetailsOverlayContent } from "./MobileDetailsOverlayContent";
 import { TooltipOverlay } from "../utils/TooltipOverlay";
+import { LightAboutOverlayContent } from "../light-page/LightAboutOverlayContent";
+import { LightWarningConfirmOverlay } from "../light-page/LightWarningConfirmOverlay";
 
 export function Overlays() {
   const { t } = useTranslation();
@@ -25,6 +27,13 @@ export function Overlays() {
         testId="suggester-overlay"
       >
         <SuggestOverlayContent />
+      </Overlay>
+      <Overlay
+        overlayId="LIGHT_ABOUT"
+        title={t("light-about")}
+        testId="light-about"
+      >
+        <LightAboutOverlayContent />
       </Overlay>
       <Overlay
         overlayId="SAVE_PIZZERIA"
@@ -47,6 +56,13 @@ export function Overlays() {
         testId="manage-overlay"
       >
         <ManagePizzeriaOverlayContent />
+      </Overlay>
+      <Overlay
+        overlayId="LIGHT_WARNING"
+        title={t("light-warning")}
+        testId="light-warning-overlay"
+      >
+        <LightWarningConfirmOverlay />
       </Overlay>
       <Desktop>
         <Overlay

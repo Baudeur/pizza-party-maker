@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { scrollToBottom, setPeople } from "./test-utils";
+import { defaultURL, scrollToBottom, setPeople } from "../test-utils";
 
 test("Graphs are visible", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const graphExpand = page.getByTestId("graph-expand");
   await graphExpand.click();
   const peopleGraph = page.getByTestId("people-graph");
@@ -16,7 +16,7 @@ test("Graphs are visible", async ({ page }) => {
 });
 
 test("Display N/A if empty", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const graphExpand = page.getByTestId("graph-expand");
   await graphExpand.click();
   const peopleGraph = page.getByTestId("people-graph");
@@ -24,7 +24,7 @@ test("Display N/A if empty", async ({ page }) => {
 });
 
 test("Display all people in proportions", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const graphExpand = page.getByTestId("graph-expand");
   await graphExpand.click();
   await setPeople(page, 1, 3, 4, 2);
@@ -34,7 +34,7 @@ test("Display all people in proportions", async ({ page }) => {
 });
 
 test("Don't display missing people", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const graphExpand = page.getByTestId("graph-expand");
   await graphExpand.click();
   await setPeople(page, 2, 0, 5, 0);
@@ -44,7 +44,7 @@ test("Don't display missing people", async ({ page }) => {
 });
 
 test("Don't display icon if too small", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const graphExpand = page.getByTestId("graph-expand");
   await graphExpand.click();
   await setPeople(page, 1, 3, 5, 5);

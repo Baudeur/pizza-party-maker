@@ -68,7 +68,11 @@ export function Params() {
             max={16}
             min={1}
             testId="slice-parameter"
-            title={t("parameters-slices").toLowerCase()}
+            title={{
+              value: "parameters-slices_lowercase",
+              isKey: true,
+              isFeminin: true,
+            }}
           />
         </div>
         <div

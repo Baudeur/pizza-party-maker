@@ -49,7 +49,10 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
     }, []);
 
     return (
-      <div className={`flex items-center relative ${className}`}>
+      <div
+        className={`flex items-center relative ${className}`}
+        onFocus={() => price === "0" && setPrice("")}
+      >
         <div className="absolute text-xl right-2 z-10 pointer-events-none">
           €
         </div>

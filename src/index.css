@@ -38,3 +38,13 @@ h1 {
 .app {
   display: flex;
 }
+
+input::-webkit-outer-spin-button.number-no-arrows,
+input::-webkit-inner-spin-button.number-no-arrows {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"].number-no-arrows {
+  -moz-appearance: textfield;
+}

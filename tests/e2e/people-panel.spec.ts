@@ -1,13 +1,14 @@
 import { test, expect } from "@playwright/test";
+import { defaultURL } from "../test-utils";
 
 test("The people panel is visible", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const peoplePanel = page.getByTestId("people-panel");
   await expect(peoplePanel).toBeVisible();
 });
 
 test("User can change people number with buttons", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const plusButton = page.getByTestId("people-category-vegetarian-plus");
   const minusButton = page.getByTestId("people-category-vegetarian-minus");
   const input = page.getByTestId("people-category-vegetarian-input");
@@ -21,7 +22,7 @@ test("User can change people number with buttons", async ({ page }) => {
 });
 
 test("User can change people count with direct input", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const input = page.getByTestId("people-category-vegan-input");
   await input.fill("45");
   await expect(input).toHaveValue("45");
@@ -30,7 +31,7 @@ test("User can change people count with direct input", async ({ page }) => {
 });
 
 test("User cannot go below 0 or over 99", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const plusButton = page.getByTestId("people-category-normal-plus");
   const minusButton = page.getByTestId("people-category-normal-minus");
   const input = page.getByTestId("people-category-normal-input");
@@ -43,7 +44,7 @@ test("User cannot go below 0 or over 99", async ({ page }) => {
 });
 
 test("User cannot enter decimal numbers", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const input = page.getByTestId("people-category-normal-input");
   await input.fill("15.");
   await expect(input).toHaveValue("15");
@@ -52,14 +53,14 @@ test("User cannot enter decimal numbers", async ({ page }) => {
 });
 
 test("User cannot enter letters", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const input = page.getByTestId("people-category-vegetarian-input");
   await input.fill("Salut");
   await expect(input).toHaveValue("0");
 });
 
 test("The total count is accurate", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const normalInput = page.getByTestId("people-category-normal-input");
   const pescoVegetarianPlusButton = page.getByTestId(
     "people-category-pescoVegetarian-plus"

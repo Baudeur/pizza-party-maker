@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { checkPizza, createPizza } from "./test-utils";
+import { checkPizza, createPizza, defaultURL } from "../test-utils";
 
 test("Overlays are visible", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const saveAsButton = page.getByTestId("pizza-panel-save-as-button");
   const manageButton = page.getByTestId("pizza-panel-manage-button");
   const saveAsOverlay = page.getByTestId("save-as-overlay-container");
@@ -22,7 +22,7 @@ test("Overlays are visible", async ({ page }) => {
 });
 
 test("User can save and load pizzeria", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const saveAsButton = page.getByTestId("pizza-panel-save-as-button");
   const manageOverlay = page.getByTestId("manage-overlay-container");
   const exitButton = page.getByTestId("pizza-panel-exit-button");
@@ -72,7 +72,7 @@ test("User can save and load pizzeria", async ({ page }) => {
 });
 
 test("Pizzerias are persisted", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const saveAsButton = page.getByTestId("pizza-panel-save-as-button");
   const saveAsInput = page.getByTestId("save-as-pizzeria-text-input");
   const saveAsInputButton = page.getByTestId("save-as-pizzeria-save-button");
@@ -109,7 +109,7 @@ test("Pizzerias are persisted", async ({ page }) => {
 });
 
 test("Pizzerias can have name conflict and be overriden", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const saveAsButton = page.getByTestId("pizza-panel-save-as-button");
   const saveAsBackground = page.getByTestId("save-as-overlay-background");
   const manageBackground = page.getByTestId("manage-overlay-background");
@@ -177,7 +177,7 @@ test("Pizzerias can have name conflict and be overriden", async ({ page }) => {
 });
 
 test("Save pizzeria can be done with keyboard", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const saveAsButton = page.getByTestId("pizza-panel-save-as-button");
   const saveAsOverlay = page.getByTestId("save-as-overlay-container");
   const alreadyExists = page.getByTestId("save-as-conflict-already-exists");
@@ -205,7 +205,7 @@ test("Save pizzeria can be done with keyboard", async ({ page }) => {
 });
 
 test("User can't edit current pizzeria directly", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const saveAsButton = page.getByTestId("pizza-panel-save-as-button");
 
   const saveAsInput = page.getByTestId("save-as-pizzeria-text-input");
@@ -238,7 +238,7 @@ test("User can't edit current pizzeria directly", async ({ page }) => {
 });
 
 test("User can edit pizzeria and cancel", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const saveAsButton = page.getByTestId("pizza-panel-save-as-button");
   const editButton = page.getByTestId("pizza-panel-edit-button");
   const cancelButton = page.getByTestId("pizza-panel-cancel-button");
@@ -290,7 +290,7 @@ test("User can edit pizzeria and cancel", async ({ page }) => {
 });
 
 test("User can edit pizzeria and validate", async ({ page }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const saveAsButton = page.getByTestId("pizza-panel-save-as-button");
   const editButton = page.getByTestId("pizza-panel-edit-button");
   const saveButton = page.getByTestId("pizza-panel-save-button");
@@ -332,7 +332,7 @@ test("User can edit pizzeria and validate", async ({ page }) => {
 test("User can load another pizzeria while editing and it cancels change", async ({
   page,
 }) => {
-  await page.goto(process.env.BASE_URL ?? "localhost:5173");
+  await page.goto(process.env.BASE_URL ?? defaultURL);
   const saveAsButton = page.getByTestId("pizza-panel-save-as-button");
   const editButton = page.getByTestId("pizza-panel-edit-button");
   const exitButton = page.getByTestId("pizza-panel-exit-button");

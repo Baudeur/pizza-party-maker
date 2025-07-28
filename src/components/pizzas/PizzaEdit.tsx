@@ -93,7 +93,7 @@ export function PizzaEdit({ pizza }: Readonly<PizzaEditProps>) {
             setValue={handleQuantityChange}
             onDelete={() => dispatch(removePizza(pizza.id))}
             testId={`${pizza.id}-pizza-edit-quantity`}
-            title={pizza.name}
+            title={{ value: pizza.name, isKey: false, isFeminin: true }}
           />
         </td>
         <td>
