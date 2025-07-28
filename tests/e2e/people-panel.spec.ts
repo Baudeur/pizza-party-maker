@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { defaultURL } from "./test-utils";
+import { defaultURL } from "../test-utils";
 
 test("The people panel is visible", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? defaultURL);

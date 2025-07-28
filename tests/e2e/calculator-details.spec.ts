@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { createPizza, defaultURL, setPeople } from "./test-utils";
+import { createPizza, defaultURL, setPeople } from "../test-utils";
 
 test("The four case scenario are displayed", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? defaultURL);

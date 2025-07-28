@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { defaultURL, scrollToBottom, setPeople } from "./test-utils";
+import { defaultURL, scrollToBottom, setPeople } from "../test-utils";
 
 test("Graphs are visible", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? defaultURL);

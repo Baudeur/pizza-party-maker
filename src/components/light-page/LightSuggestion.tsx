@@ -95,7 +95,7 @@ export function LightSuggestion() {
               : `${2 + 5.5 * dietPeopleCount}rem`,
           }}
         >
-          <Spinner size={16} />
+          <Spinner size={16} testId={"light-suggestion-spinner"} />
         </div>
       ) : (
         <div className="flex flex-col gap-2 justify-between text-xl font-bold w-full">
@@ -123,6 +123,7 @@ export function LightSuggestion() {
               title={t("light-more-fair-button")}
               className="px-2 rounded-lg flex items-center gap-1"
               disabled={fairness === 110}
+              testId={"light-more-fair-button"}
             >
               <Scale size={20} />
               {t("light-more-fair-button")}
@@ -164,6 +165,7 @@ export function LightSuggestion() {
             color="green"
             title={t("light-edit-button")}
             className="rounded-lg px-2 gap-2 text-xl mb-2"
+            testId={"light-edit-button"}
           >
             <Pencil size={20} />
             {isDesktop ? t("light-edit-button") : t("light-edit-button-short")}
@@ -175,6 +177,7 @@ export function LightSuggestion() {
         color="orange"
         title={t("light-back-button")}
         className="rounded-lg px-2 gap-2 text-xl mt-8"
+        testId={"light-restart-button"}
       >
         <RotateCcw size={20} />
         {t("light-back-button")}

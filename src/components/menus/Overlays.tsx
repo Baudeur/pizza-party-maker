@@ -60,7 +60,7 @@ export function Overlays() {
       <Overlay
         overlayId="LIGHT_WARNING"
         title={t("light-warning")}
-        testId="warning-confirm-overlay"
+        testId="light-warning-overlay"
       >
         <LightWarningConfirmOverlay />
       </Overlay>

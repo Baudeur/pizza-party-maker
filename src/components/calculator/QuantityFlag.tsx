@@ -101,7 +101,7 @@ export function LightQuantityFlag() {
       className={`bg-amber-300 rounded-lg flex items-center w-fit min-w-72 cursor-default ${
         diff === 0 ? "m-[2px]" : "border-2 border-orange-700"
       }`}
-      data-testid={"quantity-flag"}
+      data-testid={"light-quantity-flag"}
     >
       <div
         className={`flex items-center justify-center rounded-lg shadow-[10px_0px_15px_-3px_rgb(0,0,0,0.1),4px_0px_6px_-4px_rgb(0,0,0,0.1)]`}

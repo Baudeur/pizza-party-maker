@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { checkPizza, createPizza, defaultURL } from "./test-utils";
+import { checkPizza, createPizza, defaultURL } from "../test-utils";
 
 test("Overlays are visible", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? defaultURL);

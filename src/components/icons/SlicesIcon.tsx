@@ -4,9 +4,10 @@ import slices from "../../assets/Slices Icons.png";
 type SlicesIconProps = {
   quantity: number;
   height: number;
+  testId?: string;
 };
 
-export function SlicesIcon({ quantity, height }: SlicesIconProps) {
+export function SlicesIcon({ quantity, height, testId }: SlicesIconProps) {
   const column = (quantity - 1) % 4;
   const row = Math.floor((quantity - 1) / 4);
   return (
@@ -18,6 +19,7 @@ export function SlicesIcon({ quantity, height }: SlicesIconProps) {
         maxHeight: `${height}rem`,
         maxWidth: `${height * 2}rem`,
       }}
+      data-testid={testId}
     >
       <div
         className="overflow-hidden flex relative justify-center"

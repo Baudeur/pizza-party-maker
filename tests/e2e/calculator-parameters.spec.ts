@@ -1,5 +1,5 @@
 import { test, expect, Locator, Page } from "@playwright/test";
-import { createPizza, defaultURL, setPeople } from "./test-utils";
+import { createPizza, defaultURL, setPeople } from "../test-utils";
 
 test("Parameters are visible", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? defaultURL);

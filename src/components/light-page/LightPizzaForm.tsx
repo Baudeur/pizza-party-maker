@@ -82,7 +82,11 @@ export function LightPizzaForm() {
       <hr className="border-black my-2" />
       <span className="text-xl mb-2">{t("light-quantity-label")}</span>
       <div className="flex flex-col gap-2 w-full mb-2 items-center">
-        <SlicesIcon quantity={quantity} height={4} />
+        <SlicesIcon
+          quantity={quantity}
+          height={4}
+          testId="light-quantity-selector-icon"
+        />
         <input
           value={quantity}
           onChange={(e) => {
@@ -93,6 +97,7 @@ export function LightPizzaForm() {
           max={16}
           step={1}
           className={`accent-green-500 touch-none w-full`}
+          data-testid={"light-quantity-selector"}
         />
       </div>
       <div className="flex flex-col items-center w-full mt-8">
@@ -102,11 +107,14 @@ export function LightPizzaForm() {
           disabled={totalPeople === 0}
           onClick={handleCalculate}
           title={t("light-compute-label")}
+          testId="light-compute-button"
         >
           {t("light-compute-label")}
         </Button>
         {totalPeople === 0 ? (
-          <span className="text-gray-400">{t("light-0-people")}</span>
+          <span data-testid={"light-0-people"} className="text-gray-400">
+            {t("light-0-people")}
+          </span>
         ) : (
           <span className="h-6"></span>
         )}

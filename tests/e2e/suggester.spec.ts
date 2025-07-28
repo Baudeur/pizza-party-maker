@@ -1,5 +1,5 @@
 import { test, expect, Locator, Page } from "@playwright/test";
-import { createPizza, defaultURL, diets, setPeople } from "./test-utils";
+import { createPizza, defaultURL, diets, setPeople } from "../test-utils";
 
 test("Suggester overlay can be opened an closed", async ({ page }) => {
   await page.goto(process.env.BASE_URL ?? defaultURL);
@@ -138,7 +138,7 @@ test("Computing with maximal diversity selects as much pizzas as possible", asyn
 }) => {
   test.setTimeout(60000);
   await page.goto(process.env.BASE_URL ?? defaultURL);
-  await setPeople(page, 2, 3, 2, 2);
+  await setPeople(page, 4, 3, 2, 2);
   let i = 0;
   for (const diet of diets) {
     for (let j = 0; j < 2; j++) {

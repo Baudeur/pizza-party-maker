@@ -96,7 +96,10 @@ export function LightSuggestionDisplay({
               isDesktop ? "gap-4" : "gap-4 pt-1 justify-start w-full pl-1 h-10"
             }`}
           >
-            <div className={`flex ${isDesktop ? "gap-1" : "gap-3"}`}>
+            <div
+              className={`flex ${isDesktop ? "gap-1" : "gap-3"}`}
+              data-testid={`light-suggestion-display-icons-${diet}`}
+            >
               {dietsToDisplay.map((d) => (
                 <DietIcon
                   key={d}
@@ -116,6 +119,7 @@ export function LightSuggestionDisplay({
             </div>
             {edit ? (
               <IntegerInput
+                testId={`light-suggestion-display-input-${diet}`}
                 title={{ value: nameKey, isKey: true, isFeminin: true }}
                 setValue={(value) => {
                   dispatch(
@@ -130,6 +134,7 @@ export function LightSuggestionDisplay({
                 className={`${isDesktop ? "" : "text-3xl"} ${
                   suggestion === 0 && "opacity-35"
                 }`}
+                data-testid={`light-suggestion-display-quantity-${diet}`}
               >
                 {suggestion}
               </span>
@@ -139,6 +144,7 @@ export function LightSuggestionDisplay({
             className={`${
               isDesktop ? "" : "text-sm text-left w-full pb-1 pl-1"
             } ${suggestion === 0 && "opacity-35"}`}
+            data-testid={`light-suggestion-display-name-${diet}`}
           >
             {t(nameKey, { count: suggestion })}
           </span>
@@ -155,6 +161,7 @@ export function LightSuggestionDisplay({
               className={`px-2 rounded-lg text-black flex items-center ${
                 isDesktop ? "gap-1" : "flex-col min-h-20"
               }`}
+              testId={`light-suggestion-display-more-button-${diet}`}
             >
               <Plus size={20} />
               {t("more")}

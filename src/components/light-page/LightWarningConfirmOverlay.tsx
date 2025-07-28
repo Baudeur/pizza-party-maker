@@ -41,6 +41,7 @@ export function LightWarningConfirmOverlay() {
             )
           }
           className="accent-green-500 size-5"
+          data-testid={"light-warning-checkbox"}
         />
         <span>{t("light-warning-checkbox")}</span>
       </div>
@@ -51,6 +52,7 @@ export function LightWarningConfirmOverlay() {
           onClick={handleClose}
           title={t("cancel")}
           className="rounded-lg px-2 text-lg"
+          testId={"light-warning-cancel-button"}
         >
           {t("cancel")}
         </Button>
@@ -59,6 +61,7 @@ export function LightWarningConfirmOverlay() {
           onClick={handleConfirm}
           title={props.confirmTitle}
           className="rounded-lg px-2 text-lg"
+          testId={"light-warning-confirm-button"}
         >
           {props.confirmLabel}
         </Button>

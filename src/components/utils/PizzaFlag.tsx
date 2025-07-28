@@ -109,7 +109,10 @@ export function LightPizzaFlag({ quantity, diet }: LightPizzaFlagProps) {
         <DietIcon type={diet} color="Color" className="size-5 m-2" />
       </div>
       <div className="flex mr-2 justify-center items-center h-full w-full">
-        <span className="font-bold text-lg">
+        <span
+          className="font-bold text-lg"
+          data-testid={`light-pizza-flag-${diet}`}
+        >
           {t("light-quantity-slices", {
             count: quantity,
           })}

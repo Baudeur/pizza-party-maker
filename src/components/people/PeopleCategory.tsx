@@ -45,7 +45,7 @@ export function LightPeopleCategory({ diet }: PeopleCategoryProps) {
   return (
     <div
       className="flex-col flex items-center gap-1"
-      data-testid={`people-light-category-${diet}`}
+      data-testid={`light-people-category-${diet}`}
     >
       <span className="text-lg font-bold">
         {t(dietTranslationMap.get(diet) ?? "")}
@@ -56,7 +56,7 @@ export function LightPeopleCategory({ diet }: PeopleCategoryProps) {
           className="text-2xl"
           value={quantity}
           setValue={setQuantity(diet)}
-          testId={`people-category-${diet}`}
+          testId={`light-people-category-${diet}`}
           title={{ value: `${diet}-person`, isKey: true, isFeminin: true }}
         />
       </div>
