@@ -149,7 +149,7 @@ export function LightSuggestionDisplay({
             {t(nameKey, { count: suggestion })}
           </span>
         </div>
-        {!edit && suggestion < (people[diet] * quantity) / 8 && (
+        {!edit && suggestion + 1 <= (people[diet] * quantity) / 8 && (
           <>
             <Button
               onClick={handleMore}
