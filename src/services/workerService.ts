@@ -1,19 +1,12 @@
 import { LightSuggestion } from "../modules/light-pizzas/slice";
 import { People } from "../modules/people/slice";
-import { Diet, Pizza } from "../types";
-import {
-  suggestLess,
-  suggestMore,
-  SuggestMode,
-  suggestPizzas,
-} from "./suggestionService";
+import { Diet } from "../types";
+import { LIGHT_FAIRNESS_MIN } from "./constants";
+import { suggestLess, suggestMore, suggestPizzas } from "./suggestionService";
 
 export type SuggestMessage = {
-  pizzas: Pizza[];
   people: People;
   minQuantity: number;
-  suggestMode: SuggestMode;
-  fairness?: number;
 };
 
 export type MoreMessage = {
@@ -39,15 +32,8 @@ export type Message = {
 
 onmessage = (e: MessageEvent<Message>) => {
   if (e.data.suggest !== undefined) {
-    const { pizzas, people, minQuantity, suggestMode, fairness } =
-      e.data.suggest;
-    const suggestion = suggestPizzas(
-      pizzas,
-      people,
-      minQuantity,
-      suggestMode,
-      fairness,
-    );
+    const { people, minQuantity } = e.data.suggest;
+    const suggestion = suggestPizzas(people, minQuantity, LIGHT_FAIRNESS_MIN);
     postMessage(suggestion);
     return;
   }

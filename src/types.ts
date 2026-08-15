@@ -19,17 +19,3 @@ export type Rect = {
   width: number;
   height: number;
 };
-
-export type PizzaQuantity = {
-  eatenBy: Diet;
-  quantity: number;
-};
-
-export type Pizza = {
-  id: number;
-  name: string;
-  price: number;
-  eatenBy: Diet;
-  quantity: number;
-  editable: boolean;
-};

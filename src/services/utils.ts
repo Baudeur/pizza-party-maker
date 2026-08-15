@@ -1,11 +1,6 @@
 import { LightSuggestion } from "../modules/light-pizzas/slice";
-import { Diet } from "../types";
-import {
-  SuggestedQuantityPerPizza,
-  suggestLess,
-  suggestMore,
-  suggestPizzas,
-} from "./suggestionService";
+import { LIGHT_FAIRNESS_MIN } from "./constants";
+import { suggestLess, suggestMore, suggestPizzas } from "./suggestionService";
 import {
   LessMessage,
   Message,
@@ -21,47 +16,19 @@ export function shuffleArray<T>(array: Array<T>) {
   }
 }
 
-export function compareDiet(a: Diet, b: Diet) {
-  if (a === b) return 0;
-  if (b === "normal") return 1;
-  if (b === "pescoVegetarian" && a !== "normal") return 1;
-  if (b === "vegetarian" && a === "vegan") return 1;
-  return -1;
-}
-
-export function toLightSuggestion(value: SuggestedQuantityPerPizza) {
-  const rep: LightSuggestion = {
-    normal: 0,
-    pescoVegetarian: 0,
-    vegetarian: 0,
-    vegan: 0,
-  };
-  value.forEach((value, key) => {
-    rep[key.eatenBy] = value;
-  });
-  return rep;
-}
-
 export function suggest(
   start: () => void,
-  success: (data: SuggestedQuantityPerPizza) => void,
+  success: (data: LightSuggestion) => void,
   error: () => void,
   end: () => void,
   params: SuggestMessage,
 ) {
-  useWorker<SuggestedQuantityPerPizza>(
+  useWorker<LightSuggestion>(
     start,
     success,
     error,
     end,
-    () =>
-      suggestPizzas(
-        params.pizzas,
-        params.people,
-        params.minQuantity,
-        params.suggestMode,
-        params.fairness,
-      ),
+    () => suggestPizzas(params.people, params.minQuantity, LIGHT_FAIRNESS_MIN),
     { suggest: params, more: undefined, less: undefined },
   );
 }

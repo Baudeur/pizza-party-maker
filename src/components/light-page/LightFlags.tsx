@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import { lightSuggestionSelector } from "../../modules/light-pizzas/selector";
-import { desktopSize, lightPizzas } from "../../services/constants";
+import { desktopSize } from "../../services/constants";
 import { Desktop, Mobile } from "../utils/ReactiveComponents";
 import { useMemo } from "react";
 import { diets } from "../../types";
@@ -17,11 +17,7 @@ export function LightFlags() {
   const dietToDisplay = useMemo(() => diets.filter((d) => people[d] > 0), []);
 
   const peopleAteRandomAvg = useMemo(() => {
-    const pizzas = lightPizzas.map((p) => ({
-      ...p,
-      quantity: suggestion[p.eatenBy],
-    }));
-    return averageCaseScenario(100, 8, pizzas, people);
+    return averageCaseScenario(100, 8, suggestion, people);
   }, [suggestion]);
   return (
     <div

@@ -41,6 +41,7 @@ export function LightPage() {
           <button
             onClick={() => dispatch(openOverlay({ id: "LIGHT_ABOUT" }))}
             title={t("help")}
+            data-testid={"light-about-button"}
           >
             <CircleHelp
               size={30}
@@ -62,9 +63,7 @@ export function LightPage() {
         {state === "loading" && <Spinner size={16} testId={"light-spinner"} />}
         {state === "done" && <LightSuggestion />}
       </Container>
-      <Desktop>
-        <Footer />
-      </Desktop>
+      <Footer />
     </div>
   );
 }

@@ -1,5 +1,6 @@
+import { LightSuggestion } from "../modules/light-pizzas/slice";
 import { People } from "../modules/people/slice";
-import { Diet, diets, PizzaQuantity } from "../types";
+import { Diet, diets } from "../types";
 import { shuffleArray } from "./utils";
 
 // ####################### TYPES #######################
@@ -40,13 +41,13 @@ function createPeopleAte(): PeopleAte {
 
 function createSimulation(
   people: People,
-  pizzas: PizzaQuantity[],
+  suggestion: LightSuggestion,
   slices: number,
 ): Simulation {
   //Group the pizza per diet adding the quantity.
-  const pizzaStatesStacked: PizzaState[] = pizzas.map((p) => ({
-    diet: p.eatenBy,
-    slicesLeft: slices * p.quantity,
+  const pizzaStatesStacked: PizzaState[] = diets.map((diet) => ({
+    diet: diet,
+    slicesLeft: slices * suggestion[diet],
   }));
 
   //Remove the pizza that can't be eaten.
@@ -167,8 +168,8 @@ const caseScenario =
     behavior: (pizzas: PizzaState[]) => boolean,
     shuffle?: <T>(array: Array<T>) => void,
   ) =>
-  (slices: number, pizzas: PizzaQuantity[], people: People): PeopleAte => {
-    const simulation = createSimulation(people, pizzas, slices);
+  (slices: number, suggestion: LightSuggestion, people: People): PeopleAte => {
+    const simulation = createSimulation(people, suggestion, slices);
 
     const eatOneRoundBehavior = eatOneRound(behavior);
 
@@ -199,13 +200,13 @@ const randomCaseScenario = caseScenario(pickPizzaRandom(), shuffleArray);
 export function averageCaseScenario(
   iterations: number,
   slices: number,
-  pizzas: PizzaQuantity[],
+  suggestion: LightSuggestion,
   people: People,
 ): PeopleAte {
   const scenari = [];
   const simulationNumber = iterations;
   for (let i = 0; i < simulationNumber; i++) {
-    scenari.push(randomCaseScenario(slices, pizzas, people));
+    scenari.push(randomCaseScenario(slices, suggestion, people));
   }
   const peopleAte = createPeopleAte();
   for (const diet of dietOrder) {

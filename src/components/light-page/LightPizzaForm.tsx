@@ -3,11 +3,7 @@ import { SlicesIcon } from "../icons/SlicesIcon";
 import { Button } from "../utils/Button";
 import { useSelector } from "react-redux";
 import { peopleSelector } from "../../modules/people/selector";
-import {
-  desktopSize,
-  LIGHT_FAIRNESS_MIN,
-  lightPizzas,
-} from "../../services/constants";
+import { desktopSize } from "../../services/constants";
 import { useAppDispatch } from "../../hooks";
 import {
   setLightFormQuantity,
@@ -17,7 +13,7 @@ import {
 import { lightQuantitySelector } from "../../modules/light-pizzas/selector";
 import { useMediaQuery } from "react-responsive";
 import { LightPeopleCategory } from "../people/PeopleCategory";
-import { suggest, toLightSuggestion } from "../../services/utils";
+import { suggest } from "../../services/utils";
 import { useMemo } from "react";
 import { getTotalPeople } from "../../services/calculatorService";
 
@@ -31,15 +27,12 @@ export function LightPizzaForm() {
   const handleCalculate = () => {
     suggest(
       () => dispatch(setLightState("loading")),
-      (data) => dispatch(setLightSuggestion(toLightSuggestion(data))),
+      (data) => dispatch(setLightSuggestion(data)),
       () => dispatch(setLightState("form")),
       () => dispatch(setLightState("done")),
       {
-        pizzas: lightPizzas,
         people,
         minQuantity: quantity / 8,
-        suggestMode: "lowerCost",
-        fairness: LIGHT_FAIRNESS_MIN,
       },
     );
   };

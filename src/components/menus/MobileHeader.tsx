@@ -1,10 +1,10 @@
 import { ArrowLeft, CircleHelp } from "lucide-react";
 import title from "../../assets/Title.png";
-import { Infos } from "../infos/Infos";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router";
 import { useAppDispatch } from "../../hooks";
 import { closeOverlay } from "../../modules/overlays/slice";
+import { LanguageSelector } from "../infos/LanguageSelector";
 
 export function MobileHeader() {
   const dispatch = useAppDispatch();
@@ -51,7 +51,9 @@ export function MobileHeader() {
           >
             <img src={title} className="max-h-10" alt="Pizza Party Maker" />
           </Link>
-          <Infos />
+          <div className="pr-2">
+            <LanguageSelector />
+          </div>
         </div>
       </div>
     </>
