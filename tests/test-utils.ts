@@ -1,6 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
 
-export const defaultURL = "localhost:5173/#/old";
 export const defaultURLLight = "localhost:5173/";
 
 export async function checkPizza(
@@ -9,17 +8,17 @@ export async function checkPizza(
   quantity: number,
   name: string,
   diet: string,
-  price: string
+  price: string,
 ) {
   const quantityDisplay = page.getByTestId(
-    `${id}-pizza-display-quantity-display`
+    `${id}-pizza-display-quantity-display`,
   );
   const nameDisplay = page.getByTestId(`${id}-pizza-display-name`);
   const dietDisplay = page.getByTestId(
-    `${id}-pizza-display-diet-${diet}-diet-icon`
+    `${id}-pizza-display-diet-${diet}-diet-icon`,
   );
   const dietNot = page.getByTestId(
-    `${id}-pizza-display-diet-${nextDiet(diet)}-diet-icon`
+    `${id}-pizza-display-diet-${nextDiet(diet)}-diet-icon`,
   );
   const priceDisplay = page.getByTestId(`${id}-pizza-display-price`);
   await expect(quantityDisplay).toHaveText(quantity.toString());
@@ -29,35 +28,11 @@ export async function checkPizza(
   await expect(priceDisplay).toHaveText(price + " €");
 }
 
-function nextDiet(diet) {
+function nextDiet(diet: string) {
   if (diet === "normal") return "pescoVegetarian";
   if (diet === "pescoVegetarian") return "vegetarian";
   if (diet === "vegetarian") return "vegan";
   return "null";
-}
-
-export async function createPizza(
-  page: Page,
-  id: number,
-  quantity: number = 1,
-  name: string = "",
-  diet: string = "normal",
-  price: string = ""
-) {
-  const addPizzaButton = page.getByTestId("add-pizza-button");
-  await addPizzaButton.click();
-  const quantityInput = page.getByTestId(`${id}-pizza-edit-quantity-input`);
-  const nameInput = page.getByTestId(`${id}-pizza-edit-name`);
-  const dietInputButton = page.getByTestId(
-    `${id}-pizza-edit-diet-${diet}-button`
-  );
-  const priceInput = page.getByTestId(`${id}-pizza-edit-price`);
-  const submit = page.getByTestId(`${id}-pizza-edit-validate-button`);
-  await quantityInput.fill(quantity.toString());
-  await nameInput.fill(name);
-  await dietInputButton.click();
-  await priceInput.fill(price);
-  await submit.click();
 }
 
 export async function setPeople(
@@ -65,11 +40,11 @@ export async function setPeople(
   normal: number,
   pescoVegetarian: number,
   vegetarian: number,
-  vegan: number
+  vegan: number,
 ) {
   const inputNormal = page.getByTestId("people-category-normal-input");
   const inputPescoVegetarian = page.getByTestId(
-    "people-category-pescoVegetarian-input"
+    "people-category-pescoVegetarian-input",
   );
   const inputVegetarian = page.getByTestId("people-category-vegetarian-input");
   const inputVegan = page.getByTestId("people-category-vegan-input");
@@ -84,14 +59,14 @@ export async function setLightPeople(
   normal: number,
   pescoVegetarian: number,
   vegetarian: number,
-  vegan: number
+  vegan: number,
 ) {
   const inputNormal = page.getByTestId("light-people-category-normal-input");
   const inputPescoVegetarian = page.getByTestId(
-    "light-people-category-pescoVegetarian-input"
+    "light-people-category-pescoVegetarian-input",
   );
   const inputVegetarian = page.getByTestId(
-    "light-people-category-vegetarian-input"
+    "light-people-category-vegetarian-input",
   );
   const inputVegan = page.getByTestId("light-people-category-vegan-input");
   await inputNormal.fill(normal.toString());

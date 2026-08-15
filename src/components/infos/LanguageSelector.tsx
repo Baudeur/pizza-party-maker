@@ -17,14 +17,14 @@ export function LanguageSelector() {
           label: "English",
           value: "en",
           disabled: language === "en",
-          icon: <div className="text-3xl">🇬🇧</div>,
+          icon: <div className="text-3xl/[2.75rem]">🇬🇧</div>,
         },
         {
           title: "Choisir le français",
           label: "Français",
           value: "fr",
           disabled: language === "fr",
-          icon: <div className="text-3xl">🇫🇷</div>,
+          icon: <div className="text-3xl/[2.75rem]">🇫🇷</div>,
         },
       ]}
       value={language}

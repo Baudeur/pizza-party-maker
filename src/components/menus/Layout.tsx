@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 import { Mobile } from "../utils/ReactiveComponents";
 import { MobileHeader } from "./MobileHeader";
 import { Overlays } from "./Overlays";

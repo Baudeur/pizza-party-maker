@@ -9,8 +9,7 @@ import { lightStateSelector } from "../../modules/light-pizzas/selector";
 import { desktopSize } from "../../services/constants";
 import { useMediaQuery } from "react-responsive";
 import { Desktop } from "../utils/ReactiveComponents";
-import { Link } from "react-router-dom";
-import { CircleHelp, History } from "lucide-react";
+import { CircleHelp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./Footer";
 import { useAppDispatch } from "../../hooks";
@@ -39,23 +38,16 @@ export function LightPage() {
           />
         </div>
         <div className="flex gap-2 items-center w-full justify-end mb-1">
-          <Link to="/old" title={t("go-previous-ver")}>
-            <History
-              size={30}
-              color="gray"
-              strokeWidth={2}
-              className="hover:fill-amber-300 hover:stroke-amber-700"
-            />
-          </Link>
           <button
             onClick={() => dispatch(openOverlay({ id: "LIGHT_ABOUT" }))}
             title={t("help")}
+            data-testid={"light-about-button"}
           >
             <CircleHelp
               size={30}
               color="gray"
               strokeWidth={2}
-              className="hover:fill-amber-300 hover:stroke-amber-700 mr-1"
+              className="hover:fill-amber-300 hover:stroke-amber-700 mr-1 transition-all"
             />
           </button>
           <LanguageSelector />
@@ -71,9 +63,7 @@ export function LightPage() {
         {state === "loading" && <Spinner size={16} testId={"light-spinner"} />}
         {state === "done" && <LightSuggestion />}
       </Container>
-      <Desktop>
-        <Footer />
-      </Desktop>
+      <Footer />
     </div>
   );
 }

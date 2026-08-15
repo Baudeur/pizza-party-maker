@@ -1,7 +1,5 @@
-import { FlagState } from "../components/utils/PizzaFlag";
+import { LightSuggestion } from "../modules/light-pizzas/slice";
 import { People } from "../modules/people/slice";
-import { PizzaQuantity } from "../modules/pizzas/selector";
-import { Pizza } from "../modules/pizzas/slice";
 import { Diet, diets } from "../types";
 import { shuffleArray } from "./utils";
 
@@ -43,13 +41,13 @@ function createPeopleAte(): PeopleAte {
 
 function createSimulation(
   people: People,
-  pizzas: PizzaQuantity[],
-  slices: number
+  suggestion: LightSuggestion,
+  slices: number,
 ): Simulation {
   //Group the pizza per diet adding the quantity.
-  const pizzaStatesStacked: PizzaState[] = pizzas.map((p) => ({
-    diet: p.eatenBy,
-    slicesLeft: slices * p.quantity,
+  const pizzaStatesStacked: PizzaState[] = diets.map((diet) => ({
+    diet: diet,
+    slicesLeft: slices * suggestion[diet],
   }));
 
   //Remove the pizza that can't be eaten.
@@ -78,7 +76,7 @@ function canEat(personDiet: Diet, dishDiet: Diet) {
   switch (personDiet) {
     case "normal":
       return ["normal", "pescoVegetarian", "vegetarian", "vegan"].includes(
-        dishDiet
+        dishDiet,
       );
     case "pescoVegetarian":
       return ["pescoVegetarian", "vegetarian", "vegan"].includes(dishDiet);
@@ -121,7 +119,7 @@ function pickRandomSlice(pizzas: PizzaState[]): boolean {
   let rand =
     1 +
     Math.floor(
-      Math.random() * pizzas.reduce((acc, cur) => acc + cur.slicesLeft, 0)
+      Math.random() * pizzas.reduce((acc, cur) => acc + cur.slicesLeft, 0),
     );
   let pizzaIndex = 0;
   rand -= pizzas[pizzaIndex].slicesLeft;
@@ -135,7 +133,7 @@ function pickRandomSlice(pizzas: PizzaState[]): boolean {
 
 function removeUneatablePizza(
   people: People,
-  pizzas: PizzaState[]
+  pizzas: PizzaState[],
 ): PizzaState[] {
   if (people.normal > 0) return pizzas;
   if (people.pescoVegetarian > 0)
@@ -145,17 +143,6 @@ function removeUneatablePizza(
   if (people.vegan > 0) return pizzas.filter((ps) => canEat("vegan", ps.diet));
   return [];
 }
-
-const pickPizzasInOrder = (order: Diet[]) => (pizzas: PizzaState[]) => {
-  //A list of pizza list grouped by diet.
-  const pizzaDiets = order.map((diet) =>
-    pizzas.filter((ps) => ps.diet === diet)
-  );
-  for (const pizzaDiet of pizzaDiets) {
-    if (pickRandomSlice(pizzaDiet)) return true;
-  }
-  return false;
-};
 
 const pickPizzaRandom = () => (pizzas: PizzaState[]) => {
   return pickRandomSlice(pizzas);
@@ -179,10 +166,10 @@ const eatOneRound =
 const caseScenario =
   (
     behavior: (pizzas: PizzaState[]) => boolean,
-    shuffle?: <T>(array: Array<T>) => void
+    shuffle?: <T>(array: Array<T>) => void,
   ) =>
-  (slices: number, pizzas: PizzaQuantity[], people: People): PeopleAte => {
-    const simulation = createSimulation(people, pizzas, slices);
+  (slices: number, suggestion: LightSuggestion, people: People): PeopleAte => {
+    const simulation = createSimulation(people, suggestion, slices);
 
     const eatOneRoundBehavior = eatOneRound(behavior);
 
@@ -208,24 +195,18 @@ const caseScenario =
 
 // ####################### API #######################
 
-export const worstCaseScenario = caseScenario(pickPizzasInOrder(dietOrder));
-
-export const bestCaseScenario = caseScenario(
-  pickPizzasInOrder(dietOrder.slice().reverse())
-);
-
-export const randomCaseScenario = caseScenario(pickPizzaRandom(), shuffleArray);
+const randomCaseScenario = caseScenario(pickPizzaRandom(), shuffleArray);
 
 export function averageCaseScenario(
   iterations: number,
   slices: number,
-  pizzas: PizzaQuantity[],
-  people: People
+  suggestion: LightSuggestion,
+  people: People,
 ): PeopleAte {
   const scenari = [];
   const simulationNumber = iterations;
   for (let i = 0; i < simulationNumber; i++) {
-    scenari.push(randomCaseScenario(slices, pizzas, people));
+    scenari.push(randomCaseScenario(slices, suggestion, people));
   }
   const peopleAte = createPeopleAte();
   for (const diet of dietOrder) {
@@ -234,51 +215,4 @@ export function averageCaseScenario(
     ).toFixed(1);
   }
   return peopleAte;
-}
-
-export function pizzaPricePerPerson(people: People, pizzas: Pizza[]) {
-  const totalPeople = getTotalPeople(people);
-  if (totalPeople === 0) return 0;
-  return +(
-    pizzas.reduce((acc, pi) => acc + pi.price * pi.quantity, 0) / totalPeople
-  ).toFixed(2);
-}
-
-export function pizzaPriceTotal(pizzas: Pizza[]) {
-  return +pizzas
-    .reduce((acc, pi) => acc + pi.price * pi.quantity, 0)
-    .toFixed(2);
-}
-
-export function pizzaSlicesPerPerson(
-  people: People,
-  pizzas: Pizza[],
-  slices: number
-) {
-  const totalPeople = getTotalPeople(people);
-  if (totalPeople === 0) return 0;
-  return +(
-    (pizzas.reduce((acc, p) => acc + p.quantity, 0) * slices) /
-    totalPeople
-  ).toFixed(1);
-}
-
-export function stateOfDiet(
-  diet: Diet,
-  peopleAte: PeopleAte,
-  people: People,
-  okayThreshold: number,
-  badThreshold: number
-): FlagState {
-  if (people[diet] === 0) return "N/A";
-  const maxAte = Math.max(
-    Math.max(peopleAte.normal, peopleAte.pescoVegetarian),
-    Math.max(peopleAte.vegan, peopleAte.vegetarian)
-  );
-  if (peopleAte[diet] === 0) return "cantEat";
-  if (peopleAte[diet] === maxAte) return "perfect";
-  if ((peopleAte[diet] * badThreshold) / 100 < maxAte) return "bad";
-  if ((peopleAte[diet] * okayThreshold) / 100 < maxAte) return "okay";
-  if (peopleAte[diet] < maxAte) return "good";
-  return "N/A";
 }

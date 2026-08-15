@@ -10,29 +10,6 @@ type PeopleCategoryProps = {
   diet: Diet;
 };
 
-export function PeopleCategory({ diet }: Readonly<PeopleCategoryProps>) {
-  const dispatch = useDispatch();
-  const quantity = useSelector(peopleDietSelector(diet));
-
-  const setQuantity = (name: Diet) => (value: number) => {
-    dispatch(setNumber({ type: name, quantity: value }));
-  };
-
-  return (
-    <div className="text-2xl flex mb-3" data-testid={`people-category-${diet}`}>
-      <div className="mr-3 ">
-        <DietIcon type={diet} color="Color" className="size-7" />
-      </div>
-      <IntegerInput
-        value={quantity}
-        setValue={setQuantity(diet)}
-        testId={`people-category-${diet}`}
-        title={{ value: `${diet}-person`, isKey: true, isFeminin: true }}
-      />
-    </div>
-  );
-}
-
 export function LightPeopleCategory({ diet }: PeopleCategoryProps) {
   const dispatch = useDispatch();
   const quantity = useSelector(peopleDietSelector(diet));
