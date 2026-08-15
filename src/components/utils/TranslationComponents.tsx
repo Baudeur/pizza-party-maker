@@ -17,7 +17,7 @@ import { Button } from "./Button";
 import { SaveAsIcon } from "../icons/SaveAsIcon";
 import title from "../../assets/Title.png";
 import { Trans, useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { TFunction } from "i18next";
 import { useMediaQuery } from "react-responsive";
 import { desktopSize } from "../../services/constants";

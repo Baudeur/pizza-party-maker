@@ -46,7 +46,7 @@ export function DropDown<T extends number | string>({
     if (bounding === undefined) {
       setIsOutOfBounds(false);
     } else {
-      if (bounding?.x + bounding?.width > window.innerWidth) {
+      if (bounding?.x + bounding?.width > window.screen.width) {
         setIsOutOfBounds(true);
       }
     }
@@ -83,7 +83,7 @@ export function DropDown<T extends number | string>({
       {dropDownShown && (
         <div
           ref={ref}
-          className={`z-20 absolute bg-white min-w-full rounded-lg overflow-hidden border-gray-200 border-2 shadow-md overflow-y-auto max-h-[150px] ${
+          className={`z-20 absolute bg-white min-w-full rounded-lg overflow-hidden border-gray-200 border-2 h-fit shadow-md overflow-y-auto max-h-[150px] ${
             minimal && !isOutOfBounds && "-left-[14px]"
           } ${isOutOfBounds && "-right-[8px]"}`}
           onScroll={handleScroll}

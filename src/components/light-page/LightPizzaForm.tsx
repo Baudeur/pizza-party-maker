@@ -40,7 +40,7 @@ export function LightPizzaForm() {
         minQuantity: quantity / 8,
         suggestMode: "lowerCost",
         fairness: LIGHT_FAIRNESS_MIN,
-      }
+      },
     );
   };
 

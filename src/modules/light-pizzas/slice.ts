@@ -7,11 +7,11 @@ type LightPizzasActionPayload = {
   type: Diet;
 };
 
-export type LightCalculationState = "form" | "loading" | "done";
+type LightCalculationState = "form" | "loading" | "done";
 
 export type LightSuggestion = Record<Diet, number>;
 
-export type LightState = {
+type LightState = {
   suggested: LightSuggestion;
   state: LightCalculationState;
   form: {
@@ -38,7 +38,7 @@ const lightPizzas = createSlice({
   reducers: {
     setLightSuggestionForDiet: (
       state,
-      action: PayloadAction<LightPizzasActionPayload>
+      action: PayloadAction<LightPizzasActionPayload>,
     ) => {
       switch (action.payload.type) {
         case "normal":
@@ -79,7 +79,7 @@ const lightPizzas = createSlice({
     },
     setLightSuggestion: (
       state,
-      action: PayloadAction<Record<Diet, number>>
+      action: PayloadAction<Record<Diet, number>>,
     ) => {
       return {
         ...state,

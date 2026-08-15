@@ -50,7 +50,7 @@ const overlays = createSlice({
     },
     openOverlay(
       state,
-      action: PayloadAction<{ id: OverlayId; props?: OverlayProps }>
+      action: PayloadAction<{ id: OverlayId; props?: OverlayProps }>,
     ) {
       return {
         ...state,
@@ -66,7 +66,7 @@ const overlays = createSlice({
       action: PayloadAction<{
         content: string;
         coords: { x: number; top: number; bottom: number };
-      }>
+      }>,
     ) {
       return {
         ...state,
@@ -78,5 +78,4 @@ const overlays = createSlice({
 });
 
 export const overlaysReducer = overlays.reducer;
-export const { closeOverlay, openOverlay, openTooltip, closeTooltip } =
-  overlays.actions;
+export const { closeOverlay, openOverlay } = overlays.actions;

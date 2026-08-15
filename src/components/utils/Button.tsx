@@ -1,6 +1,6 @@
 import { MouseEvent, PropsWithChildren } from "react";
 
-export type ButtonColor = "green" | "red" | "yellow" | "orange";
+type ButtonColor = "green" | "red" | "yellow" | "orange";
 
 type ButtonProps = {
   className?: string;

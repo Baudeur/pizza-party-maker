@@ -1,7 +1,6 @@
 import { LightSuggestion } from "../modules/light-pizzas/slice";
 import { People } from "../modules/people/slice";
-import { Pizza } from "../modules/pizzas/slice";
-import { Diet } from "../types";
+import { Diet, Pizza } from "../types";
 import {
   suggestLess,
   suggestMore,
@@ -47,7 +46,7 @@ onmessage = (e: MessageEvent<Message>) => {
       people,
       minQuantity,
       suggestMode,
-      fairness
+      fairness,
     );
     postMessage(suggestion);
     return;
@@ -60,7 +59,7 @@ onmessage = (e: MessageEvent<Message>) => {
       people,
       diet,
       fairness,
-      minQuantity
+      minQuantity,
     );
     postMessage(reponse);
     return;
@@ -71,7 +70,7 @@ onmessage = (e: MessageEvent<Message>) => {
       suggestedQuantity,
       people,
       fairness,
-      minQuantity
+      minQuantity,
     );
     postMessage(reponse);
     return;

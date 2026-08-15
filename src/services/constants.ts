@@ -1,8 +1,6 @@
-import { Pizza } from "../modules/pizzas/slice";
+import { Pizza } from "../types";
 
 export const desktopSize = "1100px";
-
-export const smallMobile = "759px";
 
 export const LIGHT_FAIRNESS_MIN = 110;
 

@@ -1,8 +1,6 @@
 import { LightSuggestion } from "../modules/light-pizzas/slice";
 import { People } from "../modules/people/slice";
-import { PizzaQuantity } from "../modules/pizzas/selector";
-import { Pizza } from "../modules/pizzas/slice";
-import { Diet, diets } from "../types";
+import { Diet, diets, Pizza, PizzaQuantity } from "../types";
 import {
   averageCaseScenario,
   dietOrder,
@@ -24,7 +22,7 @@ export type SuggestedQuantityPerPizza = Map<Pizza, number>;
 //Check that for every diet a pizza they can eat exists.
 function isTherePizzaForEveryone(
   people: People,
-  pizzasPerDiet: Record<Diet, Pizza[]>
+  pizzasPerDiet: Record<Diet, Pizza[]>,
 ) {
   for (const diet of diets.slice().reverse()) {
     if (pizzasPerDiet[diet].length > 0) return true;
@@ -39,7 +37,7 @@ function isTherePizzaForEveryone(
 function getPresentDietsInOrder(people: People, pizzas: Pizza[]): Diet[] {
   let presentDiets: Diet[] = [];
   const pizzasDiets = dietOrder.filter(
-    (d) => pizzas.find((p) => p.eatenBy === d) !== undefined
+    (d) => pizzas.find((p) => p.eatenBy === d) !== undefined,
   );
   const peopleDiets = dietOrder.filter((d) => people[d] !== 0);
   for (const diet of pizzasDiets) {
@@ -64,13 +62,13 @@ function getPresentDietsInOrder(people: People, pizzas: Pizza[]): Diet[] {
 function avgOfXTries(
   x: number,
   suggestedQuantity: SuggestedQuantityPerDiet,
-  people: People
+  people: People,
 ) {
   let sum = 0;
   for (let i = 0; i < x; i++) {
     const newEval = evaluatePeopleAte(
       simulateSuggestionQuality(suggestedQuantity, people),
-      people
+      people,
     );
     sum += newEval;
   }
@@ -79,7 +77,7 @@ function avgOfXTries(
 
 function simulateSuggestionQuality(
   suggestedQuantity: SuggestedQuantityPerDiet,
-  people: People
+  people: People,
 ) {
   const pizzas: PizzaQuantity[] = diets.map((diet) => ({
     eatenBy: diet,
@@ -114,7 +112,7 @@ function fillDiet(
   minQuantity: number,
   howManyPizza: number,
   people: People,
-  fairness: number
+  fairness: number,
 ) {
   let given = 0;
 
@@ -158,7 +156,7 @@ function fillDiet(
 
 function addOneTo(
   suggestedQuantity: SuggestedQuantityPerDiet,
-  diet: Diet
+  diet: Diet,
 ): SuggestedQuantityPerDiet {
   const newSuggestedQuantity = { ...suggestedQuantity };
   newSuggestedQuantity[diet] += 1;
@@ -168,7 +166,7 @@ function addOneTo(
 //Select number pizza among pizzas, takes the same number of each pizza and select randomly the rest.
 function selectPizzasMostDiversity(
   quantity: number,
-  pizzas: Pizza[]
+  pizzas: Pizza[],
 ): SuggestedQuantityPerPizza {
   const selectedPizzas: SuggestedQuantityPerPizza = new Map();
   if (quantity === 0) return selectedPizzas; //No pizza to select
@@ -198,7 +196,7 @@ function selectPizzasMostDiversity(
 
 function selectPizzasCheapest(
   quantity: number,
-  pizzas: Pizza[]
+  pizzas: Pizza[],
 ): SuggestedQuantityPerPizza {
   const selectedPizzas: SuggestedQuantityPerPizza = new Map();
   if (quantity === 0) return selectedPizzas;
@@ -217,7 +215,7 @@ export function suggestPizzas(
   people: People,
   minQuantity: number,
   suggestMode: SuggestMode,
-  fairness: number = 125
+  fairness: number = 125,
 ): SuggestedQuantityPerPizza {
   const totalPeople = getTotalPeople(people);
   if (totalPeople === 0 || minQuantity === 0) return new Map();
@@ -253,7 +251,7 @@ export function suggestPizzas(
       minQuantity,
       howManyPizza,
       people,
-      fairness / 100
+      fairness / 100,
     );
   }
 
@@ -265,7 +263,7 @@ export function suggestPizzas(
     pizzaSelector(suggestedQuantity[diet], pizzasPerDiet[diet]).forEach(
       (value, key) => {
         suggestedQuantityPerPizza.set(key, value);
-      }
+      },
     );
   });
   return suggestedQuantityPerPizza;
@@ -281,7 +279,7 @@ export function suggestMore(
   people: People,
   diet: Diet,
   fairness: number,
-  minQuantity: number
+  minQuantity: number,
 ) {
   const check = (suggestion: LightSuggestion) => {
     return (
@@ -300,7 +298,7 @@ export function suggestMore(
       people,
       minQuantity,
       "lowerCost",
-      newFairness
+      newFairness,
     );
     newSuggestion = toLightSuggestion(result);
   }
@@ -315,7 +313,7 @@ export function suggestLess(
   suggestedQuantity: LightSuggestion,
   people: People,
   fairness: number,
-  minQuantity: number
+  minQuantity: number,
 ) {
   let newSuggestion = suggestedQuantity;
   let newFairness = fairness;
@@ -329,7 +327,7 @@ export function suggestLess(
       people,
       minQuantity,
       "lowerCost",
-      newFairness
+      newFairness,
     );
     newSuggestion = toLightSuggestion(result);
   }
